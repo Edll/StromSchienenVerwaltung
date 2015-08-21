@@ -32,6 +32,8 @@ public class DbAbfrage {
 	public Connection SqlConn = db.SQLiteConnect.dbConnection();
 
 	// Konstruktor
+	public DbAbfrage(){}
+	
 	public DbAbfrage(Connection SqlConn1) {
 		SqlConn = SqlConn1;
 		// SQL Connection herstellen
