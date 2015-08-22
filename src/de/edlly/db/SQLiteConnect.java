@@ -15,7 +15,7 @@ import java.sql.*;
 public class SQLiteConnect{
 	Connection conn=null;
 	
-	public static Connection dbConnection()
+	public static Connection dbConnection () throws Exception
 	{
 		try{
 			Class.forName("org.sqlite.JDBC");

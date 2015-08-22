@@ -50,6 +50,7 @@ public class Tab {
 		anzeigeBereich.setLayout(null);
 
 		// Anzeige zerlegen in TabHeader Tabelle und Hinzufügen
+		
 
 		try {
 
@@ -57,20 +58,16 @@ public class Tab {
 			anzeigeBereich.add(bereichMaterialDatenbank());
 			anzeigeBereich.add(materialEingaben());
 
-			JButton btnMarkDelet = new JButton("Makierte Löschen");
-			btnMarkDelet.setBounds(600, 492, 150, 23);
-			anzeigeBereich.add(btnMarkDelet);
+			JButton makiertesMaterialLoeschen = new JButton("Makierte Löschen");
+			makiertesMaterialLoeschen.setBounds(600, 492, 150, 23);
+			anzeigeBereich.add(makiertesMaterialLoeschen);
 
-			/**
-			 * Material hinzufügen
-			 */
+
 
 			materialHinzufuegen.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 
 					try {
-						// Daten Hinzufügen
-						sqlConn = de.edlly.db.SQLiteConnect.dbConnection();
 
 						DbAbfrage materialSorteId = new DbAbfrage();
 						materialSorteId.SqlConn = sqlConn;
@@ -112,6 +109,8 @@ public class Tab {
 
 		return anzeigeBereich;
 	}
+	
+	
 
 	public JLabel headerMaterialDatenbank() {
 		JLabel header = new JLabel("Material Datenbank");
