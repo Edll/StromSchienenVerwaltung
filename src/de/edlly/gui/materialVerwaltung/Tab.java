@@ -16,6 +16,7 @@ import javax.swing.ScrollPaneConstants;
 
 import de.edlly.material.DbAbfrage;
 import de.edlly.material.DbHinzu;
+import de.edlly.gui.Formatierung;
 
 /**
  * Enthält das UI für den Materialmanager. Sowie die ActionListener und die SQL
@@ -32,7 +33,6 @@ import de.edlly.material.DbHinzu;
 public class Tab {
 
 	private Connection sqlConn = de.edlly.db.SQLiteConnect.dbConnection();
-
 	private JTextField txtMatAnlex;
 	private JTextField txtMatAnlez;
 	private JTextField txtMatAnleMax;
@@ -42,13 +42,15 @@ public class Tab {
 
 	}
 
-	public JPanel ui() {
+	public JPanel verwaltungsAnzeige() {
 
 		JPanel tabMaterialManager = new JPanel();
 
 		// Objekt für die Material Tabelle erzeugen
 		MaterialTabelle ManagerTable = new MaterialTabelle();
 		ManagerTable.SqlConn = sqlConn;
+
+		// Anzeige zerlegen in TabHeader Tabelle und Hinzufügen
 
 		try {
 			tabMaterialManager.setLayout(null);
@@ -59,14 +61,10 @@ public class Tab {
 			tableMaterialDBscrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 			tabMaterialManager.add(tableMaterialDBscrollPane);
 
+			tabMaterialManager.add(headerLabel());
+			
 			// Anzeige Table Hinzufügen
 			tableMaterialDBscrollPane.setViewportView(ManagerTable.AusgabeTable());
-
-			// TopLabel
-			JLabel lblMaterialDatenbank = new JLabel("Material Datenbank");
-			lblMaterialDatenbank.setFont(new Font("Tahoma", Font.BOLD, 16));
-			lblMaterialDatenbank.setBounds(10, 11, 162, 20);
-			tabMaterialManager.add(lblMaterialDatenbank);
 
 			// Label über dem Hinzufügen
 			JLabel lblMaterialAnlegen = new JLabel("Material anlegen");
@@ -180,6 +178,14 @@ public class Tab {
 		}
 
 		return tabMaterialManager;
+	}
+
+	public JLabel headerLabel() {
+		JLabel header = new JLabel("Material Datenbank");
+		header.setFont(Formatierung.headerFont());
+		header.setBounds(Formatierung.HEADER_TAB_LABEL_X, Formatierung.HEADER_TAB_LABEL_Y, 162, 20);
+
+		return header;
 	}
 
 }

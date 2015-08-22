@@ -79,7 +79,7 @@ public class Main {
 		
 		// Material Manager
 		de.edlly.gui.materialVerwaltung.Tab TabMaterialManager = new de.edlly.gui.materialVerwaltung.Tab();
-		TabMenu.addTab("Material Manager", null, TabMaterialManager.ui(), null);
+		TabMenu.addTab("Material Manager", null, TabMaterialManager.verwaltungsAnzeige(), null);
 		
 		
 
