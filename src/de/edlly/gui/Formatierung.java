@@ -9,9 +9,9 @@ public class Formatierung {
 	
 	
 	
-	// Position des Headers in einem Tab
-	public static final int HEADER_TAB_LABEL_X = 5;
-	public static final int HEADER_TAB_LABEL_Y = 5;
+	// Position eines headers
+	public static final int HEADER_POSITION_X = 5;
+	public static final int HEADER_POSITION_Y = 5;
 	
 	
 	// Header Font Formatierung
@@ -20,7 +20,7 @@ public class Formatierung {
 		return headerFont;
 	}
 	
-	// Header Font Formatierung
+	// Eingabefelder Beschriftung Font Formatierung
 	public static Font eingabeFeldLabel(){
 		Font headerFont = new Font("Tahoma", Font.BOLD, 11);
 		return headerFont;		
@@ -30,6 +30,12 @@ public class Formatierung {
 	public static LineBorder rahmenUmEingabebereiche(){
 		LineBorder rahmen = new LineBorder(Color.GRAY);
 		return rahmen;
+	}
+	
+	// Button Font Formatierung
+	public static Font buttonFont(){
+		Font headerFont = new Font("Tahoma", Font.BOLD, 11);
+		return headerFont;		
 	}
 	
 	

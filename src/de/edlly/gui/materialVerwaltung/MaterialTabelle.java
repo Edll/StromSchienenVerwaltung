@@ -1,6 +1,5 @@
 package de.edlly.gui.materialVerwaltung;
 
-import java.sql.*;
 import javax.swing.JTable;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
@@ -27,10 +26,10 @@ import de.edlly.material.DbAbfrage;
 
 
 public class MaterialTabelle  {
-	public Connection SqlConn;
+
 	
-	// Konstruktor
 	public MaterialTabelle(){
+		
 
 	}
 	
@@ -42,10 +41,7 @@ public class MaterialTabelle  {
 		 
 	// Abfrage des Materials aus der DB
 	DbAbfrage MaterialSql = new DbAbfrage();
-	if(SqlConn == null){
-	throw new IllegalArgumentException("SqlConn nicht Initalisier, Verbindungsaufbau so nicht möglich");
-       }
-	 
+
 		      
 	
 	 // Erstellen des Table Models    
@@ -56,7 +52,7 @@ public class MaterialTabelle  {
 	 JTableWerkstueckWerteModel.addColumn("Maximale Länge");
 	 JTableWerkstueckWerteModel.addColumn("Benutzen");
 		
-	 MaterialSql.SqlConn = this.SqlConn;
+
 	 String[][] MaterialDBData = MaterialSql.SelectTableFormat();
 	 // NullPointerException nicht auslösen
 	 if(MaterialDBData != null) {	

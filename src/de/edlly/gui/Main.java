@@ -2,6 +2,7 @@ package de.edlly.gui;
 
 import java.awt.EventQueue;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
@@ -78,8 +79,14 @@ public class Main {
 		
 		
 		// Material Manager
-		de.edlly.gui.materialVerwaltung.Tab TabMaterialManager = new de.edlly.gui.materialVerwaltung.Tab();
-		TabMenu.addTab("Material Manager", null, TabMaterialManager.verwaltungsAnzeige(), null);
+		de.edlly.gui.materialVerwaltung.Tab TabMaterialManager;
+		try {
+			TabMaterialManager = new de.edlly.gui.materialVerwaltung.Tab();
+			TabMenu.addTab("Material Manager", null, TabMaterialManager.verwaltungsAnzeige(), null);	
+		} catch (Exception e1) {
+			JOptionPane.showMessageDialog(null, e1.getMessage());			
+		}
+
 		
 		
 
