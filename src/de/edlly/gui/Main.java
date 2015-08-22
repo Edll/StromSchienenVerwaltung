@@ -52,7 +52,7 @@ public class Main {
 
 
 	private void initialize() {
-		SqlConn = db.SQLiteConnect.dbConnection();
+		SqlConn = de.edlly.db.SQLiteConnect.dbConnection();
 		frmKupfermanager = new JFrame();
 		frmKupfermanager.setBounds(0, 0, 800, 600);
 		//frmKupfermanager.setExtendedState(Frame.MAXIMIZED_BOTH);

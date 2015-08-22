@@ -29,7 +29,7 @@ public class DbAbfrage {
 	public int MaterialSorteId;
 	public int x;
 	public int z;
-	public Connection SqlConn = db.SQLiteConnect.dbConnection();
+	public Connection SqlConn = de.edlly.db.SQLiteConnect.dbConnection();
 
 	// Konstruktor
 	public DbAbfrage(){}
@@ -38,7 +38,7 @@ public class DbAbfrage {
 		SqlConn = SqlConn1;
 		// SQL Connection herstellen
 		if (this.SqlConn == null) {
-			SqlConn1 = db.SQLiteConnect.dbConnection();
+			SqlConn1 = de.edlly.db.SQLiteConnect.dbConnection();
 		}
 	}
 
@@ -47,7 +47,7 @@ public class DbAbfrage {
 		this.x = x;
 		// SQL Connection herstellen
 		if (this.SqlConn == null) {
-			SqlConn1 = db.SQLiteConnect.dbConnection();
+			SqlConn1 = de.edlly.db.SQLiteConnect.dbConnection();
 		}
 	}
 

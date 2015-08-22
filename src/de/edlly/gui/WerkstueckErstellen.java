@@ -18,9 +18,10 @@ import javax.swing.JTextField;
 import javax.swing.JViewport;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.table.DefaultTableModel;
-import Werkstueck.KoordinatenBiegung;
-import Werkstueck.KoordinatenLoch;
+
 import de.edlly.material.DbAbfrage;
+import de.edlly.werkstueck.KoordinatenBiegung;
+import de.edlly.werkstueck.KoordinatenLoch;
 
 public class WerkstueckErstellen {
 	
@@ -39,7 +40,7 @@ public class WerkstueckErstellen {
 	WerkstueckErstellen(){
 		// SQL Connection herstellen
 		if(this.SqlConn == null){
-			SqlConn = db.SQLiteConnect.dbConnection();
+			SqlConn = de.edlly.db.SQLiteConnect.dbConnection();
 		}
 	}	
 

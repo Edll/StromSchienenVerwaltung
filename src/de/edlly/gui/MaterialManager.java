@@ -43,7 +43,7 @@ public class MaterialManager {
 	MaterialManager(){
 		// SQL Connection herstellen
 		if(this.SqlConn == null){
-			SqlConn = db.SQLiteConnect.dbConnection();
+			SqlConn = de.edlly.db.SQLiteConnect.dbConnection();
 		}
 		
 		
@@ -149,7 +149,7 @@ public class MaterialManager {
 				
 				try{
 					// Daten Hinzufügen
-					SqlConn = db.SQLiteConnect.dbConnection();
+					SqlConn = de.edlly.db.SQLiteConnect.dbConnection();
 					
 					DbAbfrage MaterialSorteId = new DbAbfrage();
 					MaterialSorteId.SqlConn = SqlConn;

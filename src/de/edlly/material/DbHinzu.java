@@ -33,7 +33,7 @@ public class DbHinzu {
 	public DbHinzu(){
 		// SQL Connection herstellen
 		if(this.SqlConn == null){
-			SqlConn = db.SQLiteConnect.dbConnection();
+			SqlConn = de.edlly.db.SQLiteConnect.dbConnection();
 		}
 	}
 	/**
