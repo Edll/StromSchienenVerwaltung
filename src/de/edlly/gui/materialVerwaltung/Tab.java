@@ -1,4 +1,4 @@
-package de.edlly.gui;
+package de.edlly.gui.materialVerwaltung;
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -31,7 +31,7 @@ import de.edlly.material.DbHinzu;
  *
  */
 
-public class MaterialManager {
+public class Tab {
 	
 	public Connection SqlConn=null;
 	
@@ -40,7 +40,7 @@ public class MaterialManager {
 	private JTextField txtMatAnleMax;
 	
 	// Konstruktor
-	MaterialManager(){
+	public Tab(){
 		// SQL Connection herstellen
 		if(this.SqlConn == null){
 			SqlConn = de.edlly.db.SQLiteConnect.dbConnection();
@@ -54,7 +54,7 @@ public class MaterialManager {
 		JPanel TabMaterialManager = new JPanel();
 		
 		// Objekt für die Material Tabelle erzeugen
-		de.edlly.material.Manager ManagerTable = new de.edlly.material.Manager();
+		de.edlly.gui.materialVerwaltung.MaterialTabelle ManagerTable = new de.edlly.gui.materialVerwaltung.MaterialTabelle();
 		ManagerTable.SqlConn = SqlConn;
 
 		
