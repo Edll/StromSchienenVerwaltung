@@ -21,6 +21,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import java.awt.Canvas;
+import javax.swing.UIManager;
 
 
 
@@ -76,6 +77,7 @@ public class GuiTest {
 		frmKupfermanager.getContentPane().add(TabMenu);
 		
 		JPanel Manager = new JPanel();
+		Manager.setBorder(UIManager.getBorder("OptionPane.border"));
 		
 	    
 		
@@ -270,6 +272,16 @@ public class GuiTest {
 		Canvas canvas = new Canvas();
 		canvas.setBounds(447, 120, 320, 360);
 		Erstellen.add(canvas);
+		
+		JPanel panel = new JPanel();
+		TabMenu.addTab("New tab", null, panel, null);
+		panel.setLayout(null);
+		
+		JPanel panel_1 = new JPanel();
+		panel_1.setBorder(new LineBorder(Color.GRAY));
+		panel_1.setBounds(276, 100, 162, 172);
+		panel.add(panel_1);
+		panel_1.setLayout(null);
 		
 		
 		
