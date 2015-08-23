@@ -20,20 +20,21 @@ public class MaterialAnlegen {
     private JTextField eingabeKoordinateZ;
     private JTextField eingabeKoordinatenMaxY;
     private JButton materialHinzufuegen;
-    private JComboBox<String> materialSortenAuswahl;
+    private JComboBox<String> materialSortenAuswahl; 
 
-    public JPanel materialEingabeBereich(JPanel anzeigeBereich) {
+    public JPanel materialEingabeBereich(int PositionX, int PositionY) {
 
 	JPanel materialEingabeBereich = new JPanel();
 	materialEingabeBereich.setBorder(Formatierung.rahmenUmEingabebereiche());
 	materialEingabeBereich.setLayout(null);
-	materialEingabeBereich.setBounds(10, 420, 500, 100);
+	materialEingabeBereich.setBounds(PositionX, PositionY, 500, 100);
+	
 	headerMaterialAnlegen(materialEingabeBereich);
 	labelsDerEingabeFelder(materialEingabeBereich);
 	eingabeFelderKoordinaten(materialEingabeBereich);
 	materialSortenListe(materialEingabeBereich);
 	buttonMaterialHinzufuegen(materialEingabeBereich);
-	actionMaterialHinzu(anzeigeBereich);
+	actionMaterialHinzu(materialEingabeBereich);
 
 	return materialEingabeBereich;
     }
@@ -103,7 +104,7 @@ public class MaterialAnlegen {
 	materialEingabeBereich.add(lblMaximaleLaenge);
     }
 
-    public void actionMaterialHinzu(JPanel anzeigeBereich) {
+    public void actionMaterialHinzu(JPanel materialEingabeBereich) {
 
 	materialHinzufuegen.addActionListener(new ActionListener() {
 	    public void actionPerformed(ActionEvent arg0) {
@@ -119,8 +120,11 @@ public class MaterialAnlegen {
 		    materialHinzu.Add(Integer.parseInt(eingabeKoordinateX.getText()),
 			    Integer.parseInt(eingabeKoordinateZ.getText()),
 			    Integer.parseInt(eingabeKoordinatenMaxY.getText()), MaterialSorteSelectId);
-		    // MaterialTabelle managerTable = new MaterialTabelle();
-		    // tabellenBereich.setViewportView(managerTable.AusgabeTable());
+		    
+		    /**
+		     * @TODO: Funktion in der Tabellen Erzeugung einbauen um die Daten in der Tabelle 
+		     *	      neu Laden zu können
+		     */
 
 		} catch (NumberFormatException e) {
 		    JOptionPane.showMessageDialog(null, "Bitte eine Zahl gültige Zahl eingeben.");
@@ -133,8 +137,8 @@ public class MaterialAnlegen {
 		    JOptionPane.showMessageDialog(null,
 			    "Exception: " + e.getClass().getSimpleName() + " " + e.getMessage());
 		}
-		anzeigeBereich.revalidate();
-		anzeigeBereich.repaint();
+		materialEingabeBereich.revalidate();
+		materialEingabeBereich.repaint();
 
 	    }
 	});
