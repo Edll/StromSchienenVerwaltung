@@ -15,130 +15,129 @@ import de.edlly.material.DbAbfrage;
 import de.edlly.material.DbHinzu;
 
 public class MaterialAnlegen {
-	
-	private JTextField eingabeKoordinateX;
-	private JTextField eingabeKoordinateZ;
-	private JTextField eingabeKoordinatenMaxY;
-	private JButton materialHinzufuegen;
-	private JComboBox<String> materialSortenAuswahl;
-	
-	
-	
-	public JPanel materialEingabeBereich(JPanel anzeigeBereich) {
 
-		JPanel materialEingabeBereich = new JPanel();
-		materialEingabeBereich.setBorder(Formatierung.rahmenUmEingabebereiche());
-		materialEingabeBereich.setLayout(null);
-		materialEingabeBereich.setBounds(10, 420, 500, 100);
-		headerMaterialAnlegen(materialEingabeBereich);
-		labelsDerEingabeFelder(materialEingabeBereich);
-		eingabeFelderKoordinaten(materialEingabeBereich);
-		materialSortenListe(materialEingabeBereich);
-		buttonMaterialHinzufuegen(materialEingabeBereich);
-		actionMaterialHinzu(anzeigeBereich);
+    private JTextField eingabeKoordinateX;
+    private JTextField eingabeKoordinateZ;
+    private JTextField eingabeKoordinatenMaxY;
+    private JButton materialHinzufuegen;
+    private JComboBox<String> materialSortenAuswahl;
 
-		return materialEingabeBereich;
-	}
+    public JPanel materialEingabeBereich(JPanel anzeigeBereich) {
 
-	public void materialSortenListe(JPanel materialEingabeBereich) {
-		DbAbfrage materialDB = new DbAbfrage();
-		materialSortenAuswahl = new JComboBox<String>(materialDB.SelectTableMaterialSorteString());
-		materialSortenAuswahl.setBounds(156, 50, 96, 20);
-		materialEingabeBereich.add(materialSortenAuswahl);
-	}
+	JPanel materialEingabeBereich = new JPanel();
+	materialEingabeBereich.setBorder(Formatierung.rahmenUmEingabebereiche());
+	materialEingabeBereich.setLayout(null);
+	materialEingabeBereich.setBounds(10, 420, 500, 100);
+	headerMaterialAnlegen(materialEingabeBereich);
+	labelsDerEingabeFelder(materialEingabeBereich);
+	eingabeFelderKoordinaten(materialEingabeBereich);
+	materialSortenListe(materialEingabeBereich);
+	buttonMaterialHinzufuegen(materialEingabeBereich);
+	actionMaterialHinzu(anzeigeBereich);
 
-	public void buttonMaterialHinzufuegen(JPanel materialEingabeBereich) {
-		materialHinzufuegen = new JButton("+");
-		materialHinzufuegen.setFont(Formatierung.buttonFont());
-		materialHinzufuegen.setBounds(392, 50, 43, 23);
-		materialEingabeBereich.add(materialHinzufuegen);
-	}
+	return materialEingabeBereich;
+    }
 
-	public void headerMaterialAnlegen(JPanel materialEingabeBereich) {
+    public void materialSortenListe(JPanel materialEingabeBereich) {
 
-		JLabel headerMaterialAnlegen = new JLabel("Material anlegen");
-		headerMaterialAnlegen.setFont(Formatierung.headerFont());
-		headerMaterialAnlegen.setBounds(Formatierung.HEADER_POSITION_X, Formatierung.HEADER_POSITION_Y, 138, 20);
-		materialEingabeBereich.add(headerMaterialAnlegen);
-	}
+	DbAbfrage materialDB = new DbAbfrage();
+	materialSortenAuswahl = new JComboBox<String>(materialDB.SelectTableMaterialSorteString());
+	materialSortenAuswahl.setBounds(156, 50, 96, 20);
+	materialEingabeBereich.add(materialSortenAuswahl);
+    }
 
-	public void eingabeFelderKoordinaten(JPanel materialEingabeBereich) {
+    public void buttonMaterialHinzufuegen(JPanel materialEingabeBereich) {
 
-		eingabeKoordinateX = new JTextField();
-		eingabeKoordinateX.setBounds(10, 50, 50, 20);
-		materialEingabeBereich.add(eingabeKoordinateX);
-		eingabeKoordinateX.setColumns(10);
+	materialHinzufuegen = new JButton("+");
+	materialHinzufuegen.setFont(Formatierung.buttonFont());
+	materialHinzufuegen.setBounds(392, 50, 43, 23);
+	materialEingabeBereich.add(materialHinzufuegen);
+    }
 
-		eingabeKoordinateZ = new JTextField();
-		eingabeKoordinateZ.setBounds(86, 50, 50, 20);
-		materialEingabeBereich.add(eingabeKoordinateZ);
-		eingabeKoordinateZ.setColumns(10);
+    public void headerMaterialAnlegen(JPanel materialEingabeBereich) {
 
-		eingabeKoordinatenMaxY = new JTextField();
-		eingabeKoordinatenMaxY.setBounds(280, 50, 86, 20);
-		materialEingabeBereich.add(eingabeKoordinatenMaxY);
-		eingabeKoordinatenMaxY.setColumns(10);
-	}
+	JLabel headerMaterialAnlegen = new JLabel("Material anlegen");
+	headerMaterialAnlegen.setFont(Formatierung.headerFont());
+	headerMaterialAnlegen.setBounds(Formatierung.HEADER_POSITION_X, Formatierung.HEADER_POSITION_Y, 138, 20);
+	materialEingabeBereich.add(headerMaterialAnlegen);
+    }
 
-	public void labelsDerEingabeFelder(JPanel materialEingabeBereich) {
+    public void eingabeFelderKoordinaten(JPanel materialEingabeBereich) {
 
-		JLabel lblMaterialGroesse = new JLabel("Gr\u00F6\u00DFe");
-		lblMaterialGroesse.setFont(Formatierung.eingabeFeldLabel());
-		lblMaterialGroesse.setBounds(10, 30, 34, 14);
-		materialEingabeBereich.add(lblMaterialGroesse);
+	eingabeKoordinateX = new JTextField();
+	eingabeKoordinateX.setBounds(10, 50, 50, 20);
+	materialEingabeBereich.add(eingabeKoordinateX);
+	eingabeKoordinateX.setColumns(10);
 
-		JLabel lblX = new JLabel("x");
-		lblX.setFont(Formatierung.eingabeFeldLabel());
-		lblX.setBounds(70, 50, 7, 14);
-		materialEingabeBereich.add(lblX);
+	eingabeKoordinateZ = new JTextField();
+	eingabeKoordinateZ.setBounds(86, 50, 50, 20);
+	materialEingabeBereich.add(eingabeKoordinateZ);
+	eingabeKoordinateZ.setColumns(10);
 
-		JLabel lblMaterialSorte = new JLabel("Material Sorte");
-		lblMaterialSorte.setFont(Formatierung.eingabeFeldLabel());
-		lblMaterialSorte.setBounds(156, 30, 81, 14);
-		materialEingabeBereich.add(lblMaterialSorte);
+	eingabeKoordinatenMaxY = new JTextField();
+	eingabeKoordinatenMaxY.setBounds(280, 50, 86, 20);
+	materialEingabeBereich.add(eingabeKoordinatenMaxY);
+	eingabeKoordinatenMaxY.setColumns(10);
+    }
 
-		JLabel lblMaximaleLaenge = new JLabel("Maximale L\u00E4nge");
-		lblMaximaleLaenge.setFont(Formatierung.eingabeFeldLabel());
-		lblMaximaleLaenge.setBounds(280, 30, 92, 14);
-		materialEingabeBereich.add(lblMaximaleLaenge);
-	}
+    public void labelsDerEingabeFelder(JPanel materialEingabeBereich) {
 
+	JLabel lblMaterialGroesse = new JLabel("Gr\u00F6\u00DFe");
+	lblMaterialGroesse.setFont(Formatierung.eingabeFeldLabel());
+	lblMaterialGroesse.setBounds(10, 30, 34, 14);
+	materialEingabeBereich.add(lblMaterialGroesse);
 
-	
-	public void actionMaterialHinzu(JPanel anzeigeBereich) {
-		materialHinzufuegen.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+	JLabel lblX = new JLabel("x");
+	lblX.setFont(Formatierung.eingabeFeldLabel());
+	lblX.setBounds(70, 50, 7, 14);
+	materialEingabeBereich.add(lblX);
 
-				try {
+	JLabel lblMaterialSorte = new JLabel("Material Sorte");
+	lblMaterialSorte.setFont(Formatierung.eingabeFeldLabel());
+	lblMaterialSorte.setBounds(156, 30, 81, 14);
+	materialEingabeBereich.add(lblMaterialSorte);
 
-					DbAbfrage materialSorteId = new DbAbfrage();
+	JLabel lblMaximaleLaenge = new JLabel("Maximale L\u00E4nge");
+	lblMaximaleLaenge.setFont(Formatierung.eingabeFeldLabel());
+	lblMaximaleLaenge.setBounds(280, 30, 92, 14);
+	materialEingabeBereich.add(lblMaximaleLaenge);
+    }
 
-					int MaterialSorteSelectId = materialSorteId
-							.SelectMaterialSorteString((String) materialSortenAuswahl.getSelectedItem());
+    public void actionMaterialHinzu(JPanel anzeigeBereich) {
 
-					DbHinzu materialHinzu = new DbHinzu();
-					materialHinzu.Add(Integer.parseInt(eingabeKoordinateX.getText()),
-							Integer.parseInt(eingabeKoordinateZ.getText()),
-							Integer.parseInt(eingabeKoordinatenMaxY.getText()), MaterialSorteSelectId);
-					//MaterialTabelle managerTable = new MaterialTabelle();
-					//tabellenBereich.setViewportView(managerTable.AusgabeTable());
+	materialHinzufuegen.addActionListener(new ActionListener() {
+	    public void actionPerformed(ActionEvent arg0) {
 
-				} catch (NumberFormatException e) {
-					JOptionPane.showMessageDialog(null, "Bitte eine Zahl gültige Zahl eingeben.");
+		try {
 
-				} catch (IllegalArgumentException e) {
-					JOptionPane.showMessageDialog(null, e.getMessage());
+		    DbAbfrage materialSorteId = new DbAbfrage();
 
-				} catch (Exception e) {
-					e.printStackTrace();
-					JOptionPane.showMessageDialog(null,
-							"Exception: " + e.getClass().getSimpleName() + " " + e.getMessage());
-				}
-				anzeigeBereich.revalidate();
-				anzeigeBereich.repaint();
+		    int MaterialSorteSelectId = materialSorteId
+			    .SelectMaterialSorteString((String) materialSortenAuswahl.getSelectedItem());
 
-			}
-		});
-	}
+		    DbHinzu materialHinzu = new DbHinzu();
+		    materialHinzu.Add(Integer.parseInt(eingabeKoordinateX.getText()),
+			    Integer.parseInt(eingabeKoordinateZ.getText()),
+			    Integer.parseInt(eingabeKoordinatenMaxY.getText()), MaterialSorteSelectId);
+		    // MaterialTabelle managerTable = new MaterialTabelle();
+		    // tabellenBereich.setViewportView(managerTable.AusgabeTable());
+
+		} catch (NumberFormatException e) {
+		    JOptionPane.showMessageDialog(null, "Bitte eine Zahl gültige Zahl eingeben.");
+
+		} catch (IllegalArgumentException e) {
+		    JOptionPane.showMessageDialog(null, e.getMessage());
+
+		} catch (Exception e) {
+		    e.printStackTrace();
+		    JOptionPane.showMessageDialog(null,
+			    "Exception: " + e.getClass().getSimpleName() + " " + e.getMessage());
+		}
+		anzeigeBereich.revalidate();
+		anzeigeBereich.repaint();
+
+	    }
+	});
+    }
 
 }

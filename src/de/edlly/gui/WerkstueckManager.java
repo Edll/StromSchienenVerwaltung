@@ -9,37 +9,33 @@ import javax.swing.JTable;
 
 public class WerkstueckManager {
 
-	public JPanel ui(){
-		JPanel WerkstueckManager = new JPanel();
-		WerkstueckManager.setLayout(null);
-		
-		JLabel lblWerkstueckManagerTitel = new JLabel("Werkst\u00FCck Manager");
-		lblWerkstueckManagerTitel.setBounds(10, 8, 162, 20);
-		lblWerkstueckManagerTitel.setFont(new Font("Tahoma", Font.BOLD, 16));
-		WerkstueckManager.add(lblWerkstueckManagerTitel);
-		
-		/*
-		 * TODO: 
-		 * Werkstück DB Erstellen
-		 */
-		JTable tableWerkstueckDB;
-	    String[][] WerkstueckDBData = {
-	    	    { "Winkel", "1304" }, { "Winkel1", "240" }, { "Etage", "220" },
-	    	    { "Bla", "217" }, {"Vamocon", "215"} 
-	    	    };
+    public JPanel ui() {
 
-	    	    String[] WerkstueckDBColNames =  {
-	    	      "Werkstück", "Länge"
-	    	    };
-		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 40, 747, 424);
-		WerkstueckManager.add(scrollPane);
-		
-		tableWerkstueckDB = new JTable (WerkstueckDBData, WerkstueckDBColNames);
-		tableWerkstueckDB.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		scrollPane.setViewportView(tableWerkstueckDB);
-		
-		return WerkstueckManager;
-	}
+	JPanel WerkstueckManager = new JPanel();
+	WerkstueckManager.setLayout(null);
+
+	JLabel lblWerkstueckManagerTitel = new JLabel("Werkst\u00FCck Manager");
+	lblWerkstueckManagerTitel.setBounds(10, 8, 162, 20);
+	lblWerkstueckManagerTitel.setFont(new Font("Tahoma", Font.BOLD, 16));
+	WerkstueckManager.add(lblWerkstueckManagerTitel);
+
+	/*
+	 * TODO: Werkstück DB Erstellen
+	 */
+	JTable tableWerkstueckDB;
+	String[][] WerkstueckDBData = { { "Winkel", "1304" }, { "Winkel1", "240" }, { "Etage", "220" },
+		{ "Bla", "217" }, { "Vamocon", "215" } };
+
+	String[] WerkstueckDBColNames = { "Werkstück", "Länge" };
+
+	JScrollPane scrollPane = new JScrollPane();
+	scrollPane.setBounds(10, 40, 747, 424);
+	WerkstueckManager.add(scrollPane);
+
+	tableWerkstueckDB = new JTable(WerkstueckDBData, WerkstueckDBColNames);
+	tableWerkstueckDB.setFont(new Font("Tahoma", Font.PLAIN, 11));
+	scrollPane.setViewportView(tableWerkstueckDB);
+
+	return WerkstueckManager;
+    }
 }
