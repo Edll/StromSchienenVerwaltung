@@ -74,7 +74,7 @@ public class Main {
 	de.edlly.gui.materialVerwaltung.TabMaterialVerwaltung TabMaterialManager;
 	try {
 	    TabMaterialManager = new de.edlly.gui.materialVerwaltung.TabMaterialVerwaltung();
-	    TabMenu.addTab("Material Manager", null, TabMaterialManager.verwaltungsAnzeige(), null);
+	    TabMenu.addTab("Material Verwaltung", null, TabMaterialManager.verwaltungsAnzeige(), null);
 	} catch (Exception e1) {
 	    JOptionPane.showMessageDialog(null, e1.getMessage());
 	}
