@@ -21,7 +21,7 @@ import java.sql.*;
  * @author Edlly
  *
  */
-public class DbHinzu {
+public class NeuesMaterialAnlegen {
 	
 	public int x;
 	public int z;
@@ -30,7 +30,7 @@ public class DbHinzu {
 	public Connection SqlConn;
 	  
 	// Konstruktor
-	public DbHinzu(){
+	public NeuesMaterialAnlegen(){
 		// SQL Connection herstellen
 		if(this.SqlConn == null){
 			SqlConn = de.edlly.db.SQLiteConnect.dbConnection();

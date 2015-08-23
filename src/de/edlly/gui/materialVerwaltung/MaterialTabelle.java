@@ -114,7 +114,7 @@ public class MaterialTabelle {
 		for (int i = 0; i < JTableWerkstueckWerte.getRowCount(); i++) {
 		    if ((Boolean) JTableWerkstueckWerte.getValueAt(i, 4)) {
 			// Update der Sichtbarkeit des Materials im System
-			de.edlly.material.DbHinzu UpdateSql = new de.edlly.material.DbHinzu();
+			de.edlly.material.NeuesMaterialAnlegen UpdateSql = new de.edlly.material.NeuesMaterialAnlegen();
 			int id = Integer.parseInt(
 				(String) JTableWerkstueckWerte.getValueAt(JTableWerkstueckWerte.getSelectedRow(), 0));
 			int value = 0;

@@ -12,7 +12,7 @@ import javax.swing.JTextField;
 
 import de.edlly.gui.Formatierung;
 import de.edlly.material.DbAbfrage;
-import de.edlly.material.DbHinzu;
+import de.edlly.material.NeuesMaterialAnlegen;
 
 public class MaterialAnlegen {
 
@@ -20,7 +20,7 @@ public class MaterialAnlegen {
     private JTextField eingabeKoordinateZ;
     private JTextField eingabeKoordinatenMaxY;
     private JButton materialHinzufuegen;
-    private JComboBox<String> materialSortenAuswahl; 
+    private JComboBox<String> materialSortenAuswahl;
 
     public JPanel materialEingabeBereich(int PositionX, int PositionY) {
 
@@ -28,7 +28,7 @@ public class MaterialAnlegen {
 	materialEingabeBereich.setBorder(Formatierung.rahmenUmEingabebereiche());
 	materialEingabeBereich.setLayout(null);
 	materialEingabeBereich.setBounds(PositionX, PositionY, 500, 100);
-	
+
 	headerMaterialAnlegen(materialEingabeBereich);
 	labelsDerEingabeFelder(materialEingabeBereich);
 	eingabeFelderKoordinaten(materialEingabeBereich);
@@ -116,14 +116,14 @@ public class MaterialAnlegen {
 		    int MaterialSorteSelectId = materialSorteId
 			    .SelectMaterialSorteString((String) materialSortenAuswahl.getSelectedItem());
 
-		    DbHinzu materialHinzu = new DbHinzu();
+		    NeuesMaterialAnlegen materialHinzu = new NeuesMaterialAnlegen();
 		    materialHinzu.Add(Integer.parseInt(eingabeKoordinateX.getText()),
 			    Integer.parseInt(eingabeKoordinateZ.getText()),
 			    Integer.parseInt(eingabeKoordinatenMaxY.getText()), MaterialSorteSelectId);
-		    
+
 		    /**
-		     * @TODO: Funktion in der Tabellen Erzeugung einbauen um die Daten in der Tabelle 
-		     *	      neu Laden zu können
+		     * @TODO: Funktion in der Tabellen Erzeugung einbauen um die Daten in der Tabelle neu Laden zu
+		     *        können
 		     */
 
 		} catch (NumberFormatException e) {
