@@ -4,6 +4,9 @@ import java.sql.*;
 import de.edlly.material.MaterialKonstanten;
 
 /**
+ * Legt einen neuen Material Datensatz aus den objektVariabeln an.
+ * 
+ * TODO updateVisibly in eine geeignete Klasse verschieben.
  * 
  * @author Edlly java@edlly.de
  *
@@ -30,13 +33,45 @@ public class NeuerMaterialDatensatz {
 	if (koordinateZIstImDefinitionsbereich(koordinateZ)) {
 	    this.koordinateZ = koordinateZ;
 	}
+
 	if (koordinateyMaxIstImDefinitionsbereich(koordinateyMax)) {
 	    this.koordinateyMax = koordinateyMax;
 	}
+
 	if (materialSorteIdIstVorhanden(materialSorteId)) {
 	    this.materialSorteId = materialSorteId;
 	}
 
+    }
+
+    public Boolean datensatzAusObjektWertenAnlegen() throws Exception {
+
+	PreparedStatement sqlPreparedStatment = null;
+
+	try {
+	    String query = "INSERT INTO Material (\"MaterialSorteId\",\"x\",\"z\",\"yMax\",\"visibly\") VALUES (?1,?2,?3,?4,?5)";
+
+	    sqlPreparedStatment = sqlConnection.prepareStatement(query);
+
+	    sqlPreparedStatment.setInt(1, this.materialSorteId);
+	    sqlPreparedStatment.setInt(2, this.koordinateX);
+	    sqlPreparedStatment.setInt(3, this.koordinateZ);
+	    sqlPreparedStatment.setInt(4, this.koordinateyMax);
+	    sqlPreparedStatment.setBoolean(5, true);
+	    sqlPreparedStatment.executeUpdate();
+
+	} catch (SQLException e) {
+
+	    throw new IllegalArgumentException(e);
+	} finally {
+	    try {
+
+		sqlPreparedStatment.close();
+	    } catch (Exception e) {
+		throw new IllegalArgumentException(e);
+	    }
+	}
+	return true;
     }
 
     public Boolean koordinateXIstImDefinitionsbereich(int koordinateX) {
@@ -44,8 +79,10 @@ public class NeuerMaterialDatensatz {
 	if (koordinateX <= 0) {
 	    throw new IllegalArgumentException("Die Materialbreite darf nicht Negativ oder 0 sein.");
 	}
+
 	if (koordinateX > MaterialKonstanten.MAXIMALER_X_WERT) {
-	    throw new IllegalArgumentException("Die maximal Material Breite ist: " + MaterialKonstanten.MAXIMALER_X_WERT);
+	    throw new IllegalArgumentException(
+		    "Die maximal Material Breite ist: " + MaterialKonstanten.MAXIMALER_X_WERT);
 	}
 
 	return true;
@@ -56,8 +93,10 @@ public class NeuerMaterialDatensatz {
 	if (koordinateZ <= 0) {
 	    throw new IllegalArgumentException("Die Materialbreite darf nicht Negativ oder 0 sein.");
 	}
+
 	if (koordinateZ > MaterialKonstanten.MAXIMALER_Z_WERT) {
-	    throw new IllegalArgumentException("Die maximal Material Dicke ist: " + MaterialKonstanten.MAXIMALER_Z_WERT);
+	    throw new IllegalArgumentException(
+		    "Die maximal Material Dicke ist: " + MaterialKonstanten.MAXIMALER_Z_WERT);
 	}
 
 	return true;
@@ -68,8 +107,10 @@ public class NeuerMaterialDatensatz {
 	if (koordinatey <= 0) {
 	    throw new IllegalArgumentException("Die Materialbreite darf nicht Negativ sein.");
 	}
+
 	if (koordinatey >= MaterialKonstanten.MAXIMALER_Y_WERT) {
-	    throw new IllegalArgumentException("Die maximal Material Länge ist: " + MaterialKonstanten.MAXIMALER_Y_WERT);
+	    throw new IllegalArgumentException(
+		    "Die maximal Material Länge ist: " + MaterialKonstanten.MAXIMALER_Y_WERT);
 	}
 
 	return true;
@@ -87,38 +128,8 @@ public class NeuerMaterialDatensatz {
 	return true;
     }
 
-    public Boolean datensatzAusObjektWertenAnlegen() throws Exception {
-
-	PreparedStatement sqlPreparedStatment = null;
-	
-	try {
-	    String query = "INSERT INTO Material (\"MaterialSorteId\",\"x\",\"z\",\"yMax\",\"visibly\") VALUES (?1,?2,?3,?4,?5)";
-
-	    sqlPreparedStatment = sqlConnection.prepareStatement(query);
-
-	    sqlPreparedStatment.setInt(1, this.materialSorteId);
-	    sqlPreparedStatment.setInt(2, this.koordinateX);
-	    sqlPreparedStatment.setInt(3, this.koordinateZ);
-	    sqlPreparedStatment.setInt(4, this.koordinateyMax);
-	    sqlPreparedStatment.setBoolean(5, true);
-	    sqlPreparedStatment.executeUpdate();
-
-	} catch (SQLException e) {
-	    
-	    throw new IllegalArgumentException(e);
-	} finally {
-	    try {
-		
-		sqlPreparedStatment.close();
-	    } catch (Exception e) {
-		throw new IllegalArgumentException(e);
-	    }
-	}
-	return true;
-    }
-
-     /**
-      * TODO: Methode in eigene Klasse auslagern
+    /**
+     * TODO: Methode in eigene Klasse auslagern
      */
     public void updateVisibly(int id, int visibly) {
 
