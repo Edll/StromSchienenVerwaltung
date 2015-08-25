@@ -9,6 +9,7 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.*;
 
+import de.edlly.db.SQLiteConnect;
 import de.edlly.gui.Formatierung;
 import de.edlly.material.DbAbfrage;
 
@@ -114,7 +115,7 @@ public class MaterialTabelle {
 		for (int i = 0; i < JTableWerkstueckWerte.getRowCount(); i++) {
 		    if ((Boolean) JTableWerkstueckWerte.getValueAt(i, 4)) {
 			// Update der Sichtbarkeit des Materials im System
-			de.edlly.material.NeuesMaterialAnlegen UpdateSql = new de.edlly.material.NeuesMaterialAnlegen();
+			de.edlly.material.NeuerMaterialDatensatz UpdateSql = new de.edlly.material.NeuerMaterialDatensatz(SQLiteConnect.dbConnection());
 			int id = Integer.parseInt(
 				(String) JTableWerkstueckWerte.getValueAt(JTableWerkstueckWerte.getSelectedRow(), 0));
 			int value = 0;

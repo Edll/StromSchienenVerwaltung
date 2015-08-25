@@ -10,9 +10,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import de.edlly.db.SQLiteConnect;
 import de.edlly.gui.Formatierung;
 import de.edlly.material.DbAbfrage;
-import de.edlly.material.NeuesMaterialAnlegen;
+import de.edlly.material.NeuerMaterialDatensatz;
 
 public class MaterialAnlegen {
 
@@ -37,6 +38,50 @@ public class MaterialAnlegen {
 	actionMaterialHinzu(materialEingabeBereich);
 
 	return materialEingabeBereich;
+    }
+
+    public void actionMaterialHinzu(JPanel materialEingabeBereich) {
+
+	materialHinzufuegen.addActionListener(new ActionListener() {
+	    public void actionPerformed(ActionEvent arg0) {
+
+		try {
+
+		    DbAbfrage materialSorteId = new DbAbfrage();
+		    int MaterialSorteSelectId = materialSorteId
+			    .SelectMaterialSorteString((String) materialSortenAuswahl.getSelectedItem());
+
+		    int koordianteX = Integer.parseInt(eingabeKoordinateX.getText());
+		    int koordianteZ = Integer.parseInt(eingabeKoordinateZ.getText());
+		    int koordinateyMax = Integer.parseInt(eingabeKoordinatenMaxY.getText());
+
+		    NeuerMaterialDatensatz MaterialDatensatzAnlegen = new NeuerMaterialDatensatz(
+			    SQLiteConnect.dbConnection());
+		    MaterialDatensatzAnlegen.setMaterialDaten(koordianteX, koordianteZ, koordinateyMax,
+			    MaterialSorteSelectId);
+		    if(MaterialDatensatzAnlegen.datensatzAusObjektWertenAnlegen()){
+			
+		    }
+			 JOptionPane.showMessageDialog(null, "Das neue Material ist erfolgreich eingefügt worden.");
+		    /**
+		     * @TODO: Funktion in der Tabellen Erzeugung einbauen um die Daten in der Tabelle neu Laden zu
+		     *        können
+		     */
+
+		} catch (NumberFormatException e) {
+		    JOptionPane.showMessageDialog(null, "Bitte eine gültige Zahl eingeben.");
+
+		} catch (IllegalArgumentException e) {
+		    JOptionPane.showMessageDialog(null, e.getMessage());
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		materialEingabeBereich.revalidate();
+		materialEingabeBereich.repaint();
+
+	    }
+	});
     }
 
     public void materialSortenListe(JPanel materialEingabeBereich) {
@@ -102,46 +147,6 @@ public class MaterialAnlegen {
 	lblMaximaleLaenge.setFont(Formatierung.eingabeFeldLabel());
 	lblMaximaleLaenge.setBounds(280, 30, 92, 14);
 	materialEingabeBereich.add(lblMaximaleLaenge);
-    }
-
-    public void actionMaterialHinzu(JPanel materialEingabeBereich) {
-
-	materialHinzufuegen.addActionListener(new ActionListener() {
-	    public void actionPerformed(ActionEvent arg0) {
-
-		try {
-
-		    DbAbfrage materialSorteId = new DbAbfrage();
-
-		    int MaterialSorteSelectId = materialSorteId
-			    .SelectMaterialSorteString((String) materialSortenAuswahl.getSelectedItem());
-
-		    NeuesMaterialAnlegen materialHinzu = new NeuesMaterialAnlegen();
-		    materialHinzu.Add(Integer.parseInt(eingabeKoordinateX.getText()),
-			    Integer.parseInt(eingabeKoordinateZ.getText()),
-			    Integer.parseInt(eingabeKoordinatenMaxY.getText()), MaterialSorteSelectId);
-
-		    /**
-		     * @TODO: Funktion in der Tabellen Erzeugung einbauen um die Daten in der Tabelle neu Laden zu
-		     *        können
-		     */
-
-		} catch (NumberFormatException e) {
-		    JOptionPane.showMessageDialog(null, "Bitte eine Zahl gültige Zahl eingeben.");
-
-		} catch (IllegalArgumentException e) {
-		    JOptionPane.showMessageDialog(null, e.getMessage());
-
-		} catch (Exception e) {
-		    e.printStackTrace();
-		    JOptionPane.showMessageDialog(null,
-			    "Exception: " + e.getClass().getSimpleName() + " " + e.getMessage());
-		}
-		materialEingabeBereich.revalidate();
-		materialEingabeBereich.repaint();
-
-	    }
-	});
     }
 
 }
