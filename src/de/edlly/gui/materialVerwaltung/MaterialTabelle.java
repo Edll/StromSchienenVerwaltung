@@ -34,7 +34,7 @@ public class MaterialTabelle {
 
     }
 
-    public JPanel tabellenAnzeigeBereich(int PositionX, int PositionY) {
+    public JPanel materialTabellePanel(int PositionX, int PositionY) {
 
 	JPanel tabellenAnzeigeBereich = new JPanel();
 	tabellenAnzeigeBereich.setBorder(Formatierung.rahmenUmEingabebereiche());
