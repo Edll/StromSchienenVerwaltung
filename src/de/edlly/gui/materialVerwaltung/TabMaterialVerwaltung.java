@@ -3,7 +3,6 @@ package de.edlly.gui.materialVerwaltung;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-
 import de.edlly.gui.Formatierung;
 import de.edlly.gui.materialVerwaltung.MaterialAnlegen;
 
@@ -15,7 +14,6 @@ import de.edlly.gui.materialVerwaltung.MaterialAnlegen;
  */
 
 public class TabMaterialVerwaltung {
-    
 
     private JButton makiertesMaterialLoeschen;
 
@@ -23,29 +21,40 @@ public class TabMaterialVerwaltung {
 
     }
 
-    public JPanel verwaltungsAnzeige() {
+    public JPanel materialVerwaltungsPanel() {
 
-	JPanel anzeigeBereich = new JPanel();
-	anzeigeBereich.setLayout(null);
+	JPanel materialVerwaltung = new JPanel();
+	materialVerwaltung.setLayout(null);
+
+	materialTabelleeAnzeigen(materialVerwaltung);
+	neuesMaterialAnlegen(materialVerwaltung);
+	auswahlLoeschenBereich(materialVerwaltung);
+
+	return materialVerwaltung;
+    }
+
+    public void materialTabelleeAnzeigen(JPanel materialVerwaltung) {
 
 	try {
-
 	    MaterialTabelle materialTabelle = new MaterialTabelle();
-	    anzeigeBereich.add(materialTabelle.tabellenAnzeigeBereich(10, 10));
-	    
-	    MaterialAnlegen neuesMaterialAnlegen = new MaterialAnlegen();
-	    anzeigeBereich.add(neuesMaterialAnlegen.materialEingabeBereich(10, 420));
-	    
-	    anzeigeBereich.add(auswahlLoeschenBereich());
-
+	    materialVerwaltung.add(materialTabelle.materialTabellePanel(10, 10));
 	} catch (Exception e) {
 	    throw e;
 	}
 
-	return anzeigeBereich;
     }
 
-    public JPanel auswahlLoeschenBereich() {
+    public void neuesMaterialAnlegen(JPanel materialVerwaltung) {
+
+	try {
+	    MaterialAnlegen neuesMaterialAnlegen = new MaterialAnlegen();
+	    materialVerwaltung.add(neuesMaterialAnlegen.materialEingabeBereich(10, 420));
+	} catch (Exception e) {
+	    throw e;
+	}
+    }
+
+    public void auswahlLoeschenBereich(JPanel materialVerwaltung) {
 
 	JPanel materialLoeschenAnzeigeBereich = new JPanel();
 	materialLoeschenAnzeigeBereich.setBorder(Formatierung.rahmenUmEingabebereiche());
@@ -57,7 +66,7 @@ public class TabMaterialVerwaltung {
 	makiertesMaterialLoeschen.setBounds(10, 10, 150, 23);
 	materialLoeschenAnzeigeBereich.add(makiertesMaterialLoeschen);
 
-	return materialLoeschenAnzeigeBereich;
+	materialVerwaltung.add(materialLoeschenAnzeigeBereich);
     }
 
 }
