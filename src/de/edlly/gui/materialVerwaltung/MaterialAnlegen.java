@@ -1,6 +1,7 @@
 package de.edlly.gui.materialVerwaltung;
 
 import java.awt.event.ActionEvent;
+
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
@@ -14,6 +15,15 @@ import de.edlly.db.SQLiteConnect;
 import de.edlly.gui.Formatierung;
 import de.edlly.material.DbAbfrage;
 import de.edlly.material.NeuerMaterialDatensatz;
+
+/**
+ * Erzeugt ein JPanel das die Eingabefelder für einen neuen Datensatz beinhaltet. Enthält eine ActionListener für den
+ * "+" Knopf der die Daten in das Objekt für einen neuen Material Datensatz legt und dann ein Anlegen des Datensatz
+ * auslöst.
+ * 
+ * @author Edlly java@edlly.de
+ *
+ */
 
 public class MaterialAnlegen {
 
@@ -35,6 +45,7 @@ public class MaterialAnlegen {
 	eingabeFelderKoordinaten(materialEingabeBereich);
 	materialSortenListe(materialEingabeBereich);
 	buttonMaterialHinzufuegen(materialEingabeBereich);
+	
 	actionMaterialHinzu(materialEingabeBereich);
 
 	return materialEingabeBereich;
@@ -59,14 +70,18 @@ public class MaterialAnlegen {
 			    SQLiteConnect.dbConnection());
 		    MaterialDatensatzAnlegen.setMaterialDaten(koordianteX, koordianteZ, koordinateyMax,
 			    MaterialSorteSelectId);
-		    if(MaterialDatensatzAnlegen.datensatzAusObjektWertenAnlegen()){
-			
+		    if (MaterialDatensatzAnlegen.datensatzAusObjektWertenAnlegen()) {
+
 		    }
-			 JOptionPane.showMessageDialog(null, "Das neue Material ist erfolgreich eingefügt worden.");
+		    JOptionPane.showMessageDialog(null, "Das neue Material ist erfolgreich eingefügt worden.");
+		    
+		    
 		    /**
 		     * @TODO: Funktion in der Tabellen Erzeugung einbauen um die Daten in der Tabelle neu Laden zu
 		     *        können
 		     */
+		    
+		    
 
 		} catch (NumberFormatException e) {
 		    JOptionPane.showMessageDialog(null, "Bitte eine gültige Zahl eingeben.");
@@ -75,7 +90,7 @@ public class MaterialAnlegen {
 		    JOptionPane.showMessageDialog(null, e.getMessage());
 
 		} catch (Exception e) {
-			e.printStackTrace();
+		    e.printStackTrace();
 		}
 		materialEingabeBereich.revalidate();
 		materialEingabeBereich.repaint();
