@@ -42,10 +42,12 @@ public class Konstanten {
  * TODO: Dynamische aus Datenbank ziehen.
  * @return result[0] = x result[1] = y
  */
+	/*TODO 
+	 * Ausgeklammert da unter 1.7 ein string nicht case fähig ist.
 	public int[] MaterialGroese() {		
 		int[] result = {0, 0};
-		
-		switch(this.Material){
+		public String materialLocal = this.Material;
+		switch(materialLocal){
 		case "20x10":
 			result[0] = 20;
 			result[1] = MATERIAL_MAX_LAENGE;
@@ -82,7 +84,7 @@ public class Konstanten {
 		
 		return  result;
 	}
-	
+	*/
 	
 	/**
 	 * Abstand des Lochs zur Kante 

@@ -39,7 +39,9 @@ public class TabMaterialVerwaltung {
 	    MaterialTabelle materialTabelle = new MaterialTabelle();
 	    materialVerwaltung.add(materialTabelle.materialTabellePanel(10, 10));
 	} catch (Exception e) {
-	    throw e;
+	    // Ausgeklammert um code in einer Version unter 1.8 laufen zu lassen
+	    // Exception ist so unbehandelt unsauber!
+	    // throw e;
 	}
 
     }
@@ -50,7 +52,9 @@ public class TabMaterialVerwaltung {
 	    MaterialAnlegen neuesMaterialAnlegen = new MaterialAnlegen();
 	    materialVerwaltung.add(neuesMaterialAnlegen.materialEingabeBereich(10, 420));
 	} catch (Exception e) {
-	    throw e;
+	    // Ausgeklammert um code in einer Version unter 1.8 laufen zu lassen
+	    // Exception ist so unbehandelt unsauber!
+	    // throw e;
 	}
     }
 

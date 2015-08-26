@@ -20,22 +20,25 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.table.DefaultTableModel;
 
 import de.edlly.material.DbAbfrage;
-import de.edlly.werkstueck.KoordinatenBiegung;
-import de.edlly.werkstueck.KoordinatenLoch;
+//Ausgeklammert um code in einer Version unter 1.8 laufen zu lassen
+//import de.edlly.werkstueck.KoordinatenBiegung;
+//import de.edlly.werkstueck.KoordinatenLoch;
 
 public class WerkstueckErstellen {
 	
 	
 	public Connection SqlConn=null;
 	private JTextField txtWerkstueckname;
-	private String Werkstueckname;
+	
 	private JTextField txtLochx;
 	private JTextField txtLochy;
 	private JTextField txtBiegungy;
 	private JTextField txtBiegungwinkel;
 	int counter=0;
-	private int xMax;
-	private int yMax;
+	// Ausgeklammert um code in einer Version unter 1.8 laufen zu lassen
+	//private String Werkstueckname;
+	//private int xMax;
+	//private int yMax;
 	// Konstruktor
 	WerkstueckErstellen(){
 		// SQL Connection herstellen
@@ -253,9 +256,9 @@ public class WerkstueckErstellen {
 				try{
 				// Textfeld zurück setzten
 				txtWerkstueckname.setText("");
-				
+				// Ausgeklammert um code in einer Version unter 1.8 laufen zu lassen
 				// Elemente Hinzufügen und Entfernen
-				WerkstueckErstellen.remove(scrollPane_1);
+				/*WerkstueckErstellen.remove(scrollPane_1);
 				WerkstueckErstellen.remove(btnBiegehinzu);
 				WerkstueckErstellen.remove(JCoBiegeRichtung);
 				WerkstueckErstellen.remove(lblWinkel);
@@ -286,7 +289,7 @@ public class WerkstueckErstellen {
 				WerkstueckErstellen.add(btnWeiter);
 				
 				WerkstueckErstellen.revalidate();
-				WerkstueckErstellen.repaint();	
+				WerkstueckErstellen.repaint();	*/
 				}catch (IllegalArgumentException e ) {
 					JOptionPane.showMessageDialog(null, e.getMessage());
 					
@@ -300,9 +303,9 @@ public class WerkstueckErstellen {
 			public void actionPerformed(ActionEvent arg1) {
 				// Textfeld zurück setzten
 				txtWerkstueckname.setText("");
-				
+				// Ausgeklammert um code in einer Version unter 1.8 laufen zu lassen
 				// Elemente Hinzufügen und Entfernen
-				WerkstueckErstellen.remove(scrollPane_1);
+				/*WerkstueckErstellen.remove(scrollPane_1);
 				WerkstueckErstellen.remove(btnBiegehinzu);
 				WerkstueckErstellen.remove(JCoBiegeRichtung);
 				WerkstueckErstellen.remove(lblWinkel);
@@ -332,7 +335,7 @@ public class WerkstueckErstellen {
 				WerkstueckErstellen.add(MaterialTableScroll);
 				
 				WerkstueckErstellen.revalidate();
-				WerkstueckErstellen.repaint();
+				WerkstueckErstellen.repaint();*/
 			}
 		});
 
@@ -343,8 +346,8 @@ public class WerkstueckErstellen {
 			public void actionPerformed(ActionEvent arg0) {
 				
 				try {
-					
-					// Werkstück Name entspricht den Vorgabe gibt ein throw wie der String auszusehen hat
+				 // Ausgeklammert um code in einer Version unter 1.8 laufen zu lassen	
+				/*	// Werkstück Name entspricht den Vorgabe gibt ein throw wie der String auszusehen hat
 					Werkstueckname = WerkstueckName(txtWerkstueckname.getText());	
 
 					// wurde ein Material in der Liste ausgewählt
@@ -398,7 +401,7 @@ public class WerkstueckErstellen {
 					WerkstueckErstellen.add(scrollPane_2);
 					
 					WerkstueckErstellen.revalidate();
-					WerkstueckErstellen.repaint();
+					WerkstueckErstellen.repaint();*/
 				
 				} catch (IllegalArgumentException e ) {
 					JOptionPane.showMessageDialog(null, e.getMessage());
@@ -413,13 +416,13 @@ public class WerkstueckErstellen {
 			public void actionPerformed(ActionEvent arg3) {
 				
 				try{
-				/*	
+				/*// Ausgeklammert um code in einer Version unter 1.8 laufen zu lassen	
 				Konstanten WerkstueckKonstanten = new Konstanten();
 				WerkstueckKonstanten.Material = lblMaterialGroesse.getText();
 				int[] MaterialMax = WerkstueckKonstanten.MaterialGroese();
 				*/
 				
-				KoordinatenLoch Koordinaten = new KoordinatenLoch();
+			/*	KoordinatenLoch Koordinaten = new KoordinatenLoch();
 				Koordinaten.yMax = yMax;
 				Koordinaten.xMax = xMax;
 				Koordinaten.x = Integer.parseInt(txtLochx.getText());
@@ -438,7 +441,7 @@ public class WerkstueckErstellen {
 				
 			 
 				WerkstueckErstellen.revalidate();
-				WerkstueckErstellen.repaint();
+				WerkstueckErstellen.repaint();*/
 				}
 				catch(NumberFormatException e){
 					JOptionPane.showMessageDialog(null, "Bitte eine Zahl gültige Zahl eingeben.");	
@@ -457,14 +460,15 @@ public class WerkstueckErstellen {
 		btnBiegehinzu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg4) {
 				try{
-					int winkel, y;
+				    /*	// Ausgeklammert um code in einer Version unter 1.8 laufen zu lassen
+				     * int winkel, y;
 					String Richtung;
-					
+					*/
 					/*Konstanten WerkstueckKonstanten = new Konstanten();
 					//WerkstueckKonstanten.Material = (String) MaterialSelect.getSelectedItem();
 				//	int[] MaterialMax = WerkstueckKonstanten.MaterialGroese();*/
 					
-					y =  Integer.parseInt(txtBiegungy.getText());
+				/*	y =  Integer.parseInt(txtBiegungy.getText());
 					winkel =  Integer.parseInt(txtBiegungwinkel.getText());
 					
 					
@@ -482,6 +486,7 @@ public class WerkstueckErstellen {
 					
 					WerkstueckErstellen.revalidate();
 					WerkstueckErstellen.repaint();
+					*/
 					}
 					catch(NumberFormatException e){
 						JOptionPane.showMessageDialog(null, "Bitte eine Zahl gültige Zahl eingeben.");	
@@ -496,8 +501,8 @@ public class WerkstueckErstellen {
 		btnDeleteRow.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
 
-                
-            	// Mehr als eine Zeile?
+        	// Ausgeklammert um code in einer Version unter 1.8 laufen zu lassen
+            	/*// Mehr als eine Zeile?
             	if(JTableWerkstueckWerte.getSelectedRows() != null){
             		int[] SelectedRows = JTableWerkstueckWerte.getSelectedRows();
             		if(SelectedRows.length > 1){
@@ -512,7 +517,7 @@ public class WerkstueckErstellen {
                     	WerkstueckTableModel.removeRow(JTableWerkstueckWerte.getSelectedRow());
                     }
             	}
-            	}
+            	}*/
             	
 
                 

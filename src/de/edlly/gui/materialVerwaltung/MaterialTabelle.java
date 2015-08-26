@@ -8,8 +8,8 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.*;
-
-import de.edlly.db.SQLiteConnect;
+//Ausgeklammert um code in einer Version unter 1.8 laufen zu lassen
+//import de.edlly.db.SQLiteConnect;
 import de.edlly.gui.Formatierung;
 import de.edlly.material.DbAbfrage;
 
@@ -109,8 +109,8 @@ public class MaterialTabelle {
 	    // Checkboxen abfrage für die in der Tabelle vorhandenen Werkstücke
 	    @Override
 	    public void tableChanged(TableModelEvent e) {
-
-		JTableWerkstueckWerte.getSelectedRow();
+		// Ausgeklammert um code in einer Version unter 1.8 laufen zu lassen
+		/*JTableWerkstueckWerte.getSelectedRow();
 
 		for (int i = 0; i < JTableWerkstueckWerte.getRowCount(); i++) {
 		    if ((Boolean) JTableWerkstueckWerte.getValueAt(i, 4)) {
@@ -123,10 +123,11 @@ public class MaterialTabelle {
 			    value = 1;
 			}
 			UpdateSql.updateVisibly(id, value);
+			
 			break;
 		    }
 
-		}
+		}*/
 	    }
 
 	});
