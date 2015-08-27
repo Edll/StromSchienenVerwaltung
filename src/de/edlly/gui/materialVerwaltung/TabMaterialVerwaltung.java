@@ -17,7 +17,7 @@ public class TabMaterialVerwaltung {
 
     private JButton makiertesMaterialLoeschen;
 
-    public TabMaterialVerwaltung() throws Exception {
+    public TabMaterialVerwaltung() {
 
     }
 
