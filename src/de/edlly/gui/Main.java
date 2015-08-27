@@ -65,10 +65,9 @@ public class Main {
 	TabMenu.addTab("Werkst\u00FCck Manager", null, TabWerkstueckManager.ui(), null);
 
 	/*
-	 * Werkstück Erstellen
+	 * Werkstück Erstellen Entfernt
 	 */
-	de.edlly.gui.WerkstueckErstellen TabWerkstueckErstellen = new de.edlly.gui.WerkstueckErstellen();
-	TabMenu.addTab("Werkst\u00FCckErstellen", null, TabWerkstueckErstellen.ui(), null);
+
 
 	// Material Manager
 	de.edlly.gui.materialVerwaltung.TabMaterialVerwaltung TabMaterialManager;

@@ -92,9 +92,6 @@ public class MaterialAnlegen {
 		} catch (Exception e) {
 		    e.printStackTrace();
 		}
-		// Ausgeklammert um code in einer Version unter 1.8 laufen zu lassen
-		//materialEingabeBereich.revalidate();
-		//materialEingabeBereich.repaint();
 
 	    }
 	});
