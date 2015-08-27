@@ -31,7 +31,7 @@ public class MaterialAnlegen {
     private JTextField eingabeKoordinateZ;
     private JTextField eingabeKoordinatenMaxY;
     private JButton materialHinzufuegen;
-    private JComboBox<String> materialSortenAuswahl;
+    private JComboBox materialSortenAuswahl;
 
     public JPanel materialEingabeBereich(int PositionX, int PositionY) {
 
@@ -103,7 +103,7 @@ public class MaterialAnlegen {
     public void materialSortenListe(JPanel materialEingabeBereich) {
 
 	DbAbfrage materialDB = new DbAbfrage();
-	materialSortenAuswahl = new JComboBox<String>(materialDB.SelectTableMaterialSorteString());
+	materialSortenAuswahl = new JComboBox(materialDB.SelectTableMaterialSorteString());
 	materialSortenAuswahl.setBounds(156, 50, 96, 20);
 	materialEingabeBereich.add(materialSortenAuswahl);
     }

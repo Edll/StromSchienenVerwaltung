@@ -130,7 +130,7 @@ public class WerkstueckErstellen {
 		lblLoecherHinzu.setBounds(10, 39, 133, 16);
 		
 		String[] LoecherDurchmesserList = {"9", "11", "14", "18", "21x14"};
-		JComboBox<Object> LoecherSelect = new JComboBox<Object>(LoecherDurchmesserList);
+		JComboBox LoecherSelect = new JComboBox(LoecherDurchmesserList);
 		LoecherSelect.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		LoecherSelect.setBounds(183, 89, 55, 20);
 		
@@ -201,7 +201,7 @@ public class WerkstueckErstellen {
 		lblWinkel.setBounds(435, 66, 46, 14);
 
 		String[] VorneHinten = {"Vorne", "Hinten"};
-		JComboBox<Object> JCoBiegeRichtung = new JComboBox<Object>(VorneHinten);
+		JComboBox JCoBiegeRichtung = new JComboBox(VorneHinten);
 		JCoBiegeRichtung.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		JCoBiegeRichtung.setBounds(511, 89, 60, 20);		
 		
