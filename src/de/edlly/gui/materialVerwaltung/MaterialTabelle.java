@@ -109,7 +109,25 @@ public class MaterialTabelle {
 	    // Checkboxen abfrage für die in der Tabelle vorhandenen Werkstücke
 	    @Override
 	    public void tableChanged(TableModelEvent e) {
-		// Inhalt gelöscht um code in einer Version unter 1.6 laufen zu lassen
+		// Ausgeklammert um code in einer Version unter 1.8 laufen zu lassen
+		/*JTableWerkstueckWerte.getSelectedRow();
+
+		for (int i = 0; i < JTableWerkstueckWerte.getRowCount(); i++) {
+		    if ((Boolean) JTableWerkstueckWerte.getValueAt(i, 4)) {
+			// Update der Sichtbarkeit des Materials im System
+			de.edlly.material.NeuerMaterialDatensatz UpdateSql = new de.edlly.material.NeuerMaterialDatensatz(SQLiteConnect.dbConnection());
+			int id = Integer.parseInt(
+				(String) JTableWerkstueckWerte.getValueAt(JTableWerkstueckWerte.getSelectedRow(), 0));
+			int value = 0;
+			if ((Boolean) JTableWerkstueckWerte.getValueAt(JTableWerkstueckWerte.getSelectedRow(), 4)) {
+			    value = 1;
+			}
+			UpdateSql.updateVisibly(id, value);
+			
+			break;
+		    }
+
+		}*/
 	    }
 
 	});
