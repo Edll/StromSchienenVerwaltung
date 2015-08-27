@@ -5,8 +5,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ScrollPaneConstants;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
 import javax.swing.table.*;
 //Ausgeklammert um code in einer Version unter 1.8 laufen zu lassen
 //import de.edlly.db.SQLiteConnect;
@@ -103,34 +101,6 @@ public class MaterialTabelle {
 	}
 
 	JTable JTableWerkstueckWerte = new JTable(JTableWerkstueckWerteModel);
-
-	JTableWerkstueckWerte.getModel().addTableModelListener(new TableModelListener() {
-
-	    // Checkboxen abfrage für die in der Tabelle vorhandenen Werkstücke
-	    @Override
-	    public void tableChanged(TableModelEvent e) {
-		// Ausgeklammert um code in einer Version unter 1.8 laufen zu lassen
-		/*JTableWerkstueckWerte.getSelectedRow();
-
-		for (int i = 0; i < JTableWerkstueckWerte.getRowCount(); i++) {
-		    if ((Boolean) JTableWerkstueckWerte.getValueAt(i, 4)) {
-			// Update der Sichtbarkeit des Materials im System
-			de.edlly.material.NeuerMaterialDatensatz UpdateSql = new de.edlly.material.NeuerMaterialDatensatz(SQLiteConnect.dbConnection());
-			int id = Integer.parseInt(
-				(String) JTableWerkstueckWerte.getValueAt(JTableWerkstueckWerte.getSelectedRow(), 0));
-			int value = 0;
-			if ((Boolean) JTableWerkstueckWerte.getValueAt(JTableWerkstueckWerte.getSelectedRow(), 4)) {
-			    value = 1;
-			}
-			UpdateSql.updateVisibly(id, value);
-			
-			break;
-		    }
-
-		}*/
-	    }
-
-	});
 
 	return JTableWerkstueckWerte;
 
