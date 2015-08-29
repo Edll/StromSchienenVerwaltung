@@ -25,7 +25,7 @@ public class SQLiteConnect {
 
     }
 
-    public void closeSqlConnection(Connection sqlConnection) {
+    public static void closeSqlConnection(Connection sqlConnection) {
 
 	try {
 	    sqlConnection.close();
