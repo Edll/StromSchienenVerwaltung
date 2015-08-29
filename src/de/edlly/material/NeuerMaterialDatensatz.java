@@ -108,7 +108,7 @@ public class NeuerMaterialDatensatz {
 			throw new IllegalArgumentException("Die Materialbreite darf nicht Negativ sein.");
 		}
 
-		if (koordinatey >= MaterialKonstanten.MAXIMALER_Y_WERT) {
+		if (koordinatey > MaterialKonstanten.MAXIMALER_Y_WERT) {
 			throw new IllegalArgumentException(
 					"Die maximal Material Länge ist: " + MaterialKonstanten.MAXIMALER_Y_WERT);
 		}
