@@ -44,7 +44,7 @@ public class NeuerMaterialDatensatz {
 
 	}
 
-	public Boolean datensatzAusObjektWertenAnlegen() throws Exception {
+	public Boolean datensatzAusObjektWertenAnlegen() throws SQLException {
 
 		PreparedStatement sqlPreparedStatment = null;
 
@@ -61,14 +61,15 @@ public class NeuerMaterialDatensatz {
 			sqlPreparedStatment.executeUpdate();
 
 		} catch (SQLException e) {
-
-			throw new IllegalArgumentException(e);
+			
+			e.printStackTrace();
+			throw new SQLException(e);
 		} finally {
 			try {
-
 				sqlPreparedStatment.close();
 			} catch (Exception e) {
-				throw new IllegalArgumentException(e);
+				
+				e.printStackTrace();
 			}
 		}
 		return true;
@@ -129,37 +130,6 @@ public class NeuerMaterialDatensatz {
 		return true;
 	}
 
-	/**
-	 * TODO: Methode in eigene Klasse auslagern
-	 */
-	public void updateVisibly(int id, int visibly) {
-
-		PreparedStatement pst = null;
-
-		if (id == 0) {
-			throw new IllegalArgumentException("Die Material id darf nicht 0 sein.");
-		}
-		if (visibly != 0 & visibly != 1) {
-			throw new IllegalArgumentException("Die Sichtbarkeit kann nur auf 1 oder 0 gesetzt werden.");
-		}
-
-		try {
-			String query = "UPDATE \"main\".\"Material\" SET \"visibly\" = ?1 WHERE  \"id\" = " + id;
-			pst = sqlConnection.prepareStatement(query);
-			pst.setInt(1, visibly);
-			pst.executeUpdate();
-
-		} catch (SQLException e) {
-
-			throw new IllegalArgumentException(e);
-		} finally {
-			try {
-
-				pst.close();
-			} catch (Exception e) {
-				throw new IllegalArgumentException(e);
-			}
-		}
-	}
+	
 
 }
