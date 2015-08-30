@@ -62,7 +62,7 @@ public class TabMaterialVerwaltung {
 	materialLoeschenAnzeigeBereich.setLayout(null);
 	materialLoeschenAnzeigeBereich.setBounds(550, 420, 170, 100);
 
-	makiertesMaterialLoeschen = new JButton("Makierte Löschen");
+	makiertesMaterialLoeschen = new JButton("Makierte LÃ¶schen");
 	makiertesMaterialLoeschen.setFont(Formatierung.buttonFont());
 	makiertesMaterialLoeschen.setBounds(10, 10, 150, 23);
 	materialLoeschenAnzeigeBereich.add(makiertesMaterialLoeschen);

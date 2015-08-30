@@ -3,7 +3,7 @@ package de.edlly.material;
 import java.sql.Connection;
 
 /**
- * Gibt Datensätze aus der DB zurück
+ * Gibt DatensÃ¤tze aus der DB zurÃ¼ck
  * 
  * TODO: Dummy Klasse in echte umbauen
  * 
@@ -51,9 +51,6 @@ public class AbfrageMaterialDatensatz {
 	return materialDatensatz;
     }
 
-    
-    
-    
     public Boolean materialIdAbfragen(int materialId) {
 
 	this.materialId = materialId;
@@ -64,7 +61,7 @@ public class AbfrageMaterialDatensatz {
 	case 1:
 	    return true;
 	case 2:
-	    return true;   
+	    return true;
 	case 3:
 	    return true;
 	default:
@@ -72,15 +69,13 @@ public class AbfrageMaterialDatensatz {
 	}
 
     }
-    
-    public void materialIdVorhanden(int materialId) throws IllegalArgumentException{
-	
-	if(materialIdAbfragen(materialId)){
-	    throw new IllegalArgumentException("Die Material Id ist nicht vorhanden."); 
-	}
-	 
-    }
-    
 
+    public void materialIdVorhanden(int materialId) throws IllegalArgumentException {
+
+	if (materialIdAbfragen(materialId)) {
+	    throw new IllegalArgumentException("Die Material Id ist nicht vorhanden.");
+	}
+
+    }
 
 }

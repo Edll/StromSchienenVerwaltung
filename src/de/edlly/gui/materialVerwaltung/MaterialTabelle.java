@@ -6,17 +6,15 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.table.*;
-//Ausgeklammert um code in einer Version unter 1.8 laufen zu lassen
-//import de.edlly.db.SQLiteConnect;
 import de.edlly.gui.Formatierung;
 import de.edlly.material.DbAbfrage;
 
 /**
- * material.Manager Stellt die Anzeige, Tabelle, und Abfragen für den Material Manager zu Verfügung.
+ * material.Manager Stellt die Anzeige, Tabelle, und Abfragen fÃ¼r den Material Manager zu VerfÃ¼gung.
  * 
  * Attribute: Connection SqlConn: Database Connection aus aufgerufenen Klasse
  * 
- * UnterKlassen: ManagerModel das Tabellen Render Model für die Ausgabe Table
+ * UnterKlassen: ManagerModel das Tabellen Render Model fï¿½r die Ausgabe Table
  * 
  * Methoden: AusgabeTable(): gibt die Darstellung einer
  * 
@@ -79,12 +77,12 @@ public class MaterialTabelle {
 	ManagerModel JTableWerkstueckWerteModel = new ManagerModel();
 	JTableWerkstueckWerteModel.addColumn("Id");
 	JTableWerkstueckWerteModel.addColumn("Sorte");
-	JTableWerkstueckWerteModel.addColumn("Größe");
-	JTableWerkstueckWerteModel.addColumn("Maximale Länge");
+	JTableWerkstueckWerteModel.addColumn("Grï¿½ï¿½e");
+	JTableWerkstueckWerteModel.addColumn("Maximale Lï¿½nge");
 	JTableWerkstueckWerteModel.addColumn("Benutzen");
 
 	String[][] MaterialDBData = MaterialSql.SelectTableFormat();
-	// NullPointerException nicht auslösen
+	// NullPointerException nicht auslÃ¶sen
 	if (MaterialDBData != null) {
 	    int Arraylength = MaterialDBData.length;
 
@@ -107,7 +105,7 @@ public class MaterialTabelle {
     }
 
     // Eigenes TableModel um die Zellen nicht Editierbar zu machen und Boolean
-    // für die Checkbox zu erzwingen.
+    // fÃ¼r die Checkbox zu erzwingen.
     public class ManagerModel extends DefaultTableModel {
 	private static final long serialVersionUID = 1L;
 

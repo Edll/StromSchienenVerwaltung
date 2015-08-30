@@ -110,7 +110,7 @@ public class NeuerMaterialDatensatz {
 
 	if (koordinatey >= MaterialKonstanten.MAXIMALER_Y_WERT) {
 	    throw new IllegalArgumentException(
-		    "Die maximal Material Länge ist: " + MaterialKonstanten.MAXIMALER_Y_WERT);
+		    "Die maximal Material Lï¿½nge ist: " + MaterialKonstanten.MAXIMALER_Y_WERT);
 	}
 
 	return true;

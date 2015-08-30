@@ -7,7 +7,7 @@ import de.edlly.material.MaterialKonstanten;
 import de.edlly.material.NeuerMaterialDatensatz;
 
 /**
- * Lädt die einzelnen Tests für die Klasse NeuerMaterialDatensatz, diese werden
+ * LÃ¤dt die einzelnen Tests fÃ¼r die Klasse NeuerMaterialDatensatz, diese werden
  * dann ausgewertet.
  * 
  * @author Edlly java@edlly.de

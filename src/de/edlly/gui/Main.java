@@ -52,7 +52,6 @@ public class Main {
 	SqlConn = de.edlly.db.SQLiteConnect.dbConnection();
 	frmKupfermanager = new JFrame();
 	frmKupfermanager.setBounds(0, 0, 800, 600);
-	// frmKupfermanager.setExtendedState(Frame.MAXIMIZED_BOTH);
 	frmKupfermanager.getContentPane().setLayout(new BorderLayout(0, 0));
 
 	JTabbedPane TabMenu = new JTabbedPane(JTabbedPane.TOP);
@@ -65,9 +64,8 @@ public class Main {
 	TabMenu.addTab("Werkst\u00FCck Manager", null, TabWerkstueckManager.ui(), null);
 
 	/*
-	 * Werkstück Erstellen Entfernt
+	 * WerkstÃ¼ck Erstellen Entfernt
 	 */
-
 
 	// Material Manager
 	de.edlly.gui.materialVerwaltung.TabMaterialVerwaltung TabMaterialManager;

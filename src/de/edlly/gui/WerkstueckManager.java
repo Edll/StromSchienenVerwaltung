@@ -14,19 +14,19 @@ public class WerkstueckManager {
 	JPanel WerkstueckManager = new JPanel();
 	WerkstueckManager.setLayout(null);
 
-	JLabel lblWerkstueckManagerTitel = new JLabel("Werkst\u00FCck Manager");
+	JLabel lblWerkstueckManagerTitel = new JLabel("WerkstÃ¼ck Manager");
 	lblWerkstueckManagerTitel.setBounds(10, 8, 162, 20);
 	lblWerkstueckManagerTitel.setFont(new Font("Tahoma", Font.BOLD, 16));
 	WerkstueckManager.add(lblWerkstueckManagerTitel);
 
 	/*
-	 * TODO: Werkstück DB Erstellen
+	 * TODO: Werkstueck DB Erstellen
 	 */
 	JTable tableWerkstueckDB;
 	String[][] WerkstueckDBData = { { "Winkel", "1304" }, { "Winkel1", "240" }, { "Etage", "220" },
 		{ "Bla", "217" }, { "Vamocon", "215" } };
 
-	String[] WerkstueckDBColNames = { "Werkstück", "Länge" };
+	String[] WerkstueckDBColNames = { "WerkstÃ¼ck", "LÃ¤nge" };
 
 	JScrollPane scrollPane = new JScrollPane();
 	scrollPane.setBounds(10, 40, 747, 424);

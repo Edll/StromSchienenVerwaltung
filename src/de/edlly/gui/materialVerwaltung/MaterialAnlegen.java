@@ -17,9 +17,9 @@ import de.edlly.material.DbAbfrage;
 import de.edlly.material.NeuerMaterialDatensatz;
 
 /**
- * Erzeugt ein JPanel das die Eingabefelder für einen neuen Datensatz beinhaltet. Enthält eine ActionListener für den
- * "+" Knopf der die Daten in das Objekt für einen neuen Material Datensatz legt und dann ein Anlegen des Datensatz
- * auslöst.
+ * Erzeugt ein JPanel das die Eingabefelder fÃ¼r einen neuen Datensatz beinhaltet. EnthÃ¤lt eine ActionListener fÃ¼r den
+ * "+" Knopf der die Daten in das Objekt fï¿½r einen neuen Material Datensatz legt und dann ein Anlegen des Datensatz
+ * auslÃ¶st.
  * 
  * @author Edlly java@edlly.de
  *
@@ -73,18 +73,18 @@ public class MaterialAnlegen {
 		    if (MaterialDatensatzAnlegen.datensatzAusObjektWertenAnlegen()) {
 
 		    }
-		    JOptionPane.showMessageDialog(null, "Das neue Material ist erfolgreich eingefügt worden.");
+		    JOptionPane.showMessageDialog(null, "Das neue Material ist erfolgreich eingefÃ¼gt worden.");
 		    
 		    
 		    /**
 		     * @TODO: Funktion in der Tabellen Erzeugung einbauen um die Daten in der Tabelle neu Laden zu
-		     *        können
+		     *        kï¿½nnen
 		     */
 		    
 		    
 
 		} catch (NumberFormatException e) {
-		    JOptionPane.showMessageDialog(null, "Bitte eine gültige Zahl eingeben.");
+		    JOptionPane.showMessageDialog(null, "Bitte eine gÃ¼ltige Zahl eingeben.");
 
 		} catch (IllegalArgumentException e) {
 		    JOptionPane.showMessageDialog(null, e.getMessage());
@@ -141,7 +141,7 @@ public class MaterialAnlegen {
 
     public void labelsDerEingabeFelder(JPanel materialEingabeBereich) {
 
-	JLabel lblMaterialGroesse = new JLabel("Gr\u00F6\u00DFe");
+	JLabel lblMaterialGroesse = new JLabel("GrÃ¶ÃŸe");
 	lblMaterialGroesse.setFont(Formatierung.eingabeFeldLabel());
 	lblMaterialGroesse.setBounds(10, 30, 34, 14);
 	materialEingabeBereich.add(lblMaterialGroesse);
@@ -156,7 +156,7 @@ public class MaterialAnlegen {
 	lblMaterialSorte.setBounds(156, 30, 81, 14);
 	materialEingabeBereich.add(lblMaterialSorte);
 
-	JLabel lblMaximaleLaenge = new JLabel("Maximale L\u00E4nge");
+	JLabel lblMaximaleLaenge = new JLabel("Maximale LÃ¤nge");
 	lblMaximaleLaenge.setFont(Formatierung.eingabeFeldLabel());
 	lblMaximaleLaenge.setBounds(280, 30, 92, 14);
 	materialEingabeBereich.add(lblMaximaleLaenge);

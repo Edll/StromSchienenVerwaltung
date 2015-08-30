@@ -4,7 +4,7 @@ import de.edlly.testUnit.testMaterialDatensatz.TestAbfrageMaterialDatensatz;
 import de.edlly.testUnit.testMaterialDatensatz.TestNeuerMaterialDatensatz;
 import de.edlly.testUnit.testMaterialDatensatz.TestUpdateMaterialDatensatz;
 /**
- * Läde die einzelnen Testklassen für die Objekte.
+ * Laede die einzelnen Testklassen fuer die Objekte.
  * @author Edlly java@edlly.de
  *
  */
