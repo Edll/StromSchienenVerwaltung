@@ -3,7 +3,7 @@ package de.edlly.db;
 import java.sql.*;
 /**
  * Attribute:
- * Connection conn enthält die Aktuelle Connection für die SQL
+ * Connection conn enthï¿½lt die Aktuelle Connection fï¿½r die SQL
  * 
  * Methoden:
  * dbConnection() Stellt die Verbindung zu Datenbank her.
@@ -22,11 +22,19 @@ public class SQLiteConnect{
 			Connection conn=DriverManager.getConnection("jdbc:sqlite:kupfer.sqlite");
 			return conn;
 		}catch(Exception e){
-			throw new IllegalArgumentException("Verbindung zur SQLite DB nicht möglich");	
+			throw new IllegalArgumentException("Verbindung zur SQLite DB nicht mï¿½glich");	
 		}
 		
 	}
 	
-	
+	    public static void closeSqlConnection(Connection sqlConnection) {
+
+		try {
+		    sqlConnection.close();
+		} catch (SQLException e) {
+		    e.printStackTrace();
+		}
+	    }
+
 
 }
