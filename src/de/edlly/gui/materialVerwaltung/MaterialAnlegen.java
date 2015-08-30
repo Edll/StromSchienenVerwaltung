@@ -3,8 +3,6 @@ package de.edlly.gui.materialVerwaltung;
 import java.awt.event.ActionEvent;
 
 import java.awt.event.ActionListener;
-import java.sql.Connection;
-import java.sql.SQLException;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -34,7 +32,6 @@ public class MaterialAnlegen {
     private JTextField eingabeKoordinatenMaxY;
     private JButton materialHinzufuegen;
     private JComboBox materialSortenAuswahl;
-    private Connection SQLConnection;
 
     public JPanel materialEingabeBereich(int PositionX, int PositionY) {
 
@@ -68,11 +65,9 @@ public class MaterialAnlegen {
 		    int koordianteX = Integer.parseInt(eingabeKoordinateX.getText());
 		    int koordianteZ = Integer.parseInt(eingabeKoordinateZ.getText());
 		    int koordinateyMax = Integer.parseInt(eingabeKoordinatenMaxY.getText());
-		    
-		    SQLConnection =  SQLiteConnect.dbConnection();
-		    
-		    NeuerMaterialDatensatz MaterialDatensatzAnlegen = new NeuerMaterialDatensatz(SQLConnection);
-		    
+
+		    NeuerMaterialDatensatz MaterialDatensatzAnlegen = new NeuerMaterialDatensatz(
+			    SQLiteConnect.dbConnection());
 		    MaterialDatensatzAnlegen.setMaterialDaten(koordianteX, koordianteZ, koordinateyMax,
 			    MaterialSorteSelectId);
 		    if (MaterialDatensatzAnlegen.datensatzAusObjektWertenAnlegen()) {
@@ -86,22 +81,16 @@ public class MaterialAnlegen {
 		     *        können
 		     */
 		    
-		    SQLConnection.close();
+		    
 
 		} catch (NumberFormatException e) {
 		    JOptionPane.showMessageDialog(null, "Bitte eine gültige Zahl eingeben.");
 
-		} catch (IllegalArgumentException e1) {
-		    JOptionPane.showMessageDialog(null, e1.getMessage());
+		} catch (IllegalArgumentException e) {
+		    JOptionPane.showMessageDialog(null, e.getMessage());
 
-		} catch (SQLException e2) {
-		    e2.printStackTrace();
-		}finally{
-			try{
-				SQLConnection.close();
-			}catch(Exception e3){
-				 e3.printStackTrace();
-			}
+		} catch (Exception e) {
+		    e.printStackTrace();
 		}
 
 	    }
