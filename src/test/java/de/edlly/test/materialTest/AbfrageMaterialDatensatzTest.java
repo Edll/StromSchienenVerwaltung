@@ -2,54 +2,53 @@ package de.edlly.test.materialTest;
 
 import java.sql.Connection;
 
+import junit.framework.TestCase;
+
 import de.edlly.db.SQLiteConnect;
 import de.edlly.material.AbfrageMaterialDatensatz;
 
-public class TestAbfrageMaterialDatensatz {
+/**
+ * Test Klasse fuer die AbfrageMaterialDatensatz Klasse.
+ * 
+ * @author Edlly java@edlly.de
+ *
+ */
+
+public class AbfrageMaterialDatensatzTest extends TestCase {
 
     private Connection sqlConnection;
 
-    public TestAbfrageMaterialDatensatz() {
+    @Override
+    public void setUp() {
+	sqlConnection = SQLiteConnect.dbConnection();
 
     }
 
-    public void callTestAbfrageDatensatz() {
+    public void testMaterialIdVorhanden() {
+	assertTrue("Material Id Vorhanden in Datenbank", abfrageMaterialIdVorhanden());
+    }
 
-	sqlConnection = SQLiteConnect.dbConnection();
+    public void testGetMaterialIdAbfragen() {
+	assertTrue("Material Id Abfragen in Datenbank", getMaterialIdAbfragen());
+    }
 
-	System.out.println("\n--callTestAbfrageDatensatz--\n");
+    public void testGetMaterialDatensatz() {
+	assertTrue("Material Datensatz anhand Id Abfragen in Datenbank", getMaterialDatensatz());
+    }
 
-	if (testMaterialIdVorhanden()) {
-	    System.out.println("materialIdVorhanden\t --> passed");
-	} else {
-	    System.out.println("materialIdVorhanden\t --> fail");
-	}
-
-	if (testMaterialIdAbfragen()) {
-	    System.out.println("materialIdAbfragen\t --> passed");
-	} else {
-	    System.out.println("materialIdAbfragen\t --> fail");
-	}
-
-	if (testGetMaterialDatensatz()) {
-	    System.out.println("getMaterialDatensatz\t --> passed");
-	} else {
-	    System.out.println("getMaterialDatensatz\t --> fail");
-	}
-
+    @Override
+    public void tearDown() {
 	SQLiteConnect.closeSqlConnection(sqlConnection);
 
     }
 
-    private Boolean testMaterialIdVorhanden() {
-
+    private Boolean abfrageMaterialIdVorhanden() {
 	Boolean ergebnissDesTests = false;
-
 	int[] materialIdList = new int[] { 0, 1, 2, 3, 4 };
 
 	AbfrageMaterialDatensatz materialDatensatz = new AbfrageMaterialDatensatz(sqlConnection);
 
-	for (int i = 0; i != materialIdList.length; i++) {
+	for (int i : materialIdList) {
 
 	    switch (i) {
 	    case 0:
@@ -88,19 +87,18 @@ public class TestAbfrageMaterialDatensatz {
 	return ergebnissDesTests;
     }
 
-    private Boolean testMaterialIdAbfragen() {
-
+    private Boolean getMaterialIdAbfragen() {
 	Boolean ergebnissDesTests = false;
 	int[] materialIdList = new int[] { 0, 1, 2, 3, 4 };
 
 	AbfrageMaterialDatensatz materialDatensatz = new AbfrageMaterialDatensatz(sqlConnection);
-	for (int i = 0; i != materialIdList.length; i++) {
+
+	for (int i : materialIdList) {
 
 	    try {
 		materialDatensatz.materialIdVorhanden(i);
 		ergebnissDesTests = true;
 	    } catch (Exception e) {
-		// e.printStackTrace();
 		if (i == 0 | i == 4) {
 		    ergebnissDesTests = true;
 		} else {
@@ -113,8 +111,8 @@ public class TestAbfrageMaterialDatensatz {
 
     }
 
-    private Boolean testGetMaterialDatensatz() {
-
+    private Boolean getMaterialDatensatz() {
+	// TODO: Funktion einbauen
 	return true;
     }
 

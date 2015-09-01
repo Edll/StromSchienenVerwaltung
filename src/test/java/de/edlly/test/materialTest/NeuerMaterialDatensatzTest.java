@@ -1,7 +1,6 @@
 package de.edlly.test.materialTest;
 
 import java.sql.Connection;
-
 import de.edlly.db.SQLiteConnect;
 import de.edlly.material.MaterialKonstanten;
 import de.edlly.material.NeuerMaterialDatensatz;
@@ -17,60 +16,88 @@ import junit.framework.TestCase;
 public class NeuerMaterialDatensatzTest extends TestCase {
 
     NeuerMaterialDatensatz testNeuerMaterialDatensatz;
+    private Connection sqlConnection;
 
-    private Connection SQLConnection;
+    @Override
+    public void setUp() {
+	sqlConnection = SQLiteConnect.dbConnection();
+
+    }
 
     public void testMaximaleObjektDatensetzen() {
-
 	assertTrue("Maximale werte in Objekt setzen", maximaleObjektDatensetzen());
     }
 
-    /*
-     * @SuppressWarnings("unused") public void setUp() throws Exception {
-     * 
-     * // assertTrue( "maximaleObjektDatensetzen\t --> fail", maximaleObjektDatensetzen() ); }
-     */
+    public void testMinimaleObjektDatensetzen() {
+	assertTrue("Minimale werte in Objekt setzen", minimaleObjektDatensetzen());
+    }
 
- 
+    public void testNeuerDatensatztausObjektDaten() {
+	assertTrue("Neuer Datensatz aus Objektdaten", neuerDatensatztAusObjektDatenErzeugen());
+    }
+
+    @Override
+    public void tearDown() {
+	SQLiteConnect.closeSqlConnection(sqlConnection);
+
+    }
 
     private Boolean maximaleObjektDatensetzen() {
-
 	int koordinatenMaxX = MaterialKonstanten.MAXIMALER_X_WERT;
 	int koordiantenMaxZ = MaterialKonstanten.MAXIMALER_Z_WERT;
 	int koordiantenMaxY = MaterialKonstanten.MAXIMALER_Y_WERT;
 	int sortenId = 1;
 
 	try {
-	    NeuerMaterialDatensatz objektfuerDatensatz = new NeuerMaterialDatensatz(SQLConnection);
+	    NeuerMaterialDatensatz objektfuerDatensatz = new NeuerMaterialDatensatz(sqlConnection);
 	    objektfuerDatensatz.setMaterialDaten(koordinatenMaxX, koordiantenMaxZ, koordiantenMaxY, sortenId);
+
 	} catch (Exception e) {
+
 	    e.printStackTrace();
 	    return false;
 	}
 	return true;
     }
 
-    /*
-     * private Boolean minimaleObjektDatensetzen() {
-     * 
-     * int koordinatenMinX = 1; int koordinatenMinY = 1; int koordiantenMinZ = 1; int sortenId = 1;
-     * 
-     * try { NeuerMaterialDatensatz objektfuerDatensatz = new NeuerMaterialDatensatz(SQLConnection);
-     * objektfuerDatensatz.setMaterialDaten(koordinatenMinX, koordiantenMinZ, koordinatenMinY, sortenId); } catch
-     * (Exception e) { e.printStackTrace(); return false; } return true; }
-     * 
-     * private Boolean neuerDatensatztausObjektDaten() {
-     * 
-     * int koordinatenMaxX = MaterialKonstanten.MAXIMALER_X_WERT; int koordiantenMaxZ =
-     * MaterialKonstanten.MAXIMALER_Z_WERT; int koordiantenMaxY = MaterialKonstanten.MAXIMALER_Y_WERT; int sortenId = 1;
-     * 
-     * try { NeuerMaterialDatensatz objektfuerDatensatz = new NeuerMaterialDatensatz(SQLConnection);
-     * objektfuerDatensatz.setMaterialDaten(koordinatenMaxX, koordiantenMaxZ, koordiantenMaxY, sortenId); if
-     * (objektfuerDatensatz.datensatzAusObjektWertenAnlegen()) { return true; } else { return false; }
-     * 
-     * } catch (Exception e) { e.printStackTrace(); return false; }
-     * 
-     * }
-     */
+    private Boolean minimaleObjektDatensetzen() {
+	int koordinatenMinX = 1;
+	int koordinatenMinY = 1;
+	int koordiantenMinZ = 1;
+	int sortenId = 1;
+
+	try {
+	    NeuerMaterialDatensatz objektfuerDatensatz = new NeuerMaterialDatensatz(sqlConnection);
+	    objektfuerDatensatz.setMaterialDaten(koordinatenMinX, koordiantenMinZ, koordinatenMinY, sortenId);
+
+	} catch (Exception e) {
+	    e.printStackTrace();
+	    return false;
+
+	}
+	return true;
+    }
+
+    private Boolean neuerDatensatztAusObjektDatenErzeugen() {
+	int koordinatenMaxX = MaterialKonstanten.MAXIMALER_X_WERT;
+	int koordiantenMaxZ = MaterialKonstanten.MAXIMALER_Z_WERT;
+	int koordiantenMaxY = MaterialKonstanten.MAXIMALER_Y_WERT;
+	int sortenId = 1;
+
+	try {
+	    NeuerMaterialDatensatz objektfuerDatensatz = new NeuerMaterialDatensatz(sqlConnection);
+	    objektfuerDatensatz.setMaterialDaten(koordinatenMaxX, koordiantenMaxZ, koordiantenMaxY, sortenId);
+	    if (objektfuerDatensatz.datensatzAusObjektWertenAnlegen()) {
+		return true;
+	    } else {
+		return false;
+	    }
+
+	} catch (Exception e) {
+	    e.printStackTrace();
+	    return false;
+	}
+
+    }
 
 }
