@@ -1,6 +1,3 @@
-/**
- * 
- */
 package de.edlly.material;
 
 import java.sql.*;

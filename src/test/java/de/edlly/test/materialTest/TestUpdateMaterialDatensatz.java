@@ -1,4 +1,4 @@
-package de.edlly.testUnit.testMaterialDatensatz;
+package de.edlly.test.materialTest;
 
 import java.sql.Connection;
 
@@ -14,6 +14,7 @@ public class TestUpdateMaterialDatensatz {
     }
 
     public void callTestUpdateDatensatz() {
+
 	SQLConnection = SQLiteConnect.dbConnection();
 
 	System.out.println("\n--callTestUpdateDatensatz--\n");
@@ -29,19 +30,18 @@ public class TestUpdateMaterialDatensatz {
 	} else {
 	    System.out.println("SetMaterialVisibly\t --> fail");
 	}
-	
+
 	if (testSetMaterialId()) {
 	    System.out.println("SetMaterialId\t --> passed");
 	} else {
 	    System.out.println("SetMaterialId\t --> fail");
 	}
-	
+
 	if (testUpdateVisibly()) {
 	    System.out.println("UpdateVisibly\t --> passed");
 	} else {
 	    System.out.println("UpdateVisibly\t --> fail");
 	}
-	
 
 	SQLiteConnect.closeSqlConnection(SQLConnection);
 
@@ -51,36 +51,31 @@ public class TestUpdateMaterialDatensatz {
 
 	return true;
     }
-    
-    
 
     private Boolean testSetMaterialVisibly() {
 
 	return true;
     }
-    
-    
+
     private Boolean testSetMaterialId() {
-	try{
+
+	try {
 	    UpdateMaterialDatensatz materialDatensetzten = new UpdateMaterialDatensatz(SQLConnection);
-	    
+
 	    materialDatensetzten.setMaterialId(1);
 	    materialDatensetzten.setMaterialId(2);
 	    materialDatensetzten.setMaterialId(3);
 	    return true;
-	}catch(IllegalArgumentException e){
-	   // e.printStackTrace();
-		return false;
+	} catch (IllegalArgumentException e) {
+	    // e.printStackTrace();
+	    return false;
 	}
 
-
     }
-    
+
     private Boolean testUpdateVisibly() {
 
 	return true;
     }
-    
-   
 
 }

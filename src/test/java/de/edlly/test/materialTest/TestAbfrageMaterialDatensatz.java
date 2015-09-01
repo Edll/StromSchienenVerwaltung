@@ -1,4 +1,4 @@
-package de.edlly.testUnit.testMaterialDatensatz;
+package de.edlly.test.materialTest;
 
 import java.sql.Connection;
 
@@ -7,45 +7,47 @@ import de.edlly.material.AbfrageMaterialDatensatz;
 
 public class TestAbfrageMaterialDatensatz {
 
-    private Connection SQLConnection;
+    private Connection sqlConnection;
 
     public TestAbfrageMaterialDatensatz() {
 
     }
 
     public void callTestAbfrageDatensatz() {
-	SQLConnection = SQLiteConnect.dbConnection();
+
+	sqlConnection = SQLiteConnect.dbConnection();
 
 	System.out.println("\n--callTestAbfrageDatensatz--\n");
 
-	if (testmaterialIdVorhanden()) {
+	if (testMaterialIdVorhanden()) {
 	    System.out.println("materialIdVorhanden\t --> passed");
 	} else {
 	    System.out.println("materialIdVorhanden\t --> fail");
 	}
 
-	if (testmaterialIdAbfragen()) {
+	if (testMaterialIdAbfragen()) {
 	    System.out.println("materialIdAbfragen\t --> passed");
 	} else {
 	    System.out.println("materialIdAbfragen\t --> fail");
 	}
 
-	if (testgetMaterialDatensatz()) {
+	if (testGetMaterialDatensatz()) {
 	    System.out.println("getMaterialDatensatz\t --> passed");
 	} else {
 	    System.out.println("getMaterialDatensatz\t --> fail");
 	}
 
-	SQLiteConnect.closeSqlConnection(SQLConnection);
+	SQLiteConnect.closeSqlConnection(sqlConnection);
 
     }
 
-    private Boolean testmaterialIdVorhanden() {
+    private Boolean testMaterialIdVorhanden() {
+
 	Boolean ergebnissDesTests = false;
 
 	int[] materialIdList = new int[] { 0, 1, 2, 3, 4 };
 
-	AbfrageMaterialDatensatz materialDatensatz = new AbfrageMaterialDatensatz(SQLConnection);
+	AbfrageMaterialDatensatz materialDatensatz = new AbfrageMaterialDatensatz(sqlConnection);
 
 	for (int i = 0; i != materialIdList.length; i++) {
 
@@ -86,34 +88,32 @@ public class TestAbfrageMaterialDatensatz {
 	return ergebnissDesTests;
     }
 
-    private Boolean testmaterialIdAbfragen() {
-	
+    private Boolean testMaterialIdAbfragen() {
+
 	Boolean ergebnissDesTests = false;
-	int[] materialIdList = new int[] {0,  1, 2, 3, 4 };
-	
+	int[] materialIdList = new int[] { 0, 1, 2, 3, 4 };
 
-	AbfrageMaterialDatensatz materialDatensatz = new AbfrageMaterialDatensatz(SQLConnection);
+	AbfrageMaterialDatensatz materialDatensatz = new AbfrageMaterialDatensatz(sqlConnection);
 	for (int i = 0; i != materialIdList.length; i++) {
-	    
 
-	try{
-	    materialDatensatz.materialIdVorhanden(i);
-	    ergebnissDesTests = true; 
-	}catch(Exception e){
-	    //e.printStackTrace();
-	    if(i==0 | i==4){
-	    ergebnissDesTests = true;
-	    }else{
-		ergebnissDesTests = false;
+	    try {
+		materialDatensatz.materialIdVorhanden(i);
+		ergebnissDesTests = true;
+	    } catch (Exception e) {
+		// e.printStackTrace();
+		if (i == 0 | i == 4) {
+		    ergebnissDesTests = true;
+		} else {
+		    ergebnissDesTests = false;
+		}
+
 	    }
-		
 	}
-    }
 	return ergebnissDesTests;
 
     }
 
-    private Boolean testgetMaterialDatensatz() {
+    private Boolean testGetMaterialDatensatz() {
 
 	return true;
     }

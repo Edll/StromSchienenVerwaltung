@@ -6,8 +6,10 @@
    <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
-  <build>
-    <sourceDirectory>src</sourceDirectory>
+  <build>   
+    <sourceDirectory>src/main/java</sourceDirectory>
+    <scriptSourceDirectory>src/main/scripts</scriptSourceDirectory>
+    <testSourceDirectory>src/test/java</testSourceDirectory>
     <plugins>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
@@ -37,6 +39,12 @@
   		<groupId>org.xerial</groupId>
   		<artifactId>sqlite-jdbc</artifactId>
   		<version>3.7.2</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>junit</groupId>
+<artifactId>junit</artifactId>
+  		<version>4.8.2</version>
+  		<scope>test</scope>
   	</dependency>
   </dependencies>
 </project>
