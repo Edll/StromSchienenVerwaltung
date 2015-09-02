@@ -25,7 +25,7 @@ public class NeuerMaterialDatensatz {
 
     }
 
-    public void setMaterialDaten(int koordinateX, int koordinateZ, int koordinateyMax, int materialSorteId) {
+    public void setMaterialDaten(int koordinateX, int koordinateZ, int koordinateyMax, int materialSorteId) throws IllegalArgumentException {
 
 	if (koordinateXIstImDefinitionsbereich(koordinateX)) {
 	    this.koordinateX = koordinateX;
@@ -45,7 +45,7 @@ public class NeuerMaterialDatensatz {
 
     }
 
-    public Boolean datensatzAusObjektWertenAnlegen() throws Exception {
+    public Boolean datensatzAusObjektWertenAnlegen() throws SQLException {
 
 	PreparedStatement sqlPreparedStatment = null;
 
@@ -61,21 +61,21 @@ public class NeuerMaterialDatensatz {
 	    sqlPreparedStatment.setBoolean(5, true);
 	    sqlPreparedStatment.executeUpdate();
 
-	} catch (SQLException e) {
+	} catch (SQLException sqlException) {
 
-	    throw new IllegalArgumentException(e);
+	    throw new SQLException(sqlException);
 	} finally {
 	    try {
 
 		sqlPreparedStatment.close();
-	    } catch (Exception e) {
-		throw new IllegalArgumentException(e);
+	    } catch (Exception closeException) {
+		closeException.printStackTrace();
 	    }
 	}
 	return true;
     }
 
-    public Boolean koordinateXIstImDefinitionsbereich(int koordinateX) {
+    public Boolean koordinateXIstImDefinitionsbereich(int koordinateX) throws IllegalArgumentException {
 
 	if (koordinateX <= 0) {
 	    throw new IllegalArgumentException("Die Materialbreite darf nicht Negativ oder 0 sein.");
@@ -89,7 +89,7 @@ public class NeuerMaterialDatensatz {
 	return true;
     }
 
-    public Boolean koordinateZIstImDefinitionsbereich(int koordinateZ) {
+    public Boolean koordinateZIstImDefinitionsbereich(int koordinateZ) throws IllegalArgumentException {
 
 	if (koordinateZ <= 0) {
 	    throw new IllegalArgumentException("Die Materialbreite darf nicht Negativ oder 0 sein.");
@@ -103,7 +103,7 @@ public class NeuerMaterialDatensatz {
 	return true;
     }
 
-    public Boolean koordinateyMaxIstImDefinitionsbereich(int koordinatey) {
+    public Boolean koordinateyMaxIstImDefinitionsbereich(int koordinatey) throws IllegalArgumentException {
 
 	if (koordinatey <= 0) {
 	    throw new IllegalArgumentException("Die Materialbreite darf nicht Negativ sein.");
@@ -117,7 +117,7 @@ public class NeuerMaterialDatensatz {
 	return true;
     }
 
-    public Boolean materialSorteIdIstVorhanden(int materialSorteId) {
+    public Boolean materialSorteIdIstVorhanden(int materialSorteId) throws IllegalArgumentException {
 
 	if (materialSorteId < 0) {
 	    throw new IllegalArgumentException("Die materialSorteId darf nicht Negativ sein.");
