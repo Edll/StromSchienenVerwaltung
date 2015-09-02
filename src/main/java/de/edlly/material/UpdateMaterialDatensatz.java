@@ -50,6 +50,7 @@ public class UpdateMaterialDatensatz {
 
     }
 
+
     public void updateVisibly(int id, int visibly) {
 
 	PreparedStatement pst = null;
@@ -75,9 +76,10 @@ public class UpdateMaterialDatensatz {
 
 		pst.close();
 	    } catch (Exception e) {
-		e.printStackTrace();
+		throw new IllegalArgumentException(e);
 	    }
 	}
     }
+
 
 }

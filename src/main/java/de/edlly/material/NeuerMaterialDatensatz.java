@@ -25,29 +25,41 @@ public class NeuerMaterialDatensatz {
 
     }
 
-    public void setMaterialDaten(int koordinateX, int koordinateZ, int koordinateyMax, int materialSorteId) throws IllegalArgumentException {
+    public void setMaterialDaten(int koordinateX, int koordinateZ, int koordinateyMax, int materialSorteId)
+	    throws IllegalArgumentException {
 
-	if (koordinateXIstImDefinitionsbereich(koordinateX)) {
-	    this.koordinateX = koordinateX;
+	try {
+	    if (koordinateXIstImDefinitionsbereich(koordinateX)) {
+		this.koordinateX = koordinateX;
+	    }
+
+	    if (koordinateZIstImDefinitionsbereich(koordinateZ)) {
+		this.koordinateZ = koordinateZ;
+	    }
+
+	    if (koordinateyMaxIstImDefinitionsbereich(koordinateyMax)) {
+		this.koordinateyMax = koordinateyMax;
+	    }
+
+	    if (materialSorteIdIstVorhanden(materialSorteId)) {
+		this.materialSorteId = materialSorteId;
+	    }
+
+	} catch (IllegalArgumentException datenSetzenFehlgeschlagen) {
+
+	    clearObjektWerte();
+
+	    throw new IllegalArgumentException(datenSetzenFehlgeschlagen);
 	}
-
-	if (koordinateZIstImDefinitionsbereich(koordinateZ)) {
-	    this.koordinateZ = koordinateZ;
-	}
-
-	if (koordinateyMaxIstImDefinitionsbereich(koordinateyMax)) {
-	    this.koordinateyMax = koordinateyMax;
-	}
-
-	if (materialSorteIdIstVorhanden(materialSorteId)) {
-	    this.materialSorteId = materialSorteId;
-	}
-
     }
 
-    public Boolean datensatzAusObjektWertenAnlegen() throws SQLException {
-
+    public Boolean datensatzAusObjektWertenAnlegen() throws SQLException, IllegalArgumentException {
 	PreparedStatement sqlPreparedStatment = null;
+
+	if (objektWerteSindNull()) {
+	    throw new IllegalArgumentException(
+		    "Die Objektwerte sind nicht gesetzt worden /n ein leerer Datensatz kann nich angelegt werden.");
+	}
 
 	try {
 	    String query = "INSERT INTO Material (\"MaterialSorteId\",\"x\",\"z\",\"yMax\",\"visibly\") VALUES (?1,?2,?3,?4,?5)";
@@ -77,7 +89,7 @@ public class NeuerMaterialDatensatz {
 
     public Boolean koordinateXIstImDefinitionsbereich(int koordinateX) throws IllegalArgumentException {
 
-	if (koordinateX <= 0) {
+	if (koordinateX < MaterialKonstanten.MINIMALER_X_WERT) {
 	    throw new IllegalArgumentException("Die Materialbreite darf nicht Negativ oder 0 sein.");
 	}
 
@@ -91,7 +103,7 @@ public class NeuerMaterialDatensatz {
 
     public Boolean koordinateZIstImDefinitionsbereich(int koordinateZ) throws IllegalArgumentException {
 
-	if (koordinateZ <= 0) {
+	if (koordinateZ < MaterialKonstanten.MINIMALER_Z_WERT) {
 	    throw new IllegalArgumentException("Die Materialbreite darf nicht Negativ oder 0 sein.");
 	}
 
@@ -105,7 +117,7 @@ public class NeuerMaterialDatensatz {
 
     public Boolean koordinateyMaxIstImDefinitionsbereich(int koordinatey) throws IllegalArgumentException {
 
-	if (koordinatey <= 0) {
+	if (koordinatey < MaterialKonstanten.MINIMALER_Y_WERT) {
 	    throw new IllegalArgumentException("Die Materialbreite darf nicht Negativ sein.");
 	}
 
@@ -129,37 +141,19 @@ public class NeuerMaterialDatensatz {
 	return true;
     }
 
-    /**
-     * TODO: Methode in eigene Klasse auslagern
-     */
-    public void updateVisibly(int id, int visibly) {
-
-	PreparedStatement pst = null;
-
-	if (id == 0) {
-	    throw new IllegalArgumentException("Die Material id darf nicht 0 sein.");
+    public Boolean objektWerteSindNull() {
+	if (this.koordinateX == 0 || this.koordinateyMax == 0 || this.materialSorteId == 0 || this.koordinateZ == 0) {
+	    return true;
+	} else {
+	    return false;
 	}
-	if (visibly != 0 & visibly != 1) {
-	    throw new IllegalArgumentException("Die Sichtbarkeit kann nur auf 1 oder 0 gesetzt werden.");
-	}
+    }
 
-	try {
-	    String query = "UPDATE \"main\".\"Material\" SET \"visibly\" = ?1 WHERE  \"id\" = " + id;
-	    pst = sqlConnection.prepareStatement(query);
-	    pst.setInt(1, visibly);
-	    pst.executeUpdate();
-
-	} catch (SQLException e) {
-
-	    throw new IllegalArgumentException(e);
-	} finally {
-	    try {
-
-		pst.close();
-	    } catch (Exception e) {
-		throw new IllegalArgumentException(e);
-	    }
-	}
+    private void clearObjektWerte() {
+	this.koordinateX = MaterialKonstanten.MINIMALER_X_WERT - 1;
+	this.koordinateZ = MaterialKonstanten.MINIMALER_Z_WERT - 1;
+	this.koordinateyMax = MaterialKonstanten.MINIMALER_Y_WERT - 1;
+	this.materialSorteId = 0;
     }
 
 }
