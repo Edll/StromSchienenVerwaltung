@@ -1,6 +1,7 @@
 package de.edlly.test;
 
 import de.edlly.test.materialTest.NeuerMaterialDatensatzTest;
+import de.edlly.test.materialTest.AbfrageMaterialListeTest;
 import de.edlly.test.materialTest.AbfrageMaterialDatensatzTest;
 import de.edlly.test.materialTest.UpdateMaterialDatensatzTest;
 import junit.framework.Test;
@@ -23,6 +24,9 @@ public class AllTests extends TestSuite {
 
 	TestSuite updateMaterialDatensatz = new TestSuite("-> Abfrage Material Datensatz");
 	updateMaterialDatensatz.addTestSuite(UpdateMaterialDatensatzTest.class);
+	
+	TestSuite AbfrageMaterialTabelle = new TestSuite("-> Abfrage Material Datensatz");
+	AbfrageMaterialTabelle.addTestSuite(AbfrageMaterialListeTest.class);
 
 	return neuerMaterialDatensatz;
     }
