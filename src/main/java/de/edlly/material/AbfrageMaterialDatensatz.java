@@ -77,13 +77,8 @@ public class AbfrageMaterialDatensatz {
 	    throw new SQLException(sqlException);
 
 	} finally {
-	    try {
 		sqlStatment.close();
 		sqlResultSet.close();
-
-	    } catch (Exception finallyException) {
-		finallyException.printStackTrace();
-	    }
 	}
 	return sqlMaterialIdErgebniss;
     }
