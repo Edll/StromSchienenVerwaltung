@@ -6,11 +6,17 @@ import java.sql.SQLException;
 
 public class UpdateMaterialDatensatz {
 
+    @SuppressWarnings("unused")
     private int materialId;
+    @SuppressWarnings("unused")
     private int koordinateX;
+    @SuppressWarnings("unused")
     private int koordinateZ;
+    @SuppressWarnings("unused")
     private int koordinateyMax;
+    @SuppressWarnings("unused")
     private int materialSorteId;
+    @SuppressWarnings("unused")
     private int visibly;
 
     private Connection sqlConnection;
@@ -37,7 +43,7 @@ public class UpdateMaterialDatensatz {
 
     }
 
-    public void setMaterialId(int materialId) throws IllegalArgumentException {
+    public void setMaterialId(int materialId) throws IllegalArgumentException, SQLException {
 
 	try {
 	    AbfrageMaterialDatensatz materialIdVorhanden = new AbfrageMaterialDatensatz(this.sqlConnection);

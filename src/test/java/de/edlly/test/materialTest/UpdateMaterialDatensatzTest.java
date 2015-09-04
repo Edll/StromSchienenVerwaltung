@@ -1,6 +1,7 @@
 package de.edlly.test.materialTest;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
 import de.edlly.db.SQLiteConnect;
 import de.edlly.material.UpdateMaterialDatensatz;
@@ -24,7 +25,7 @@ public class UpdateMaterialDatensatzTest extends TestCase {
 	assertTrue("Set Material Visibly in Objekt", setMaterialVisibly());
     }
 
-    public void testSetMaterialId() {
+    public void testSetMaterialId() throws SQLException {
 	assertTrue("Set Material Id in Objekt", setMaterialId());
     }
 
@@ -48,7 +49,7 @@ public class UpdateMaterialDatensatzTest extends TestCase {
 	return true;
     }
 
-    private Boolean setMaterialId() {
+    private Boolean setMaterialId() throws SQLException {
 	try {
 	    UpdateMaterialDatensatz materialDatensetzten = new UpdateMaterialDatensatz(sqlConnection);
 
