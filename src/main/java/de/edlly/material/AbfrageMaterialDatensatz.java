@@ -121,10 +121,10 @@ public class AbfrageMaterialDatensatz {
 
 	} finally {
 	    try {
-		
+
 		sqlStatment.close();
 		sqlResultSet.close();
-		
+
 	    } catch (SQLException e) {
 		throw new SQLException(e);
 	    }
