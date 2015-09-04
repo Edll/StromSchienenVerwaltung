@@ -24,14 +24,14 @@ public class AbfrageMaterialListe {
     }
 
     public Object[] GetMaterialListe(boolean visibily) throws SQLException {
-	Object[] MaterialListe = null;
+	Object[] materialListe = null;
 	int[] materialIds;
 	// TODO: Code schreiben
 	
 	materialIds = sqlAbfrageMaterialIds();
 	
 	if(materialIds[0] == 0){
-	    return MaterialListe = new Object[0];
+	    return materialListe = new Object[0];
 	}
 	
 	//return sqlMaterialIdErgebniss;
@@ -41,9 +41,7 @@ public class AbfrageMaterialListe {
 	// Mit den Ids in einer Schleife die Objekt Datenabfragen
 
 	// Liste aus diesen Datensätzen bauen
-
-	// return dieser Datensätze
-return MaterialListe;
+	    return materialListe = new Object[0];  
     }
 
     

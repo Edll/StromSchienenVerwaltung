@@ -31,7 +31,7 @@ public class AbfrageMaterialDatensatzTest extends TestCase {
     }
 
     @Test
-    public void testMaterialIdVorhandenOhneErgeniss() throws SQLException {
+    public void testMaterialIdVorhandenOhneErgebniss() throws SQLException {
 	try {
 	    materialDatensatz.materialIdVorhanden(0); // wirft eine: IllegalArgumentException
 
