@@ -10,7 +10,6 @@ import de.edlly.material.NeuerMaterialDatensatz;
 import junit.framework.TestCase;
 import org.junit.*;
 import org.junit.rules.ExpectedException;
-import org.junit.Assert.*;
 
 /**
  * Lädt die einzelnen Tests für die Klasse NeuerMaterialDatensatz, diese werden dann ausgewertet.
