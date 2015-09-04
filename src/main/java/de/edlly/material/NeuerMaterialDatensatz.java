@@ -7,7 +7,6 @@ import de.edlly.material.MaterialKonstanten;
 /**
  * Legt einen neuen Material Datensatz aus den objektVariabeln an.
  * 
- * TODO updateVisibly in eine geeignete Klasse verschieben.
  * 
  * @author Edlly java@edlly.de
  *
@@ -72,13 +71,12 @@ public class NeuerMaterialDatensatz {
 	    sqlPreparedStatment.setInt(4, this.koordinateyMax);
 	    sqlPreparedStatment.setBoolean(5, true);
 	    sqlPreparedStatment.executeUpdate();
-
+	    sqlPreparedStatment.close();
 	} catch (SQLException sqlException) {
 
 	    throw new SQLException(sqlException);
 	} finally {
 	    try {
-
 		sqlPreparedStatment.close();
 	    } catch (Exception closeException) {
 		closeException.printStackTrace();
