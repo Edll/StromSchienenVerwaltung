@@ -1,81 +1,133 @@
 package de.edlly.material;
 
-import java.sql.Connection;
+import java.sql.*;
 
 /**
- * Gibt Datensätze aus der DB zurück
- * 
- * TODO: Dummy Klasse in echte umbauen
+ * Fragt den Material Datensatz aus der DB ab.
  * 
  * @author Edlly java@edlly.de
  *
  */
 
 public class AbfrageMaterialDatensatz {
-
     private int[] materialDatensatz;
     private int materialId;
-    @SuppressWarnings("unused")
+
     private Connection sqlConnection;
 
     public AbfrageMaterialDatensatz(Connection sqlConnection) {
 	this.sqlConnection = sqlConnection;
+	this.materialDatensatz = new int[] { 0, 0, 0, 0, 0, 0 };
 
     }
 
-    public int[] getMaterialDatensatz(int materialId) {
+    public void setMaterialId(int materialId) throws IllegalArgumentException, SQLException {
+	materialIdVorhanden(materialId);
 
 	this.materialId = materialId;
+    }
 
-	// MaterialDaten id, materialSortenId, x, z, yMax, visibly
+    public int getMaterialId() {
+	return materialId;
+    }
 
-	switch (this.materialId) {
-	case 0:
-	    materialDatensatz = new int[] { 0, 0, 0, 0, 0, 0 };
-	    break;
-	case 1:
-	    materialDatensatz = new int[] { 1, 1, 30, 20, 4000, 1 };
-	    break;
-	case 2:
-	    materialDatensatz = new int[] { 1, 1, 40, 10, 5000, 0 };
-	    break;
-	case 3:
-	    materialDatensatz = new int[] { 1, 1, 50, 15, 3000, 1 };
-	    break;
-	default:
-	    materialDatensatz = new int[] { 0, 0, 0, 0, 0, 0 };
-	    break;
+    public int[] getMaterialDatensatz(int materialId) throws IllegalArgumentException, SQLException {
+	setMaterialId(materialId);
 
-	}
+	materialDatensatzInObjektdatenSchreiben();
 
 	return materialDatensatz;
     }
 
-    public Boolean materialIdAbfragen(int materialId) {
+    public void materialIdVorhanden(int materialId) throws SQLException {
+	int sqlMaterialIdErgebniss = 0;
 
-	this.materialId = materialId;
+	sqlMaterialIdErgebniss = sqlAbfrageMaterialIdVorhanden(materialId);
 
-	switch (this.materialId) {
-	case 0:
-	    return false;
-	case 1:
-	    return true;
-	case 2:
-	    return true;
-	case 3:
-	    return true;
-	default:
-	    return false;
-	}
-
-    }
-
-    public void materialIdVorhanden(int materialId) throws IllegalArgumentException {
-
-	if (materialIdAbfragen(materialId)) {
+	if (sqlMaterialIdErgebniss == 0) {
 	    throw new IllegalArgumentException("Die Material Id ist nicht vorhanden.");
 	}
-
     }
 
+    public int sqlAbfrageMaterialIdVorhanden(int materialId) throws SQLException {
+	Statement sqlStatment = null;
+	ResultSet sqlResultSet = null;
+
+	int sqlMaterialIdErgebniss = 0;
+
+	try {
+	    sqlStatment = sqlConnection.createStatement();
+
+	    String query = "SELECT id FROM Material WHERE id = \"" + materialId + "\"";
+
+	    sqlResultSet = sqlStatment.executeQuery(query);
+
+	    if (!sqlAbfrageOhneErgebniss(sqlResultSet)) {
+		sqlMaterialIdErgebniss = 0;
+
+	    } else {
+		sqlMaterialIdErgebniss = sqlResultSet.getInt(1);
+
+	    }
+
+	    sqlStatment.close();
+	    sqlResultSet.close();
+
+	} catch (SQLException sqlException) {
+	    throw new SQLException(sqlException);
+
+	} finally {
+	    try {
+		sqlStatment.close();
+		sqlResultSet.close();
+
+	    } catch (Exception finallyException) {
+		finallyException.printStackTrace();
+	    }
+	}
+	return sqlMaterialIdErgebniss;
+    }
+
+    private boolean sqlAbfrageOhneErgebniss(ResultSet sqlResultSet) throws SQLException {
+	return sqlResultSet.isBeforeFirst();
+    }
+
+    private void materialDatensatzInObjektdatenSchreiben() throws SQLException {
+
+	Statement sqlStatment = null;
+	ResultSet sqlResultSet = null;
+
+	try {
+	    sqlStatment = sqlConnection.createStatement();
+
+	    String sqlQuery = "SELECT id, MaterialSorteId, x, z, yMax, visibly FROM Material WHERE id = \""
+		    + this.materialId + "\" ";
+
+	    sqlResultSet = sqlStatment.executeQuery(sqlQuery);
+
+	    materialDatensatz[0] = sqlResultSet.getInt(1);
+	    materialDatensatz[1] = sqlResultSet.getInt(2);
+	    materialDatensatz[2] = sqlResultSet.getInt(3);
+	    materialDatensatz[3] = sqlResultSet.getInt(4);
+	    materialDatensatz[4] = sqlResultSet.getInt(5);
+	    materialDatensatz[5] = sqlResultSet.getInt(6);
+
+	    sqlStatment.close();
+	    sqlResultSet.close();
+
+	} catch (SQLException e) {
+
+	    throw new SQLException(e);
+
+	} finally {
+	    try {
+		
+		sqlStatment.close();
+		sqlResultSet.close();
+		
+	    } catch (SQLException e) {
+		throw new SQLException(e);
+	    }
+	}
+    }
 }

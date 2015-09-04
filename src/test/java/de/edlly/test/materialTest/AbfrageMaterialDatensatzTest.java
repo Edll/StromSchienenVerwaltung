@@ -1,6 +1,9 @@
 package de.edlly.test.materialTest;
 
 import java.sql.Connection;
+import java.sql.SQLException;
+
+import org.junit.Test;
 
 import junit.framework.TestCase;
 
@@ -8,7 +11,7 @@ import de.edlly.db.SQLiteConnect;
 import de.edlly.material.AbfrageMaterialDatensatz;
 
 /**
- * Test Klasse fuer die AbfrageMaterialDatensatz Klasse.
+ * Tests für die AbfrageMaterialDatensatz Klasse.
  * 
  * @author Edlly java@edlly.de
  *
@@ -16,104 +19,65 @@ import de.edlly.material.AbfrageMaterialDatensatz;
 
 public class AbfrageMaterialDatensatzTest extends TestCase {
 
-    private Connection sqlConnection;
+    AbfrageMaterialDatensatz materialDatensatz;
+    Connection sqlConnection;
+
+    int[] materialIdList = new int[] { 0, 1, 2, 3, 4 };
 
     @Override
     public void setUp() {
 	sqlConnection = SQLiteConnect.dbConnection();
-
+	materialDatensatz = new AbfrageMaterialDatensatz(sqlConnection);
     }
 
-    public void testMaterialIdVorhanden() {
-	assertTrue("Material Id Vorhanden in Datenbank", abfrageMaterialIdVorhanden());
+    @Test
+    public void testMaterialIdVorhandenOhneErgeniss() throws SQLException {
+	try {
+	    materialDatensatz.materialIdVorhanden(0); // wirft eine: IllegalArgumentException
+
+	    fail("Sollte eine IllegalArgumentException ergeben: Material Id nicht Vorhanden.");
+
+	} catch (IllegalArgumentException expected) {
+	    assertEquals(IllegalArgumentException.class, expected.getClass());
+	}
     }
 
-    public void testGetMaterialIdAbfragen() {
-	assertTrue("Material Id Abfragen in Datenbank", getMaterialIdAbfragen());
+    @Test
+    public void testSetMaterialIdNull() throws SQLException {
+	try {
+	    materialDatensatz.setMaterialId(0); // wirft eine: IllegalArgumentException
+
+	    fail("Sollte eine IllegalArgumentException ergeben: Material Id nicht Vorhanden.");
+	} catch (IllegalArgumentException expected) {
+	    assertEquals(IllegalArgumentException.class, expected.getClass());
+	}
     }
 
-    public void testGetMaterialDatensatz() {
-	assertTrue("Material Datensatz anhand Id Abfragen in Datenbank", getMaterialDatensatz());
+    @Test
+    public void testSetMaterialIdEins() throws SQLException {
+	materialDatensatz.setMaterialId(1);
+
+	assertEquals(1, materialDatensatz.getMaterialId());
+    }
+
+    @Test
+    public void testGetMaterialId() {
+	assertEquals(0, materialDatensatz.getMaterialId());
+    }
+
+    @Test
+    public void testGetMaterialDatensatz() throws SQLException {
+
+	int[] testDatensatzEins = { 1, 1, 50, 10, 4000, 1 };
+
+	int[] abfrageErgebnissEins = materialDatensatz.getMaterialDatensatz(1);
+
+	org.junit.Assert.assertArrayEquals(testDatensatzEins, abfrageErgebnissEins);
+
     }
 
     @Override
     public void tearDown() {
 	SQLiteConnect.closeSqlConnection(sqlConnection);
-
     }
-
-    private Boolean abfrageMaterialIdVorhanden() {
-	Boolean ergebnissDesTests = false;
-	int[] materialIdList = new int[] { 0, 1, 2, 3, 4 };
-
-	AbfrageMaterialDatensatz materialDatensatz = new AbfrageMaterialDatensatz(sqlConnection);
-
-	for (int i : materialIdList) {
-
-	    switch (i) {
-	    case 0:
-		if (!materialDatensatz.materialIdAbfragen(materialIdList[i])) {
-		    ergebnissDesTests = true;
-		}
-		break;
-	    case 1:
-		if (materialDatensatz.materialIdAbfragen(materialIdList[i])) {
-		    ergebnissDesTests = true;
-		}
-		break;
-	    case 2:
-		if (materialDatensatz.materialIdAbfragen(materialIdList[i])) {
-		    ergebnissDesTests = true;
-		}
-		break;
-
-	    case 3:
-		if (materialDatensatz.materialIdAbfragen(materialIdList[i])) {
-		    ergebnissDesTests = true;
-		}
-		break;
-
-	    case 4:
-		if (!materialDatensatz.materialIdAbfragen(materialIdList[i])) {
-		    ergebnissDesTests = true;
-		}
-		break;
-	    default:
-		ergebnissDesTests = false;
-
-	    }
-
-	}
-	return ergebnissDesTests;
-    }
-
-    private Boolean getMaterialIdAbfragen() {
-	Boolean ergebnissDesTests = false;
-	int[] materialIdList = new int[] { 0, 1, 2, 3, 4 };
-
-	AbfrageMaterialDatensatz materialDatensatz = new AbfrageMaterialDatensatz(sqlConnection);
-
-	for (int i : materialIdList) {
-
-	    try {
-		materialDatensatz.materialIdVorhanden(i);
-		ergebnissDesTests = true;
-	    } catch (Exception e) {
-		if (i == 0 | i == 4) {
-		    ergebnissDesTests = true;
-		} else {
-		    ergebnissDesTests = false;
-		}
-
-	    }
-	}
-	return ergebnissDesTests;
-
-    }
-
-    private Boolean getMaterialDatensatz() {
-	// TODO: Funktion einbauen
-	return true;
-    }
-
 }
