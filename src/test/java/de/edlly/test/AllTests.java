@@ -16,18 +16,11 @@ import junit.framework.TestSuite;
 
 public class AllTests extends TestSuite {
     public static Test suite() {
-	TestSuite neuerMaterialDatensatz = new TestSuite("-> Neuer Material Datensatz");
-	neuerMaterialDatensatz.addTestSuite(NeuerMaterialDatensatzTest.class);
-
-	TestSuite abfrageMaterialDatensatz = new TestSuite("-> Abfrage Material Datensatz");
-	abfrageMaterialDatensatz.addTestSuite(AbfrageMaterialDatensatzTest.class);
-
-	TestSuite updateMaterialDatensatz = new TestSuite("-> Abfrage Material Datensatz");
-	updateMaterialDatensatz.addTestSuite(UpdateMaterialDatensatzTest.class);
-	
-	TestSuite AbfrageMaterialTabelle = new TestSuite("-> Abfrage Material Datensatz");
-	AbfrageMaterialTabelle.addTestSuite(AbfrageMaterialListeTest.class);
-
-	return neuerMaterialDatensatz;
+	TestSuite materialDatensatz = new TestSuite("Material Datenbank Abfragen");
+	materialDatensatz.addTestSuite(NeuerMaterialDatensatzTest.class);
+	materialDatensatz.addTestSuite(AbfrageMaterialDatensatzTest.class);
+	materialDatensatz.addTestSuite(UpdateMaterialDatensatzTest.class);
+	materialDatensatz.addTestSuite(AbfrageMaterialListeTest.class);
+	return materialDatensatz;
     }
 }
