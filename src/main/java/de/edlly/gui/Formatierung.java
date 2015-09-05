@@ -24,6 +24,18 @@ public class Formatierung {
 	public static Font eingabeFeldLabel(){
 		Font headerFont = new Font("Tahoma", Font.BOLD, 11);
 		return headerFont;		
+	}	
+	
+	// Button Font Formatierung
+	public static Font buttonFont(){
+		Font buttonFont = new Font("Tahoma", Font.BOLD, 11);
+		return buttonFont;		
+	}
+	
+	// Tabellen Schrift Formatierung
+	public static Font tableFont(){
+		Font tableFont = new Font("Tahoma", Font.PLAIN, 11);
+		return tableFont;		
 	}
 	
 	// Rahmen um Eingabebereiche
@@ -32,11 +44,7 @@ public class Formatierung {
 		return rahmen;
 	}
 	
-	// Button Font Formatierung
-	public static Font buttonFont(){
-		Font headerFont = new Font("Tahoma", Font.BOLD, 11);
-		return headerFont;		
-	}
+
 	
 	
 

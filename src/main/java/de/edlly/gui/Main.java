@@ -51,7 +51,7 @@ public class Main {
     }
 
     private void tabsHinzufuegen(JTabbedPane tabMenu) {
-	WerkstueckManager werkstueckVerwaltung = new WerkstueckManager();
+	WerkstueckVerwaltung werkstueckVerwaltung = new WerkstueckVerwaltung();
 	tabMenu.addTab("Werkst\u00FCck Verwaltung", null, werkstueckVerwaltung.werkstueckVerwaltungsPanel(), null);
 
 	TabMaterialVerwaltung materialVerwaltung = new TabMaterialVerwaltung();
