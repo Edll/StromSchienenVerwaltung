@@ -1,4 +1,4 @@
-package de.edlly.gui;
+package de.edlly.werkstueck;
 
 import java.awt.BorderLayout;
 import java.awt.Color;

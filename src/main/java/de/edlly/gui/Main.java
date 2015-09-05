@@ -9,6 +9,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.border.LineBorder;
 
 import de.edlly.gui.materialVerwaltung.TabMaterialVerwaltung;
+import de.edlly.gui.werkstueckVerwaltung.WerkstueckVerwaltung;
 
 /**
  * Programm Main Loader

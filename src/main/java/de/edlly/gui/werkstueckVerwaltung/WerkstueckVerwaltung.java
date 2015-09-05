@@ -1,9 +1,11 @@
-package de.edlly.gui;
+package de.edlly.gui.werkstueckVerwaltung;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+
+import de.edlly.gui.Formatierung;
 
 /**
  * Anzeige der Werkstück Verwaltung

@@ -1,4 +1,4 @@
-package de.edlly.gui;
+package de.edlly.gui.werkstueckErstellen;
 
 /**
  * Oberfläche um Werkstücke zu erstellen laden
