@@ -9,7 +9,7 @@ import javax.swing.JTable;
 
 public class WerkstueckManager {
 
-    public JPanel ui() {
+    public JPanel werkstueckVerwaltungsPanel() {
 
 	JPanel WerkstueckManager = new JPanel();
 	WerkstueckManager.setLayout(null);

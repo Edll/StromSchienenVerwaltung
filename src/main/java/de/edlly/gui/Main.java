@@ -2,87 +2,59 @@ package de.edlly.gui;
 
 import java.awt.EventQueue;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 import javax.swing.border.LineBorder;
 
+import de.edlly.gui.materialVerwaltung.TabMaterialVerwaltung;
+
 import java.awt.Color;
 import java.awt.BorderLayout;
-import java.sql.Connection;
-import java.sql.SQLException;
 
 public class Main {
-    private JFrame frmKupfermanager;
+    private JFrame mainFrame;
 
-    /**
-     * Launch the application.
-     */
+    public Main() {
+	initialize();
+    }
+
     public static void main(String[] args) {
 
 	EventQueue.invokeLater(new Runnable() {
 	    public void run() {
 
-		try {
+
 		    Main window = new Main();
-		    window.frmKupfermanager.setVisible(true);
-		} catch (Exception e) {
-		    e.printStackTrace();
-		}
+		    window.mainFrame.setVisible(true);
+
 	    }
 	});
     }
 
-    /**
-     * Create the application.
-     */
-
-    public Connection SqlConn = null;
-
-    public Main() {
-	initialize();
-
-    }
-
-    /**
-     * Initialize the contents of the frame.
-     */
-
     private void initialize() {
+	mainFrame = new JFrame();
+	mainFrame.setBounds(0, 0, 800, 600);
+	mainFrame.getContentPane().setLayout(new BorderLayout(0, 0));
 
-	SqlConn = de.edlly.db.SQLiteConnect.dbConnection();
-	frmKupfermanager = new JFrame();
-	frmKupfermanager.setBounds(0, 0, 800, 600);
-	frmKupfermanager.getContentPane().setLayout(new BorderLayout(0, 0));
+	JTabbedPane tabMenu = tabMenuErstellen();
 
-	JTabbedPane TabMenu = new JTabbedPane(JTabbedPane.TOP);
-	TabMenu.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
-	TabMenu.setBorder(new LineBorder(new Color(0, 0, 0)));
-	frmKupfermanager.getContentPane().add(TabMenu);
-
-	de.edlly.gui.WerkstueckManager TabWerkstueckManager = new de.edlly.gui.WerkstueckManager();
-
-	TabMenu.addTab("Werkst\u00FCck Manager", null, TabWerkstueckManager.ui(), null);
-
-	/*
-	 * Werkstück Erstellen Entfernt
-	 */
-
-	// Material Manager
-	de.edlly.gui.materialVerwaltung.TabMaterialVerwaltung TabMaterialManager;
-	try {
-	    TabMaterialManager = new de.edlly.gui.materialVerwaltung.TabMaterialVerwaltung();
-	    TabMenu.addTab("Material Verwaltung", null, TabMaterialManager.materialVerwaltungsPanel(), null);
-	} catch (Exception e1) {
-	    JOptionPane.showMessageDialog(null, e1.getMessage());
-	}
-
-	try {
-	    SqlConn.close();
-	} catch (SQLException e) {
-	    // TODO Auto-generated catch block
-	    e.printStackTrace();
-	}
-
+	mainFrame.getContentPane().add(tabMenu);
     }
 
+    private JTabbedPane tabMenuErstellen() {
+	JTabbedPane tabMenu = new JTabbedPane(JTabbedPane.TOP);
+	tabMenu.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
+	tabMenu.setBorder(new LineBorder(new Color(0, 0, 0)));
+
+	tabsHinzufuegen(tabMenu);
+
+	return tabMenu;
+    }
+
+    private void tabsHinzufuegen(JTabbedPane tabMenu) {
+	WerkstueckManager werkstueckVerwaltung = new WerkstueckManager();
+	tabMenu.addTab("Werkst\u00FCck Verwaltung", null, werkstueckVerwaltung.werkstueckVerwaltungsPanel(), null);
+
+	TabMaterialVerwaltung materialVerwaltung = new TabMaterialVerwaltung();
+	tabMenu.addTab("Material Verwaltung", null, materialVerwaltung.materialVerwaltungsPanel(), null);
+    }
 }

@@ -30,7 +30,7 @@ public class AbfrageMaterialListe {
 	return materialListe;
     }
 
-    private void materialListeAusDatenbankAbrufen(boolean visibily) throws SQLException {
+    private void materialListeAusDatenbankAbrufen(boolean visibily) throws SQLException, IllegalArgumentException  {
 	int[] materialIds = new int[0];
 
 	materialIds = sqlAbfrageMaterialIds(visibily);
