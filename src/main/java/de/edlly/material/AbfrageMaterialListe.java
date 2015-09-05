@@ -17,17 +17,40 @@ import java.sql.Statement;
 public class AbfrageMaterialListe {
 
     private Connection sqlConnection;
-    private int[][] materialListe = null;
+
+    private Object[][] materialListeUnformatiert = null;
+    private Object[][] materialListeFormatiert = null;
 
     public AbfrageMaterialListe(Connection sqlConnection) {
 	this.sqlConnection = sqlConnection;
 
     }
 
-    public int[][] getMaterialListe(boolean visibily) throws SQLException, IllegalArgumentException {
+    public Object[][] getMaterialListe(boolean visibily) throws SQLException, IllegalArgumentException {
 
 	materialListeAusDatenbankAbrufen(visibily);
-	return materialListe;
+	return materialListeUnformatiert;
+    }
+
+    public Object[][] getMaterialListeFormatiert(boolean visibily) throws SQLException, IllegalArgumentException {
+
+	materialListeAusDatenbankAbrufen(visibily);
+	materialListeFormatieren();
+	return materialListeFormatiert;
+    }
+
+    private void materialListeFormatieren() {
+	materialListeFormatiert = new Object[materialListeUnformatiert.length][5];
+	for(int DatensatzCounter = 0; DatensatzCounter != materialListeUnformatiert.length; DatensatzCounter++){
+	    
+
+          materialListeFormatiert[DatensatzCounter][0] =  materialListeUnformatiert[DatensatzCounter][0];
+          materialListeFormatiert[DatensatzCounter][1] = (String)( (Integer)materialListeUnformatiert[DatensatzCounter][1] + "x" +   (Integer)materialListeUnformatiert[DatensatzCounter][2]);
+          materialListeFormatiert[DatensatzCounter][2] =  materialListeUnformatiert[DatensatzCounter][3];
+          materialListeFormatiert[DatensatzCounter][3] =  materialListeUnformatiert[DatensatzCounter][4]; 
+          materialListeFormatiert[DatensatzCounter][4] = integertoBoolean( (Integer)materialListeUnformatiert[DatensatzCounter][5]);
+	    
+	}	
     }
 
     private void materialListeAusDatenbankAbrufen(boolean visibily) throws SQLException, IllegalArgumentException {
@@ -36,10 +59,10 @@ public class AbfrageMaterialListe {
 	materialIds = sqlAbfrageMaterialIds(visibily);
 
 	if (materialIds[0] == 0) {
-	    materialListe = new int[0][0];
+	    materialListeUnformatiert = new Object[0][0];
 	}
 
-	materialListe = new int[materialIds.length][];
+	materialListeUnformatiert = new Object[materialIds.length][6];
 
 	int zaehlerDesArrayIndexes = 0;
 
@@ -47,13 +70,17 @@ public class AbfrageMaterialListe {
 
 	    AbfrageMaterialDatensatz abrufenDerWerte = new AbfrageMaterialDatensatz(sqlConnection);
 
-	    materialListe[zaehlerDesArrayIndexes] = abrufenDerWerte.getMaterialDatensatz(materialIdZumAbrufen);
-	    zaehlerDesArrayIndexes++;
+	    int ArrayPostionsZahler = 0;
+	    for (int werte : abrufenDerWerte.getMaterialDatensatz(materialIdZumAbrufen)) {
 
+		materialListeUnformatiert[zaehlerDesArrayIndexes][ArrayPostionsZahler] = (Integer) werte;
+		ArrayPostionsZahler++;
+	    }
+	    zaehlerDesArrayIndexes++;
 	}
     }
 
-    public int[] sqlAbfrageMaterialIds(boolean visibily) throws SQLException {
+    public int[] sqlAbfrageMaterialIds(boolean visibily) throws SQLException, IllegalArgumentException {
 	Statement sqlStatment = null;
 	ResultSet ergebnissDerDatensatzZaehlung = null;
 	ResultSet abfrageDerDatensatze = null;
@@ -103,5 +130,13 @@ public class AbfrageMaterialListe {
 	    integre = 1;
 	}
 	return integre;
+    }    
+    private boolean integertoBoolean(int integer) {
+	boolean bool = false;
+	if (integer == 1) {
+	    bool = true;
+	}
+	return bool;
     }
+
 }

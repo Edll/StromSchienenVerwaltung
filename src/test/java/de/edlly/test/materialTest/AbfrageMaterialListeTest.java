@@ -31,19 +31,63 @@ public class AbfrageMaterialListeTest extends TestCase {
     }
     
     @Test
-    public void testGetMaterialListeKeineNull() throws SQLException{
+    public void testGetMaterialListeKeineNullDatensatzAnzeigen() throws IllegalArgumentException, SQLException {
 	boolean ausgelendeteDatensatzeNichtAnzeigen = true;
-	Object[] materialListe =  materialDatensatz.getMaterialListe(ausgelendeteDatensatzeNichtAnzeigen);
+	Object[][] materialListe =  materialDatensatz.getMaterialListe(ausgelendeteDatensatzeNichtAnzeigen);
+	
+	assertNotNull("methode darf keine Null liefern", materialListe);
+    }    
+    @Test
+    public void testGetMaterialListeKeineNullDatensatzAusblenden() throws IllegalArgumentException, SQLException {
+	boolean ausgelendeteDatensatzeNichtAnzeigen = false;
+	try{
+	    Object[][] materialListe =  materialDatensatz.getMaterialListe(ausgelendeteDatensatzeNichtAnzeigen);
+	assertNotNull("methode darf keine Null liefern", materialListe);
+	}catch(IllegalArgumentException e){
+	    
+	}
+
+    }
+    
+    @Test
+    public void testGetMaterialListeIstObject() throws SQLException, IllegalArgumentException{
+	boolean ausgelendeteDatensatzeNichtAnzeigen = true;
+	Object[][] vergleichsFormate = new Object[0][0];  
+	assertEquals(vergleichsFormate.getClass(), materialDatensatz.getMaterialListe(ausgelendeteDatensatzeNichtAnzeigen).getClass());
+    }
+    
+    
+    @Test
+    public void testsqlAbfrageMaterialIdsKeineNullDatensatzAnzeigen() throws SQLException, IllegalArgumentException{
+	boolean ausgelendeteDatensatzeNichtAnzeigen = true;
+	int[] materialListe =  materialDatensatz.sqlAbfrageMaterialIds(ausgelendeteDatensatzeNichtAnzeigen);
 	
 	assertNotNull("methode darf keine Null liefern", materialListe);
     }
     
     @Test
-    public void testsqlAbfrageMaterialIdsKeineNull() throws SQLException{
-	boolean ausgelendeteDatensatzeNichtAnzeigen = true;
+    public void testsqlAbfrageMaterialIdsKeineNullDatensatzAusblenden() throws SQLException, IllegalArgumentException{
+	boolean ausgelendeteDatensatzeNichtAnzeigen = false;
 	int[] materialListe =  materialDatensatz.sqlAbfrageMaterialIds(ausgelendeteDatensatzeNichtAnzeigen);
 	
 	assertNotNull("methode darf keine Null liefern", materialListe);
+    }
+    
+    @Test 
+    public void testgetMaterialListeFormatiertKeineNullDatensatzAnzeigen() throws SQLException, IllegalArgumentException{
+	boolean ausgelendeteDatensatzeNichtAnzeigen = true;
+	
+	Object[][] materialListe =  materialDatensatz.getMaterialListeFormatiert(ausgelendeteDatensatzeNichtAnzeigen);
+	assertNotNull("methode darf keine Null liefern", materialListe);
+    }
+    
+    @Test 
+    public void testgetMaterialListeFormatiertKeineNullDatensatzAusblenden() throws SQLException, IllegalArgumentException{
+	boolean ausgelendeteDatensatzeNichtAnzeigen = false;
+	
+	Object[][] materialListe =  materialDatensatz.getMaterialListeFormatiert(ausgelendeteDatensatzeNichtAnzeigen);
+	assertNotNull("methode darf keine Null liefern", materialListe);
+
     }
     
     

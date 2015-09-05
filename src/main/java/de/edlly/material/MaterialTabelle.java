@@ -30,7 +30,7 @@ public class MaterialTabelle {
 	materialTabellenModel.addColumn("Maximale Länge");
 	materialTabellenModel.addColumn("Sichtbar");
 	
-	int[][] materialListe = kompletteMaterialListe.getMaterialListe(ausgeblendeteAnzeigen);
+	Object[][] materialListe = kompletteMaterialListe.getMaterialListeFormatiert(ausgeblendeteAnzeigen);
 	
 	
 	for(int anzahlDerDatensatze=0; anzahlDerDatensatze != materialListe.length; anzahlDerDatensatze++){
@@ -60,7 +60,7 @@ public class MaterialTabelle {
 	@SuppressWarnings("rawtypes")
 	// TODO: letzte klasse zu Boolean für checkbox ändern
 	Class[] types = new Class[] { java.lang.Object.class, java.lang.Object.class, java.lang.Object.class,
-		java.lang.Object.class, java.lang.Object.class, };
+		java.lang.Object.class, java.lang.Boolean.class, };
 
 	public Class<?> getColumnClass(int columnIndex) {
 
