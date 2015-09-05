@@ -31,9 +31,17 @@ public class AbfrageMaterialListeTest extends TestCase {
     }
     
     @Test
-    public void testGetMaterialListe() throws SQLException{
-	boolean ausgelendeteDatensatzeAnzeigen = false;
-	Object[] materialListe =  materialDatensatz.GetMaterialListe(ausgelendeteDatensatzeAnzeigen);
+    public void testGetMaterialListeKeineNull() throws SQLException{
+	boolean ausgelendeteDatensatzeNichtAnzeigen = true;
+	Object[] materialListe =  materialDatensatz.getMaterialListe(ausgelendeteDatensatzeNichtAnzeigen);
+	
+	assertNotNull("methode darf keine Null liefern", materialListe);
+    }
+    
+    @Test
+    public void testsqlAbfrageMaterialIdsKeineNull() throws SQLException{
+	boolean ausgelendeteDatensatzeNichtAnzeigen = true;
+	int[] materialListe =  materialDatensatz.sqlAbfrageMaterialIds(ausgelendeteDatensatzeNichtAnzeigen);
 	
 	assertNotNull("methode darf keine Null liefern", materialListe);
     }

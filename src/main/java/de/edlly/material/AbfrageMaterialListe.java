@@ -17,65 +17,70 @@ import java.sql.Statement;
 public class AbfrageMaterialListe {
 
     Connection sqlConnection;
+    Object[] materialListe = null;
 
     public AbfrageMaterialListe(Connection sqlConnection) {
 	this.sqlConnection = sqlConnection;
 
     }
 
-    public Object[] GetMaterialListe(boolean visibily) throws SQLException {
-	Object[] MaterialListe = null;
-	int[] materialIds;
-	// TODO: Code schreiben
-	
-	materialIds = sqlAbfrageMaterialIds();
-	
-	if(materialIds[0] == 0){
-	    return MaterialListe = new Object[0];
-	}
-	
-	//return sqlMaterialIdErgebniss;
+    public Object[] getMaterialListe(boolean visibily) throws SQLException, IllegalArgumentException {
 
-	// -> null object lerr machen
-
-	// Mit den Ids in einer Schleife die Objekt Datenabfragen
-
-	// Liste aus diesen Datensätzen bauen
-
-	// return dieser Datensätze
-return MaterialListe;
+	materialListeAusDatenbankAbrufen(visibily);
+	return materialListe;
     }
 
-    
-    public int[] sqlAbfrageMaterialIds() throws SQLException {
+    private void materialListeAusDatenbankAbrufen(boolean visibily) throws SQLException {
+	int[] materialIds = new int[0];
+
+	materialIds = sqlAbfrageMaterialIds(visibily);
+
+	if (materialIds[0] == 0) {
+	    materialListe = new Object[0];
+	}
+
+	materialListe = new Object[materialIds.length];
+
+	int zaehlerDesArrayIndexes = 0;
+
+	for (int materialIdZumAbrufen : materialIds) {
+
+	    AbfrageMaterialDatensatz abrufenDerWerte = new AbfrageMaterialDatensatz(sqlConnection);
+	    materialListe[zaehlerDesArrayIndexes] = abrufenDerWerte.getMaterialDatensatz(materialIdZumAbrufen);
+	    zaehlerDesArrayIndexes++;
+
+	}
+    }
+
+    public int[] sqlAbfrageMaterialIds(boolean visibily) throws SQLException {
 	Statement sqlStatment = null;
 	ResultSet ergebnissDerDatensatzZaehlung = null;
 	ResultSet abfrageDerDatensatze = null;
 	int anzahlDerDatensatze = 0;
-	int[] listeDerIds;
-	
+	int[] listeDerIds = new int[] { 0 };
 
 	try {
 	    sqlStatment = sqlConnection.createStatement();
-	    String query = "SELECT id FROM Material";
+	    String query = "SELECT id FROM Material WHERE visibly=\"" + booleanToIntegre(visibily) + "\"";
 	    ergebnissDerDatensatzZaehlung = sqlStatment.executeQuery(query);
-	    
+
 	    while (ergebnissDerDatensatzZaehlung.next()) {
 		anzahlDerDatensatze++;
 	    }
 	    abfrageDerDatensatze = sqlStatment.executeQuery(query);
 	    if (anzahlDerDatensatze != 0) {
-		
+
 		listeDerIds = new int[anzahlDerDatensatze];
 
-		int AnzahlDerAbgefragtenDatensatze = 0;
-		
+		int zaehlerDesArrayIndexes = 0;
+
 		while (ergebnissDerDatensatzZaehlung.next()) {
-		    listeDerIds[AnzahlDerAbgefragtenDatensatze] = abfrageDerDatensatze.getInt(1);
+		    listeDerIds[zaehlerDesArrayIndexes] = abfrageDerDatensatze.getInt(1);
+		    zaehlerDesArrayIndexes++;
 		}
-     
-	    }else{
-		 listeDerIds = new int[] {0};
+
+	    } else {
+		listeDerIds = new int[] { 0 };
 	    }
 
 	    sqlStatment.close();
@@ -85,9 +90,17 @@ return MaterialListe;
 	    throw new SQLException(sqlException);
 
 	} finally {
-		sqlStatment.close();
-		abfrageDerDatensatze.close();
+	    sqlStatment.close();
+	    abfrageDerDatensatze.close();
 	}
-	    return listeDerIds;
+	return listeDerIds;
+    }
+
+    private int booleanToIntegre(boolean bool) {
+	int integre = 0;
+	if (bool) {
+	    integre = 1;
+	}
+	return integre;
     }
 }
