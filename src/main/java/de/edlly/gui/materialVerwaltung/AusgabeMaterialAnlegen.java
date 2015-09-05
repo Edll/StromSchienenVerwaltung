@@ -32,10 +32,10 @@ public class AusgabeMaterialAnlegen {
     private JTextField eingabeKoordinatenMaxY;
     private JButton materialHinzufuegen;
     private JComboBox materialSortenAuswahl;
-
+    private JPanel materialEingabeBereich = new JPanel();
+    
     public JPanel materialEingabeBereich(int PositionX, int PositionY) {
 
-	JPanel materialEingabeBereich = new JPanel();
 	materialEingabeBereich.setBorder(Formatierung.rahmenUmEingabebereiche());
 	materialEingabeBereich.setLayout(null);
 	materialEingabeBereich.setBounds(PositionX, PositionY, 500, 100);
@@ -46,12 +46,12 @@ public class AusgabeMaterialAnlegen {
 	materialSortenListe(materialEingabeBereich);
 	buttonMaterialHinzufuegen(materialEingabeBereich);
 	
-	actionMaterialHinzu(materialEingabeBereich);
+	actionMaterialHinzu();
 
 	return materialEingabeBereich;
     }
 
-    public void actionMaterialHinzu(JPanel materialEingabeBereich) {
+    public void actionMaterialHinzu() {
 
 	materialHinzufuegen.addActionListener(new ActionListener() {
 	    public void actionPerformed(ActionEvent arg0) {
@@ -75,12 +75,10 @@ public class AusgabeMaterialAnlegen {
 		    }
 		    JOptionPane.showMessageDialog(null, "Das neue Material ist erfolgreich eingefügt worden.");
 		    
+		    AusgabeMaterialTabelle neuLadenDerTabelle = new AusgabeMaterialTabelle();
+		    neuLadenDerTabelle.refreshMaterialTabelle();
 		    
-		    /**
-		     * @TODO: Funktion in der Tabellen Erzeugung einbauen um die Daten in der Tabelle neu Laden zu
-		     *        k�nnen
-		     */
-		    
+		    materialEingabeBereich.repaint();
 		    
 
 		} catch (NumberFormatException e) {

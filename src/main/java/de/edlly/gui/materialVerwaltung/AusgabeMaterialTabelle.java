@@ -21,15 +21,14 @@ import de.edlly.material.MaterialTabelle;
 
 public class AusgabeMaterialTabelle {
 
-    private JScrollPane tabellenBereich;
+    private JScrollPane tabellenBereich = new JScrollPane();;
+    private JPanel tabellenAnzeigeBereich  = new JPanel();
 
     public AusgabeMaterialTabelle() {
 
     }
 
     public JPanel materialTabellePanel(int PositionX, int PositionY) {
-
-	JPanel tabellenAnzeigeBereich = new JPanel();
 	tabellenAnzeigeBereich.setBorder(Formatierung.rahmenUmEingabebereiche());
 	tabellenAnzeigeBereich.setLayout(null);
 	tabellenAnzeigeBereich.setBounds(PositionX, PositionY, 738, 380);
@@ -68,6 +67,23 @@ public class AusgabeMaterialTabelle {
 	    sqlException.printStackTrace();
 	}
 	return tabellenBereich;
+    }
+    
+    
+    /*
+     * FIXME: Dies funktioniert noch nicht!
+     */
+    public void refreshMaterialTabelle(){
+	try{
+	Connection sqlConnection;
+	sqlConnection = SQLiteConnect.dbConnection();
+	MaterialTabelle materialTabelle = new MaterialTabelle(sqlConnection);
+	tabellenBereich.setViewportView(materialTabelle.tabelleErstellen(true));
+	SQLiteConnect.closeSqlConnection(sqlConnection);
+	}catch(SQLException sqlException){
+	    sqlException.printStackTrace();
+	}
+
     }
 
 
