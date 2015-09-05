@@ -5,6 +5,12 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
+/**
+ * Anzeige der Werkstück Verwaltung
+ * 
+ * @author Edlly java@edlly.de
+ *
+ */
 public class WerkstueckVerwaltung {
 
     public JPanel werkstueckVerwaltungsPanel() {
@@ -34,11 +40,11 @@ public class WerkstueckVerwaltung {
 
 	tableWerkstueckDB = new JTable(werkstueckDBData, werkstueckDBColNames);
 	tableWerkstueckDB.setFont(Formatierung.tableFont());
-	
+
 	JScrollPane scrollPane = new JScrollPane();
 	scrollPane.setBounds(10, 40, 747, 424);
 	werkstueckVerwaltung.add(scrollPane);
-	
+
 	scrollPane.setViewportView(tableWerkstueckDB);
     }
 }

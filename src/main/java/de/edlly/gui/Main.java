@@ -1,14 +1,21 @@
 package de.edlly.gui;
 
 import java.awt.EventQueue;
+import java.awt.Color;
+import java.awt.BorderLayout;
+
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
 import javax.swing.border.LineBorder;
 
 import de.edlly.gui.materialVerwaltung.TabMaterialVerwaltung;
 
-import java.awt.Color;
-import java.awt.BorderLayout;
+/**
+ * Programm Main Loader
+ * 
+ * @author Edlly java@edlly.de
+ *
+ */
 
 public class Main {
     private JFrame mainFrame;
@@ -22,9 +29,8 @@ public class Main {
 	EventQueue.invokeLater(new Runnable() {
 	    public void run() {
 
-
-		    Main window = new Main();
-		    window.mainFrame.setVisible(true);
+		Main window = new Main();
+		window.mainFrame.setVisible(true);
 
 	    }
 	});
