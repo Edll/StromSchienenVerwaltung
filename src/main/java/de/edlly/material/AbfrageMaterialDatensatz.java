@@ -17,13 +17,9 @@ public class AbfrageMaterialDatensatz {
 
     public AbfrageMaterialDatensatz(Connection sqlConnection) {
 	this.sqlConnection = sqlConnection;
-	this.materialDatensatz = new int[] { 0, 0, 0, 0, 0, 0 };
-
     }
 
-    public void setMaterialId(int materialId) throws IllegalArgumentException, SQLException {
-	materialIdVorhanden(materialId);
-
+    public void setMaterialId(int materialId) {
 	this.materialId = materialId;
     }
 
@@ -39,7 +35,7 @@ public class AbfrageMaterialDatensatz {
 	return materialDatensatz;
     }
 
-    public void materialIdVorhanden(int materialId) throws SQLException {
+    public void materialIdVorhanden(int materialId) throws SQLException, IllegalArgumentException {
 	int sqlMaterialIdErgebniss = 0;
 
 	sqlMaterialIdErgebniss = sqlAbfrageMaterialIdVorhanden(materialId);
@@ -62,7 +58,7 @@ public class AbfrageMaterialDatensatz {
 
 	    sqlResultSet = sqlStatment.executeQuery(query);
 
-	    if (!sqlAbfrageOhneErgebniss(sqlResultSet)) {
+	    if (sqlAbfrageOhneErgebniss(sqlResultSet)) {
 		sqlMaterialIdErgebniss = 0;
 
 	    } else {
@@ -77,38 +73,37 @@ public class AbfrageMaterialDatensatz {
 	    throw new SQLException(sqlException);
 
 	} finally {
-		sqlStatment.close();
-		sqlResultSet.close();
+	    sqlStatment.close();
+	    sqlResultSet.close();
 	}
 	return sqlMaterialIdErgebniss;
-    }
-
-    private boolean sqlAbfrageOhneErgebniss(ResultSet sqlResultSet) throws SQLException {
-	return sqlResultSet.isBeforeFirst();
     }
 
     private void materialDatensatzInObjektdatenSchreiben() throws SQLException {
 
 	Statement sqlStatment = null;
 	ResultSet sqlResultSet = null;
-
 	try {
 	    sqlStatment = sqlConnection.createStatement();
-
+	    materialDatensatz = new int[6];
 	    String sqlQuery = "SELECT id, MaterialSorteId, x, z, yMax, visibly FROM Material WHERE id = \""
 		    + this.materialId + "\" ";
 
 	    sqlResultSet = sqlStatment.executeQuery(sqlQuery);
 
-	    materialDatensatz[0] = sqlResultSet.getInt(1);
-	    materialDatensatz[1] = sqlResultSet.getInt(2);
-	    materialDatensatz[2] = sqlResultSet.getInt(3);
-	    materialDatensatz[3] = sqlResultSet.getInt(4);
-	    materialDatensatz[4] = sqlResultSet.getInt(5);
-	    materialDatensatz[5] = sqlResultSet.getInt(6);
+	    if (sqlAbfrageOhneErgebniss(sqlResultSet)) {
+		materialDatensatz = new int[] { 0, 0, 0, 0, 0, 0 };
+	    } else {
+		materialDatensatz[0] = sqlResultSet.getInt(1);
+		materialDatensatz[1] = sqlResultSet.getInt(2);
+		materialDatensatz[2] = sqlResultSet.getInt(3);
+		materialDatensatz[3] = sqlResultSet.getInt(4);
+		materialDatensatz[4] = sqlResultSet.getInt(5);
+		materialDatensatz[5] = sqlResultSet.getInt(6);
 
-	    sqlStatment.close();
-	    sqlResultSet.close();
+		sqlStatment.close();
+		sqlResultSet.close();
+	    }
 
 	} catch (SQLException e) {
 
@@ -116,13 +111,16 @@ public class AbfrageMaterialDatensatz {
 
 	} finally {
 	    try {
-
 		sqlStatment.close();
 		sqlResultSet.close();
-
 	    } catch (SQLException e) {
-		throw new SQLException(e);
+		e.printStackTrace();
 	    }
+
 	}
+    }
+
+    private boolean sqlAbfrageOhneErgebniss(ResultSet sqlResultSet) throws SQLException {
+	return !sqlResultSet.isBeforeFirst();
     }
 }

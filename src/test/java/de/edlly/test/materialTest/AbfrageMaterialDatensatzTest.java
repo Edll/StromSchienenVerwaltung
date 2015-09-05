@@ -43,18 +43,15 @@ public class AbfrageMaterialDatensatzTest extends TestCase {
     }
 
     @Test
-    public void testSetMaterialIdNull() throws SQLException {
-	try {
-	    materialDatensatz.setMaterialId(0); // wirft eine: IllegalArgumentException
+    public void testSetMaterialIdNull() {
 
-	    fail("Sollte eine IllegalArgumentException ergeben: Material Id nicht Vorhanden.");
-	} catch (IllegalArgumentException expected) {
-	    assertEquals(IllegalArgumentException.class, expected.getClass());
-	}
+	materialDatensatz.setMaterialId(0);
+
+	assertEquals(0, materialDatensatz.getMaterialId());
     }
 
     @Test
-    public void testSetMaterialIdEins() throws SQLException {
+    public void testSetMaterialIdEins() {
 	materialDatensatz.setMaterialId(1);
 
 	assertEquals(1, materialDatensatz.getMaterialId());
@@ -66,8 +63,18 @@ public class AbfrageMaterialDatensatzTest extends TestCase {
     }
 
     @Test
-    public void testGetMaterialDatensatz() throws SQLException {
+    public void testGetMaterialDatensatzWennMaterialIdNull() throws SQLException {
+	materialDatensatz.setMaterialId(0);
 
+	int[] abfrageErgebnissEins = materialDatensatz.getMaterialDatensatz(0);
+
+	int[] testDatensatzEins = { 0, 0, 0, 0, 0, 0 };
+
+	org.junit.Assert.assertArrayEquals(testDatensatzEins, abfrageErgebnissEins);
+    }
+
+    @Test
+    public void testGetMaterialDatensatz() throws SQLException {
 	int[] testDatensatzEins = { 1, 1, 50, 10, 4000, 1 };
 
 	int[] abfrageErgebnissEins = materialDatensatz.getMaterialDatensatz(1);
