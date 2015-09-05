@@ -25,7 +25,7 @@ import de.edlly.material.NeuerMaterialDatensatz;
  *
  */
 
-public class MaterialAnlegen {
+public class AusgabeMaterialAnlegen {
 
     private JTextField eingabeKoordinateX;
     private JTextField eingabeKoordinateZ;

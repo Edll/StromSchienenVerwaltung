@@ -16,36 +16,37 @@ import java.sql.Statement;
 
 public class AbfrageMaterialListe {
 
-    Connection sqlConnection;
-    Object[] materialListe = null;
+    private Connection sqlConnection;
+    private int[][] materialListe = null;
 
     public AbfrageMaterialListe(Connection sqlConnection) {
 	this.sqlConnection = sqlConnection;
 
     }
 
-    public Object[] getMaterialListe(boolean visibily) throws SQLException, IllegalArgumentException {
+    public int[][] getMaterialListe(boolean visibily) throws SQLException, IllegalArgumentException {
 
 	materialListeAusDatenbankAbrufen(visibily);
 	return materialListe;
     }
 
-    private void materialListeAusDatenbankAbrufen(boolean visibily) throws SQLException, IllegalArgumentException  {
+    private void materialListeAusDatenbankAbrufen(boolean visibily) throws SQLException, IllegalArgumentException {
 	int[] materialIds = new int[0];
 
 	materialIds = sqlAbfrageMaterialIds(visibily);
 
 	if (materialIds[0] == 0) {
-	    materialListe = new Object[0];
+	    materialListe = new int[0][0];
 	}
 
-	materialListe = new Object[materialIds.length];
+	materialListe = new int[materialIds.length][];
 
 	int zaehlerDesArrayIndexes = 0;
 
 	for (int materialIdZumAbrufen : materialIds) {
 
 	    AbfrageMaterialDatensatz abrufenDerWerte = new AbfrageMaterialDatensatz(sqlConnection);
+
 	    materialListe[zaehlerDesArrayIndexes] = abrufenDerWerte.getMaterialDatensatz(materialIdZumAbrufen);
 	    zaehlerDesArrayIndexes++;
 

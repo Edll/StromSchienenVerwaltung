@@ -4,7 +4,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import de.edlly.gui.Formatierung;
-import de.edlly.gui.materialVerwaltung.MaterialAnlegen;
+import de.edlly.gui.materialVerwaltung.AusgabeMaterialAnlegen;
 
 /**
  * Erzeugt ein JPanel das die Material Verwaltung beinhaltet.
@@ -36,7 +36,7 @@ public class TabMaterialVerwaltung {
     public void materialTabelleeAnzeigen(JPanel materialVerwaltung) {
 
 	try {
-	    MaterialTabelle materialTabelle = new MaterialTabelle();
+	    AusgabeMaterialTabelle materialTabelle = new AusgabeMaterialTabelle();
 	    materialVerwaltung.add(materialTabelle.materialTabellePanel(10, 10));
 	} catch (Exception e) {
 	    e.printStackTrace();
@@ -48,7 +48,7 @@ public class TabMaterialVerwaltung {
     public void neuesMaterialAnlegen(JPanel materialVerwaltung) {
 
 	try {
-	    MaterialAnlegen neuesMaterialAnlegen = new MaterialAnlegen();
+	    AusgabeMaterialAnlegen neuesMaterialAnlegen = new AusgabeMaterialAnlegen();
 	    materialVerwaltung.add(neuesMaterialAnlegen.materialEingabeBereich(10, 420));
 	} catch (Exception e) {
 	    e.printStackTrace();
