@@ -3,7 +3,6 @@ package de.edlly.material;
 import java.sql.*;
 import java.sql.SQLException;
 
-
 import de.edlly.db.*;
 
 /**
@@ -41,24 +40,25 @@ public class MaterialListe {
 
     private void materialListeFormatieren() {
 	materialListeFormatiert = new Object[materialListeUnformatiert.length][5];
-	for(int DatensatzCounter = 0; DatensatzCounter != materialListeUnformatiert.length; DatensatzCounter++){
-	    
+	for (int DatensatzCounter = 0; DatensatzCounter != materialListeUnformatiert.length; DatensatzCounter++) {
 
-          materialListeFormatiert[DatensatzCounter][0] =  materialListeUnformatiert[DatensatzCounter][0];
-          materialListeFormatiert[DatensatzCounter][1] = (String)( (Integer)materialListeUnformatiert[DatensatzCounter][1] + "x" +   (Integer)materialListeUnformatiert[DatensatzCounter][2]);
-          materialListeFormatiert[DatensatzCounter][2] =  materialListeUnformatiert[DatensatzCounter][3];
-          materialListeFormatiert[DatensatzCounter][3] =  materialListeUnformatiert[DatensatzCounter][4]; 
-          materialListeFormatiert[DatensatzCounter][4] = SQLiteBoolean.integerToBoolean( (Integer)materialListeUnformatiert[DatensatzCounter][5]);
-	    
-	}	
+	    materialListeFormatiert[DatensatzCounter][0] = materialListeUnformatiert[DatensatzCounter][0];
+	    materialListeFormatiert[DatensatzCounter][1] = (String) ((Integer) materialListeUnformatiert[DatensatzCounter][1]
+		    + "x" + (Integer) materialListeUnformatiert[DatensatzCounter][2]);
+	    materialListeFormatiert[DatensatzCounter][2] = materialListeUnformatiert[DatensatzCounter][3];
+	    materialListeFormatiert[DatensatzCounter][3] = materialListeUnformatiert[DatensatzCounter][4];
+	    materialListeFormatiert[DatensatzCounter][4] = SQLiteBoolean
+		    .integerToBoolean((Integer) materialListeUnformatiert[DatensatzCounter][5]);
+
+	}
     }
 
     private void materialListeAusDatenbankAbrufen(boolean visibily) throws SQLException, IllegalArgumentException {
 	int[] materialIds = new int[0];
 
-	
 	MaterialIds abfrageMaterialIds = new MaterialIds(this.sqlConnection);
-	materialIds = abfrageMaterialIds.sqlAbfrageMaterialIds(visibily);
+	abfrageMaterialIds.setAusgelendeteDatensatzeBeruecksichtigen(visibily);
+	materialIds = abfrageMaterialIds.getIdListe();
 
 	if (materialIds[0] == 0) {
 	    materialListeUnformatiert = new Object[0][0];
@@ -82,6 +82,3 @@ public class MaterialListe {
 	}
     }
 }
-   
-
-

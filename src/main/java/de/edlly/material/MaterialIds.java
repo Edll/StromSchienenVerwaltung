@@ -3,71 +3,105 @@ package de.edlly.material;
 import java.sql.*;
 import de.edlly.db.*;
 
+/**
+ * Stellt eine MaterialIds Liste, prüft ob überhaupt ob eine vorhanden ist wenn nicht gibt eine liste mit 0 zurück.
+ * 
+ * @author Edlly java@edlly.de
+ *
+ */
+
 public class MaterialIds {
+
     private Connection sqlConnection;
+    private boolean ausgelendeteDatensaetzeBeruecksichtigen;
+    private int[] idListe = new int[] { 0 };
+
     private Statement sqlStatment = null;
-    private ResultSet ergebnissDerDatensatzZaehlung = null;
-    private ResultSet abfrageDerDatensatze = null;
-    private String query;
-    private int[] listeDerIds = new int[] { 0 };
-    
+    private ResultSet sqlErgebniss = null;
+    private String sqlQuery = "";
 
     public MaterialIds(Connection sqlConnection) {
-	try {
-	    SQLiteConnect.sqlConnectionCloseorNull(sqlConnection);
-	} catch (IllegalArgumentException e) {
-	    e.printStackTrace();
-	} 
-	
+
+	SQLiteConnect.sqlConnectionCloseorNull(sqlConnection);
 	this.sqlConnection = sqlConnection;
     }
 
-    public int[] sqlAbfrageMaterialIds(boolean ausgelendeteDatensatzeBeruecksichtigen)
-	    throws SQLException, IllegalArgumentException {
+    public void setAusgelendeteDatensatzeBeruecksichtigen(boolean ausgelendeteDatensatzeBeruecksichtigen) {
+	this.ausgelendeteDatensaetzeBeruecksichtigen = ausgelendeteDatensatzeBeruecksichtigen;
+    }
 
-	int anzahlDerDatensatze = 0;
-	if (ausgelendeteDatensatzeBeruecksichtigen) {
-	    query = "SELECT id FROM Material WHERE visibly = 1";
-	} else {
-	    query = "SELECT id FROM Material";
-	}
+    public int[] getIdListe() throws IllegalArgumentException, SQLException {
+	materialListeErstellen();
+	return idListe;
+    }
+
+    public void materialListeErstellen() throws SQLException, IllegalArgumentException {
 
 	try {
-	    sqlStatment = sqlConnection.createStatement();
+	    queryAuswahl();
+	    int anzahlDerDatensatze = anzahlDatenseatze();
 
-	    ergebnissDerDatensatzZaehlung = sqlStatment.executeQuery(query);
-
-	    while (ergebnissDerDatensatzZaehlung.next()) {
-		anzahlDerDatensatze++;
-	    }
-
-	    abfrageDerDatensatze = sqlStatment.executeQuery(query);
+	    sqlErgebniss = sqlStatment.executeQuery(sqlQuery);
 
 	    if (anzahlDerDatensatze == 0) {
-
-		listeDerIds = new int[] { 0 };
+		idListe = new int[] { 0 };
 	    } else {
 
-		listeDerIds = new int[anzahlDerDatensatze];
+		idListe = new int[anzahlDerDatensatze];
 		int zaehlerDesArrayIndexes = 0;
 
-		while (ergebnissDerDatensatzZaehlung.next()) {
-		    listeDerIds[zaehlerDesArrayIndexes] = abfrageDerDatensatze.getInt(1);
+		while (sqlErgebniss.next()) {
+
+		    idListe[zaehlerDesArrayIndexes] = sqlErgebniss.getInt(1);
 		    zaehlerDesArrayIndexes++;
 		}
 	    }
-
 	    sqlStatment.close();
-	    abfrageDerDatensatze.close();
+	    sqlErgebniss.close();
 
 	} catch (SQLException sqlException) {
 	    throw new SQLException(sqlException);
 
+	} catch (IllegalArgumentException illegalException) {
+	    throw new SQLException(illegalException);
+
 	} finally {
 	    sqlStatment.close();
-	    abfrageDerDatensatze.close();
+	    sqlErgebniss.close();
 	}
-	return listeDerIds;
+    }
+
+    public int anzahlDatenseatze() {
+	int anzahlDerDatensatze = 0;
+
+	try {
+
+	    sqlStatment = sqlConnection.createStatement();
+	    sqlErgebniss = sqlStatment.executeQuery(sqlQuery);
+
+	    while (sqlErgebniss.next()) {
+		anzahlDerDatensatze++;
+	    }
+	} catch (SQLException sqlException) {
+
+	    anzahlDerDatensatze = 0;
+	}
+
+	return anzahlDerDatensatze;
+    }
+
+    public String getQuery() {
+	return sqlQuery;
+    }
+
+    public void queryAuswahl() {
+	if (ausgelendeteDatensaetzeBeruecksichtigen) {
+
+	    sqlQuery = "SELECT id FROM Material";
+
+	} else {
+	    sqlQuery = "SELECT id FROM Material WHERE visibly = 1";
+	}
     }
 
 }
