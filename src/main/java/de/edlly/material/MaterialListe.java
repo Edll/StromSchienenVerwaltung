@@ -8,7 +8,7 @@ import de.edlly.db.*;
 /**
  * Abfrage der MaterialDaten für eine Tabelle
  * 
- * TODO: Code ist WIP!
+ * TODO: Object wirklich die beste lösung?
  * 
  * @author Edlly java@edlly.de
  *
@@ -17,7 +17,7 @@ import de.edlly.db.*;
 public class MaterialListe {
 
     private Connection sqlConnection;
-    boolean ausgeblendetDatenAnzeigen=false;
+    boolean ausgeblendetDatenAnzeigen = false;
 
     private Object[][] materialListeUnformatiert = null;
     private Object[][] materialListeFormatiert = null;
@@ -61,7 +61,6 @@ public class MaterialListe {
 
 	    materialListeFormatiert[DatensatzCounter][4] = SQLiteBoolean
 		    .integerToBoolean((Integer) materialListeUnformatiert[DatensatzCounter][5]);
-
 	}
     }
 
@@ -69,6 +68,7 @@ public class MaterialListe {
 	int[] materialIds = new int[0];
 
 	MaterialIds abfrageMaterialIds = new MaterialIds(this.sqlConnection);
+	
 	abfrageMaterialIds.setAusgeblendetDatenAnzeigenn(ausgeblendetDatenAnzeigen);
 	materialIds = abfrageMaterialIds.getIdListe();
 
@@ -79,11 +79,10 @@ public class MaterialListe {
 	materialListeUnformatiert = new Object[materialIds.length][6];
 
 	int zaehlerDesArrayIndexes = 0;
-
 	for (int materialIdZumAbrufen : materialIds) {
 
 	    AbfrageMaterialDatensatz abrufenDerWerte = new AbfrageMaterialDatensatz(sqlConnection);
-
+	    
 	    int ArrayPostionsZahler = 0;
 	    for (int werte : abrufenDerWerte.getMaterialDatensatz(materialIdZumAbrufen)) {
 
