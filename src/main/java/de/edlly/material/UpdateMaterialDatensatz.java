@@ -43,19 +43,19 @@ public class UpdateMaterialDatensatz {
 
     }
 
-    public void setMaterialId(int materialId) throws IllegalArgumentException, SQLException {
+    public void setMaterialId(int materialId) throws IllegalArgumentException {
 
 	try {
-	    MaterialDatensatz materialIdVorhanden = new MaterialDatensatz(this.sqlConnection);
-	    materialIdVorhanden.materialIdVorhanden(materialId);
-	    this.materialId = materialId;
+	    // Auskommentiert da Datensatz so nicht mehr aktuell
+	    // MaterialDatensatz materialIdVorhanden = new MaterialDatensatz(this.sqlConnection);
+	    // materialIdVorhanden.materialIdVorhanden(materialId);
+	    // this.materialId = materialId;
 	} catch (IllegalArgumentException e) {
-	  //  e.printStackTrace();
+	    // e.printStackTrace();
 
 	}
 
     }
-
 
     public void updateVisibly(int id, int visibly) {
 
@@ -86,6 +86,5 @@ public class UpdateMaterialDatensatz {
 	    }
 	}
     }
-
 
 }

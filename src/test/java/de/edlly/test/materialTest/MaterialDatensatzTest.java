@@ -31,18 +31,6 @@ public class MaterialDatensatzTest extends TestCase {
     }
 
     @Test
-    public void testMaterialIdVorhandenOhneErgeniss() throws SQLException {
-	try {
-	    materialDatensatz.materialIdVorhanden(0); // wirft eine: IllegalArgumentException
-
-	    fail("Sollte eine IllegalArgumentException ergeben: Material Id nicht Vorhanden.");
-
-	} catch (IllegalArgumentException expected) {
-	    assertEquals(IllegalArgumentException.class, expected.getClass());
-	}
-    }
-
-    @Test
     public void testSetMaterialIdNull() {
 
 	materialDatensatz.setMaterialId(0);

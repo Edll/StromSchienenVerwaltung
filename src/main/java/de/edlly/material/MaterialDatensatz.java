@@ -37,50 +37,6 @@ public class MaterialDatensatz {
 	return materialDatensatz;
     }
 
-    public void materialIdVorhanden(int materialId) throws SQLException, IllegalArgumentException {
-	int sqlMaterialIdErgebniss = 0;
-
-	sqlMaterialIdErgebniss = sqlAbfrageMaterialIdVorhanden(materialId);
-
-	if (sqlMaterialIdErgebniss == 0) {
-	    throw new IllegalArgumentException("Die Material Id ist nicht vorhanden.");
-	}
-    }
-
-    public int sqlAbfrageMaterialIdVorhanden(int materialId) throws SQLException {
-	Statement sqlStatment = null;
-	ResultSet sqlResultSet = null;
-
-	int sqlMaterialIdErgebniss = 0;
-
-	try {
-	    sqlStatment = sqlConnection.createStatement();
-
-	    String query = "SELECT id FROM Material WHERE id = \"" + materialId + "\"";
-
-	    sqlResultSet = sqlStatment.executeQuery(query);
-
-	    if (sqlAbfrageOhneErgebniss(sqlResultSet)) {
-		sqlMaterialIdErgebniss = 0;
-
-	    } else {
-		sqlMaterialIdErgebniss = sqlResultSet.getInt(1);
-
-	    }
-
-	    sqlStatment.close();
-	    sqlResultSet.close();
-
-	} catch (SQLException sqlException) {
-	    throw new SQLException(sqlException);
-
-	} finally {
-	    sqlStatment.close();
-	    sqlResultSet.close();
-	}
-	return sqlMaterialIdErgebniss;
-    }
-
     private void materialDatensatzInObjektdatenSchreiben() throws SQLException {
 
 	Statement sqlStatment = null;

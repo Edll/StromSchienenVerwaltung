@@ -34,6 +34,19 @@ public class MaterialIds {
 	materialListeErstellen();
 	return idListe;
     }
+    
+    public boolean materialIdVorhanden(int materialId) throws IllegalArgumentException, SQLException {
+
+	setAusgeblendetDatenAnzeigenn(false);
+	int[] idListe = getIdListe();
+	for(int id : idListe){
+	    
+	    if(id == materialId ){
+		return true;
+	    }
+	}
+	return false;
+    }
 
     public void materialListeErstellen() throws SQLException, IllegalArgumentException {
 
