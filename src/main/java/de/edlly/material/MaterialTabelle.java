@@ -2,7 +2,6 @@ package de.edlly.material;
 
 import java.sql.*;
 
-
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -14,14 +13,10 @@ public class MaterialTabelle {
 	this.sqlConnection = sqlConnection;
     }
 
-    
-    
-    
-
     public JTable tabelleErstellen(boolean ausgeblendeteAnzeigen) throws SQLException {
 
 	MaterialListe kompletteMaterialListe = new MaterialListe(sqlConnection);
-
+	kompletteMaterialListe.setAusgeblendetDatenAnzeigen(true);
 	// Erstellen des Table Models
 	MaterialTabelleModel materialTabellenModel = new MaterialTabelleModel();
 	materialTabellenModel.addColumn("Id");
@@ -29,14 +24,14 @@ public class MaterialTabelle {
 	materialTabellenModel.addColumn("Größe");
 	materialTabellenModel.addColumn("Maximale Länge");
 	materialTabellenModel.addColumn("Sichtbar");
-	
-	Object[][] materialListe = kompletteMaterialListe.getMaterialListeFormatiert(ausgeblendeteAnzeigen);
-	
-	
-	for(int anzahlDerDatensatze=0; anzahlDerDatensatze != materialListe.length; anzahlDerDatensatze++){
-	    materialTabellenModel.addRow(new Object[] { materialListe[anzahlDerDatensatze][0], materialListe[anzahlDerDatensatze][1], materialListe[anzahlDerDatensatze][2], materialListe[anzahlDerDatensatze][3], materialListe[anzahlDerDatensatze][4] }); 
+
+	Object[][] materialListe = kompletteMaterialListe.getMaterialListeFormatiert();
+
+	for (int anzahlDerDatensatze = 0; anzahlDerDatensatze != materialListe.length; anzahlDerDatensatze++) {
+	    materialTabellenModel.addRow(new Object[] { materialListe[anzahlDerDatensatze][0],
+		    materialListe[anzahlDerDatensatze][1], materialListe[anzahlDerDatensatze][2],
+		    materialListe[anzahlDerDatensatze][3], materialListe[anzahlDerDatensatze][4] });
 	}
-	
 
 	JTable materialTabelle = new JTable(materialTabellenModel);
 
