@@ -15,13 +15,13 @@ import de.edlly.db.*;
  *
  */
 
-public class AbfrageMaterialListe {
+public class MaterialListe {
 
     private Object[][] materialListeUnformatiert = null;
     private Object[][] materialListeFormatiert = null;
     private Connection sqlConnection;
 
-    public AbfrageMaterialListe(Connection sqlConnection) {
+    public MaterialListe(Connection sqlConnection) {
 	this.sqlConnection = sqlConnection;
 
     }
@@ -57,7 +57,7 @@ public class AbfrageMaterialListe {
 	int[] materialIds = new int[0];
 
 	
-	AbfrageMaterialIds abfrageMaterialIds = new AbfrageMaterialIds(this.sqlConnection);
+	MaterialIds abfrageMaterialIds = new MaterialIds(this.sqlConnection);
 	materialIds = abfrageMaterialIds.sqlAbfrageMaterialIds(visibily);
 
 	if (materialIds[0] == 0) {

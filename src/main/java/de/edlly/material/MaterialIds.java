@@ -3,7 +3,7 @@ package de.edlly.material;
 import java.sql.*;
 import de.edlly.db.*;
 
-public class AbfrageMaterialIds {
+public class MaterialIds {
     private Connection sqlConnection;
     private Statement sqlStatment = null;
     private ResultSet ergebnissDerDatensatzZaehlung = null;
@@ -12,7 +12,7 @@ public class AbfrageMaterialIds {
     private int[] listeDerIds = new int[] { 0 };
     
 
-    public AbfrageMaterialIds(Connection sqlConnection) {
+    public MaterialIds(Connection sqlConnection) {
 	try {
 	    SQLiteConnect.sqlConnectionCloseorNull(sqlConnection);
 	} catch (IllegalArgumentException e) {

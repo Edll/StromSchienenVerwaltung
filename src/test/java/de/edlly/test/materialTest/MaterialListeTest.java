@@ -5,7 +5,7 @@ import java.sql.*;
 import org.junit.Test;
 import junit.framework.TestCase;
 import de.edlly.db.SQLiteConnect;
-import de.edlly.material.AbfrageMaterialListe;
+import de.edlly.material.MaterialListe;
 
 /**
  * Tests für die AbfrageDatensatzMaterialTabelle
@@ -17,16 +17,16 @@ import de.edlly.material.AbfrageMaterialListe;
  *
  */
 
-public class AbfrageMaterialListeTest extends TestCase {
+public class MaterialListeTest extends TestCase {
     
-    AbfrageMaterialListe materialDatensatz;
+    MaterialListe materialDatensatz;
     Connection sqlConnection;
     
     
     @Override
     public void setUp() {
 	sqlConnection = SQLiteConnect.dbConnection();
-	materialDatensatz = new AbfrageMaterialListe(sqlConnection);
+	materialDatensatz = new MaterialListe(sqlConnection);
     }
     
     @Test

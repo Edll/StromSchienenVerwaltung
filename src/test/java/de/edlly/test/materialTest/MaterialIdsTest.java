@@ -10,16 +10,16 @@ import org.junit.Before;
 import org.junit.Test;
 
 import de.edlly.db.SQLiteConnect;
-import de.edlly.material.AbfrageMaterialIds;
+import de.edlly.material.MaterialIds;
 
-public class AbfrageMaterialIdsTest {
+public class MaterialIdsTest {
     Connection sqlConnection;
-    AbfrageMaterialIds materialIds;
+    MaterialIds materialIds;
     
     @Before
     public void setUp() {
 	sqlConnection = SQLiteConnect.dbConnection();
-	materialIds = new AbfrageMaterialIds(sqlConnection);
+	materialIds = new MaterialIds(sqlConnection);
     }
 
 

@@ -1,7 +1,7 @@
 package de.edlly.test;
 
 import de.edlly.test.materialTest.NeuerMaterialDatensatzTest;
-import de.edlly.test.materialTest.AbfrageMaterialListeTest;
+import de.edlly.test.materialTest.MaterialListeTest;
 import de.edlly.test.materialTest.AbfrageMaterialDatensatzTest;
 import de.edlly.test.materialTest.UpdateMaterialDatensatzTest;
 import de.edlly.test.db.SQLiteBooleanTest;
@@ -22,7 +22,7 @@ public class AllTests extends TestSuite {
 	materialDatensatz.addTestSuite(NeuerMaterialDatensatzTest.class);
 	materialDatensatz.addTestSuite(AbfrageMaterialDatensatzTest.class);
 	materialDatensatz.addTestSuite(UpdateMaterialDatensatzTest.class);
-	materialDatensatz.addTestSuite(AbfrageMaterialListeTest.class);
+	materialDatensatz.addTestSuite(MaterialListeTest.class);
 	return materialDatensatz;
     }
 

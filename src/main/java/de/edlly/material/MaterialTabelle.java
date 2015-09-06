@@ -20,7 +20,7 @@ public class MaterialTabelle {
 
     public JTable tabelleErstellen(boolean ausgeblendeteAnzeigen) throws SQLException {
 
-	AbfrageMaterialListe kompletteMaterialListe = new AbfrageMaterialListe(sqlConnection);
+	MaterialListe kompletteMaterialListe = new MaterialListe(sqlConnection);
 
 	// Erstellen des Table Models
 	MaterialTabelleModel materialTabellenModel = new MaterialTabelleModel();
