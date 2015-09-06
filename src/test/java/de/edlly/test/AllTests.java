@@ -2,7 +2,9 @@ package de.edlly.test;
 
 import de.edlly.test.materialTest.NeuerMaterialDatensatzTest;
 import de.edlly.test.materialTest.MaterialListeTest;
+import de.edlly.test.materialTest.MaterialSorteTest;
 import de.edlly.test.materialTest.MaterialDatensatzTest;
+import de.edlly.test.materialTest.MaterialIdsTest;
 import de.edlly.test.materialTest.UpdateMaterialDatensatzTest;
 import de.edlly.test.db.SQLiteBooleanTest;
 import junit.framework.Test;
@@ -23,6 +25,8 @@ public class AllTests extends TestSuite {
 	materialDatensatz.addTestSuite(MaterialDatensatzTest.class);
 	materialDatensatz.addTestSuite(UpdateMaterialDatensatzTest.class);
 	materialDatensatz.addTestSuite(MaterialListeTest.class);
+	materialDatensatz.addTestSuite(MaterialIdsTest.class);
+	materialDatensatz.addTestSuite(MaterialSorteTest.class);
 	return materialDatensatz;
     }
 

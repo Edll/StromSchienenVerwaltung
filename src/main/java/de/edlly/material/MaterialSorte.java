@@ -7,53 +7,63 @@ import de.edlly.db.SQLiteConnect;
 /**
  * MaterialSorten Behandlung
  * 
- * TODO: Klasse Sauber machen! Der Code ist so echt misst!
+ * TODO: Code ist WIP! Refactoring bzw Neustrukturierung nötig!
  * 
  * @author Edlly java@edlly.de
  *
  */
 
 public class MaterialSorte {
-    public int id;
-    public int materialSorteId;
-    public int x;
-    public int z;
-    public Connection sqlConnection;
+    private int materialSorteId;
+    private String MaterialSorteName = "";
+    private Connection sqlConnection;
+
+    private Statement sqlStatment = null;
+    private PreparedStatement sqlpreparedStatment = null;
+    private ResultSet sqlErgebniss = null;
+    private String sqlQuery = "";
 
     public MaterialSorte(Connection sqlConnection) {
-	
+
 	SQLiteConnect.sqlConnectionCloseorNull(sqlConnection);
 	this.sqlConnection = sqlConnection;
     }
 
-    public String SelectMaterialSorteId(int MaterialSorteId) {
-
-	String result = null;
-	ResultSet rs = null;
-	PreparedStatement pst = null;
+    public String materialSortenName(int MaterialSorteId) throws SQLException {
 	try {
-	    if (MaterialSorteId == 0) {
-		throw new IllegalArgumentException("Material Sorte in Abfrage MaterialSorteId 0");
+
+	    sqlStatment = sqlConnection.createStatement();
+	    sqlQuery = "SELECT MaterialSorte FROM MaterialSorten Where id=" + MaterialSorteId;
+	    sqlErgebniss = sqlStatment.executeQuery(sqlQuery);
+
+	    if (sqlAbfrageOhneErgebniss()) {
+		sqlStatment.close();
+		sqlErgebniss.close();
+
+		return MaterialSorteName = "N/A";
 	    }
-	    String query = "SELECT MaterialSorte FROM MaterialSorten Where id=" + MaterialSorteId;
-	    pst = sqlConnection.prepareStatement(query);
 
-	    rs = pst.executeQuery();
-	    result = rs.getString(1);
+	    MaterialSorteName = sqlErgebniss.getString(1);
 
-	    return result;
-	} catch (Exception e) {
+	    sqlStatment.close();
+	    sqlErgebniss.close();
+	    return MaterialSorteName;
 
-	    throw new IllegalArgumentException(e);
+	} catch (SQLException sqlException) {
 
+	    throw new SQLException(sqlException);
 	} finally {
 	    try {
-		pst.close();
-		rs.close();
-	    } catch (Exception e) {
-		throw new IllegalArgumentException(e);
+		sqlStatment.close();
+		sqlErgebniss.close();
+	    } catch (SQLException sqlException) {
+		sqlException.printStackTrace();
 	    }
 	}
+    }
+
+    private boolean sqlAbfrageOhneErgebniss() throws SQLException {
+	return !sqlErgebniss.isBeforeFirst();
     }
 
     public int SelectMaterialSorteString(String MaterialSorteString) {

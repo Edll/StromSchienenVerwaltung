@@ -1,7 +1,5 @@
 package de.edlly.test.materialTest;
 
-import static org.junit.Assert.*;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -11,6 +9,7 @@ import org.junit.Test;
 
 import de.edlly.db.SQLiteConnect;
 import de.edlly.material.MaterialIds;
+import junit.framework.TestCase;
 
 /**
  * Tests für die MaterialIds Klasse.
@@ -19,7 +18,7 @@ import de.edlly.material.MaterialIds;
  *
  */
 
-public class MaterialIdsTest {
+public class MaterialIdsTest extends TestCase {
     Connection sqlConnection;
     MaterialIds materialIds;
 

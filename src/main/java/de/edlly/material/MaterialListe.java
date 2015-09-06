@@ -45,14 +45,14 @@ public class MaterialListe {
 	return materialListeFormatiert;
     }
 
-    private void materialListeFormatieren() {
+    private void materialListeFormatieren() throws SQLException {
 	materialListeFormatiert = new Object[materialListeUnformatiert.length][5];
 	MaterialSorte materialSorte = new MaterialSorte(SQLiteConnect.dbConnection());
 	for (int DatensatzCounter = 0; DatensatzCounter != materialListeUnformatiert.length; DatensatzCounter++) {
 	    materialListeFormatiert[DatensatzCounter][0] = materialListeUnformatiert[DatensatzCounter][0];
 
 	    materialListeFormatiert[DatensatzCounter][1] = (String) materialSorte
-		    .SelectMaterialSorteId((Integer) materialListeUnformatiert[DatensatzCounter][1]);
+		    .materialSortenName((Integer) materialListeUnformatiert[DatensatzCounter][1]);
 
 	    materialListeFormatiert[DatensatzCounter][2] = (String) ((Integer) materialListeUnformatiert[DatensatzCounter][2]
 		    + "x" + (Integer) materialListeUnformatiert[DatensatzCounter][3]);
