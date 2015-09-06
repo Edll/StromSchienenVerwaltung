@@ -13,7 +13,7 @@ import javax.swing.JTextField;
 
 import de.edlly.db.SQLiteConnect;
 import de.edlly.gui.Formatierung;
-import de.edlly.material.DbAbfrage;
+import de.edlly.material.MaterialSorte;
 import de.edlly.material.NeuerMaterialDatensatz;
 
 /**
@@ -58,7 +58,7 @@ public class AusgabeMaterialAnlegen {
 
 		try {
 
-		    DbAbfrage materialSorteId = new DbAbfrage();
+		    MaterialSorte materialSorteId = new MaterialSorte( SQLiteConnect.dbConnection());
 		    int MaterialSorteSelectId = materialSorteId
 			    .SelectMaterialSorteString((String) materialSortenAuswahl.getSelectedItem());
 
@@ -97,7 +97,7 @@ public class AusgabeMaterialAnlegen {
 
     public void materialSortenListe(JPanel materialEingabeBereich) {
 
-	DbAbfrage materialDB = new DbAbfrage();
+	MaterialSorte materialDB = new MaterialSorte( SQLiteConnect.dbConnection());
 	materialSortenAuswahl = new JComboBox(materialDB.SelectTableMaterialSorteString());
 	materialSortenAuswahl.setBounds(156, 50, 96, 20);
 	materialEingabeBereich.add(materialSortenAuswahl);
