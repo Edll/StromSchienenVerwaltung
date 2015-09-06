@@ -16,48 +16,60 @@ import de.edlly.db.*;
 
 public class MaterialListe {
 
+    private Connection sqlConnection;
+    boolean ausgeblendetDatenAnzeigen=false;
+
     private Object[][] materialListeUnformatiert = null;
     private Object[][] materialListeFormatiert = null;
-    private Connection sqlConnection;
 
     public MaterialListe(Connection sqlConnection) {
-	this.sqlConnection = sqlConnection;
 
+	SQLiteConnect.sqlConnectionCloseorNull(sqlConnection);
+	this.sqlConnection = sqlConnection;
     }
 
-    public Object[][] getMaterialListe(boolean visibily) throws SQLException, IllegalArgumentException {
+    public void setAusgeblendetDatenAnzeigen(boolean ausgeblendetDatenAnzeigen) {
+	this.ausgeblendetDatenAnzeigen = ausgeblendetDatenAnzeigen;
+    }
 
-	materialListeAusDatenbankAbrufen(visibily);
+    public Object[][] getMaterialListe() throws SQLException, IllegalArgumentException {
+
+	materialListeAusDatenbankAbrufen();
 	return materialListeUnformatiert;
     }
 
-    public Object[][] getMaterialListeFormatiert(boolean visibily) throws SQLException, IllegalArgumentException {
+    public Object[][] getMaterialListeFormatiert() throws SQLException, IllegalArgumentException {
 
-	materialListeAusDatenbankAbrufen(visibily);
+	materialListeAusDatenbankAbrufen();
 	materialListeFormatieren();
 	return materialListeFormatiert;
     }
 
     private void materialListeFormatieren() {
 	materialListeFormatiert = new Object[materialListeUnformatiert.length][5];
+	MaterialSorte materialSorte = new MaterialSorte(SQLiteConnect.dbConnection());
 	for (int DatensatzCounter = 0; DatensatzCounter != materialListeUnformatiert.length; DatensatzCounter++) {
-
 	    materialListeFormatiert[DatensatzCounter][0] = materialListeUnformatiert[DatensatzCounter][0];
-	    materialListeFormatiert[DatensatzCounter][1] = (String) ((Integer) materialListeUnformatiert[DatensatzCounter][1]
-		    + "x" + (Integer) materialListeUnformatiert[DatensatzCounter][2]);
-	    materialListeFormatiert[DatensatzCounter][2] = materialListeUnformatiert[DatensatzCounter][3];
+
+	    materialListeFormatiert[DatensatzCounter][1] = (String) materialSorte
+		    .SelectMaterialSorteId((Integer) materialListeUnformatiert[DatensatzCounter][1]);
+
+	    materialListeFormatiert[DatensatzCounter][2] = (String) ((Integer) materialListeUnformatiert[DatensatzCounter][2]
+		    + "x" + (Integer) materialListeUnformatiert[DatensatzCounter][3]);
+
 	    materialListeFormatiert[DatensatzCounter][3] = materialListeUnformatiert[DatensatzCounter][4];
+
 	    materialListeFormatiert[DatensatzCounter][4] = SQLiteBoolean
 		    .integerToBoolean((Integer) materialListeUnformatiert[DatensatzCounter][5]);
 
 	}
     }
 
-    private void materialListeAusDatenbankAbrufen(boolean visibily) throws SQLException, IllegalArgumentException {
+    private void materialListeAusDatenbankAbrufen() throws SQLException, IllegalArgumentException {
 	int[] materialIds = new int[0];
 
 	MaterialIds abfrageMaterialIds = new MaterialIds(this.sqlConnection);
-	abfrageMaterialIds.setAusgelendeteDatensatzeBeruecksichtigen(visibily);
+	abfrageMaterialIds.setAusgeblendetDatenAnzeigenn(ausgeblendetDatenAnzeigen);
 	materialIds = abfrageMaterialIds.getIdListe();
 
 	if (materialIds[0] == 0) {

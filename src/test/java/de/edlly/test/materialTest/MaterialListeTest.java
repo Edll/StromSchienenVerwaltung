@@ -31,16 +31,17 @@ public class MaterialListeTest extends TestCase {
     
     @Test
     public void testGetMaterialListeKeineNullDatensatzAnzeigen() throws IllegalArgumentException, SQLException {
-	boolean ausgelendeteDatensatzeNichtAnzeigen = true;
-	Object[][] materialListe =  materialDatensatz.getMaterialListe(ausgelendeteDatensatzeNichtAnzeigen);
+	
+	materialDatensatz.setAusgeblendetDatenAnzeigen(true);
+	Object[][] materialListe =  materialDatensatz.getMaterialListe();
 	
 	assertNotNull("methode darf keine Null liefern", materialListe);
     }    
     @Test
     public void testGetMaterialListeKeineNullDatensatzAusblenden() throws IllegalArgumentException, SQLException {
-	boolean ausgelendeteDatensatzeNichtAnzeigen = false;
 	try{
-	    Object[][] materialListe =  materialDatensatz.getMaterialListe(ausgelendeteDatensatzeNichtAnzeigen);
+	    materialDatensatz.setAusgeblendetDatenAnzeigen(false);
+	    Object[][] materialListe =  materialDatensatz.getMaterialListe();
 	assertNotNull("methode darf keine Null liefern", materialListe);
 	}catch(IllegalArgumentException e){
 	    
@@ -50,9 +51,9 @@ public class MaterialListeTest extends TestCase {
     
     @Test
     public void testGetMaterialListeIstObject() throws SQLException, IllegalArgumentException{
-	boolean ausgelendeteDatensatzeNichtAnzeigen = true;
+	  materialDatensatz.setAusgeblendetDatenAnzeigen(false);
 	Object[][] vergleichsFormate = new Object[0][0];  
-	assertEquals(vergleichsFormate.getClass(), materialDatensatz.getMaterialListe(ausgelendeteDatensatzeNichtAnzeigen).getClass());
+	assertEquals(vergleichsFormate.getClass(), materialDatensatz.getMaterialListe().getClass());
     }
     
     
@@ -60,17 +61,17 @@ public class MaterialListeTest extends TestCase {
     
     @Test 
     public void testgetMaterialListeFormatiertKeineNullDatensatzAnzeigen() throws SQLException, IllegalArgumentException{
-	boolean ausgelendeteDatensatzeNichtAnzeigen = true;
-	
-	Object[][] materialListe =  materialDatensatz.getMaterialListeFormatiert(ausgelendeteDatensatzeNichtAnzeigen);
+
+	  materialDatensatz.setAusgeblendetDatenAnzeigen(true);
+	Object[][] materialListe =  materialDatensatz.getMaterialListeFormatiert();
 	assertNotNull("methode darf keine Null liefern", materialListe);
     }
     
     @Test 
     public void testgetMaterialListeFormatiertKeineNullDatensatzAusblenden() throws SQLException, IllegalArgumentException{
-	boolean ausgelendeteDatensatzeNichtAnzeigen = false;
-	
-	Object[][] materialListe =  materialDatensatz.getMaterialListeFormatiert(ausgelendeteDatensatzeNichtAnzeigen);
+
+	  materialDatensatz.setAusgeblendetDatenAnzeigen(false);
+	Object[][] materialListe =  materialDatensatz.getMaterialListeFormatiert();
 	assertNotNull("methode darf keine Null liefern", materialListe);
 
     }
