@@ -81,7 +81,7 @@ public class MaterialListe {
 	int zaehlerDesArrayIndexes = 0;
 	for (int materialIdZumAbrufen : materialIds) {
 
-	    AbfrageMaterialDatensatz abrufenDerWerte = new AbfrageMaterialDatensatz(sqlConnection);
+	    MaterialDatensatz abrufenDerWerte = new MaterialDatensatz(sqlConnection);
 	    
 	    int ArrayPostionsZahler = 0;
 	    for (int werte : abrufenDerWerte.getMaterialDatensatz(materialIdZumAbrufen)) {

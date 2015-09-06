@@ -3,19 +3,21 @@ package de.edlly.material;
 import java.sql.*;
 
 /**
- * Fragt den Material Datensatz aus der DB ab.
+ * Erstellt einen Material Datensatz anhand einer der materialId
+ * 
+ * TODO: Klasse zerlegen abfrage wie MaterialIds umbauen.
  * 
  * @author Edlly java@edlly.de
  *
  */
 
-public class AbfrageMaterialDatensatz {
+public class MaterialDatensatz {
     private int[] materialDatensatz;
     private int materialId;
 
     private Connection sqlConnection;
 
-    public AbfrageMaterialDatensatz(Connection sqlConnection) {
+    public MaterialDatensatz(Connection sqlConnection) {
 	this.sqlConnection = sqlConnection;
     }
 

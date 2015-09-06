@@ -46,7 +46,7 @@ public class UpdateMaterialDatensatz {
     public void setMaterialId(int materialId) throws IllegalArgumentException, SQLException {
 
 	try {
-	    AbfrageMaterialDatensatz materialIdVorhanden = new AbfrageMaterialDatensatz(this.sqlConnection);
+	    MaterialDatensatz materialIdVorhanden = new MaterialDatensatz(this.sqlConnection);
 	    materialIdVorhanden.materialIdVorhanden(materialId);
 	    this.materialId = materialId;
 	} catch (IllegalArgumentException e) {
