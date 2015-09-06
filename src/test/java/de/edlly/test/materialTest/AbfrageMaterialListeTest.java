@@ -4,7 +4,6 @@ import java.sql.*;
 
 import org.junit.Test;
 import junit.framework.TestCase;
-
 import de.edlly.db.SQLiteConnect;
 import de.edlly.material.AbfrageMaterialListe;
 
@@ -57,21 +56,7 @@ public class AbfrageMaterialListeTest extends TestCase {
     }
     
     
-    @Test
-    public void testsqlAbfrageMaterialIdsKeineNullDatensatzAnzeigen() throws SQLException, IllegalArgumentException{
-	boolean ausgelendeteDatensatzeNichtAnzeigen = true;
-	int[] materialListe =  materialDatensatz.sqlAbfrageMaterialIds(ausgelendeteDatensatzeNichtAnzeigen);
-	
-	assertNotNull("methode darf keine Null liefern", materialListe);
-    }
-    
-    @Test
-    public void testsqlAbfrageMaterialIdsKeineNullDatensatzAusblenden() throws SQLException, IllegalArgumentException{
-	boolean ausgelendeteDatensatzeNichtAnzeigen = false;
-	int[] materialListe =  materialDatensatz.sqlAbfrageMaterialIds(ausgelendeteDatensatzeNichtAnzeigen);
-	
-	assertNotNull("methode darf keine Null liefern", materialListe);
-    }
+   
     
     @Test 
     public void testgetMaterialListeFormatiertKeineNullDatensatzAnzeigen() throws SQLException, IllegalArgumentException{
