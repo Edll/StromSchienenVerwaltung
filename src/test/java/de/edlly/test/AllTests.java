@@ -9,13 +9,14 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 /**
- * Läde die einzelnen tests.
+ * Lädt die einzelnen tests.
  * 
  * @author Edlly java@edlly.de
  *
  */
 
 public class AllTests extends TestSuite {
+
     public static Test suiteMaterial() {
 	TestSuite materialDatensatz = new TestSuite("Material Datenbank Abfragen");
 	materialDatensatz.addTestSuite(NeuerMaterialDatensatzTest.class);
@@ -24,10 +25,10 @@ public class AllTests extends TestSuite {
 	materialDatensatz.addTestSuite(AbfrageMaterialListeTest.class);
 	return materialDatensatz;
     }
+
     public static Test suiteDB() {
 	TestSuite datenbankTest = new TestSuite("Datenbank Funktionen");
 	datenbankTest.addTestSuite(SQLiteBooleanTest.class);
 	return datenbankTest;
     }
-    
 }
