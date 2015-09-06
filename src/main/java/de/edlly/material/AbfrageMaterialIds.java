@@ -1,49 +1,60 @@
 package de.edlly.material;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-
-import de.edlly.db.SQLiteBoolean;
+import java.sql.*;
+import de.edlly.db.*;
 
 public class AbfrageMaterialIds {
     private Connection sqlConnection;
+    private Statement sqlStatment = null;
+    private ResultSet ergebnissDerDatensatzZaehlung = null;
+    private ResultSet abfrageDerDatensatze = null;
+    private String query;
+    private int[] listeDerIds = new int[] { 0 };
+    
 
     public AbfrageMaterialIds(Connection sqlConnection) {
-	this.sqlConnection = sqlConnection;
+	try {
+	    SQLiteConnect.sqlConnectionCloseorNull(sqlConnection);
+	} catch (IllegalArgumentException e) {
+	    e.printStackTrace();
+	} 
 	
+	this.sqlConnection = sqlConnection;
     }
 
-    public int[] sqlAbfrageMaterialIds(boolean visibily) throws SQLException, IllegalArgumentException {
-	Statement sqlStatment = null;
-	ResultSet ergebnissDerDatensatzZaehlung = null;
-	ResultSet abfrageDerDatensatze = null;
+    public int[] sqlAbfrageMaterialIds(boolean ausgelendeteDatensatzeBeruecksichtigen)
+	    throws SQLException, IllegalArgumentException {
+
 	int anzahlDerDatensatze = 0;
-	int[] listeDerIds = new int[] { 0 };
+	if (ausgelendeteDatensatzeBeruecksichtigen) {
+	    query = "SELECT id FROM Material WHERE visibly = 1";
+	} else {
+	    query = "SELECT id FROM Material";
+	}
 
 	try {
 	    sqlStatment = sqlConnection.createStatement();
-	    String query = "SELECT id FROM Material WHERE visibly=\"" + SQLiteBoolean.booleanToInteger(visibily) + "\"";
+
 	    ergebnissDerDatensatzZaehlung = sqlStatment.executeQuery(query);
 
 	    while (ergebnissDerDatensatzZaehlung.next()) {
 		anzahlDerDatensatze++;
 	    }
+
 	    abfrageDerDatensatze = sqlStatment.executeQuery(query);
-	    if (anzahlDerDatensatze != 0) {
+
+	    if (anzahlDerDatensatze == 0) {
+
+		listeDerIds = new int[] { 0 };
+	    } else {
 
 		listeDerIds = new int[anzahlDerDatensatze];
-
 		int zaehlerDesArrayIndexes = 0;
 
 		while (ergebnissDerDatensatzZaehlung.next()) {
 		    listeDerIds[zaehlerDesArrayIndexes] = abfrageDerDatensatze.getInt(1);
 		    zaehlerDesArrayIndexes++;
 		}
-
-	    } else {
-		listeDerIds = new int[] { 0 };
 	    }
 
 	    sqlStatment.close();
