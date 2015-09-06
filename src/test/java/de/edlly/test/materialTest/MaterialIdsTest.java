@@ -32,7 +32,7 @@ public class MaterialIdsTest {
     @Test
     public void testGetIdListeDatensatzeTrue() throws SQLException, IllegalArgumentException {
 	boolean ausgelendeteDatensatzeNichtAnzeigen = true;
-	materialIds.setAusgelendeteDatensatzeBeruecksichtigen(ausgelendeteDatensatzeNichtAnzeigen);
+	materialIds.setAusgeblendetDatenAnzeigenn(ausgelendeteDatensatzeNichtAnzeigen);
 	int[] idListeBekommen = materialIds.getIdListe();
 
 	assertNotNull("methode darf keine Null liefern", idListeBekommen);
@@ -42,7 +42,7 @@ public class MaterialIdsTest {
     public void testGetIdListeDatensatzeFalse() throws SQLException, IllegalArgumentException {
 	boolean ausgelendeteDatensatzeNichtAnzeigen = false;
 
-	materialIds.setAusgelendeteDatensatzeBeruecksichtigen(ausgelendeteDatensatzeNichtAnzeigen);
+	materialIds.setAusgeblendetDatenAnzeigenn(ausgelendeteDatensatzeNichtAnzeigen);
 	int[] idListeBekommen = materialIds.getIdListe();
 
 	assertNotNull("methode darf keine Null liefern", idListeBekommen);
@@ -50,7 +50,7 @@ public class MaterialIdsTest {
 
     @Test
     public void testQueryAuswahlFalse() {
-	materialIds.setAusgelendeteDatensatzeBeruecksichtigen(false);
+	materialIds.setAusgeblendetDatenAnzeigenn(false);
 	materialIds.queryAuswahl();
 
 	String bekommenesQuery = materialIds.getQuery();
@@ -61,7 +61,7 @@ public class MaterialIdsTest {
 
     @Test
     public void testQueryAuswahlTrue() {
-	materialIds.setAusgelendeteDatensatzeBeruecksichtigen(true);
+	materialIds.setAusgeblendetDatenAnzeigenn(true);
 	materialIds.queryAuswahl();
 
 	String queryBekommen = materialIds.getQuery();

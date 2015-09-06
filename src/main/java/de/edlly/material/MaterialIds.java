@@ -13,7 +13,7 @@ import de.edlly.db.*;
 public class MaterialIds {
 
     private Connection sqlConnection;
-    private boolean ausgelendeteDatensaetzeBeruecksichtigen;
+    private boolean ausgeblendetDatenAnzeigen;
     private int[] idListe = new int[] { 0 };
 
     private Statement sqlStatment = null;
@@ -26,8 +26,8 @@ public class MaterialIds {
 	this.sqlConnection = sqlConnection;
     }
 
-    public void setAusgelendeteDatensatzeBeruecksichtigen(boolean ausgelendeteDatensatzeBeruecksichtigen) {
-	this.ausgelendeteDatensaetzeBeruecksichtigen = ausgelendeteDatensatzeBeruecksichtigen;
+    public void setAusgeblendetDatenAnzeigenn(boolean ausgelendeteDatensatzeBeruecksichtigen) {
+	this.ausgeblendetDatenAnzeigen = ausgelendeteDatensatzeBeruecksichtigen;
     }
 
     public int[] getIdListe() throws IllegalArgumentException, SQLException {
@@ -95,7 +95,7 @@ public class MaterialIds {
     }
 
     public void queryAuswahl() {
-	if (ausgelendeteDatensaetzeBeruecksichtigen) {
+	if (ausgeblendetDatenAnzeigen) {
 
 	    sqlQuery = "SELECT id FROM Material";
 
