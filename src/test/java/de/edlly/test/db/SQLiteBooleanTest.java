@@ -18,24 +18,6 @@ public class SQLiteBooleanTest extends TestCase {
     SQLiteBoolean booleanTransformer = new SQLiteBoolean();
 
     @Test
-    public void testSetBoolean() {
-	booleanTransformer.setBool(true);
-	assertTrue(booleanTransformer.isBool());
-
-	booleanTransformer.setBool(false);
-	assertFalse(booleanTransformer.isBool());
-    }
-
-    @Test
-    public void testSetInteger() {
-	booleanTransformer.setInteger(0);
-	assertSame("Sollte 0 sein", 0, booleanTransformer.getInteger());
-
-	booleanTransformer.setInteger(1);
-	assertSame("Sollte 1 sein", 1, booleanTransformer.getInteger());
-    }
-
-    @Test
     public void testToBoolean() {
 	int integreReturnEins = SQLiteBoolean.booleanToInteger(true);
 	assertSame("Sollte 1 sein", 1, integreReturnEins);
