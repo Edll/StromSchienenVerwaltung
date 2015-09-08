@@ -24,7 +24,7 @@ public class MaterialDatensatz {
     private String sqlQuery = "";
 
     public MaterialDatensatz(Connection sqlConnection) {
-	
+
 	SQLiteConnect.sqlConnectionCloseorNull(sqlConnection);
 	this.sqlConnection = sqlConnection;
     }
@@ -62,20 +62,26 @@ public class MaterialDatensatz {
 		materialDatensatz[4] = sqlErgebniss.getInt(5); // yMax
 		materialDatensatz[5] = sqlErgebniss.getInt(6); // visibly
 	    }
-	    sqlStatment.close();
-	    sqlErgebniss.close();
+	    sqlCloseStatmentUndErgebiss();
 	} catch (SQLException e) {
-
 	    throw new SQLException(e);
 
 	} finally {
 	    try {
-		sqlStatment.close();
-		sqlErgebniss.close();
+		sqlCloseStatmentUndErgebiss();
 	    } catch (SQLException e) {
 		e.printStackTrace();
 	    }
 
+	}
+    }
+
+    private void sqlCloseStatmentUndErgebiss() throws SQLException {
+	if (sqlStatment != null) {
+	    sqlStatment.close();
+	}
+	if (sqlErgebniss != null) {
+	    sqlErgebniss.close();
 	}
     }
 
