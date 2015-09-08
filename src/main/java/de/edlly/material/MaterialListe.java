@@ -52,7 +52,7 @@ public class MaterialListe {
 	    materialListeFormatiert[DatensatzCounter][0] = materialListeUnformatiert[DatensatzCounter][0];
 
 	    materialListeFormatiert[DatensatzCounter][1] = (String) materialSorte
-		    .materialSortenName((Integer) materialListeUnformatiert[DatensatzCounter][1]);
+		    .getMaterialSorteName((Integer) materialListeUnformatiert[DatensatzCounter][1]);
 
 	    materialListeFormatiert[DatensatzCounter][2] = (String) ((Integer) materialListeUnformatiert[DatensatzCounter][2]
 		    + "x" + (Integer) materialListeUnformatiert[DatensatzCounter][3]);

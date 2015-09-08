@@ -3,6 +3,7 @@ package de.edlly.gui.materialVerwaltung;
 import java.awt.event.ActionEvent;
 
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -34,7 +35,7 @@ public class AusgabeMaterialAnlegen {
     private JComboBox materialSortenAuswahl;
     private JPanel materialEingabeBereich = new JPanel();
     
-    public JPanel materialEingabeBereich(int PositionX, int PositionY) {
+    public JPanel materialEingabeBereich(int PositionX, int PositionY) throws SQLException {
 
 	materialEingabeBereich.setBorder(Formatierung.rahmenUmEingabebereiche());
 	materialEingabeBereich.setLayout(null);
@@ -60,7 +61,7 @@ public class AusgabeMaterialAnlegen {
 
 		    MaterialSorte materialSorteId = new MaterialSorte( SQLiteConnect.dbConnection());
 		    int MaterialSorteSelectId = materialSorteId
-			    .SelectMaterialSorteString((String) materialSortenAuswahl.getSelectedItem());
+			    .getMaterialSorteId((String) materialSortenAuswahl.getSelectedItem());
 
 		    int koordianteX = Integer.parseInt(eingabeKoordinateX.getText());
 		    int koordianteZ = Integer.parseInt(eingabeKoordinateZ.getText());
@@ -95,10 +96,10 @@ public class AusgabeMaterialAnlegen {
 	});
     }
 
-    public void materialSortenListe(JPanel materialEingabeBereich) {
+    public void materialSortenListe(JPanel materialEingabeBereich) throws SQLException  {
 
 	MaterialSorte materialDB = new MaterialSorte( SQLiteConnect.dbConnection());
-	materialSortenAuswahl = new JComboBox(materialDB.SelectTableMaterialSorteString());
+	materialSortenAuswahl = new JComboBox(materialDB.materialSorteNamensListe());
 	materialSortenAuswahl.setBounds(156, 50, 96, 20);
 	materialEingabeBereich.add(materialSortenAuswahl);
     }
