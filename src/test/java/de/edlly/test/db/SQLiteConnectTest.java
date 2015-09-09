@@ -1,14 +1,14 @@
 package de.edlly.test.db;
 
-import static org.junit.Assert.*;
 
 import java.sql.*;
 
 import org.junit.Test;
 
 import de.edlly.db.SQLiteConnect;
+import junit.framework.TestCase;
 
-public class SQLiteConnectTest {
+public class SQLiteConnectTest extends TestCase {
     Connection sqlConnection;
 
     @Test

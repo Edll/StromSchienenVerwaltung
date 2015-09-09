@@ -6,7 +6,9 @@ import de.edlly.test.materialTest.MaterialSorteTest;
 import de.edlly.test.materialTest.MaterialDatensatzTest;
 import de.edlly.test.materialTest.MaterialIdsTest;
 import de.edlly.test.materialTest.UpdateMaterialDatensatzTest;
+import de.edlly.test.db.SQLiteAbfrageTest;
 import de.edlly.test.db.SQLiteBooleanTest;
+import de.edlly.test.db.SQLiteConnectTest;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -17,9 +19,9 @@ import junit.framework.TestSuite;
  *
  */
 
-public class AllTests extends TestSuite {
+public class AllTest extends TestSuite {
 
-    public static Test suiteMaterial() {
+    public static Test suite() {
 	TestSuite materialDatensatz = new TestSuite("Material Datenbank Abfragen");
 	materialDatensatz.addTestSuite(NeuerMaterialDatensatzTest.class);
 	materialDatensatz.addTestSuite(MaterialDatensatzTest.class);
@@ -27,12 +29,13 @@ public class AllTests extends TestSuite {
 	materialDatensatz.addTestSuite(MaterialListeTest.class);
 	materialDatensatz.addTestSuite(MaterialIdsTest.class);
 	materialDatensatz.addTestSuite(MaterialSorteTest.class);
-	return materialDatensatz;
-    }
+	
 
-    public static Test suiteDB() {
-	TestSuite datenbankTest = new TestSuite("Datenbank Funktionen");
-	datenbankTest.addTestSuite(SQLiteBooleanTest.class);
-	return datenbankTest;
+	materialDatensatz.addTestSuite(SQLiteBooleanTest.class);
+	materialDatensatz.addTestSuite(SQLiteConnectTest.class);
+	materialDatensatz.addTestSuite(SQLiteAbfrageTest.class);
+	
+	
+	return materialDatensatz;
     }
 }
