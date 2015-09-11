@@ -9,6 +9,12 @@ import de.edlly.db.SQLiteAbfrage;
 import de.edlly.db.SQLiteConnect;
 import junit.framework.TestCase;
 
+/**
+ * TODO: für nicht mehr Private Methoden in SQLiteAbfrage tests einbauen.
+ * 
+ * @author Edlly java@edlly.de
+ *
+ */
 public class SQLiteAbfrageTest extends TestCase {
     SQLiteAbfrage sqlAbfrage;
     Connection sqlConnection;
@@ -26,28 +32,26 @@ public class SQLiteAbfrageTest extends TestCase {
 	    sqlAbfrage.setQuery(null);
 	    fail("Muss eine IllegalArgumentException auslösen");
 	} catch (IllegalArgumentException exception) {
-	   String erwarteteException = "Der query String darf nicht null sein.";
+	    String erwarteteException = "Der SQL Query String darf nicht null sein.";
 	    assertEquals(erwarteteException, exception.getMessage());
 	}
-	
+    }
 
-    }
-    @Test 
-    public void testGetQuery(){
-	 String erwartet = "TestQuery";
-	 sqlAbfrage.setQuery(erwartet);
-	 String bekommen = sqlAbfrage.getQuery();
-	 
-	 assertEquals(erwartet, bekommen);
-    }
     @Test
-    public void testSqlCloseStatmentUndErgebiss() throws SQLException{
+    public void testGetQuery() {
+	String erwartet = "TestQuery";
+	sqlAbfrage.setQuery(erwartet);
+	String bekommen = sqlAbfrage.getQuery();
+
+	assertEquals(erwartet, bekommen);
+    }
+
+    @Test
+    public void testSqlCloseStatmentUndErgebiss() throws SQLException {
 	sqlAbfrage.setStatment(null);
 	sqlAbfrage.setResult(null);
 	sqlAbfrage.sqlCloseStatmentUndErgebiss();
     }
-    
-
 
     @Override
     public void tearDown() {
