@@ -2,8 +2,6 @@ package de.edlly.material;
 
 import java.sql.*;
 
-import de.edlly.db.SQLiteConnect;
-
 /**
  * Erstellt einen Material Datensatz anhand einer der materialId
  * 
@@ -13,20 +11,13 @@ import de.edlly.db.SQLiteConnect;
  *
  */
 
-public class MaterialDatensatz {
+public class MaterialDatensatz extends Material {
 
-    private int[] materialDatensatz;
+    private int[] materialDatensatz = new int[6];
     private int materialId;
-    private Connection sqlConnection;
-
-    private Statement sqlStatment = null;
-    private ResultSet sqlErgebniss = null;
-    private String sqlQuery = "";
 
     public MaterialDatensatz(Connection sqlConnection) {
-
-	SQLiteConnect.sqlConnectionCloseorNull(sqlConnection);
-	this.sqlConnection = sqlConnection;
+	super(sqlConnection);
     }
 
     public void setMaterialId(int materialId) {
@@ -48,51 +39,35 @@ public class MaterialDatensatz {
     private void materialDatenAbrufen() throws SQLException {
 
 	try {
-	    sqlQueryVorbereiten();
-	    sqlErgebniss = sqlStatment.executeQuery(sqlQuery);
+	    setQuery("SELECT id, MaterialSorteId, x, z, yMax, visibly FROM Material WHERE id = \"" + this.materialId
+		    + "\" ");
+	    sqlAbfrageVorbereitenUndStarten(getQuery());
 
-	    if (sqlAbfrageOhneErgebniss(sqlErgebniss)) {
+	    if (sqlAbfrageOhneErgebniss(result)) {
 		materialDatensatz = new int[] { 0, 0, 0, 0, 0, 0 };
 
 	    } else {
-		materialDatensatz[0] = sqlErgebniss.getInt(1); // id
-		materialDatensatz[1] = sqlErgebniss.getInt(2); // MaterialSorteId
-		materialDatensatz[2] = sqlErgebniss.getInt(3); // x
-		materialDatensatz[3] = sqlErgebniss.getInt(4); // z
-		materialDatensatz[4] = sqlErgebniss.getInt(5); // yMax
-		materialDatensatz[5] = sqlErgebniss.getInt(6); // visibly
+		materialDatensatz[0] = result.getInt(1); // id
+		materialDatensatz[1] = result.getInt(2); // MaterialSorteId
+		materialDatensatz[2] = result.getInt(3); // x
+		materialDatensatz[3] = result.getInt(4); // z
+		materialDatensatz[4] = result.getInt(5); // yMax
+		materialDatensatz[5] = result.getInt(6); // visibly
 	    }
+
 	    sqlCloseStatmentUndErgebiss();
+
 	} catch (SQLException e) {
 	    throw new SQLException(e);
 
 	} finally {
 	    try {
 		sqlCloseStatmentUndErgebiss();
+
 	    } catch (SQLException e) {
 		e.printStackTrace();
 	    }
 
 	}
-    }
-
-    private void sqlCloseStatmentUndErgebiss() throws SQLException {
-	if (sqlStatment != null) {
-	    sqlStatment.close();
-	}
-	if (sqlErgebniss != null) {
-	    sqlErgebniss.close();
-	}
-    }
-
-    private void sqlQueryVorbereiten() throws SQLException {
-	sqlStatment = sqlConnection.createStatement();
-	materialDatensatz = new int[6];
-	sqlQuery = "SELECT id, MaterialSorteId, x, z, yMax, visibly FROM Material WHERE id = \"" + this.materialId
-		+ "\" ";
-    }
-
-    private boolean sqlAbfrageOhneErgebniss(ResultSet sqlResultSet) throws SQLException {
-	return !sqlResultSet.isBeforeFirst();
     }
 }

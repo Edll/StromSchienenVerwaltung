@@ -14,18 +14,14 @@ import de.edlly.db.*;
  *
  */
 
-public class MaterialListe {
-
-    private Connection sqlConnection;
-    boolean ausgeblendetDatenAnzeigen = false;
-
+public class MaterialListe extends Material {
+    
+    private boolean ausgeblendetDatenAnzeigen = false;
     private Object[][] materialListeUnformatiert = null;
     private Object[][] materialListeFormatiert = null;
 
     public MaterialListe(Connection sqlConnection) {
-
-	SQLiteConnect.sqlConnectionCloseorNull(sqlConnection);
-	this.sqlConnection = sqlConnection;
+	super(sqlConnection);
     }
 
     public void setAusgeblendetDatenAnzeigen(boolean ausgeblendetDatenAnzeigen) {
@@ -68,8 +64,8 @@ public class MaterialListe {
 	int[] materialIds = new int[0];
 
 	MaterialIds abfrageMaterialIds = new MaterialIds(this.sqlConnection);
-	
-	abfrageMaterialIds.setAusgeblendetDatenAnzeigenn(ausgeblendetDatenAnzeigen);
+
+	abfrageMaterialIds.setAusgeblendetDatenAnzeigen(ausgeblendetDatenAnzeigen);
 	materialIds = abfrageMaterialIds.getIdListe();
 
 	if (materialIds[0] == 0) {
@@ -82,7 +78,7 @@ public class MaterialListe {
 	for (int materialIdZumAbrufen : materialIds) {
 
 	    MaterialDatensatz abrufenDerWerte = new MaterialDatensatz(sqlConnection);
-	    
+
 	    int ArrayPostionsZahler = 0;
 	    for (int werte : abrufenDerWerte.getMaterialDatensatz(materialIdZumAbrufen)) {
 

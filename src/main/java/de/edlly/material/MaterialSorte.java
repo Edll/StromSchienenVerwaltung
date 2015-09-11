@@ -2,8 +2,6 @@ package de.edlly.material;
 
 import java.sql.*;
 
-import de.edlly.db.SQLiteConnect;
-
 /**
  * MaterialSorten Aus der Datenbank erfragen eine Liste mit Namen, den Name nach Id oder die Id nach Namen.
  * 
@@ -11,19 +9,13 @@ import de.edlly.db.SQLiteConnect;
  *
  */
 
-public class MaterialSorte {
+public class MaterialSorte extends Material {
     private int materialSorteId;
     private String materialSorteName = "";
     private String[] materialSorteNameListe = new String[0];
-    private Connection sqlConnection;
-
-    private Statement sqlStatment = null;
-    private ResultSet sqlErgebniss = null;
-    private String sqlQuery = "";
 
     public MaterialSorte(Connection sqlConnection) {
-	SQLiteConnect.sqlConnectionCloseorNull(sqlConnection);
-	this.sqlConnection = sqlConnection;
+	super(sqlConnection);
     }
 
     public int getMaterialSorteId(String materialSorteName) throws IllegalArgumentException, SQLException {
@@ -54,15 +46,15 @@ public class MaterialSorte {
 
     public void materialSortenIdToName() throws SQLException {
 	try {
-	    sqlQuery = "SELECT MaterialSorte FROM MaterialSorten Where id=" + materialSorteId;
-	    sqlAbfrageVorbereitenUndStarten(sqlQuery);
+	    setQuery("SELECT MaterialSorte FROM MaterialSorten Where id=" + materialSorteId);
+	    sqlAbfrageVorbereitenUndStarten(getQuery());
 
-	    if (sqlAbfrageOhneErgebniss()) {
+	    if (sqlAbfrageOhneErgebniss(result)) {
 		sqlCloseStatmentUndErgebiss();
 		materialSorteName = "N/A";
 	    } else {
 
-		materialSorteName = sqlErgebniss.getString(1);
+		materialSorteName = result.getString(1);
 		sqlCloseStatmentUndErgebiss();
 	    }
 	} catch (SQLException sqlException) {
@@ -81,14 +73,14 @@ public class MaterialSorte {
 	    if (materialSorteName == null) {
 		materialSorteId = 0;
 	    } else {
-		sqlQuery = "SELECT id FROM MaterialSorten Where MaterialSorte='" + materialSorteName + "'";
-		sqlAbfrageVorbereitenUndStarten(sqlQuery);
+		setQuery("SELECT id FROM MaterialSorten Where MaterialSorte='" + materialSorteName + "'");
+		sqlAbfrageVorbereitenUndStarten(getQuery());
 
-		if (sqlAbfrageOhneErgebniss()) {
+		if (sqlAbfrageOhneErgebniss(result)) {
 		    sqlCloseStatmentUndErgebiss();
 		    materialSorteId = 0;
 		} else {
-		    materialSorteId = sqlErgebniss.getInt(1);
+		    materialSorteId = result.getInt(1);
 
 		    sqlCloseStatmentUndErgebiss();
 		}
@@ -108,21 +100,21 @@ public class MaterialSorte {
 
     public String[] materialSorteNamensListe() throws SQLException {
 	try {
-	    sqlQuery = "SELECT MaterialSorte FROM MaterialSorten";
-	    sqlAbfrageVorbereitenUndStarten(sqlQuery);
+	    setQuery("SELECT MaterialSorte FROM MaterialSorten");
+	    sqlAbfrageVorbereitenUndStarten(getQuery());
 
 	    int anzahlDerDatensatze = 0;
-	    while (sqlErgebniss.next()) {
+	    while (result.next()) {
 		anzahlDerDatensatze++;
 	    }
 
 	    materialSorteNameListe = new String[anzahlDerDatensatze];
 
-	    sqlAbfrageStarten(sqlQuery); // nötig um den Datensatz zurück zu setzten. SQLite bietet hier keine bessere
-					 // Möglichkeit.
+	    sqlExecuteStatment(getQuery()); // nötig um den Datensatz zurück zu setzten. SQLite bietet hier keine
+					    // bessere Möglichkeit.
 	    int count = 0;
-	    while (sqlErgebniss.next()) {
-		materialSorteNameListe[count] = sqlErgebniss.getString(1);
+	    while (result.next()) {
+		materialSorteNameListe[count] = result.getString(1);
 		count++;
 	    }
 
@@ -141,29 +133,4 @@ public class MaterialSorte {
 	}
     }
 
-    private void sqlCloseStatmentUndErgebiss() throws SQLException {
-	if (sqlStatment != null) {
-	    sqlStatment.close();
-	}
-	if (sqlErgebniss != null) {
-	    sqlErgebniss.close();
-	}
-    }
-
-    private boolean sqlAbfrageOhneErgebniss() throws SQLException {
-	return !sqlErgebniss.isBeforeFirst();
-    }
-
-    private void sqlAbfrageVorbereitenUndStarten(String sqlQuery) throws SQLException {
-	sqlAbfrageVorbereiten();
-	sqlAbfrageStarten(sqlQuery);
-    }
-
-    private void sqlAbfrageVorbereiten() throws SQLException {
-	sqlStatment = sqlConnection.createStatement();
-    }
-
-    private void sqlAbfrageStarten(String sqlQuery) throws SQLException {
-	sqlErgebniss = sqlStatment.executeQuery(sqlQuery);
-    }
 }

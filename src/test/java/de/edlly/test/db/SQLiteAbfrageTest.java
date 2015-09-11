@@ -1,6 +1,7 @@
 package de.edlly.test.db;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
 import org.junit.Test;
 
@@ -15,7 +16,8 @@ public class SQLiteAbfrageTest extends TestCase {
     @Override
     public void setUp() {
 	sqlConnection = SQLiteConnect.dbConnection();
-	sqlAbfrage = new SQLiteAbfrage(sqlConnection);
+	sqlAbfrage = new SQLiteAbfrage();
+	sqlAbfrage.setSqlConnection(sqlConnection);
     }
 
     @Test
@@ -30,6 +32,22 @@ public class SQLiteAbfrageTest extends TestCase {
 	
 
     }
+    @Test 
+    public void testGetQuery(){
+	 String erwartet = "TestQuery";
+	 sqlAbfrage.setQuery(erwartet);
+	 String bekommen = sqlAbfrage.getQuery();
+	 
+	 assertEquals(erwartet, bekommen);
+    }
+    @Test
+    public void testSqlCloseStatmentUndErgebiss() throws SQLException{
+	sqlAbfrage.setStatment(null);
+	sqlAbfrage.setResult(null);
+	sqlAbfrage.sqlCloseStatmentUndErgebiss();
+    }
+    
+
 
     @Override
     public void tearDown() {

@@ -11,16 +11,15 @@ import de.edlly.material.MaterialKonstanten;
  * @author Edlly java@edlly.de
  *
  */
-public class NeuerMaterialDatensatz {
+public class NeuerMaterialDatensatz extends Material {
 
     private int koordinateX;
     private int koordinateZ;
     private int koordinateyMax;
     private int materialSorteId;
-    private Connection sqlConnection;
 
-    public NeuerMaterialDatensatz(Connection SqlConnection) {
-	this.sqlConnection = SqlConnection;
+    public NeuerMaterialDatensatz(Connection sqlConnection) {
+	super(sqlConnection);
 
     }
 
@@ -61,16 +60,18 @@ public class NeuerMaterialDatensatz {
 	}
 
 	try {
-	    String query = "INSERT INTO Material (\"MaterialSorteId\",\"x\",\"z\",\"yMax\",\"visibly\") VALUES (?1,?2,?3,?4,?5)";
+	    setQuery("INSERT INTO Material (\"MaterialSorteId\",\"x\",\"z\",\"yMax\",\"visibly\") VALUES (?1,?2,?3,?4,?5)");
 
-	    sqlPreparedStatment = sqlConnection.prepareStatement(query);
+	    sqlPreparedStatment = sqlConnection.prepareStatement(getQuery());
 
 	    sqlPreparedStatment.setInt(1, this.materialSorteId);
 	    sqlPreparedStatment.setInt(2, this.koordinateX);
 	    sqlPreparedStatment.setInt(3, this.koordinateZ);
 	    sqlPreparedStatment.setInt(4, this.koordinateyMax);
 	    sqlPreparedStatment.setBoolean(5, true);
+	    
 	    sqlPreparedStatment.executeUpdate();
+	    
 	    sqlPreparedStatment.close();
 	} catch (SQLException sqlException) {
 
@@ -78,8 +79,8 @@ public class NeuerMaterialDatensatz {
 	} finally {
 	    try {
 		sqlPreparedStatment.close();
-	    } catch (Exception closeException) {
-		closeException.printStackTrace();
+	    } catch (SQLException sqlException) {
+		sqlException.printStackTrace();
 	    }
 	}
 	return true;
