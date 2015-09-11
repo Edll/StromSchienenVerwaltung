@@ -7,6 +7,7 @@ import de.edlly.material.MaterialKonstanten;
 /**
  * Legt einen neuen Material Datensatz aus den objektVariabeln an.
  * 
+ * Zusammenlegen mit MaterialDatensatz
  * 
  * @author Edlly java@edlly.de
  *

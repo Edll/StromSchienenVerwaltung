@@ -5,7 +5,7 @@ import java.sql.*;
 /**
  * Erstellt einen Material Datensatz anhand einer der materialId
  * 
- * TODO: Raus finden wie eine Methode überladen wird
+ * TODO: Zusammenlegen mit NeuerMaterialDatensatz
  * 
  * @author Edlly java@edlly.de
  *
