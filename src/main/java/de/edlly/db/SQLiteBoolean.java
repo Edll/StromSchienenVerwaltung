@@ -3,9 +3,7 @@ package de.edlly.db;
 /**
  * Transformiert Boolean in Integer und zurück.
  * 
- * Ist Nötig da SQLite Boolean nur als 1/0 wert kennt. Java aber mit true/false Zuständen arbeitet.
- * 
- * TODO: Raus finden wie man Methoden über Laden kann!
+ * Ist nötig da SQLite Boolesche werte nicht als true/false kennt, sondern nur als 1/0 wert kennt.
  * 
  * @author Edlly java@edlly.de
  *
