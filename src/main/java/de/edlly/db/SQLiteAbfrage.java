@@ -6,52 +6,71 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 /**
- * Ziel dieser Klasse ist es die Code Dublikate aus den ganzen Material Klassen in eine Klasse zusammen zu fassen. Zudem
- * eine sauber lösung zu schaffen für die SQLite Verbindung öffenen und schließen.
+ * Stellt die nötigen Funktionen bereit um SQLite operationen durchzuführen.
  * 
+ * Der query String muss private sein, denn sollte null als wert an das executeQuery übergeben werden wird ein fatal
+ * error EXCEPTION_ACCESS_VIOLATION (0xc0000005) von der JVM erkannt.
+ * 
+ * TODO: Die anderen Objekt Variablen auf Privat setzten.
  * 
  * @author Edlly java@edlly.de
  *
  */
 public class SQLiteAbfrage {
     protected Connection sqlConnection;
-    protected Statement statment = null;
 
+    protected Statement statment = null;
     protected ResultSet result = null;
     private String query = "";
 
-    public SQLiteAbfrage() {
-
+    public void setSqlConnection(Connection sqlConnection) {
+	this.sqlConnection = sqlConnection;
     }
 
     public ResultSet getResult() {
 	return result;
     }
+
     public Statement getStatment() {
-        return statment;
+	return statment;
     }
 
     public void setStatment(Statement statment) {
-        this.statment = statment;
+	this.statment = statment;
     }
 
     public void setResult(ResultSet result) {
-        this.result = result;
+	this.result = result;
     }
 
     public void setQuery(String query) throws IllegalArgumentException {
-	if (query == null) {
-	    throw new IllegalArgumentException("Der query String darf nicht null sein.");
-	}
+	queryNotNull(query);
 	this.query = query;
     }
-    
-    public String getQuery(){
+
+    private void queryNotNull(String query) throws IllegalArgumentException {
+	if (query == null) {
+
+	    throw new IllegalArgumentException("Der SQL Query String darf nicht null sein.");
+	}
+    }
+
+    public String getQuery() {
 	return this.query;
     }
 
-    public void setSqlConnection(Connection sqlConnection) {
-	this.sqlConnection = sqlConnection;
+    public void sqlAbfrageVorbereitenUndStarten(String query) throws SQLException {
+	sqlAbfrageVorbereiten();
+	sqlExecuteStatment(query);
+    }
+
+    public void sqlAbfrageVorbereiten() throws SQLException {
+	statment = sqlConnection.createStatement();
+    }
+
+    public void sqlExecuteStatment(String query) throws SQLException {
+	queryNotNull(query);
+	result = statment.executeQuery(query);
     }
 
     public void sqlCloseStatmentUndErgebiss() throws SQLException {
@@ -63,20 +82,7 @@ public class SQLiteAbfrage {
 	}
     }
 
-    public void sqlAbfrageVorbereitenUndStarten(String sqlQuery) throws SQLException {
-	sqlAbfrageVorbereiten();
-	sqlExecuteStatment(sqlQuery);
-    }
-
-    public void sqlAbfrageVorbereiten() throws SQLException {
-	statment = sqlConnection.createStatement();
-    }
-
-    public void sqlExecuteStatment(String query) throws SQLException {
-	result = statment.executeQuery(query);
-    }
-
-    public boolean sqlAbfrageOhneErgebniss(ResultSet sqlResultSet) throws SQLException {
-	return !sqlResultSet.isBeforeFirst();
+    public boolean sqlAbfrageOhneErgebniss(ResultSet result) throws SQLException {
+	return !result.isBeforeFirst();
     }
 }
