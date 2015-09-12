@@ -132,5 +132,13 @@ public class MaterialSorte extends Material {
 	    }
 	}
     }
+    public boolean materialsorteIdVorhanden(int id) throws SQLException{
+	if(getMaterialSorteName(id) == "N/A"){
+		return false;    
+	}else{
+	    return true;
+	}
+
+    }
 
 }

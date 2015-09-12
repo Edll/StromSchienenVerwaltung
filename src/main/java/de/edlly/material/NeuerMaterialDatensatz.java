@@ -6,9 +6,7 @@ import de.edlly.material.MaterialKonstanten;
 import de.edlly.db.*;
 
 /**
- * Legt einen neuen Material Datensatz aus den objektVariabeln an.
- * 
- * Zusammenlegen mit MaterialDatensatz
+ * Legt einen neuen Material Datensatz an nutzt dabei MaterialDatensatz.
  * 
  * @author Edlly java@edlly.de
  *
@@ -21,7 +19,7 @@ public class NeuerMaterialDatensatz extends MaterialDatensatz {
     }
 
     public void setMaterialDaten(int koordinateX, int koordinateZ, int koordinateyMax, int materialSorteId)
-	    throws IllegalArgumentException {
+	    throws IllegalArgumentException, SQLException {
 	int[] materialDatensatz = new int[6];
 	try {
 
@@ -53,7 +51,7 @@ public class NeuerMaterialDatensatz extends MaterialDatensatz {
     public Boolean datensatzAusObjektWertenAnlegen() throws SQLException, IllegalArgumentException {
 	PreparedStatement sqlPreparedStatment = null;
 	int[] materialDatensatz = getMaterialDatensatz();
-	
+
 	if (objektWerteSindNull()) {
 	    throw new IllegalArgumentException(
 		    "Die Objektwerte sind nicht gesetzt worden /n ein leerer Datensatz kann nich angelegt werden.");
@@ -109,8 +107,7 @@ public class NeuerMaterialDatensatz extends MaterialDatensatz {
 	}
 
 	if (koordinateZ > MaterialKonstanten.MAXIMALER_Z_WERT) {
-	    throw new IllegalArgumentException(
-		    "Die maximal Materialdicke ist: " + MaterialKonstanten.MAXIMALER_Z_WERT);
+	    throw new IllegalArgumentException("Die maximal Materialdicke ist: " + MaterialKonstanten.MAXIMALER_Z_WERT);
 	}
 
 	return true;
@@ -130,16 +127,18 @@ public class NeuerMaterialDatensatz extends MaterialDatensatz {
 	return true;
     }
 
-    public Boolean materialSorteIdIstVorhanden(int materialSorteId) throws IllegalArgumentException {
+    public Boolean materialSorteIdIstVorhanden(int materialSorteId) throws IllegalArgumentException, SQLException {
 
 	if (materialSorteId < 0) {
 	    throw new IllegalArgumentException("Die materialSorteId darf nicht Negativ sein.");
 	}
-	/**
-	 * @TODO Abfrage einbauen die abfragt ob die Sorte in der Datenbank vorhanden ist.
-	 */
 
-	return true;
+	MaterialSorte sorteVorhanden = new MaterialSorte(sqlConnection);
+	if (!sorteVorhanden.materialsorteIdVorhanden(materialSorteId)){
+	    throw new IllegalArgumentException("Die materialSorteId ist nicht vorhanden."); 
+	}
+
+	    return true;
     }
 
     public Boolean objektWerteSindNull() {

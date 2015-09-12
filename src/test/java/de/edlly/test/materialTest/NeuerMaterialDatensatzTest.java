@@ -39,7 +39,7 @@ public class NeuerMaterialDatensatzTest extends TestCase {
     }
 
     @Test
-    public void testSetMaximaleMaterialDatenPlusEins() {
+    public void testSetMaximaleMaterialDatenPlusEins() throws SQLException {
 	try {
 	    materialDatensatz.setMaterialDaten(koordinatenMaxX + 1, koordiantenMaxZ - 1, koordiantenMaxY - 1,
 		    sortenId - 1); // wirft eine: IllegalArgumentException
@@ -59,14 +59,14 @@ public class NeuerMaterialDatensatzTest extends TestCase {
     }
 
     @Test
-    public void testSetMaximaleMaterialDaten() throws IllegalArgumentException {
+    public void testSetMaximaleMaterialDaten() throws IllegalArgumentException, SQLException {
 	materialDatensatz.setMaterialDaten(koordinatenMaxX, koordiantenMaxZ, koordiantenMaxY, sortenId);
 
 	assertFalse("Maximalewerte sind nicht gesetzt worden", materialDatensatz.objektWerteSindNull());
     }
 
     @Test
-    public void testMinimaleObjektDatensetzenMinusEins() {
+    public void testMinimaleObjektDatensetzenMinusEins() throws SQLException {
 	try {
 	    materialDatensatz.setMaterialDaten(koordinatenMinX - 1, koordiantenMinZ + 1, koordinatenMinY + 1,
 		    sortenId + 1); // wirft eine: IllegalArgumentException
@@ -87,7 +87,7 @@ public class NeuerMaterialDatensatzTest extends TestCase {
     }
 
     @Test
-    public void testMinimaleObjektDatensetzen() throws IllegalArgumentException {
+    public void testMinimaleObjektDatensetzen() throws IllegalArgumentException, SQLException {
 	materialDatensatz.setMaterialDaten(koordinatenMinX, koordiantenMinZ, koordinatenMinY, sortenId);
 	assertFalse("Minimalewerte sind nicht gesetzt worden", materialDatensatz.objektWerteSindNull());
     }

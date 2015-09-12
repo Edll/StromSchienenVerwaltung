@@ -64,6 +64,15 @@ public class MaterialSorteTest extends TestCase {
 	assertEquals(materialSorteListe[2], materialSorteVergleichsListe[2]);
     }
 
+    @Test
+    public void testMateriaSorteIdVorhande() throws SQLException {
+	boolean nichtVorhanden = materialSorte.materialsorteIdVorhanden(0);
+	assertFalse(nichtVorhanden);
+
+	boolean vorhanden = materialSorte.materialsorteIdVorhanden(1);
+	assertTrue(vorhanden);
+    }
+
     @Override
     public void tearDown() {
 	SQLiteConnect.closeSqlConnection(sqlConnection);
