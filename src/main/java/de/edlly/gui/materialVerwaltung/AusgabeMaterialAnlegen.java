@@ -22,11 +22,13 @@ import de.edlly.material.NeuerMaterialDatensatz;
  * "+" Knopf der die Daten in das Objekt f�r einen neuen Material Datensatz legt und dann ein Anlegen des Datensatz
  * auslöst.
  * 
+ * TODO: Code ist Wip muss neu strukturiert werden!
+ * 
  * @author Edlly java@edlly.de
  *
  */
 
-public class AusgabeMaterialAnlegen {
+public class AusgabeMaterialAnlegen extends TabMaterialVerwaltung {
 
     private JTextField eingabeKoordinateX;
     private JTextField eingabeKoordinateZ;
@@ -34,7 +36,7 @@ public class AusgabeMaterialAnlegen {
     private JButton materialHinzufuegen;
     private JComboBox materialSortenAuswahl;
     private JPanel materialEingabeBereich = new JPanel();
-    
+
     public JPanel materialEingabeBereich(int PositionX, int PositionY) throws SQLException {
 
 	materialEingabeBereich.setBorder(Formatierung.rahmenUmEingabebereiche());
@@ -46,7 +48,7 @@ public class AusgabeMaterialAnlegen {
 	eingabeFelderKoordinaten(materialEingabeBereich);
 	materialSortenListe(materialEingabeBereich);
 	buttonMaterialHinzufuegen(materialEingabeBereich);
-	
+
 	actionMaterialHinzu();
 
 	return materialEingabeBereich;
@@ -59,7 +61,7 @@ public class AusgabeMaterialAnlegen {
 
 		try {
 
-		    MaterialSorte materialSorteId = new MaterialSorte( SQLiteConnect.dbConnection());
+		    MaterialSorte materialSorteId = new MaterialSorte(SQLiteConnect.dbConnection());
 		    int MaterialSorteSelectId = materialSorteId
 			    .getMaterialSorteId((String) materialSortenAuswahl.getSelectedItem());
 
@@ -75,12 +77,10 @@ public class AusgabeMaterialAnlegen {
 
 		    }
 		    JOptionPane.showMessageDialog(null, "Das neue Material ist erfolgreich eingefügt worden.");
-		    
-		    AusgabeMaterialTabelle neuLadenDerTabelle = new AusgabeMaterialTabelle();
-		    neuLadenDerTabelle.refreshMaterialTabelle();
-		    
+
+		    refreshMaterialTabelle();
+
 		    materialEingabeBereich.repaint();
-		    
 
 		} catch (NumberFormatException e) {
 		    JOptionPane.showMessageDialog(null, "Bitte eine gültige Zahl eingeben.");
@@ -96,9 +96,9 @@ public class AusgabeMaterialAnlegen {
 	});
     }
 
-    public void materialSortenListe(JPanel materialEingabeBereich) throws SQLException  {
+    public void materialSortenListe(JPanel materialEingabeBereich) throws SQLException {
 
-	MaterialSorte materialDB = new MaterialSorte( SQLiteConnect.dbConnection());
+	MaterialSorte materialDB = new MaterialSorte(SQLiteConnect.dbConnection());
 	materialSortenAuswahl = new JComboBox(materialDB.materialSorteNamensListe());
 	materialSortenAuswahl.setBounds(156, 50, 96, 20);
 	materialEingabeBereich.add(materialSortenAuswahl);

@@ -2,7 +2,6 @@ package de.edlly.material;
 
 import java.sql.*;
 
-import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 public class MaterialTabelle {
@@ -13,11 +12,11 @@ public class MaterialTabelle {
 	this.sqlConnection = sqlConnection;
     }
 
-    public JTable tabelleErstellen(boolean ausgeblendeteAnzeigen) throws SQLException {
+    public MaterialTabelleModel tabelleErstellen(boolean ausgeblendeteAnzeigen) throws SQLException {
 
 	MaterialListe kompletteMaterialListe = new MaterialListe(sqlConnection);
 	kompletteMaterialListe.setAusgeblendetDatenAnzeigen(true);
-	// Erstellen des Table Models
+
 	MaterialTabelleModel materialTabellenModel = new MaterialTabelleModel();
 	materialTabellenModel.addColumn("Id");
 	materialTabellenModel.addColumn("Sorte");
@@ -32,10 +31,7 @@ public class MaterialTabelle {
 		    materialListe[anzahlDerDatensatze][1], materialListe[anzahlDerDatensatze][2],
 		    materialListe[anzahlDerDatensatze][3], materialListe[anzahlDerDatensatze][4] });
 	}
-
-	JTable materialTabelle = new JTable(materialTabellenModel);
-
-	return materialTabelle;
+	return materialTabellenModel;
     }
 
     public class MaterialTabelleModel extends DefaultTableModel {
@@ -53,7 +49,6 @@ public class MaterialTabelle {
 	}
 
 	@SuppressWarnings("rawtypes")
-	// TODO: letzte klasse zu Boolean für checkbox ändern
 	Class[] types = new Class[] { java.lang.Object.class, java.lang.Object.class, java.lang.Object.class,
 		java.lang.Object.class, java.lang.Boolean.class, };
 

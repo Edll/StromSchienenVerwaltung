@@ -5,8 +5,8 @@ import java.sql.*;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.ScrollPaneConstants;
-
 
 import de.edlly.db.SQLiteConnect;
 import de.edlly.gui.Formatierung;
@@ -15,20 +15,21 @@ import de.edlly.material.MaterialTabelle;
 
 /**
  * 
+ * TODO: Code ist Wip muss neu strukturiert werden!
+ * 
+ * 
  * @author Edlly
  *
  */
 
-public class AusgabeMaterialTabelle {
+public class AusgabeMaterialTabelle extends TabMaterialVerwaltung {
 
-    private JScrollPane tabellenBereich = new JScrollPane();;
-    private JPanel tabellenAnzeigeBereich  = new JPanel();
-
-    public AusgabeMaterialTabelle() {
-
+    public AusgabeMaterialTabelle(JScrollPane tabellenBereich) {
+	this.tabellenBereich = tabellenBereich;
     }
 
     public JPanel materialTabellePanel(int PositionX, int PositionY) {
+	JPanel tabellenAnzeigeBereich = new JPanel();
 	tabellenAnzeigeBereich.setBorder(Formatierung.rahmenUmEingabebereiche());
 	tabellenAnzeigeBereich.setLayout(null);
 	tabellenAnzeigeBereich.setBounds(PositionX, PositionY, 738, 380);
@@ -48,43 +49,24 @@ public class AusgabeMaterialTabelle {
     }
 
     public JScrollPane bereichMaterialDatenbank() {
-	
-	try{
-	Connection sqlConnection;
-	sqlConnection = SQLiteConnect.dbConnection();
-	
 
-	tabellenBereich = new JScrollPane();
-	tabellenBereich.setBounds(10, 40, 718, 320);
-	tabellenBereich.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-	tabellenBereich.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-	MaterialTabelle materialTabelle = new MaterialTabelle(sqlConnection);
-	tabellenBereich.setViewportView(materialTabelle.tabelleErstellen(true));
+	try {
+	    Connection sqlConnection;
+	    sqlConnection = SQLiteConnect.dbConnection();
 
-	
-	SQLiteConnect.closeSqlConnection(sqlConnection);
-	}catch(SQLException sqlException){
+	    tabellenBereich = new JScrollPane();
+	    tabellenBereich.setBounds(10, 40, 718, 320);
+	    tabellenBereich.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+	    tabellenBereich.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+	    materialModel = new MaterialTabelle(sqlConnection);
+	    materialTabelleJTable = new JTable(materialModel.tabelleErstellen(true));
+	    tabellenBereich.setViewportView(materialTabelleJTable);
+	    System.out.println("breich =>" + tabellenBereich);
+	    SQLiteConnect.closeSqlConnection(sqlConnection);
+	} catch (SQLException sqlException) {
 	    sqlException.printStackTrace();
 	}
 	return tabellenBereich;
     }
-    
-    
-    /*
-     * FIXME: Dies funktioniert noch nicht!
-     */
-    public void refreshMaterialTabelle(){
-	try{
-	Connection sqlConnection;
-	sqlConnection = SQLiteConnect.dbConnection();
-	MaterialTabelle materialTabelle = new MaterialTabelle(sqlConnection);
-	tabellenBereich.setViewportView(materialTabelle.tabelleErstellen(true));
-	SQLiteConnect.closeSqlConnection(sqlConnection);
-	}catch(SQLException sqlException){
-	    sqlException.printStackTrace();
-	}
-
-    }
-
 
 }
