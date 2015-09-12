@@ -3,6 +3,7 @@ package de.edlly.material;
 import java.sql.*;
 
 import de.edlly.material.MaterialKonstanten;
+import de.edlly.db.*;
 
 /**
  * Legt einen neuen Material Datensatz aus den objektVariabeln an.
@@ -12,12 +13,7 @@ import de.edlly.material.MaterialKonstanten;
  * @author Edlly java@edlly.de
  *
  */
-public class NeuerMaterialDatensatz extends Material {
-
-    private int koordinateX;
-    private int koordinateZ;
-    private int koordinateyMax;
-    private int materialSorteId;
+public class NeuerMaterialDatensatz extends MaterialDatensatz {
 
     public NeuerMaterialDatensatz(Connection sqlConnection) {
 	super(sqlConnection);
@@ -26,23 +22,25 @@ public class NeuerMaterialDatensatz extends Material {
 
     public void setMaterialDaten(int koordinateX, int koordinateZ, int koordinateyMax, int materialSorteId)
 	    throws IllegalArgumentException {
-
+	int[] materialDatensatz = new int[6];
 	try {
+
 	    if (koordinateXIstImDefinitionsbereich(koordinateX)) {
-		this.koordinateX = koordinateX;
+		materialDatensatz[getOrdinal("X")] = koordinateX;
 	    }
 
 	    if (koordinateZIstImDefinitionsbereich(koordinateZ)) {
-		this.koordinateZ = koordinateZ;
+		materialDatensatz[getOrdinal("Z")] = koordinateZ;
 	    }
 
 	    if (koordinateyMaxIstImDefinitionsbereich(koordinateyMax)) {
-		this.koordinateyMax = koordinateyMax;
+		materialDatensatz[getOrdinal("YMAX")] = koordinateyMax;
 	    }
 
 	    if (materialSorteIdIstVorhanden(materialSorteId)) {
-		this.materialSorteId = materialSorteId;
+		materialDatensatz[getOrdinal("MATERIALSORTE_ID")] = materialSorteId;
 	    }
+	    setMaterialDatensatz(materialDatensatz);
 
 	} catch (IllegalArgumentException datenSetzenFehlgeschlagen) {
 
@@ -54,25 +52,28 @@ public class NeuerMaterialDatensatz extends Material {
 
     public Boolean datensatzAusObjektWertenAnlegen() throws SQLException, IllegalArgumentException {
 	PreparedStatement sqlPreparedStatment = null;
-
+	int[] materialDatensatz = getMaterialDatensatz();
+	
 	if (objektWerteSindNull()) {
 	    throw new IllegalArgumentException(
 		    "Die Objektwerte sind nicht gesetzt worden /n ein leerer Datensatz kann nich angelegt werden.");
 	}
 
 	try {
-	    setQuery("INSERT INTO Material (\"MaterialSorteId\",\"x\",\"z\",\"yMax\",\"visibly\") VALUES (?1,?2,?3,?4,?5)");
+	    setQuery(
+		    "INSERT INTO Material (\"MaterialSorteId\",\"x\",\"z\",\"yMax\",\"visibly\") VALUES (?1,?2,?3,?4,?5)");
 
 	    sqlPreparedStatment = sqlConnection.prepareStatement(getQuery());
 
-	    sqlPreparedStatment.setInt(1, this.materialSorteId);
-	    sqlPreparedStatment.setInt(2, this.koordinateX);
-	    sqlPreparedStatment.setInt(3, this.koordinateZ);
-	    sqlPreparedStatment.setInt(4, this.koordinateyMax);
-	    sqlPreparedStatment.setBoolean(5, true);
-	    
+	    sqlPreparedStatment.setInt(1, materialDatensatz[getOrdinal("MATERIALSORTE_ID")]);
+	    sqlPreparedStatment.setInt(2, materialDatensatz[getOrdinal("X")]);
+	    sqlPreparedStatment.setInt(3, materialDatensatz[getOrdinal("Z")]);
+	    sqlPreparedStatment.setInt(4, materialDatensatz[getOrdinal("YMAX")]);
+	    sqlPreparedStatment.setBoolean(5,
+		    SQLiteBoolean.integerToBoolean(materialDatensatz[getOrdinal("SICHTBARKEIT")]));
+
 	    sqlPreparedStatment.executeUpdate();
-	    
+
 	    sqlPreparedStatment.close();
 	} catch (SQLException sqlException) {
 
@@ -95,7 +96,7 @@ public class NeuerMaterialDatensatz extends Material {
 
 	if (koordinateX > MaterialKonstanten.MAXIMALER_X_WERT) {
 	    throw new IllegalArgumentException(
-		    "Die maximal Material Breite ist: " + MaterialKonstanten.MAXIMALER_X_WERT);
+		    "Die maximal Materialbreite ist: " + MaterialKonstanten.MAXIMALER_X_WERT);
 	}
 
 	return true;
@@ -109,7 +110,7 @@ public class NeuerMaterialDatensatz extends Material {
 
 	if (koordinateZ > MaterialKonstanten.MAXIMALER_Z_WERT) {
 	    throw new IllegalArgumentException(
-		    "Die maximal Material Dicke ist: " + MaterialKonstanten.MAXIMALER_Z_WERT);
+		    "Die maximal Materialdicke ist: " + MaterialKonstanten.MAXIMALER_Z_WERT);
 	}
 
 	return true;
@@ -123,7 +124,7 @@ public class NeuerMaterialDatensatz extends Material {
 
 	if (koordinatey > MaterialKonstanten.MAXIMALER_Y_WERT) {
 	    throw new IllegalArgumentException(
-		    "Die maximal Material L�nge ist: " + MaterialKonstanten.MAXIMALER_Y_WERT);
+		    "Die maximal Material Länge ist: " + MaterialKonstanten.MAXIMALER_Y_WERT);
 	}
 
 	return true;
@@ -142,7 +143,9 @@ public class NeuerMaterialDatensatz extends Material {
     }
 
     public Boolean objektWerteSindNull() {
-	if (this.koordinateX == 0 || this.koordinateyMax == 0 || this.materialSorteId == 0 || this.koordinateZ == 0) {
+	int[] datensatz = getMaterialDatensatz();
+	if (datensatz[getOrdinal("MATERIALSORTE_ID")] == 0 || datensatz[getOrdinal("X")] == 0
+		|| datensatz[getOrdinal("YMAX")] == 0 || datensatz[getOrdinal("YMAX")] == 0) {
 	    return true;
 	} else {
 	    return false;
@@ -150,10 +153,7 @@ public class NeuerMaterialDatensatz extends Material {
     }
 
     private void clearObjektWerte() {
-	this.koordinateX = MaterialKonstanten.MINIMALER_X_WERT - 1;
-	this.koordinateZ = MaterialKonstanten.MINIMALER_Z_WERT - 1;
-	this.koordinateyMax = MaterialKonstanten.MINIMALER_Y_WERT - 1;
-	this.materialSorteId = 0;
+	setMaterialDatensatz(new int[] { 0, 0, 0, 0, 0, 0 });
     }
 
 }

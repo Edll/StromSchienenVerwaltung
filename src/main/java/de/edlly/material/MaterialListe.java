@@ -80,7 +80,7 @@ public class MaterialListe extends Material {
 	    MaterialDatensatz abrufenDerWerte = new MaterialDatensatz(sqlConnection);
 
 	    int ArrayPostionsZahler = 0;
-	    for (int werte : abrufenDerWerte.getMaterialDatensatz(materialIdZumAbrufen)) {
+	    for (int werte : abrufenDerWerte.getMaterialDatensatzAusDatenbank(materialIdZumAbrufen)) {
 
 		materialListeUnformatiert[zaehlerDesArrayIndexes][ArrayPostionsZahler] = (Integer) werte;
 		ArrayPostionsZahler++;

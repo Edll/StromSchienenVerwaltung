@@ -28,12 +28,24 @@ public class MaterialDatensatz extends Material {
 	return materialId;
     }
 
-    public int[] getMaterialDatensatz(int materialId) throws IllegalArgumentException, SQLException {
+    public int[] getMaterialDatensatzAusDatenbank(int materialId) throws IllegalArgumentException, SQLException {
 	setMaterialId(materialId);
 
 	materialDatenAbrufen();
 
 	return materialDatensatz;
+    }
+
+    public int[] getMaterialDatensatz() {
+	return materialDatensatz;
+    }
+
+    public void setMaterialDatensatz(int[] materialDatensatz) throws IllegalArgumentException {
+	if (materialDatensatz == null) {
+	    throw new IllegalArgumentException(
+		    "Der Materialdatensatz bei eintragen darf nicht null sein." + this.getClass());
+	}
+	this.materialDatensatz = materialDatensatz;
     }
 
     private void materialDatenAbrufen() throws SQLException {
@@ -47,12 +59,12 @@ public class MaterialDatensatz extends Material {
 		materialDatensatz = new int[] { 0, 0, 0, 0, 0, 0 };
 
 	    } else {
-		materialDatensatz[0] = result.getInt(1); // id
-		materialDatensatz[1] = result.getInt(2); // MaterialSorteId
-		materialDatensatz[2] = result.getInt(3); // x
-		materialDatensatz[3] = result.getInt(4); // z
-		materialDatensatz[4] = result.getInt(5); // yMax
-		materialDatensatz[5] = result.getInt(6); // visibly
+		materialDatensatz[getOrdinal("ID")] = result.getInt(1); // id
+		materialDatensatz[getOrdinal("MATERIALSORTE_ID")] = result.getInt(2); // MaterialSorteId
+		materialDatensatz[getOrdinal("X")] = result.getInt(3); // x
+		materialDatensatz[getOrdinal("Z")] = result.getInt(4); // z
+		materialDatensatz[getOrdinal("YMAX")] = result.getInt(5); // yMax
+		materialDatensatz[getOrdinal("SICHTBARKEIT")] = result.getInt(6); // visibly
 	    }
 
 	    sqlCloseStatmentUndErgebiss();
@@ -70,4 +82,5 @@ public class MaterialDatensatz extends Material {
 
 	}
     }
+
 }
