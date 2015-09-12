@@ -17,5 +17,9 @@ public abstract class Material extends SQLiteAbfrage {
 	SQLiteConnect.sqlConnectionCloseorNull(sqlConnection);
 	this.sqlConnection = sqlConnection;
     }
+    
+    static int getOrdinal(String datensatzNamen){
+	return MaterialDatensatz.datensatzNamen.valueOf(datensatzNamen).ordinal();
+    }    
 
 }
