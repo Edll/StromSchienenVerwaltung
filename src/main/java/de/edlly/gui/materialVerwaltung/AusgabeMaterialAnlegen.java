@@ -5,12 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.*;
 
 import de.edlly.db.SQLiteConnect;
 import de.edlly.gui.Formatierung;
@@ -36,6 +31,12 @@ public class AusgabeMaterialAnlegen extends TabMaterialVerwaltung {
     private JButton materialHinzufuegen;
     private JComboBox materialSortenAuswahl;
     private JPanel materialEingabeBereich = new JPanel();
+    private AusgabeMaterialTabelle materialTabelleAlt;
+
+    public AusgabeMaterialAnlegen(JButton materialHinzufuegen, AusgabeMaterialTabelle materialTabelleAlt) {
+	this.materialHinzufuegen = materialHinzufuegen;
+	this.materialTabelleAlt = materialTabelleAlt;
+    }
 
     public JPanel materialEingabeBereich(int PositionX, int PositionY) throws SQLException {
 
@@ -78,7 +79,7 @@ public class AusgabeMaterialAnlegen extends TabMaterialVerwaltung {
 		    }
 		    JOptionPane.showMessageDialog(null, "Das neue Material ist erfolgreich eingefügt worden.");
 
-		    refreshMaterialTabelle();
+		    materialTabelleAlt.refreshMaterialTabelle();
 
 		    materialEingabeBereich.repaint();
 
@@ -88,8 +89,8 @@ public class AusgabeMaterialAnlegen extends TabMaterialVerwaltung {
 		} catch (IllegalArgumentException e) {
 		    JOptionPane.showMessageDialog(null, e.getMessage());
 
-		} catch (Exception e) {
-		    e.printStackTrace();
+		} catch (SQLException sqlException) {
+		    sqlException.printStackTrace();
 		}
 
 	    }
