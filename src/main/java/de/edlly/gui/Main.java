@@ -1,6 +1,7 @@
 package de.edlly.gui;
 
 import java.awt.EventQueue;
+import java.sql.SQLException;
 import java.awt.Color;
 import java.awt.BorderLayout;
 
@@ -58,10 +59,14 @@ public class Main {
     }
 
     private void tabsHinzufuegen(JTabbedPane tabMenu) {
+	try {
 	WerkstueckVerwaltung werkstueckVerwaltung = new WerkstueckVerwaltung();
 	tabMenu.addTab("Werkst\u00FCck Verwaltung", null, werkstueckVerwaltung.werkstueckVerwaltungsPanel(), null);
 
 	TabMaterialVerwaltung materialVerwaltung = new TabMaterialVerwaltung();
-	tabMenu.addTab("Material Verwaltung", null, materialVerwaltung.materialVerwaltungsPanel(), null);
+	    tabMenu.addTab("Material Verwaltung", null, materialVerwaltung.materialVerwaltungsPanel(), null);
+	} catch (SQLException e) {
+	    e.printStackTrace();
+	}
     }
 }

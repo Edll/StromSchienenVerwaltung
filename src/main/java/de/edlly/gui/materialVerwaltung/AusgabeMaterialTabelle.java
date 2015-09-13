@@ -1,12 +1,7 @@
 package de.edlly.gui.materialVerwaltung;
 
 import java.sql.*;
-
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.ScrollPaneConstants;
+import javax.swing.*;
 
 import de.edlly.db.SQLiteConnect;
 import de.edlly.gui.Formatierung;
@@ -44,38 +39,31 @@ public class AusgabeMaterialTabelle extends TabMaterialVerwaltung {
 
 	scrollpaneErstellen();
 
-	try {
-	    Connection sqlConnection;
-	    sqlConnection = SQLiteConnect.dbConnection();
+	Connection sqlConnection;
+	sqlConnection = SQLiteConnect.dbConnection();
 
-	    materialModel = new MaterialTabelle(sqlConnection);
-	    materialTabelle = new JTable(materialModel.tabelleErstellen(true));
+	materialModel = new MaterialTabelle(sqlConnection);
+	materialTabelle = new JTable(materialModel.tabelleErstellen(true));
 
-	    tabellenBereich.setViewportView(materialTabelle);
+	tabellenBereich.setViewportView(materialTabelle);
 
-	    SQLiteConnect.closeSqlConnection(sqlConnection);
-	} catch (SQLException sqlException) {
+	SQLiteConnect.closeSqlConnection(sqlConnection);
 
-	    throw new SQLException(sqlException);
-	}
 	return tabellenBereich;
     }
 
     public void refreshMaterialTabelle() throws SQLException {
-	try {
-	    Connection sqlConnection;
-	    sqlConnection = SQLiteConnect.dbConnection();
 
-	    materialModel = new MaterialTabelle(sqlConnection);
-	    materialTabelle = new JTable(materialModel.tabelleErstellen(true));
-	    tabellenBereich.setViewportView(materialTabelle);
+	Connection sqlConnection;
+	sqlConnection = SQLiteConnect.dbConnection();
 
-	    SQLiteConnect.closeSqlConnection(sqlConnection);
-	} catch (SQLException sqlException) {
-	    throw new SQLException(sqlException);
-	}
+	materialModel = new MaterialTabelle(sqlConnection);
+	materialTabelle = new JTable(materialModel.tabelleErstellen(true));
+	tabellenBereich.setViewportView(materialTabelle);
+
+	SQLiteConnect.closeSqlConnection(sqlConnection);
+
     }
-    
 
     private void scrollpaneErstellen() {
 	tabellenBereich = new JScrollPane();
