@@ -55,16 +55,16 @@ public class MaterialDatensatz extends Material {
 		    + "\" ");
 	    abfrageVorbereitenUndStarten(getQuery());
 
-	    if (abfrageOhneErgebniss(result)) {
+	    if (abfrageOhneErgebniss(getResult())) {
 		materialDatensatz = new int[] { 0, 0, 0, 0, 0, 0 };
 
 	    } else {
-		materialDatensatz[getOrdinal("ID")] = result.getInt(1); // id
-		materialDatensatz[getOrdinal("MATERIALSORTE_ID")] = result.getInt(2); // MaterialSorteId
-		materialDatensatz[getOrdinal("X")] = result.getInt(3); // x
-		materialDatensatz[getOrdinal("Z")] = result.getInt(4); // z
-		materialDatensatz[getOrdinal("YMAX")] = result.getInt(5); // yMax
-		materialDatensatz[getOrdinal("SICHTBARKEIT")] = result.getInt(6); // visibly
+		materialDatensatz[getOrdinal("ID")] = getResult().getInt(1); // id
+		materialDatensatz[getOrdinal("MATERIALSORTE_ID")] = getResult().getInt(2); // MaterialSorteId
+		materialDatensatz[getOrdinal("X")] = getResult().getInt(3); // x
+		materialDatensatz[getOrdinal("Z")] = getResult().getInt(4); // z
+		materialDatensatz[getOrdinal("YMAX")] = getResult().getInt(5); // yMax
+		materialDatensatz[getOrdinal("SICHTBARKEIT")] = getResult().getInt(6); // visibly
 	    }
 
 	    closeStatmentUndErgebiss();

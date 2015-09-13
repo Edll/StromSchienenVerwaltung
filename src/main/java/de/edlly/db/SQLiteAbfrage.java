@@ -19,23 +19,18 @@ import java.sql.Statement;
 public class SQLiteAbfrage {
     private Connection sqlConnection;
 
-    protected Statement statment = null;
-    protected ResultSet result = null;
+    private Statement statment = null;
+    private ResultSet result = null;
     private String query = "";
 
-    public ResultSet getResult() {
-	return result;
-    }
-    
-    public void setSqlConnection(Connection sqlConnection){
+    public void setSqlConnection(Connection sqlConnection) {
 	SQLiteConnect.sqlConnectionCloseorNull(sqlConnection);
 	this.sqlConnection = sqlConnection;
     }
-    
-    public Connection getSqlConnection(){
- 	return sqlConnection;
-     }
-    
+
+    public Connection getSqlConnection() {
+	return sqlConnection;
+    }
 
     public Statement getStatment() {
 	return statment;
@@ -47,6 +42,10 @@ public class SQLiteAbfrage {
 
     public void setResult(ResultSet result) {
 	this.result = result;
+    }
+
+    public ResultSet getResult() {
+	return result;
     }
 
     public void setQuery(String query) throws IllegalArgumentException {

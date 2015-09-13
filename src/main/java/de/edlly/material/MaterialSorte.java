@@ -49,12 +49,12 @@ public class MaterialSorte extends Material {
 	    setQuery("SELECT MaterialSorte FROM MaterialSorten Where id=" + materialSorteId);
 	    abfrageVorbereitenUndStarten(getQuery());
 
-	    if (abfrageOhneErgebniss(result)) {
+	    if (abfrageOhneErgebniss(getResult())) {
 		closeStatmentUndErgebiss();
 		materialSorteName = "N/A";
 	    } else {
 
-		materialSorteName = result.getString(1);
+		materialSorteName = getResult().getString(1);
 		closeStatmentUndErgebiss();
 	    }
 	} catch (SQLException sqlException) {
@@ -76,11 +76,11 @@ public class MaterialSorte extends Material {
 		setQuery("SELECT id FROM MaterialSorten Where MaterialSorte='" + materialSorteName + "'");
 		abfrageVorbereitenUndStarten(getQuery());
 
-		if (abfrageOhneErgebniss(result)) {
+		if (abfrageOhneErgebniss(getResult())) {
 		    closeStatmentUndErgebiss();
 		    materialSorteId = 0;
 		} else {
-		    materialSorteId = result.getInt(1);
+		    materialSorteId = getResult().getInt(1);
 
 		    closeStatmentUndErgebiss();
 		}
@@ -104,7 +104,7 @@ public class MaterialSorte extends Material {
 	    abfrageVorbereitenUndStarten(getQuery());
 
 	    int anzahlDerDatensatze = 0;
-	    while (result.next()) {
+	    while (getResult().next()) {
 		anzahlDerDatensatze++;
 	    }
 
@@ -113,8 +113,8 @@ public class MaterialSorte extends Material {
 	    executeStatment(getQuery()); // nötig um den Datensatz zurück zu setzten. SQLite bietet hier keine
 					    // bessere Möglichkeit.
 	    int count = 0;
-	    while (result.next()) {
-		materialSorteNameListe[count] = result.getString(1);
+	    while (getResult().next()) {
+		materialSorteNameListe[count] = getResult().getString(1);
 		count++;
 	    }
 

@@ -55,9 +55,9 @@ public class MaterialIds extends Material {
 		idListe = new int[anzahlDerDatensatze];
 		int zaehlerDesArrayIndexes = 0;
 
-		while (result.next()) {
+		while (getResult().next()) {
 
-		    idListe[zaehlerDesArrayIndexes] = result.getInt(1);
+		    idListe[zaehlerDesArrayIndexes] = getResult().getInt(1);
 		    zaehlerDesArrayIndexes++;
 		}
 	    }
@@ -80,7 +80,7 @@ public class MaterialIds extends Material {
 	try {
 	    abfrageVorbereitenUndStarten(getQuery());
 
-	    while (result.next()) {
+	    while (getResult().next()) {
 		anzahlDerDatensatze++;
 	    }
 	} catch (SQLException sqlException) {
