@@ -17,19 +17,25 @@ import java.sql.Statement;
  *
  */
 public class SQLiteAbfrage {
-    protected Connection sqlConnection;
+    private Connection sqlConnection;
 
     protected Statement statment = null;
     protected ResultSet result = null;
     private String query = "";
 
-    public void setSqlConnection(Connection sqlConnection) {
-	this.sqlConnection = sqlConnection;
-    }
-
     public ResultSet getResult() {
 	return result;
     }
+    
+    public void setSqlConnection(Connection sqlConnection){
+	SQLiteConnect.sqlConnectionCloseorNull(sqlConnection);
+	this.sqlConnection = sqlConnection;
+    }
+    
+    public Connection getSqlConnection(){
+ 	return sqlConnection;
+     }
+    
 
     public Statement getStatment() {
 	return statment;

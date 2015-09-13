@@ -61,7 +61,7 @@ public class NeuerMaterialDatensatz extends MaterialDatensatz {
 	    setQuery(
 		    "INSERT INTO Material (\"MaterialSorteId\",\"x\",\"z\",\"yMax\",\"visibly\") VALUES (?1,?2,?3,?4,?5)");
 
-	    sqlPreparedStatment = sqlConnection.prepareStatement(getQuery());
+	    sqlPreparedStatment = getSqlConnection().prepareStatement(getQuery());
 
 	    sqlPreparedStatment.setInt(1, materialDatensatz[getOrdinal("MATERIALSORTE_ID")]);
 	    sqlPreparedStatment.setInt(2, materialDatensatz[getOrdinal("X")]);
@@ -133,7 +133,7 @@ public class NeuerMaterialDatensatz extends MaterialDatensatz {
 	    throw new IllegalArgumentException("Die materialSorteId darf nicht Negativ sein.");
 	}
 
-	MaterialSorte sorteVorhanden = new MaterialSorte(sqlConnection);
+	MaterialSorte sorteVorhanden = new MaterialSorte(getSqlConnection());
 	if (!sorteVorhanden.materialsorteIdVorhanden(materialSorteId)){
 	    throw new IllegalArgumentException("Die materialSorteId ist nicht vorhanden."); 
 	}

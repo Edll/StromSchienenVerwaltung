@@ -63,7 +63,7 @@ public class MaterialListe extends Material {
     private void materialListeAusDatenbankAbrufen() throws SQLException, IllegalArgumentException {
 	int[] materialIds = new int[0];
 
-	MaterialIds abfrageMaterialIds = new MaterialIds(this.sqlConnection);
+	MaterialIds abfrageMaterialIds = new MaterialIds(getSqlConnection());
 
 	abfrageMaterialIds.setAusgeblendetDatenAnzeigen(ausgeblendetDatenAnzeigen);
 	materialIds = abfrageMaterialIds.getIdListe();
@@ -77,7 +77,7 @@ public class MaterialListe extends Material {
 	int zaehlerDesArrayIndexes = 0;
 	for (int materialIdZumAbrufen : materialIds) {
 
-	    MaterialDatensatz abrufenDerWerte = new MaterialDatensatz(sqlConnection);
+	    MaterialDatensatz abrufenDerWerte = new MaterialDatensatz(getSqlConnection());
 
 	    int ArrayPostionsZahler = 0;
 	    for (int werte : abrufenDerWerte.getMaterialDatensatzAusDatenbank(materialIdZumAbrufen)) {

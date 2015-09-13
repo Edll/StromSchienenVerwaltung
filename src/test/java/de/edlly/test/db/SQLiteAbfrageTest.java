@@ -35,6 +35,18 @@ public class SQLiteAbfrageTest extends TestCase {
     }
 
     @Test
+    public void testSetSqlConnection() {
+	try {
+	    sqlAbfrage.setSqlConnection(null);
+	    fail("Muss eine IllegalArgumentException auslösen");
+	} catch (IllegalArgumentException exception) {
+	    String erwarteteException = "Fehler bei der SQL Verbindung!";
+	    assertEquals(erwarteteException, exception.getMessage());
+	}
+
+    }
+
+    @Test
     public void testGetQuery() {
 	String erwartet = "TestQuery";
 	sqlAbfrage.setQuery(erwartet);
