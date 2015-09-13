@@ -1,6 +1,7 @@
 package de.edlly.db;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -18,8 +19,8 @@ import java.sql.Statement;
  */
 public class SQLiteAbfrage {
     private Connection sqlConnection;
-
     private Statement statment = null;
+    private PreparedStatement preparedStatment = null;
     private ResultSet result = null;
     private String query = "";
 
@@ -38,6 +39,14 @@ public class SQLiteAbfrage {
 
     public void setStatment(Statement statment) {
 	this.statment = statment;
+    }
+
+    public PreparedStatement getPreparedStatment() {
+	return preparedStatment;
+    }
+
+    public void setPreparedStatment(PreparedStatement preparedStatment) {
+	this.preparedStatment = preparedStatment;
     }
 
     public void setResult(ResultSet result) {
@@ -64,21 +73,30 @@ public class SQLiteAbfrage {
 	return this.query;
     }
 
-    public void abfrageVorbereitenUndStarten(String query) throws SQLException {
-	abfrageVorbereiten();
-	executeStatment(query);
+    public void statmentVorbereitenUndStarten(String query) throws SQLException {
+	statmentVorbereiten();
+	statmentAusfuehren(query);
     }
 
-    public void abfrageVorbereiten() throws SQLException {
+    public void statmentVorbereiten() throws SQLException {
 	statment = sqlConnection.createStatement();
     }
 
-    public void executeStatment(String query) throws SQLException {
+    public void statmentAusfuehren(String query) throws SQLException {
 	queryNotNull(query);
 	result = statment.executeQuery(query);
     }
 
-    public void closeStatmentUndErgebiss() throws SQLException {
+    public void preparedStatmentVorbereiten(String query) throws SQLException {
+	queryNotNull(query);
+	preparedStatment = getSqlConnection().prepareStatement(query);
+    }
+
+    public void preparedStatmentAusfuehren() throws SQLException {
+	preparedStatment.executeUpdate();
+    }
+
+    public void closeStatmentUndResult() throws SQLException {
 	if (statment != null) {
 	    statment.close();
 	}
@@ -87,7 +105,13 @@ public class SQLiteAbfrage {
 	}
     }
 
-    public boolean abfrageOhneErgebniss(ResultSet result) throws SQLException {
+    public void closePrepareStatment() throws SQLException {
+	if (preparedStatment != null) {
+	    preparedStatment.close();
+	}
+    }
+
+    public boolean resultOhneErgebniss(ResultSet result) throws SQLException {
 	return !result.isBeforeFirst();
     }
 }

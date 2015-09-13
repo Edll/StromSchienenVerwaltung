@@ -56,18 +56,21 @@ public class SQLiteAbfrageTest extends TestCase {
     }
 
     @Test
-    public void testCloseStatmentUndErgebiss() {
+    public void testCloseStatmentUndResult() {
 	try {
-	    sqlAbfrage.abfrageVorbereiten();
-	    sqlAbfrage.executeStatment("SELECT * FROM material");
-	    sqlAbfrage.closeStatmentUndErgebiss();
+	    sqlAbfrage.statmentVorbereiten();
+	    sqlAbfrage.statmentAusfuehren("SELECT * FROM material");
+	    sqlAbfrage.closeStatmentUndResult();
 	} catch (Exception e) {
 	    fail("Sollte keine Exception werfen, ist aber:" + e.getMessage() + e.getLocalizedMessage());
 	    e.printStackTrace();
 	}
+    }
 
+    @Test
+    public void testStatmentAusfuehren() {
 	try {
-	    sqlAbfrage.executeStatment(null);
+	    sqlAbfrage.statmentAusfuehren(null);
 	    fail("Muss eine IllegalArgumentException auslösen");
 	} catch (IllegalArgumentException exception) {
 	    String erwarteteException = "Der SQL Query String darf nicht null sein.";
@@ -78,23 +81,47 @@ public class SQLiteAbfrageTest extends TestCase {
     }
 
     @Test
-    public void testAbfrageOhneErgebniss() throws SQLException {
-	sqlAbfrage.abfrageVorbereiten();
-	sqlAbfrage.executeStatment("SELECT * FROM material");
-	boolean ergebniss = sqlAbfrage.abfrageOhneErgebniss(sqlAbfrage.getResult());
+    public void testClosePrepareStatment() {
+	try {
+	    sqlAbfrage.preparedStatmentVorbereiten("INSERT INTO Material (\"MaterialSorteId\") VALUES (?1)");
+	    sqlAbfrage.closePrepareStatment();
+	} catch (Exception e) {
+	    e.printStackTrace();
+	    fail("Sollte keine Exception werfen, ist aber:" + e.getMessage() + e.getLocalizedMessage());
+	}
+    }
+
+    @Test
+    public void testPreparedStatmentVorbereiten() {
+	try {
+	    sqlAbfrage.preparedStatmentVorbereiten(null);
+	    fail("Muss eine IllegalArgumentException auslösen");
+	} catch (IllegalArgumentException exception) {
+	    String erwarteteException = "Der SQL Query String darf nicht null sein.";
+	    assertEquals(erwarteteException, exception.getMessage());
+	} catch (SQLException e) {
+	    e.printStackTrace();
+	}
+    }
+
+    @Test
+    public void testResultOhneErgebniss() throws SQLException {
+	sqlAbfrage.statmentVorbereiten();
+	sqlAbfrage.statmentAusfuehren("SELECT * FROM material");
+	boolean ergebniss = sqlAbfrage.resultOhneErgebniss(sqlAbfrage.getResult());
 
 	assertFalse(ergebniss);
     }
 
     @Test
     public void testAbfrageVorbereitenUndStarten() throws SQLException {
-	sqlAbfrage.abfrageVorbereitenUndStarten("SELECT * FROM material");
-	boolean ergebniss = sqlAbfrage.abfrageOhneErgebniss(sqlAbfrage.getResult());
+	sqlAbfrage.statmentVorbereitenUndStarten("SELECT * FROM material");
+	boolean ergebniss = sqlAbfrage.resultOhneErgebniss(sqlAbfrage.getResult());
 
 	assertFalse(ergebniss);
 
 	try {
-	    sqlAbfrage.abfrageVorbereitenUndStarten(null);
+	    sqlAbfrage.statmentVorbereitenUndStarten(null);
 	    fail("Muss eine IllegalArgumentException auslösen");
 	} catch (IllegalArgumentException exception) {
 	    String erwarteteException = "Der SQL Query String darf nicht null sein.";
@@ -105,7 +132,7 @@ public class SQLiteAbfrageTest extends TestCase {
     @Override
     public void tearDown() {
 	try {
-	    sqlAbfrage.closeStatmentUndErgebiss();
+	    sqlAbfrage.closeStatmentUndResult();
 	} catch (SQLException e) {
 	    e.printStackTrace();
 	}

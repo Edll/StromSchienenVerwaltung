@@ -3,7 +3,6 @@ package de.edlly.material;
 import java.sql.*;
 
 import de.edlly.material.MaterialKonstanten;
-import de.edlly.db.*;
 
 /**
  * Legt einen neuen Material Datensatz an nutzt dabei MaterialDatensatz.
@@ -38,6 +37,7 @@ public class NeuerMaterialDatensatz extends MaterialDatensatz {
 	    if (materialSorteIdIstVorhanden(materialSorteId)) {
 		materialDatensatz[getOrdinal("MATERIALSORTE_ID")] = materialSorteId;
 	    }
+	    materialDatensatz[getOrdinal("SICHTBARKEIT")] = 1;
 	    setMaterialDatensatz(materialDatensatz);
 
 	} catch (IllegalArgumentException datenSetzenFehlgeschlagen) {
@@ -49,7 +49,6 @@ public class NeuerMaterialDatensatz extends MaterialDatensatz {
     }
 
     public Boolean datensatzAusObjektWertenAnlegen() throws SQLException, IllegalArgumentException {
-	PreparedStatement sqlPreparedStatment = null;
 	int[] materialDatensatz = getMaterialDatensatz();
 
 	if (objektWerteSindNull()) {
@@ -61,27 +60,22 @@ public class NeuerMaterialDatensatz extends MaterialDatensatz {
 	    setQuery(
 		    "INSERT INTO Material (\"MaterialSorteId\",\"x\",\"z\",\"yMax\",\"visibly\") VALUES (?1,?2,?3,?4,?5)");
 
-	    sqlPreparedStatment = getSqlConnection().prepareStatement(getQuery());
+	    preparedStatmentVorbereiten(getQuery());
 
-	    sqlPreparedStatment.setInt(1, materialDatensatz[getOrdinal("MATERIALSORTE_ID")]);
-	    sqlPreparedStatment.setInt(2, materialDatensatz[getOrdinal("X")]);
-	    sqlPreparedStatment.setInt(3, materialDatensatz[getOrdinal("Z")]);
-	    sqlPreparedStatment.setInt(4, materialDatensatz[getOrdinal("YMAX")]);
-	    sqlPreparedStatment.setBoolean(5,
-		    SQLiteBoolean.integerToBoolean(materialDatensatz[getOrdinal("SICHTBARKEIT")]));
+	    getPreparedStatment().setInt(1, materialDatensatz[getOrdinal("MATERIALSORTE_ID")]);
+	    getPreparedStatment().setInt(2, materialDatensatz[getOrdinal("X")]);
+	    getPreparedStatment().setInt(3, materialDatensatz[getOrdinal("Z")]);
+	    getPreparedStatment().setInt(4, materialDatensatz[getOrdinal("YMAX")]);
+	    getPreparedStatment().setInt(5, materialDatensatz[getOrdinal("SICHTBARKEIT")]);
 
-	    sqlPreparedStatment.executeUpdate();
-
-	    sqlPreparedStatment.close();
+	    preparedStatmentAusfuehren();
+	    closePrepareStatment();
+	    
 	} catch (SQLException sqlException) {
 
 	    throw new SQLException(sqlException);
 	} finally {
-	    try {
-		sqlPreparedStatment.close();
-	    } catch (SQLException sqlException) {
-		sqlException.printStackTrace();
-	    }
+	    closePrepareStatment();
 	}
 	return true;
     }
@@ -134,11 +128,11 @@ public class NeuerMaterialDatensatz extends MaterialDatensatz {
 	}
 
 	MaterialSorte sorteVorhanden = new MaterialSorte(getSqlConnection());
-	if (!sorteVorhanden.materialsorteIdVorhanden(materialSorteId)){
-	    throw new IllegalArgumentException("Die materialSorteId ist nicht vorhanden."); 
+	if (!sorteVorhanden.materialsorteIdVorhanden(materialSorteId)) {
+	    throw new IllegalArgumentException("Die materialSorteId ist nicht vorhanden.");
 	}
 
-	    return true;
+	return true;
     }
 
     public Boolean objektWerteSindNull() {
