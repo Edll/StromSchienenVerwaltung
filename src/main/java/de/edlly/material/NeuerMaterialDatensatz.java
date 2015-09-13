@@ -43,8 +43,7 @@ public class NeuerMaterialDatensatz extends MaterialDatensatz {
 	} catch (IllegalArgumentException datenSetzenFehlgeschlagen) {
 
 	    clearObjektWerte();
-
-	    throw new IllegalArgumentException(datenSetzenFehlgeschlagen);
+	    throw new IllegalArgumentException(datenSetzenFehlgeschlagen.getMessage());
 	}
     }
 
