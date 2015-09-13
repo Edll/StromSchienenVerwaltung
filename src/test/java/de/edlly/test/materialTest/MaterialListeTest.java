@@ -24,7 +24,7 @@ public class MaterialListeTest extends TestCase {
     
     
     @Override
-    public void setUp() {
+    public void setUp() throws IllegalArgumentException, SQLException {
 	sqlConnection = SQLiteConnect.dbConnection();
 	materialDatensatz = new MaterialListe(sqlConnection);
     }

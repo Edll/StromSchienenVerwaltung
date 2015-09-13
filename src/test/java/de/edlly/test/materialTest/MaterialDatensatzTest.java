@@ -25,7 +25,7 @@ public class MaterialDatensatzTest extends TestCase {
     int[] materialIdList = new int[] { 0, 1, 2, 3, 4 };
 
     @Override
-    public void setUp() {
+    public void setUp() throws IllegalArgumentException, SQLException {
 	sqlConnection = SQLiteConnect.dbConnection();
 	materialDatensatz = new MaterialDatensatz(sqlConnection);
     }

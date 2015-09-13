@@ -23,7 +23,7 @@ public class MaterialIdsTest extends TestCase {
     MaterialIds materialIds;
 
     @Before
-    public void setUp() {
+    public void setUp() throws IllegalArgumentException, SQLException {
 	sqlConnection = SQLiteConnect.dbConnection();
 	materialIds = new MaterialIds(sqlConnection);
     }

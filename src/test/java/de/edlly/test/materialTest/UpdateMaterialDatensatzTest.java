@@ -1,7 +1,7 @@
 package de.edlly.test.materialTest;
 
 import java.sql.Connection;
-
+import java.sql.SQLException;
 
 import de.edlly.db.SQLiteConnect;
 import de.edlly.material.UpdateMaterialDatensatz;
@@ -12,7 +12,7 @@ public class UpdateMaterialDatensatzTest extends TestCase {
     private Connection sqlConnection;
 
     @Override
-    public void setUp() {
+    public void setUp() throws IllegalArgumentException, SQLException {
 	sqlConnection = SQLiteConnect.dbConnection();
 
     }

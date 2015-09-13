@@ -33,7 +33,7 @@ public class NeuerMaterialDatensatzTest extends TestCase {
     private int sortenId = 1;
 
     @Override
-    public void setUp() {
+    public void setUp() throws IllegalArgumentException, SQLException {
 	sqlConnection = SQLiteConnect.dbConnection();
 	materialDatensatz = new NeuerMaterialDatensatz(sqlConnection);
     }

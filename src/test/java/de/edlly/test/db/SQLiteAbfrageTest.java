@@ -7,7 +7,6 @@ import junit.framework.TestCase;
 import de.edlly.db.*;
 
 /**
- * TODO: für nicht mehr Private Methoden in SQLiteAbfrage tests einbauen.
  * 
  * @author Edlly java@edlly.de
  *
@@ -17,7 +16,7 @@ public class SQLiteAbfrageTest extends TestCase {
     Connection sqlConnection;
 
     @Override
-    public void setUp() {
+    public void setUp() throws IllegalArgumentException, SQLException {
 	sqlConnection = SQLiteConnect.dbConnection();
 	sqlAbfrage = new SQLiteAbfrage();
 	sqlAbfrage.setSqlConnection(sqlConnection);

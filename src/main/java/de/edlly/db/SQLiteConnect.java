@@ -17,18 +17,13 @@ import java.sql.*;
 public class SQLiteConnect {
     static Connection sqlConnection = null;
 
-    public static Connection dbConnection() throws IllegalArgumentException {
+    public static Connection dbConnection() throws IllegalArgumentException, SQLException {
 
 	try {
 	    Class.forName("org.sqlite.JDBC");
 	    sqlConnection = DriverManager.getConnection("jdbc:sqlite:kupfer.sqlite");
 	    
 	    return sqlConnection;
-
-	} catch (SQLException e) {
-
-	    e.printStackTrace();
-	    throw new IllegalArgumentException("Verbindung zur SQLite DB nicht möglich");
 
 	} catch (ClassNotFoundException e) {
 	    e.printStackTrace();
