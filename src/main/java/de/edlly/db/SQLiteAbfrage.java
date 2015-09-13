@@ -59,21 +59,21 @@ public class SQLiteAbfrage {
 	return this.query;
     }
 
-    public void sqlAbfrageVorbereitenUndStarten(String query) throws SQLException {
-	sqlAbfrageVorbereiten();
-	sqlExecuteStatment(query);
+    public void abfrageVorbereitenUndStarten(String query) throws SQLException {
+	abfrageVorbereiten();
+	executeStatment(query);
     }
 
-    public void sqlAbfrageVorbereiten() throws SQLException {
+    public void abfrageVorbereiten() throws SQLException {
 	statment = sqlConnection.createStatement();
     }
 
-    public void sqlExecuteStatment(String query) throws SQLException {
+    public void executeStatment(String query) throws SQLException {
 	queryNotNull(query);
 	result = statment.executeQuery(query);
     }
 
-    public void sqlCloseStatmentUndErgebiss() throws SQLException {
+    public void closeStatmentUndErgebiss() throws SQLException {
 	if (statment != null) {
 	    statment.close();
 	}
@@ -82,7 +82,7 @@ public class SQLiteAbfrage {
 	}
     }
 
-    public boolean sqlAbfrageOhneErgebniss(ResultSet result) throws SQLException {
+    public boolean abfrageOhneErgebniss(ResultSet result) throws SQLException {
 	return !result.isBeforeFirst();
     }
 }
