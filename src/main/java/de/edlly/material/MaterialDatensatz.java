@@ -53,9 +53,9 @@ public class MaterialDatensatz extends Material {
 	try {
 	    setQuery("SELECT id, MaterialSorteId, x, z, yMax, visibly FROM Material WHERE id = \"" + this.materialId
 		    + "\" ");
-	    sqlAbfrageVorbereitenUndStarten(getQuery());
+	    abfrageVorbereitenUndStarten(getQuery());
 
-	    if (sqlAbfrageOhneErgebniss(result)) {
+	    if (abfrageOhneErgebniss(result)) {
 		materialDatensatz = new int[] { 0, 0, 0, 0, 0, 0 };
 
 	    } else {
@@ -67,14 +67,14 @@ public class MaterialDatensatz extends Material {
 		materialDatensatz[getOrdinal("SICHTBARKEIT")] = result.getInt(6); // visibly
 	    }
 
-	    sqlCloseStatmentUndErgebiss();
+	    closeStatmentUndErgebiss();
 
 	} catch (SQLException e) {
 	    throw new SQLException(e);
 
 	} finally {
 	    try {
-		sqlCloseStatmentUndErgebiss();
+		closeStatmentUndErgebiss();
 
 	    } catch (SQLException e) {
 		e.printStackTrace();

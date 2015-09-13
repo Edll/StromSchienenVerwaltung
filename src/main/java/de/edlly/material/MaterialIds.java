@@ -45,7 +45,7 @@ public class MaterialIds extends Material {
 	try {
 	    queryAuswahl();
 	    int anzahlDerDatensatze = anzahlDatenseatze();
-	    sqlExecuteStatment(getQuery());
+	    executeStatment(getQuery());
 
 	    if (anzahlDerDatensatze == 0) {
 
@@ -61,7 +61,7 @@ public class MaterialIds extends Material {
 		    zaehlerDesArrayIndexes++;
 		}
 	    }
-	    sqlCloseStatmentUndErgebiss();
+	    closeStatmentUndErgebiss();
 
 	} catch (SQLException sqlException) {
 	    throw new SQLException(sqlException);
@@ -70,7 +70,7 @@ public class MaterialIds extends Material {
 	    throw new IllegalArgumentException(illegalException);
 
 	} finally {
-	    sqlCloseStatmentUndErgebiss();
+	    closeStatmentUndErgebiss();
 	}
     }
 
@@ -78,7 +78,7 @@ public class MaterialIds extends Material {
 	int anzahlDerDatensatze = 0;
 
 	try {
-	    sqlAbfrageVorbereitenUndStarten(getQuery());
+	    abfrageVorbereitenUndStarten(getQuery());
 
 	    while (result.next()) {
 		anzahlDerDatensatze++;

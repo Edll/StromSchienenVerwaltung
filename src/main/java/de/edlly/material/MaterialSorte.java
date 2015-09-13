@@ -47,21 +47,21 @@ public class MaterialSorte extends Material {
     public void materialSortenIdToName() throws SQLException {
 	try {
 	    setQuery("SELECT MaterialSorte FROM MaterialSorten Where id=" + materialSorteId);
-	    sqlAbfrageVorbereitenUndStarten(getQuery());
+	    abfrageVorbereitenUndStarten(getQuery());
 
-	    if (sqlAbfrageOhneErgebniss(result)) {
-		sqlCloseStatmentUndErgebiss();
+	    if (abfrageOhneErgebniss(result)) {
+		closeStatmentUndErgebiss();
 		materialSorteName = "N/A";
 	    } else {
 
 		materialSorteName = result.getString(1);
-		sqlCloseStatmentUndErgebiss();
+		closeStatmentUndErgebiss();
 	    }
 	} catch (SQLException sqlException) {
 	    throw new SQLException(sqlException);
 	} finally {
 	    try {
-		sqlCloseStatmentUndErgebiss();
+		closeStatmentUndErgebiss();
 	    } catch (SQLException sqlException) {
 		sqlException.printStackTrace();
 	    }
@@ -74,15 +74,15 @@ public class MaterialSorte extends Material {
 		materialSorteId = 0;
 	    } else {
 		setQuery("SELECT id FROM MaterialSorten Where MaterialSorte='" + materialSorteName + "'");
-		sqlAbfrageVorbereitenUndStarten(getQuery());
+		abfrageVorbereitenUndStarten(getQuery());
 
-		if (sqlAbfrageOhneErgebniss(result)) {
-		    sqlCloseStatmentUndErgebiss();
+		if (abfrageOhneErgebniss(result)) {
+		    closeStatmentUndErgebiss();
 		    materialSorteId = 0;
 		} else {
 		    materialSorteId = result.getInt(1);
 
-		    sqlCloseStatmentUndErgebiss();
+		    closeStatmentUndErgebiss();
 		}
 	    }
 	} catch (SQLException sqlException) {
@@ -91,7 +91,7 @@ public class MaterialSorte extends Material {
 
 	} finally {
 	    try {
-		sqlCloseStatmentUndErgebiss();
+		closeStatmentUndErgebiss();
 	    } catch (SQLException sqlException) {
 		sqlException.printStackTrace();
 	    }
@@ -101,7 +101,7 @@ public class MaterialSorte extends Material {
     public String[] materialSorteNamensListe() throws SQLException {
 	try {
 	    setQuery("SELECT MaterialSorte FROM MaterialSorten");
-	    sqlAbfrageVorbereitenUndStarten(getQuery());
+	    abfrageVorbereitenUndStarten(getQuery());
 
 	    int anzahlDerDatensatze = 0;
 	    while (result.next()) {
@@ -110,7 +110,7 @@ public class MaterialSorte extends Material {
 
 	    materialSorteNameListe = new String[anzahlDerDatensatze];
 
-	    sqlExecuteStatment(getQuery()); // nötig um den Datensatz zurück zu setzten. SQLite bietet hier keine
+	    executeStatment(getQuery()); // nötig um den Datensatz zurück zu setzten. SQLite bietet hier keine
 					    // bessere Möglichkeit.
 	    int count = 0;
 	    while (result.next()) {
@@ -118,7 +118,7 @@ public class MaterialSorte extends Material {
 		count++;
 	    }
 
-	    sqlCloseStatmentUndErgebiss();
+	    closeStatmentUndErgebiss();
 	    return materialSorteNameListe;
 
 	} catch (SQLException sqlException) {
@@ -126,7 +126,7 @@ public class MaterialSorte extends Material {
 
 	} finally {
 	    try {
-		sqlCloseStatmentUndErgebiss();
+		closeStatmentUndErgebiss();
 	    } catch (SQLException sqlException) {
 		sqlException.printStackTrace();
 	    }
