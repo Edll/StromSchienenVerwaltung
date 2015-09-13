@@ -6,11 +6,13 @@ import java.awt.Color;
 import java.awt.BorderLayout;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 import javax.swing.border.LineBorder;
 
 import de.edlly.gui.materialVerwaltung.TabMaterialVerwaltung;
 import de.edlly.gui.werkstueckVerwaltung.WerkstueckVerwaltung;
+import de.edlly.db.*;
 
 /**
  * Programm Main Loader
@@ -27,7 +29,6 @@ public class Main {
     }
 
     public static void main(String[] args) {
-
 	EventQueue.invokeLater(new Runnable() {
 	    public void run() {
 
@@ -43,6 +44,15 @@ public class Main {
 	mainFrame.setBounds(0, 0, 800, 600);
 	mainFrame.getContentPane().setLayout(new BorderLayout(0, 0));
 
+	SQLiteDatenbankStruktur datenbankCheck = new SQLiteDatenbankStruktur();
+	try{
+	datenbankCheck.datenbankCheckUndAnlegen();
+	}catch(SQLException e){
+	    e.printStackTrace();    
+	}catch(IllegalArgumentException e){
+	    JOptionPane.showMessageDialog(null, e.getMessage()); 
+	}
+	
 	JTabbedPane tabMenu = tabMenuErstellen();
 
 	mainFrame.getContentPane().add(tabMenu);
@@ -60,10 +70,10 @@ public class Main {
 
     private void tabsHinzufuegen(JTabbedPane tabMenu) {
 	try {
-	WerkstueckVerwaltung werkstueckVerwaltung = new WerkstueckVerwaltung();
-	tabMenu.addTab("Werkst\u00FCck Verwaltung", null, werkstueckVerwaltung.werkstueckVerwaltungsPanel(), null);
+	    WerkstueckVerwaltung werkstueckVerwaltung = new WerkstueckVerwaltung();
+	    tabMenu.addTab("Werkst\u00FCck Verwaltung", null, werkstueckVerwaltung.werkstueckVerwaltungsPanel(), null);
 
-	TabMaterialVerwaltung materialVerwaltung = new TabMaterialVerwaltung();
+	    TabMaterialVerwaltung materialVerwaltung = new TabMaterialVerwaltung();
 	    tabMenu.addTab("Material Verwaltung", null, materialVerwaltung.materialVerwaltungsPanel(), null);
 	} catch (SQLException e) {
 	    e.printStackTrace();
