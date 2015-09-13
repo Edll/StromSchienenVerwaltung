@@ -17,7 +17,6 @@ import de.edlly.gui.materialVerwaltung.AusgabeMaterialAnlegen;
 public class TabMaterialVerwaltung {
 
     private JButton makiertesMaterialLoeschen;
-    private JButton materialHinzufuegen;
     protected AusgabeMaterialTabelle materialTabelle;
 
     public JPanel materialVerwaltungsPanel() {
@@ -44,7 +43,7 @@ public class TabMaterialVerwaltung {
 
     public void neuesMaterialAnlegen(JPanel materialVerwaltung) {
 
-	AusgabeMaterialAnlegen neuesMaterialAnlegen = new AusgabeMaterialAnlegen(materialHinzufuegen, materialTabelle);
+	AusgabeMaterialAnlegen neuesMaterialAnlegen = new AusgabeMaterialAnlegen(materialTabelle);
 	try {
 	    materialVerwaltung.add(neuesMaterialAnlegen.materialEingabeBereich(10, 420));
 	} catch (SQLException e) {

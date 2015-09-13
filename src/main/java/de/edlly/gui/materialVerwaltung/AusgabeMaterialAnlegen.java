@@ -31,11 +31,10 @@ public class AusgabeMaterialAnlegen extends TabMaterialVerwaltung {
     private JButton materialHinzufuegen;
     private JComboBox materialSortenAuswahl;
     private JPanel materialEingabeBereich = new JPanel();
-    private AusgabeMaterialTabelle materialTabelleAlt;
+    private AusgabeMaterialTabelle materialTabelle;
 
-    public AusgabeMaterialAnlegen(JButton materialHinzufuegen, AusgabeMaterialTabelle materialTabelleAlt) {
-	this.materialHinzufuegen = materialHinzufuegen;
-	this.materialTabelleAlt = materialTabelleAlt;
+    public AusgabeMaterialAnlegen(AusgabeMaterialTabelle materialTabelle) {
+	this.materialTabelle = materialTabelle;
     }
 
     public JPanel materialEingabeBereich(int PositionX, int PositionY) throws SQLException {
@@ -79,7 +78,7 @@ public class AusgabeMaterialAnlegen extends TabMaterialVerwaltung {
 		    }
 		    JOptionPane.showMessageDialog(null, "Das neue Material ist erfolgreich eingefügt worden.");
 
-		    materialTabelleAlt.refreshMaterialTabelle();
+		    materialTabelle.refreshMaterialTabelle();
 
 		    materialEingabeBereich.repaint();
 
@@ -106,7 +105,6 @@ public class AusgabeMaterialAnlegen extends TabMaterialVerwaltung {
     }
 
     public void buttonMaterialHinzufuegen(JPanel materialEingabeBereich) {
-
 	materialHinzufuegen = new JButton("+");
 	materialHinzufuegen.setFont(Formatierung.buttonFont());
 	materialHinzufuegen.setBounds(392, 50, 43, 23);
