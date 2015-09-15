@@ -9,6 +9,8 @@ import de.edlly.test.materialTest.UpdateMaterialDatensatzTest;
 import de.edlly.test.db.SQLiteAbfrageTest;
 import de.edlly.test.db.SQLiteBooleanTest;
 import de.edlly.test.db.SQLiteConnectTest;
+import de.edlly.test.db.SQLitePreparedStatementTest;
+import de.edlly.test.db.SQLiteStatementTest;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -34,6 +36,8 @@ public class AllTests extends TestSuite {
 	materialDatensatz.addTestSuite(SQLiteBooleanTest.class);
 	materialDatensatz.addTestSuite(SQLiteConnectTest.class);
 	materialDatensatz.addTestSuite(SQLiteAbfrageTest.class);
+	materialDatensatz.addTestSuite(SQLiteStatementTest.class);
+	materialDatensatz.addTestSuite(SQLitePreparedStatementTest.class);
 	
 	
 	return materialDatensatz;

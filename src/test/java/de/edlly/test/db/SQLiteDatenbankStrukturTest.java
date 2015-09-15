@@ -16,7 +16,7 @@ public class SQLiteDatenbankStrukturTest  extends TestCase {
     @Override
     public void setUp() throws IllegalArgumentException, SQLException {
 	sqlConnection = SQLiteConnect.dbConnection();
-	datenbank = new SQLiteDatenbankStruktur();
+	datenbank = new SQLiteDatenbankStruktur(SQLiteConnect.dbConnection());
 
     }
     @Test
