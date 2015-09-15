@@ -70,29 +70,26 @@ public class MaterialDatensatzTest extends TestCase {
 	org.junit.Assert.assertArrayEquals(testDatensatzEins, abfrageErgebnissEins);
 
     }
-    
+
     @Test
-    public void testSetMaterialDatensatz(){
-	int[] materialDatensatzOhneWerte = { 0, 0, 0, 0, 0, 0};
+    public void testSetMaterialDatensatz() {
+	int[] materialDatensatzOhneWerte = { 0, 0, 0, 0, 0, 0 };
 	int[] materialDatensatzNull = null;
-	
+
 	materialDatensatz.setMaterialDatensatz(materialDatensatzOhneWerte);
 	int[] ergebnissOhneWerte = materialDatensatz.getMaterialDatensatz();
 	org.junit.Assert.assertArrayEquals(materialDatensatzOhneWerte, ergebnissOhneWerte);
 
-	String exceptionErwartet = "Der Materialdatensatz bei eintragen darf nicht null sein." + materialDatensatz.getClass();
-	try{
-	materialDatensatz.setMaterialDatensatz(materialDatensatzNull);
-	fail("IllegalArgumentException erwartet: " + exceptionErwartet);
-	}catch(IllegalArgumentException e){
-	    
+	String exceptionErwartet = "Der Materialdatensatz bei eintragen darf nicht null sein."
+		+ materialDatensatz.getClass();
+	try {
+	    materialDatensatz.setMaterialDatensatz(materialDatensatzNull);
+	    fail("IllegalArgumentException erwartet: " + exceptionErwartet);
+	} catch (IllegalArgumentException e) {
+
 	    assertEquals(exceptionErwartet, e.getMessage());
 	}
 
-	
-	
-	
-	
     }
 
     @Override

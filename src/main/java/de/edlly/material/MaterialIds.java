@@ -2,6 +2,8 @@ package de.edlly.material;
 
 import java.sql.*;
 
+import de.edlly.db.SQLiteStatement;
+
 /**
  * Stellt eine MaterialIds Liste, prüft ob überhaupt ob eine vorhanden ist wenn nicht gibt eine liste mit 0 zurück.
  * 
@@ -13,9 +15,10 @@ public class MaterialIds extends Material {
 
     private boolean ausgeblendetDatenAnzeigen;
     private int[] idListe = new int[] { 0 };
+    SQLiteStatement sqlLite;
 
     public MaterialIds(Connection sqlConnection) {
-	super(sqlConnection);
+	sqlLite = new SQLiteStatement(sqlConnection);
     }
 
     public void setAusgeblendetDatenAnzeigen(boolean ausgelendeteDatensatzeBeruecksichtigen) {
@@ -45,7 +48,7 @@ public class MaterialIds extends Material {
 	try {
 	    queryAuswahl();
 	    int anzahlDerDatensatze = anzahlDatenseatze();
-	    statmentAusfuehren(getQuery());
+	    sqlLite.statmentAusfuehren(sqlLite.getQuery());
 
 	    if (anzahlDerDatensatze == 0) {
 
@@ -55,13 +58,13 @@ public class MaterialIds extends Material {
 		idListe = new int[anzahlDerDatensatze];
 		int zaehlerDesArrayIndexes = 0;
 
-		while (getResult().next()) {
+		while (sqlLite.getResult().next()) {
 
-		    idListe[zaehlerDesArrayIndexes] = getResult().getInt(1);
+		    idListe[zaehlerDesArrayIndexes] = sqlLite.getResult().getInt(1);
 		    zaehlerDesArrayIndexes++;
 		}
 	    }
-	    closeStatmentUndResult();
+	    sqlLite.closeStatmentUndResult();
 
 	} catch (SQLException sqlException) {
 	    throw new SQLException(sqlException);
@@ -70,7 +73,7 @@ public class MaterialIds extends Material {
 	    throw new IllegalArgumentException(illegalException);
 
 	} finally {
-	    closeStatmentUndResult();
+	    sqlLite.closeStatmentUndResult();
 	}
     }
 
@@ -78,9 +81,9 @@ public class MaterialIds extends Material {
 	int anzahlDerDatensatze = 0;
 
 	try {
-	    statmentVorbereitenUndStarten(getQuery());
+	    sqlLite.statmentVorbereitenUndStarten(sqlLite.getQuery());
 
-	    while (getResult().next()) {
+	    while (sqlLite.getResult().next()) {
 		anzahlDerDatensatze++;
 	    }
 	} catch (SQLException sqlException) {
@@ -94,11 +97,15 @@ public class MaterialIds extends Material {
     public void queryAuswahl() {
 	if (ausgeblendetDatenAnzeigen) {
 
-	    setQuery("SELECT id FROM Material");
+	    sqlLite.setQuery("SELECT id FROM Material");
 	} else {
 
-	    setQuery("SELECT id FROM Material WHERE visibly = 1");
+	    sqlLite.setQuery("SELECT id FROM Material WHERE visibly = 1");
 	}
+    }
+
+    public String getQuery() {
+	return sqlLite.getQuery();
     }
 
 }

@@ -15,13 +15,14 @@ import de.edlly.db.*;
  */
 
 public class MaterialListe extends Material {
-    
+
     private boolean ausgeblendetDatenAnzeigen = false;
     private Object[][] materialListeUnformatiert = null;
     private Object[][] materialListeFormatiert = null;
+    private Connection sqlConnection;
 
     public MaterialListe(Connection sqlConnection) {
-	super(sqlConnection);
+	this.sqlConnection = sqlConnection;
     }
 
     public void setAusgeblendetDatenAnzeigen(boolean ausgeblendetDatenAnzeigen) {
@@ -63,7 +64,7 @@ public class MaterialListe extends Material {
     private void materialListeAusDatenbankAbrufen() throws SQLException, IllegalArgumentException {
 	int[] materialIds = new int[0];
 
-	MaterialIds abfrageMaterialIds = new MaterialIds(getSqlConnection());
+	MaterialIds abfrageMaterialIds = new MaterialIds(sqlConnection);
 
 	abfrageMaterialIds.setAusgeblendetDatenAnzeigen(ausgeblendetDatenAnzeigen);
 	materialIds = abfrageMaterialIds.getIdListe();
@@ -77,7 +78,7 @@ public class MaterialListe extends Material {
 	int zaehlerDesArrayIndexes = 0;
 	for (int materialIdZumAbrufen : materialIds) {
 
-	    MaterialDatensatz abrufenDerWerte = new MaterialDatensatz(getSqlConnection());
+	    MaterialDatensatz abrufenDerWerte = new MaterialDatensatz(sqlConnection);
 
 	    int ArrayPostionsZahler = 0;
 	    for (int werte : abrufenDerWerte.getMaterialDatensatzAusDatenbank(materialIdZumAbrufen)) {

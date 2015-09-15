@@ -41,7 +41,7 @@ public class MaterialListeTest extends TestCase {
     public void testGetMaterialListeKeineNullDatensatzAusblenden() throws IllegalArgumentException, SQLException {
 	try{
 	    materialDatensatz.setAusgeblendetDatenAnzeigen(false);
-	    Object[][] materialListe =  materialDatensatz.getMaterialListe();
+	    Object[][] materialListe = materialDatensatz.getMaterialListe();
 	assertNotNull("methode darf keine Null liefern", materialListe);
 	}catch(IllegalArgumentException e){
 	    

@@ -44,8 +44,9 @@ public class Main {
 	mainFrame.setBounds(0, 0, 800, 600);
 	mainFrame.getContentPane().setLayout(new BorderLayout(0, 0));
 
-	SQLiteDatenbankStruktur datenbankCheck = new SQLiteDatenbankStruktur();
+
 	try{
+		SQLiteDatenbankStruktur datenbankCheck = new SQLiteDatenbankStruktur(SQLiteConnect.dbConnection());    
 	datenbankCheck.datenbankCheckUndAnlegen();
 	}catch(SQLException e){
 	    e.printStackTrace();    

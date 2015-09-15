@@ -2,6 +2,8 @@ package de.edlly.material;
 
 import java.sql.*;
 
+import de.edlly.db.SQLiteStatement;
+
 /**
  * MaterialSorten Aus der Datenbank erfragen eine Liste mit Namen, den Name nach Id oder die Id nach Namen.
  * 
@@ -13,9 +15,10 @@ public class MaterialSorte extends Material {
     private int materialSorteId;
     private String materialSorteName = "";
     private String[] materialSorteNameListe = new String[0];
+    SQLiteStatement sqlLite;
 
     public MaterialSorte(Connection sqlConnection) {
-	super(sqlConnection);
+	sqlLite = new SQLiteStatement(sqlConnection);
     }
 
     public int getMaterialSorteId(String materialSorteName) throws IllegalArgumentException, SQLException {
@@ -46,22 +49,22 @@ public class MaterialSorte extends Material {
 
     public void materialSortenIdToName() throws SQLException {
 	try {
-	    setQuery("SELECT MaterialSorte FROM MaterialSorten Where id=" + materialSorteId);
-	    statmentVorbereitenUndStarten(getQuery());
+	    sqlLite.setQuery("SELECT MaterialSorte FROM MaterialSorten Where id=" + materialSorteId);
+	    sqlLite.statmentVorbereitenUndStarten(sqlLite.getQuery());
 
-	    if (resultOhneErgebniss(getResult())) {
-		closeStatmentUndResult();
+	    if (sqlLite.resultOhneErgebniss(sqlLite.getResult())) {
+		sqlLite.closeStatmentUndResult();
 		materialSorteName = "N/A";
 	    } else {
 
-		materialSorteName = getResult().getString(1);
-		closeStatmentUndResult();
+		materialSorteName = sqlLite.getResult().getString(1);
+		sqlLite.closeStatmentUndResult();
 	    }
 	} catch (SQLException sqlException) {
 	    throw new SQLException(sqlException);
 	} finally {
 	    try {
-		closeStatmentUndResult();
+		sqlLite.closeStatmentUndResult();
 	    } catch (SQLException sqlException) {
 		sqlException.printStackTrace();
 	    }
@@ -73,16 +76,16 @@ public class MaterialSorte extends Material {
 	    if (materialSorteName == null) {
 		materialSorteId = 0;
 	    } else {
-		setQuery("SELECT id FROM MaterialSorten Where MaterialSorte='" + materialSorteName + "'");
-		statmentVorbereitenUndStarten(getQuery());
+		sqlLite.setQuery("SELECT id FROM MaterialSorten Where MaterialSorte='" + materialSorteName + "'");
+		sqlLite.statmentVorbereitenUndStarten(sqlLite.getQuery());
 
-		if (resultOhneErgebniss(getResult())) {
-		    closeStatmentUndResult();
+		if (sqlLite.resultOhneErgebniss(sqlLite.getResult())) {
+		    sqlLite.closeStatmentUndResult();
 		    materialSorteId = 0;
 		} else {
-		    materialSorteId = getResult().getInt(1);
+		    materialSorteId = sqlLite.getResult().getInt(1);
 
-		    closeStatmentUndResult();
+		    sqlLite.closeStatmentUndResult();
 		}
 	    }
 	} catch (SQLException sqlException) {
@@ -91,7 +94,7 @@ public class MaterialSorte extends Material {
 
 	} finally {
 	    try {
-		closeStatmentUndResult();
+		sqlLite.closeStatmentUndResult();
 	    } catch (SQLException sqlException) {
 		sqlException.printStackTrace();
 	    }
@@ -100,25 +103,26 @@ public class MaterialSorte extends Material {
 
     public String[] materialSorteNamensListe() throws SQLException {
 	try {
-	    setQuery("SELECT MaterialSorte FROM MaterialSorten");
-	    statmentVorbereitenUndStarten(getQuery());
+	    sqlLite.setQuery("SELECT MaterialSorte FROM MaterialSorten");
+	    sqlLite.statmentVorbereitenUndStarten(sqlLite.getQuery());
 
 	    int anzahlDerDatensatze = 0;
-	    while (getResult().next()) {
+	    while (sqlLite.getResult().next()) {
 		anzahlDerDatensatze++;
 	    }
 
 	    materialSorteNameListe = new String[anzahlDerDatensatze];
 
-	    statmentAusfuehren(getQuery()); // nötig um den Datensatz zurück zu setzten. SQLite bietet hier keine
-					 // bessere Möglichkeit.
+	    sqlLite.statmentAusfuehren(sqlLite.getQuery()); // nötig um den Datensatz zurück zu setzten. SQLite bietet
+							    // hier keine
+	    // bessere Möglichkeit.
 	    int count = 0;
-	    while (getResult().next()) {
-		materialSorteNameListe[count] = getResult().getString(1);
+	    while (sqlLite.getResult().next()) {
+		materialSorteNameListe[count] = sqlLite.getResult().getString(1);
 		count++;
 	    }
 
-	    closeStatmentUndResult();
+	    sqlLite.closeStatmentUndResult();
 	    return materialSorteNameListe;
 
 	} catch (SQLException sqlException) {
@@ -126,7 +130,7 @@ public class MaterialSorte extends Material {
 
 	} finally {
 	    try {
-		closeStatmentUndResult();
+		sqlLite.closeStatmentUndResult();
 	    } catch (SQLException sqlException) {
 		sqlException.printStackTrace();
 	    }

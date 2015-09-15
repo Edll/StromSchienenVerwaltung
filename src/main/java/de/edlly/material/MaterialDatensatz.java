@@ -2,6 +2,8 @@ package de.edlly.material;
 
 import java.sql.*;
 
+import de.edlly.db.SQLiteStatement;
+
 /**
  * Erstellt einen Material Datensatz anhand einer der materialId
  * 
@@ -15,9 +17,10 @@ public class MaterialDatensatz extends Material {
 
     private int[] materialDatensatz = new int[6];
     private int materialId;
+    SQLiteStatement sqlLite;
 
     public MaterialDatensatz(Connection sqlConnection) {
-	super(sqlConnection);
+	sqlLite = new SQLiteStatement(sqlConnection);
     }
 
     public void setMaterialId(int materialId) {
@@ -51,30 +54,31 @@ public class MaterialDatensatz extends Material {
     private void materialDatenAbrufen() throws SQLException {
 
 	try {
-	    setQuery("SELECT id, MaterialSorteId, x, z, yMax, visibly FROM Material WHERE id = \"" + this.materialId
-		    + "\" ");
-	    statmentVorbereitenUndStarten(getQuery());
 
-	    if (resultOhneErgebniss(getResult())) {
+	    sqlLite.setQuery("SELECT id, MaterialSorteId, x, z, yMax, visibly FROM Material WHERE id = \""
+		    + this.materialId + "\" ");
+	    sqlLite.statmentVorbereitenUndStarten(sqlLite.getQuery());
+
+	    if (sqlLite.resultOhneErgebniss(sqlLite.getResult())) {
 		materialDatensatz = new int[] { 0, 0, 0, 0, 0, 0 };
 
 	    } else {
-		materialDatensatz[getOrdinal("ID")] = getResult().getInt(1); // id
-		materialDatensatz[getOrdinal("MATERIALSORTE_ID")] = getResult().getInt(2); // MaterialSorteId
-		materialDatensatz[getOrdinal("X")] = getResult().getInt(3); // x
-		materialDatensatz[getOrdinal("Z")] = getResult().getInt(4); // z
-		materialDatensatz[getOrdinal("YMAX")] = getResult().getInt(5); // yMax
-		materialDatensatz[getOrdinal("SICHTBARKEIT")] = getResult().getInt(6); // visibly
+		materialDatensatz[getOrdinal("ID")] = sqlLite.getResult().getInt(1); // id
+		materialDatensatz[getOrdinal("MATERIALSORTE_ID")] = sqlLite.getResult().getInt(2); // MaterialSorteId
+		materialDatensatz[getOrdinal("X")] = sqlLite.getResult().getInt(3); // x
+		materialDatensatz[getOrdinal("Z")] = sqlLite.getResult().getInt(4); // z
+		materialDatensatz[getOrdinal("YMAX")] = sqlLite.getResult().getInt(5); // yMax
+		materialDatensatz[getOrdinal("SICHTBARKEIT")] = sqlLite.getResult().getInt(6); // visibly
 	    }
 
-	    closeStatmentUndResult();
+	    sqlLite.closeStatmentUndResult();
 
 	} catch (SQLException e) {
 	    throw new SQLException(e);
 
 	} finally {
 	    try {
-		closeStatmentUndResult();
+		sqlLite.closeStatmentUndResult();
 
 	    } catch (SQLException e) {
 		e.printStackTrace();

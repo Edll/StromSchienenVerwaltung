@@ -4,29 +4,36 @@ import java.sql.*;
 
 /**
  * 
- * Beim ersten start des Programms wird die Datenbank Struktur geprüft sollte diese nicht vorhanden sein wird sie angelegt.
+ * Beim ersten start des Programms wird die Datenbank Struktur geprüft sollte diese nicht vorhanden sein wird sie
+ * angelegt.
  * 
  * @author Edlly java@edlly.de
  *
  */
 
-public class SQLiteDatenbankStruktur extends SQLiteAbfrage {
+public class SQLiteDatenbankStruktur extends SQLitePreparedStatement {
+
+    public SQLiteDatenbankStruktur(Connection sqlConnection) {
+	super(sqlConnection);
+    }
 
     public void datenbankCheckUndAnlegen() throws IllegalArgumentException, SQLException {
 	setSqlConnection(SQLiteConnect.dbConnection());
 	boolean tableMaterialVorhanden = tableMaterialVorhanden();
 	boolean tableMaterialSorteVorhanden = tableMaterialSorteVorhanden();
 	boolean tableBiegenVorhanden = tableBiegenVorhanden();
-	if(tableMaterialVorhanden || tableMaterialSorteVorhanden || tableBiegenVorhanden){
-	    throw new IllegalArgumentException("Die Datenbank war nicht vorhanden. Eine neue leere Datenbank wurde angelegt.");
+	if (tableMaterialVorhanden || tableMaterialSorteVorhanden || tableBiegenVorhanden) {
+	    throw new IllegalArgumentException(
+		    "Die Datenbank war nicht vorhanden. Eine neue leere Datenbank wurde angelegt.");
 	}
     }
 
     public boolean tableMaterialVorhanden() throws SQLException, IllegalArgumentException {
 	try {
 	    setQuery("SELECT * FROM Material");
-	    statmentVorbereitenUndStarten(getQuery());
-	    closeStatmentUndResult();
+	    preparedStatmentVorbereiten(getQuery());
+	    preparedStatmentAusfuehren();
+	    closePrepareStatment();
 	} catch (SQLException e) {
 	    String errorErwartet = "no such table: Material";
 	    String errorBekommen = e.getLocalizedMessage();
@@ -46,8 +53,9 @@ public class SQLiteDatenbankStruktur extends SQLiteAbfrage {
     public boolean tableMaterialSorteVorhanden() throws SQLException, IllegalArgumentException {
 	try {
 	    setQuery("SELECT * FROM MaterialSorten");
-	    statmentVorbereitenUndStarten(getQuery());
-	    closeStatmentUndResult();
+	    preparedStatmentVorbereiten(getQuery());
+	    preparedStatmentAusfuehren();
+	    closePrepareStatment();
 	} catch (SQLException e) {
 	    String errorErwartet = "no such table: MaterialSorten";
 	    String errorBekommen = e.getLocalizedMessage();
@@ -56,7 +64,7 @@ public class SQLiteDatenbankStruktur extends SQLiteAbfrage {
 			"CREATE TABLE \"MaterialSorten\" (\"id\" INTEGER PRIMARY KEY  NOT NULL  UNIQUE , \"MaterialSorte\" TEXT)");
 		preparedStatmentVorbereiten(getQuery());
 		preparedStatmentAusfuehren();
-		closeStatmentUndResult();
+		closePrepareStatment();
 
 		// TODO: SQLite Befehl so umstricken das er alles Datensätze auf einmal einträgt!
 		setQuery("INSERT INTO MaterialSorten  (\"id\",\"MaterialSorte\") VALUES (\"1\",\"Kupfer\") ");
@@ -81,8 +89,9 @@ public class SQLiteDatenbankStruktur extends SQLiteAbfrage {
     public boolean tableBiegenVorhanden() throws SQLException, IllegalArgumentException {
 	try {
 	    setQuery("SELECT * FROM Biegen");
-	    statmentVorbereitenUndStarten(getQuery());
-	    closeStatmentUndResult();
+	    preparedStatmentVorbereiten(getQuery());
+	    preparedStatmentAusfuehren();
+	    closePrepareStatment();
 
 	} catch (SQLException e) {
 	    String errorErwartet = "no such table: Biegen";
@@ -92,7 +101,7 @@ public class SQLiteDatenbankStruktur extends SQLiteAbfrage {
 			"CREATE TABLE \"Biegen\" (\"id\" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE , \"WerkstueckId\" INTEGER NOT NULL , \"y\" INTEGER, \"Winkel\" INTEGER, \"Richtung\" TEXT)");
 		preparedStatmentVorbereiten(getQuery());
 		preparedStatmentAusfuehren();
-		closeStatmentUndResult();
+		closePrepareStatment();
 		return true;
 	    }
 	}

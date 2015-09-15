@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 import javax.swing.*;
 
-import de.edlly.db.SQLiteConnect;
+import de.edlly.db.*;
 import de.edlly.gui.Formatierung;
 import de.edlly.material.MaterialSorte;
 import de.edlly.material.NeuerMaterialDatensatz;

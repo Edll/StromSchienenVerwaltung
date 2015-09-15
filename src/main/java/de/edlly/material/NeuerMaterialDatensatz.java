@@ -2,6 +2,7 @@ package de.edlly.material;
 
 import java.sql.*;
 
+import de.edlly.db.SQLitePreparedStatement;
 import de.edlly.material.MaterialKonstanten;
 
 /**
@@ -11,9 +12,13 @@ import de.edlly.material.MaterialKonstanten;
  *
  */
 public class NeuerMaterialDatensatz extends MaterialDatensatz {
+    private SQLitePreparedStatement sqlLite;
+    private Connection sqlConnection;
 
     public NeuerMaterialDatensatz(Connection sqlConnection) {
 	super(sqlConnection);
+	this.sqlConnection = sqlConnection;
+	sqlLite = new SQLitePreparedStatement(sqlConnection);
 
     }
 
@@ -56,25 +61,25 @@ public class NeuerMaterialDatensatz extends MaterialDatensatz {
 	}
 
 	try {
-	    setQuery(
+	    sqlLite.setQuery(
 		    "INSERT INTO Material (\"MaterialSorteId\",\"x\",\"z\",\"yMax\",\"visibly\") VALUES (?1,?2,?3,?4,?5)");
 
-	    preparedStatmentVorbereiten(getQuery());
+	    sqlLite.preparedStatmentVorbereiten(sqlLite.getQuery());
 
-	    getPreparedStatment().setInt(1, materialDatensatz[getOrdinal("MATERIALSORTE_ID")]);
-	    getPreparedStatment().setInt(2, materialDatensatz[getOrdinal("X")]);
-	    getPreparedStatment().setInt(3, materialDatensatz[getOrdinal("Z")]);
-	    getPreparedStatment().setInt(4, materialDatensatz[getOrdinal("YMAX")]);
-	    getPreparedStatment().setInt(5, materialDatensatz[getOrdinal("SICHTBARKEIT")]);
+	    sqlLite.getPreparedStatment().setInt(1, materialDatensatz[getOrdinal("MATERIALSORTE_ID")]);
+	    sqlLite.getPreparedStatment().setInt(2, materialDatensatz[getOrdinal("X")]);
+	    sqlLite.getPreparedStatment().setInt(3, materialDatensatz[getOrdinal("Z")]);
+	    sqlLite.getPreparedStatment().setInt(4, materialDatensatz[getOrdinal("YMAX")]);
+	    sqlLite.getPreparedStatment().setInt(5, materialDatensatz[getOrdinal("SICHTBARKEIT")]);
 
-	    preparedStatmentAusfuehren();
-	    closePrepareStatment();
-	    
+	    sqlLite.preparedStatmentAusfuehren();
+	    sqlLite.closePrepareStatment();
+
 	} catch (SQLException sqlException) {
 
 	    throw new SQLException(sqlException);
 	} finally {
-	    closePrepareStatment();
+	    sqlLite.closePrepareStatment();
 	}
 	return true;
     }
@@ -126,7 +131,7 @@ public class NeuerMaterialDatensatz extends MaterialDatensatz {
 	    throw new IllegalArgumentException("Die materialSorteId darf nicht Negativ sein.");
 	}
 
-	MaterialSorte sorteVorhanden = new MaterialSorte(getSqlConnection());
+	MaterialSorte sorteVorhanden = new MaterialSorte(sqlConnection);
 	if (!sorteVorhanden.materialsorteIdVorhanden(materialSorteId)) {
 	    throw new IllegalArgumentException("Die materialSorteId ist nicht vorhanden.");
 	}

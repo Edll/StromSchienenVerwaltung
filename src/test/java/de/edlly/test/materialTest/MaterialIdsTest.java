@@ -76,17 +76,19 @@ public class MaterialIdsTest extends TestCase {
 
 	assertEquals(anzahlErwartet, anzahlBekommen);
     }
+
     @Test
-    public void testMaterialIdVorhandenFalse() throws IllegalArgumentException, SQLException{
+    public void testMaterialIdVorhandenFalse() throws IllegalArgumentException, SQLException {
 	boolean idnichtvorhanden = materialIds.materialIdVorhanden(0);
-	
+
 	assertFalse("Wenn 0 als id abgefragt wird sollte das ergebniss false sein", idnichtvorhanden);
     }
+
     @Test
-    public void testMaterialIdVorhandenTrue() throws IllegalArgumentException, SQLException{
+    public void testMaterialIdVorhandenTrue() throws IllegalArgumentException, SQLException {
 	int[] idListeBekommen = materialIds.getIdListe();
 	boolean idvorhanden = materialIds.materialIdVorhanden(idListeBekommen[0]);
-	
+
 	assertTrue("Id vorhanden sollte true sein", idvorhanden);
     }
 
