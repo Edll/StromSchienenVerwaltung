@@ -13,12 +13,12 @@ import java.sql.*;
 
 public class SQLiteDatenbankStruktur extends SQLitePreparedStatement {
 
-    public SQLiteDatenbankStruktur(Connection sqlConnection) {
+    public SQLiteDatenbankStruktur(SQLiteConnect sqlConnection) throws IllegalArgumentException {
 	super(sqlConnection);
     }
 
     public void datenbankCheckUndAnlegen() throws IllegalArgumentException, SQLException {
-	setSqlConnection(SQLiteConnect.dbConnection());
+	getSqlConnection();
 	boolean tableMaterialVorhanden = tableMaterialVorhanden();
 	boolean tableMaterialSorteVorhanden = tableMaterialSorteVorhanden();
 	boolean tableBiegenVorhanden = tableBiegenVorhanden();

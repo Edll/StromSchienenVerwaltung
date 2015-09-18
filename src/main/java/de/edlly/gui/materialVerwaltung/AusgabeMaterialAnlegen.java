@@ -32,6 +32,7 @@ public class AusgabeMaterialAnlegen extends TabMaterialVerwaltung {
     private JComboBox materialSortenAuswahl;
     private JPanel materialEingabeBereich = new JPanel();
     private AusgabeMaterialTabelle materialTabelle;
+    private SQLiteConnect sqlConnection = new SQLiteConnect();
 
     public AusgabeMaterialAnlegen(AusgabeMaterialTabelle materialTabelle) {
 	this.materialTabelle = materialTabelle;
@@ -61,7 +62,9 @@ public class AusgabeMaterialAnlegen extends TabMaterialVerwaltung {
 
 		try {
 
-		    MaterialSorte materialSorteId = new MaterialSorte(SQLiteConnect.dbConnection());
+		    sqlConnection.dbConnection();
+
+		    MaterialSorte materialSorteId = new MaterialSorte(sqlConnection);
 		    int MaterialSorteSelectId = materialSorteId
 			    .getMaterialSorteId((String) materialSortenAuswahl.getSelectedItem());
 
@@ -69,8 +72,7 @@ public class AusgabeMaterialAnlegen extends TabMaterialVerwaltung {
 		    int koordianteZ = Integer.parseInt(eingabeKoordinateZ.getText());
 		    int koordinateyMax = Integer.parseInt(eingabeKoordinatenMaxY.getText());
 
-		    NeuerMaterialDatensatz MaterialDatensatzAnlegen = new NeuerMaterialDatensatz(
-			    SQLiteConnect.dbConnection());
+		    NeuerMaterialDatensatz MaterialDatensatzAnlegen = new NeuerMaterialDatensatz(sqlConnection);
 		    MaterialDatensatzAnlegen.setMaterialDaten(koordianteX, koordianteZ, koordinateyMax,
 			    MaterialSorteSelectId);
 		    if (MaterialDatensatzAnlegen.datensatzAusObjektWertenAnlegen()) {
@@ -82,6 +84,7 @@ public class AusgabeMaterialAnlegen extends TabMaterialVerwaltung {
 
 		    materialEingabeBereich.repaint();
 
+		    sqlConnection.closeSqlConnection();
 		} catch (NumberFormatException e) {
 		    JOptionPane.showMessageDialog(null, "Bitte eine gültige Zahl eingeben.");
 
@@ -90,6 +93,13 @@ public class AusgabeMaterialAnlegen extends TabMaterialVerwaltung {
 
 		} catch (SQLException sqlException) {
 		    sqlException.printStackTrace();
+		} finally {
+		    try {
+			sqlConnection.closeSqlConnection();
+		    } catch (SQLException e) {
+
+			e.printStackTrace();
+		    }
 		}
 
 	    }
@@ -97,11 +107,13 @@ public class AusgabeMaterialAnlegen extends TabMaterialVerwaltung {
     }
 
     public void materialSortenListe(JPanel materialEingabeBereich) throws SQLException {
-
-	MaterialSorte materialDB = new MaterialSorte(SQLiteConnect.dbConnection());
+	sqlConnection = new SQLiteConnect();
+	sqlConnection.dbConnection();
+	MaterialSorte materialDB = new MaterialSorte(sqlConnection);
 	materialSortenAuswahl = new JComboBox(materialDB.materialSorteNamensListe());
 	materialSortenAuswahl.setBounds(156, 50, 96, 20);
 	materialEingabeBereich.add(materialSortenAuswahl);
+	sqlConnection.closeSqlConnection();
     }
 
     public void buttonMaterialHinzufuegen(JPanel materialEingabeBereich) {

@@ -3,7 +3,7 @@ package de.edlly.db;
 import java.sql.*;
 
 /**
- * Stellt die nötigen Funktionen bereit um SQLite operationen durchzuführen.
+ * Stellt die nötigen Funktionen bereit um SQLite Operationen durchzuführen.
  * 
  * Der query String muss private sein, denn sollte null als wert an das executeQuery übergeben werden wird ein fatal
  * error EXCEPTION_ACCESS_VIOLATION (0xc0000005) von der JVM erkannt.
@@ -12,28 +12,13 @@ import java.sql.*;
  * @author Edlly java@edlly.de
  *
  */
-public class SQLiteQueryAndResult {
-    private Connection sqlConnection;
-
+public class SQLiteQueryAndResult extends SQLite {
     private ResultSet result = null;
     private String query = "";
 
-    public SQLiteQueryAndResult(Connection sqlConnection) {
+    public SQLiteQueryAndResult(SQLiteConnect sqlConnection) throws IllegalArgumentException {
 	SQLiteConnect.sqlConnectionCloseorNull(sqlConnection);
-	this.sqlConnection = sqlConnection;
-    }
-
-    public SQLiteQueryAndResult() {
-
-    }
-
-    public void setSqlConnection(Connection sqlConnection) {
-	SQLiteConnect.sqlConnectionCloseorNull(sqlConnection);
-	this.sqlConnection = sqlConnection;
-    }
-
-    public Connection getSqlConnection() {
-	return sqlConnection;
+	setSqlConnection(sqlConnection);
     }
 
     public void setResult(ResultSet result) {
@@ -49,9 +34,15 @@ public class SQLiteQueryAndResult {
 	this.query = query;
     }
 
-    protected void queryNotNull(String query) throws IllegalArgumentException {
-	if (query == null) {
+    public void closeResult() throws SQLException {
 
+	if (this.result != null && !this.result.isClosed()) {
+	    this.result.close();
+	}
+    }
+
+    protected void queryNotNull(String query) throws IllegalArgumentException {
+	if (query == null || query == "") {
 	    throw new IllegalArgumentException("Der SQL Query String darf nicht null sein.");
 	}
     }

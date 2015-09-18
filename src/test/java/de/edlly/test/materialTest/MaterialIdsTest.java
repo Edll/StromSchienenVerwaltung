@@ -1,6 +1,5 @@
 package de.edlly.test.materialTest;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 
 import org.junit.After;
@@ -19,12 +18,13 @@ import junit.framework.TestCase;
  */
 
 public class MaterialIdsTest extends TestCase {
-    Connection sqlConnection;
+    SQLiteConnect sqlConnection;
     MaterialIds materialIds;
 
     @Before
     public void setUp() throws IllegalArgumentException, SQLException {
-	sqlConnection = SQLiteConnect.dbConnection();
+	sqlConnection = new SQLiteConnect();
+	sqlConnection.dbConnection();
 	materialIds = new MaterialIds(sqlConnection);
     }
 
@@ -71,10 +71,21 @@ public class MaterialIdsTest extends TestCase {
 
     @Test
     public void testanzahlDerDatensatze() {
+	materialIds.setAusgeblendetDatenAnzeigen(false);
+	materialIds.queryAuswahl();
 	int anzahlBekommen = materialIds.anzahlDatenseatze();
-	int anzahlErwartet = 0;
 
-	assertEquals(anzahlErwartet, anzahlBekommen);
+	assertTrue(0 < anzahlBekommen);
+    }
+
+    @Test
+    public void testanzahlDerDatensatzeFail() {
+	try {
+	    materialIds.anzahlDatenseatze();
+	    fail("muss eine IllegalArgumentException ergeben da Query String nicht gesezt worden ist.");
+	} catch (IllegalArgumentException e) {
+	    assertEquals("Der SQL Query String darf nicht null sein.", e.getLocalizedMessage());
+	}
     }
 
     @Test
@@ -93,7 +104,8 @@ public class MaterialIdsTest extends TestCase {
     }
 
     @After
-    public void tearDown() {
+    public void tearDown() throws SQLException {
+	sqlConnection.closeSqlConnection();
     }
 
 }

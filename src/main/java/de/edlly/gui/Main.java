@@ -44,16 +44,18 @@ public class Main {
 	mainFrame.setBounds(0, 0, 800, 600);
 	mainFrame.getContentPane().setLayout(new BorderLayout(0, 0));
 
-
-	try{
-		SQLiteDatenbankStruktur datenbankCheck = new SQLiteDatenbankStruktur(SQLiteConnect.dbConnection());    
-	datenbankCheck.datenbankCheckUndAnlegen();
-	}catch(SQLException e){
-	    e.printStackTrace();    
-	}catch(IllegalArgumentException e){
-	    JOptionPane.showMessageDialog(null, e.getMessage()); 
+	try {
+	    SQLiteConnect sqlConnection = new SQLiteConnect();
+	    sqlConnection.dbConnection();
+	    SQLiteDatenbankStruktur datenbankCheck = new SQLiteDatenbankStruktur(sqlConnection);
+	    datenbankCheck.datenbankCheckUndAnlegen();
+	    sqlConnection.closeSqlConnection();
+	} catch (SQLException e) {
+	    e.printStackTrace();
+	} catch (IllegalArgumentException e) {
+	    JOptionPane.showMessageDialog(null, e.getMessage());
 	}
-	
+
 	JTabbedPane tabMenu = tabMenuErstellen();
 
 	mainFrame.getContentPane().add(tabMenu);

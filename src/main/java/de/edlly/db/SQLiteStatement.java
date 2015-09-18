@@ -2,15 +2,13 @@ package de.edlly.db;
 
 import java.sql.*;
 
-
 public class SQLiteStatement extends SQLiteQueryAndResult {
-    
+
     private Statement statment = null;
-    
-    public SQLiteStatement(Connection sqlConnection){
+
+    public SQLiteStatement(SQLiteConnect sqlConnection) throws IllegalArgumentException {
 	super(sqlConnection);
     }
-    
 
     public Statement getStatment() {
 	return statment;
@@ -19,6 +17,7 @@ public class SQLiteStatement extends SQLiteQueryAndResult {
     public void setStatment(Statement statment) {
 	this.statment = statment;
     }
+
     public void statmentVorbereitenUndStarten(String query) throws SQLException {
 	statmentVorbereiten();
 	statmentAusfuehren(query);
@@ -33,15 +32,14 @@ public class SQLiteStatement extends SQLiteQueryAndResult {
 	setResult(statment.executeQuery(query));
     }
 
-  
+    public void closeStatmentAndResult() throws SQLException {
+	closeStatment();
+	closeResult();
+    }
 
-    public void closeStatmentUndResult() throws SQLException {
-	if (statment != null) {
+    public void closeStatment() throws SQLException {
+	if (statment != null && statment.isClosed()) {
 	    statment.close();
-	}
-	 ResultSet result = getResult();
-	if (result != null) {   
-	    result.close();
 	}
     }
 

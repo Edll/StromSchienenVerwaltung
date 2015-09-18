@@ -5,12 +5,8 @@ import java.sql.*;
 public class SQLitePreparedStatement extends SQLiteQueryAndResult {
     public PreparedStatement preparedStatment;
 
-    public SQLitePreparedStatement(Connection sqlConnection) {
+    public SQLitePreparedStatement(SQLiteConnect sqlConnection) throws IllegalArgumentException {
 	super(sqlConnection);
-
-    }
-    
-    public SQLitePreparedStatement() {
     }
 
     public PreparedStatement getPreparedStatment() {
@@ -20,17 +16,23 @@ public class SQLitePreparedStatement extends SQLiteQueryAndResult {
     public void setPreparedStatment(PreparedStatement preparedStatment) {
 	this.preparedStatment = preparedStatment;
     }
-    public void preparedStatmentVorbereiten(String query) throws SQLException {
-  	queryNotNull(query);
-  	preparedStatment = getSqlConnection().prepareStatement(query);
-      }
 
-      public void preparedStatmentAusfuehren() throws SQLException {
-  	preparedStatment.executeUpdate();
-      }
+    public void preparedStatmentVorbereiten(String query) throws SQLException {
+	queryNotNull(query);
+	preparedStatment = getSqlConnection().prepareStatement(query);
+    }
+
+    public void preparedStatmentAusfuehren() throws SQLException {
+	preparedStatment.executeUpdate();
+    }
+
+    public void closePrepareStatmentAndResult() throws SQLException {
+	closePrepareStatment();
+	closeResult();
+    }
 
     public void closePrepareStatment() throws SQLException {
-	if (preparedStatment != null) {
+	if (preparedStatment != null && !preparedStatment.isClosed()) {
 	    preparedStatment.close();
 	}
     }

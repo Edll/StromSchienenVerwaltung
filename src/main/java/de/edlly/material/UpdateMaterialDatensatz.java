@@ -1,8 +1,6 @@
 package de.edlly.material;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class UpdateMaterialDatensatz {
 
@@ -21,8 +19,8 @@ public class UpdateMaterialDatensatz {
 
     private Connection sqlConnection;
 
-    public UpdateMaterialDatensatz(Connection sqlConnection) {
-	this.sqlConnection = sqlConnection;
+    public UpdateMaterialDatensatz(Connection sqLiteConnect) {
+	this.sqlConnection = sqLiteConnect;
     }
 
     public void setMaterialDaten(int materialId, int koordinateX, int koordinateZ, int koordinateyMax,
@@ -70,7 +68,7 @@ public class UpdateMaterialDatensatz {
 
 	try {
 	    String query = "UPDATE \"main\".\"Material\" SET \"visibly\" = ?1 WHERE  \"id\" = " + id;
-	    pst = sqlConnection.prepareStatement(query);
+	    pst = ((Connection) sqlConnection).prepareStatement(query);
 	    pst.setInt(1, visibly);
 	    pst.executeUpdate();
 

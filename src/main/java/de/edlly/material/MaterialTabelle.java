@@ -4,11 +4,13 @@ import java.sql.*;
 
 import javax.swing.table.DefaultTableModel;
 
+import de.edlly.db.SQLiteConnect;
+
 public class MaterialTabelle {
 
-    private Connection sqlConnection;
+    private SQLiteConnect sqlConnection;
 
-    public MaterialTabelle(Connection sqlConnection) {
+    public MaterialTabelle(SQLiteConnect sqlConnection) {
 	this.sqlConnection = sqlConnection;
     }
 

@@ -1,6 +1,5 @@
 package de.edlly.test.db;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 
 import org.junit.Test;
@@ -10,13 +9,14 @@ import junit.framework.TestCase;
 
 public class SQLitePreparedStatementTest extends TestCase {
     SQLitePreparedStatement preparedStatement;
-    Connection sqlConnection;
+    SQLiteConnect sqlConnection;
 
     @Override
     public void setUp() throws IllegalArgumentException, SQLException {
-	sqlConnection = SQLiteConnect.dbConnection();
-	preparedStatement = new SQLitePreparedStatement();
-	preparedStatement.setSqlConnection(sqlConnection);
+	sqlConnection = new SQLiteConnect();
+	sqlConnection.dbConnection();
+	preparedStatement = new SQLitePreparedStatement(sqlConnection);
+
     }
 
     @Test
@@ -24,6 +24,18 @@ public class SQLitePreparedStatementTest extends TestCase {
 	try {
 	    preparedStatement.preparedStatmentVorbereiten("INSERT INTO Material (\"MaterialSorteId\") VALUES (?1)");
 	    preparedStatement.closePrepareStatment();
+	} catch (Exception e) {
+	    e.printStackTrace();
+	    fail("Sollte keine Exception werfen, ist aber:" + e.getMessage() + e.getLocalizedMessage());
+	}
+    }
+
+    @Test
+    public void testClosePrepareStatmentAndResult() {
+	try {
+	    preparedStatement.preparedStatmentVorbereiten("INSERT INTO Material (\"MaterialSorteId\") VALUES (?1)");
+	    preparedStatement.getResult();
+	    preparedStatement.closePrepareStatmentAndResult();
 	} catch (Exception e) {
 	    e.printStackTrace();
 	    fail("Sollte keine Exception werfen, ist aber:" + e.getMessage() + e.getLocalizedMessage());
@@ -44,9 +56,9 @@ public class SQLitePreparedStatementTest extends TestCase {
     }
 
     @Override
-    public void tearDown() {
+    public void tearDown() throws SQLException {
 
-	SQLiteConnect.closeSqlConnection(sqlConnection);
+	sqlConnection.closeSqlConnection();
     }
 
 }

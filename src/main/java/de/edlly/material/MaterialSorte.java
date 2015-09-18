@@ -2,6 +2,7 @@ package de.edlly.material;
 
 import java.sql.*;
 
+import de.edlly.db.SQLiteConnect;
 import de.edlly.db.SQLiteStatement;
 
 /**
@@ -17,7 +18,8 @@ public class MaterialSorte extends Material {
     private String[] materialSorteNameListe = new String[0];
     SQLiteStatement sqlLite;
 
-    public MaterialSorte(Connection sqlConnection) {
+    public MaterialSorte(SQLiteConnect sqlConnection) {
+	super(sqlConnection);
 	sqlLite = new SQLiteStatement(sqlConnection);
     }
 
@@ -53,18 +55,18 @@ public class MaterialSorte extends Material {
 	    sqlLite.statmentVorbereitenUndStarten(sqlLite.getQuery());
 
 	    if (sqlLite.resultOhneErgebniss(sqlLite.getResult())) {
-		sqlLite.closeStatmentUndResult();
+		sqlLite.closeStatmentAndResult();
 		materialSorteName = "N/A";
 	    } else {
 
 		materialSorteName = sqlLite.getResult().getString(1);
-		sqlLite.closeStatmentUndResult();
+		sqlLite.closeStatmentAndResult();
 	    }
 	} catch (SQLException sqlException) {
 	    throw new SQLException(sqlException);
 	} finally {
 	    try {
-		sqlLite.closeStatmentUndResult();
+		sqlLite.closeStatmentAndResult();
 	    } catch (SQLException sqlException) {
 		sqlException.printStackTrace();
 	    }
@@ -80,12 +82,12 @@ public class MaterialSorte extends Material {
 		sqlLite.statmentVorbereitenUndStarten(sqlLite.getQuery());
 
 		if (sqlLite.resultOhneErgebniss(sqlLite.getResult())) {
-		    sqlLite.closeStatmentUndResult();
+		    sqlLite.closeStatmentAndResult();
 		    materialSorteId = 0;
 		} else {
 		    materialSorteId = sqlLite.getResult().getInt(1);
 
-		    sqlLite.closeStatmentUndResult();
+		    sqlLite.closeStatmentAndResult();
 		}
 	    }
 	} catch (SQLException sqlException) {
@@ -94,7 +96,7 @@ public class MaterialSorte extends Material {
 
 	} finally {
 	    try {
-		sqlLite.closeStatmentUndResult();
+		sqlLite.closeStatmentAndResult();
 	    } catch (SQLException sqlException) {
 		sqlException.printStackTrace();
 	    }
@@ -122,7 +124,7 @@ public class MaterialSorte extends Material {
 		count++;
 	    }
 
-	    sqlLite.closeStatmentUndResult();
+	    sqlLite.closeStatmentAndResult();
 	    return materialSorteNameListe;
 
 	} catch (SQLException sqlException) {
@@ -130,7 +132,7 @@ public class MaterialSorte extends Material {
 
 	} finally {
 	    try {
-		sqlLite.closeStatmentUndResult();
+		sqlLite.closeStatmentAndResult();
 	    } catch (SQLException sqlException) {
 		sqlException.printStackTrace();
 	    }

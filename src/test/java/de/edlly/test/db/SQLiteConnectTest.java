@@ -1,15 +1,12 @@
 package de.edlly.test.db;
 
-
-import java.sql.*;
-
 import org.junit.Test;
 
 import de.edlly.db.SQLiteConnect;
 import junit.framework.TestCase;
 
 public class SQLiteConnectTest extends TestCase {
-    Connection sqlConnection;
+    SQLiteConnect sqlConnection;
 
     @Test
     public void testSqlConnectionCloseorNull() {

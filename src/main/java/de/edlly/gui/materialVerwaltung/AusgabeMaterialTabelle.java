@@ -39,29 +39,29 @@ public class AusgabeMaterialTabelle extends TabMaterialVerwaltung {
 
 	scrollpaneErstellen();
 
-	Connection sqlConnection;
-	sqlConnection = SQLiteConnect.dbConnection();
+	SQLiteConnect sqlConnection = new SQLiteConnect();
+	sqlConnection.dbConnection();
 
 	materialModel = new MaterialTabelle(sqlConnection);
 	materialTabelle = new JTable(materialModel.tabelleErstellen(true));
 
 	tabellenBereich.setViewportView(materialTabelle);
 
-	SQLiteConnect.closeSqlConnection(sqlConnection);
+	sqlConnection.closeSqlConnection();
 
 	return tabellenBereich;
     }
 
     public void refreshMaterialTabelle() throws SQLException {
 
-	Connection sqlConnection;
-	sqlConnection = SQLiteConnect.dbConnection();
+	SQLiteConnect sqlConnection = new SQLiteConnect();
+	sqlConnection.dbConnection();
 
 	materialModel = new MaterialTabelle(sqlConnection);
 	materialTabelle = new JTable(materialModel.tabelleErstellen(true));
 	tabellenBereich.setViewportView(materialTabelle);
 
-	SQLiteConnect.closeSqlConnection(sqlConnection);
+	sqlConnection.closeSqlConnection();
 
     }
 

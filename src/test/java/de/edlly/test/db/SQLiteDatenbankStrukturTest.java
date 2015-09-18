@@ -8,25 +8,26 @@ import de.edlly.db.SQLiteDatenbankStruktur;
 import de.edlly.db.SQLiteConnect;
 import junit.framework.TestCase;
 
-public class SQLiteDatenbankStrukturTest  extends TestCase {
+public class SQLiteDatenbankStrukturTest extends TestCase {
     SQLiteDatenbankStruktur datenbank;
-    Connection sqlConnection;
-    
-    
+    SQLiteConnect sqlConnection;
+
     @Override
     public void setUp() throws IllegalArgumentException, SQLException {
-	sqlConnection = SQLiteConnect.dbConnection();
-	datenbank = new SQLiteDatenbankStruktur(SQLiteConnect.dbConnection());
+	sqlConnection = new SQLiteConnect();
+	sqlConnection.dbConnection();
+	datenbank = new SQLiteDatenbankStruktur(sqlConnection);
 
     }
+
     @Test
-    public void testDatenbankCheckUndAnlegen() throws IllegalArgumentException, SQLException{
+    public void testDatenbankCheckUndAnlegen() throws IllegalArgumentException, SQLException {
 	// TODO: SetUp schreiben mit dem der Datenbankpfad umgelenkt werden kann damit eine Exception ausgelöst wird!
 	datenbank.datenbankCheckUndAnlegen();
     }
 
     @Override
-    public void tearDown() {
-	SQLiteConnect.closeSqlConnection(sqlConnection);
+    public void tearDown() throws SQLException {
+	sqlConnection.closeSqlConnection();
     }
 }

@@ -20,12 +20,13 @@ import de.edlly.material.MaterialListe;
 public class MaterialListeTest extends TestCase {
     
     MaterialListe materialDatensatz;
-    Connection sqlConnection;
+    SQLiteConnect sqlConnection;
     
     
     @Override
     public void setUp() throws IllegalArgumentException, SQLException {
-	sqlConnection = SQLiteConnect.dbConnection();
+	sqlConnection = new SQLiteConnect();
+	sqlConnection.dbConnection();
 	materialDatensatz = new MaterialListe(sqlConnection);
     }
     
@@ -33,7 +34,7 @@ public class MaterialListeTest extends TestCase {
     public void testGetMaterialListeKeineNullDatensatzAnzeigen() throws IllegalArgumentException, SQLException {
 	
 	materialDatensatz.setAusgeblendetDatenAnzeigen(true);
-	Object[][] materialListe =  materialDatensatz.getMaterialListe();
+	Object[][] materialListe = materialDatensatz.getMaterialListe();
 	
 	assertNotNull("methode darf keine Null liefern", materialListe);
     }    
@@ -79,8 +80,8 @@ public class MaterialListeTest extends TestCase {
     
     
     @Override
-    public void tearDown() {
-	SQLiteConnect.closeSqlConnection(sqlConnection);
+    public void tearDown() throws SQLException {
+	sqlConnection.closeSqlConnection();
     }
 
 }

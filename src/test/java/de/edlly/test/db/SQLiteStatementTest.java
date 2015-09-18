@@ -1,6 +1,5 @@
 package de.edlly.test.db;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 
 import org.junit.Test;
@@ -12,11 +11,12 @@ import junit.framework.TestCase;
 public class SQLiteStatementTest extends TestCase {
 
     SQLiteStatement statement;
-    Connection sqlConnection;
+    SQLiteConnect sqlConnection;
 
     @Override
     public void setUp() throws IllegalArgumentException, SQLException {
-	sqlConnection = SQLiteConnect.dbConnection();
+	sqlConnection = new SQLiteConnect();
+	sqlConnection.dbConnection();
 	statement = new SQLiteStatement(sqlConnection);
     }
 
@@ -25,7 +25,7 @@ public class SQLiteStatementTest extends TestCase {
 	try {
 	    statement.statmentVorbereiten();
 	    statement.statmentAusfuehren("SELECT * FROM material");
-	    statement.closeStatmentUndResult();
+	    statement.closeStatmentAndResult();
 	} catch (Exception e) {
 	    fail("Sollte keine Exception werfen, ist aber:" + e.getMessage() + e.getLocalizedMessage());
 	    e.printStackTrace();
@@ -71,12 +71,12 @@ public class SQLiteStatementTest extends TestCase {
     }
 
     @Override
-    public void tearDown() {
+    public void tearDown() throws SQLException {
 	try {
-	    statement.closeStatmentUndResult();
+	    statement.closeStatmentAndResult();
 	} catch (SQLException e) {
 	    e.printStackTrace();
 	}
-	SQLiteConnect.closeSqlConnection(sqlConnection);
+	sqlConnection.closeSqlConnection();
     }
 }

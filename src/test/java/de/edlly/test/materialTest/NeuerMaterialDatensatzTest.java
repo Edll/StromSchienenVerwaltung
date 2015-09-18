@@ -1,6 +1,5 @@
 package de.edlly.test.materialTest;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 
 import de.edlly.db.SQLiteConnect;
@@ -20,7 +19,7 @@ import org.junit.*;
 public class NeuerMaterialDatensatzTest extends TestCase {
 
     private NeuerMaterialDatensatz materialDatensatz;
-    private Connection sqlConnection;
+    private SQLiteConnect sqlConnection;
 
     private int koordinatenMaxX = MaterialKonstanten.MAXIMALER_X_WERT;
     private int koordiantenMaxY = MaterialKonstanten.MAXIMALER_Y_WERT;
@@ -34,7 +33,8 @@ public class NeuerMaterialDatensatzTest extends TestCase {
 
     @Override
     public void setUp() throws IllegalArgumentException, SQLException {
-	sqlConnection = SQLiteConnect.dbConnection();
+	sqlConnection = new SQLiteConnect();
+	sqlConnection.dbConnection();
 	materialDatensatz = new NeuerMaterialDatensatz(sqlConnection);
     }
 
@@ -103,8 +103,8 @@ public class NeuerMaterialDatensatzTest extends TestCase {
     }
 
     @Override
-    public void tearDown() {
-	SQLiteConnect.closeSqlConnection(sqlConnection);
+    public void tearDown() throws SQLException {
+	sqlConnection.closeSqlConnection();
 
     }
 

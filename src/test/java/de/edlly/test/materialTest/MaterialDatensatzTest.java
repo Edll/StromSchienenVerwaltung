@@ -1,10 +1,7 @@
 package de.edlly.test.materialTest;
 
-import java.sql.Connection;
 import java.sql.SQLException;
-
 import org.junit.Test;
-
 import junit.framework.TestCase;
 
 import de.edlly.db.SQLiteConnect;
@@ -20,13 +17,14 @@ import de.edlly.material.MaterialDatensatz;
 public class MaterialDatensatzTest extends TestCase {
 
     MaterialDatensatz materialDatensatz;
-    Connection sqlConnection;
+    SQLiteConnect sqlConnection;
 
     int[] materialIdList = new int[] { 0, 1, 2, 3, 4 };
 
     @Override
     public void setUp() throws IllegalArgumentException, SQLException {
-	sqlConnection = SQLiteConnect.dbConnection();
+	sqlConnection = new SQLiteConnect();
+	sqlConnection.dbConnection();
 	materialDatensatz = new MaterialDatensatz(sqlConnection);
     }
 
@@ -93,7 +91,7 @@ public class MaterialDatensatzTest extends TestCase {
     }
 
     @Override
-    public void tearDown() {
-	SQLiteConnect.closeSqlConnection(sqlConnection);
+    public void tearDown() throws SQLException {
+	sqlConnection.closeSqlConnection();
     }
 }

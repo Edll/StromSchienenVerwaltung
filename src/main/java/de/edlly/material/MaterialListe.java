@@ -1,8 +1,6 @@
 package de.edlly.material;
 
-import java.sql.*;
 import java.sql.SQLException;
-
 import de.edlly.db.*;
 
 /**
@@ -19,10 +17,9 @@ public class MaterialListe extends Material {
     private boolean ausgeblendetDatenAnzeigen = false;
     private Object[][] materialListeUnformatiert = null;
     private Object[][] materialListeFormatiert = null;
-    private Connection sqlConnection;
 
-    public MaterialListe(Connection sqlConnection) {
-	this.sqlConnection = sqlConnection;
+    public MaterialListe(SQLiteConnect sqlConnection) {
+	super(sqlConnection);
     }
 
     public void setAusgeblendetDatenAnzeigen(boolean ausgeblendetDatenAnzeigen) {
@@ -44,7 +41,7 @@ public class MaterialListe extends Material {
 
     private void materialListeFormatieren() throws SQLException {
 	materialListeFormatiert = new Object[materialListeUnformatiert.length][5];
-	MaterialSorte materialSorte = new MaterialSorte(SQLiteConnect.dbConnection());
+	MaterialSorte materialSorte = new MaterialSorte(getSqlConnection());
 	for (int DatensatzCounter = 0; DatensatzCounter != materialListeUnformatiert.length; DatensatzCounter++) {
 	    materialListeFormatiert[DatensatzCounter][0] = materialListeUnformatiert[DatensatzCounter][0];
 
@@ -56,7 +53,7 @@ public class MaterialListe extends Material {
 
 	    materialListeFormatiert[DatensatzCounter][3] = materialListeUnformatiert[DatensatzCounter][4];
 
-	    materialListeFormatiert[DatensatzCounter][4] = SQLiteBoolean
+	    materialListeFormatiert[DatensatzCounter][4] = SQLiteUtil
 		    .integerToBoolean((Integer) materialListeUnformatiert[DatensatzCounter][5]);
 	}
     }
@@ -64,7 +61,7 @@ public class MaterialListe extends Material {
     private void materialListeAusDatenbankAbrufen() throws SQLException, IllegalArgumentException {
 	int[] materialIds = new int[0];
 
-	MaterialIds abfrageMaterialIds = new MaterialIds(sqlConnection);
+	MaterialIds abfrageMaterialIds = new MaterialIds(getSqlConnection());
 
 	abfrageMaterialIds.setAusgeblendetDatenAnzeigen(ausgeblendetDatenAnzeigen);
 	materialIds = abfrageMaterialIds.getIdListe();
@@ -78,7 +75,7 @@ public class MaterialListe extends Material {
 	int zaehlerDesArrayIndexes = 0;
 	for (int materialIdZumAbrufen : materialIds) {
 
-	    MaterialDatensatz abrufenDerWerte = new MaterialDatensatz(sqlConnection);
+	    MaterialDatensatz abrufenDerWerte = new MaterialDatensatz(getSqlConnection());
 
 	    int ArrayPostionsZahler = 0;
 	    for (int werte : abrufenDerWerte.getMaterialDatensatzAusDatenbank(materialIdZumAbrufen)) {

@@ -12,42 +12,43 @@ import java.sql.*;
  *
  */
 
+public class SQLiteConnect extends SQLite {
+    private Connection sqlConnection;
+        
+    public SQLiteConnect()  {
 
+    }
 
-public class SQLiteConnect {
-    static Connection sqlConnection = null;
+    public Connection getSqlConnection() {
+	return sqlConnection;
+    }
 
-    public static Connection dbConnection() throws IllegalArgumentException, SQLException {
+    public void setSqlConnection(Connection sqlConnection) {
+	this.sqlConnection = sqlConnection;
+    }
+
+    public void dbConnection() throws IllegalArgumentException, SQLException {
 
 	try {
 	    Class.forName("org.sqlite.JDBC");
-	    sqlConnection = DriverManager.getConnection("jdbc:sqlite:kupfer.sqlite");
-	    
-	    return sqlConnection;
+	    sqlConnection = DriverManager.getConnection("jdbc:sqlite:" + SQLITE_FILE_PATH);
 
 	} catch (ClassNotFoundException e) {
 	    e.printStackTrace();
-	    return sqlConnection;
 	}
     }
 
-    public static void closeSqlConnection(Connection sqlConnection) {
+    public void closeSqlConnection() throws SQLException {
 
-	try {
-	    sqlConnection.close();
-	} catch (SQLException e) {
-	    e.printStackTrace();
+	if (sqlConnection != null && !((Connection) sqlConnection).isClosed()) {
+	    ((Connection) sqlConnection).close();
 	}
     }
 
-    public static void sqlConnectionCloseorNull(Connection sqlConnection) throws IllegalArgumentException {
+    public static void sqlConnectionCloseorNull(SQLiteConnect sqlConnection2) throws IllegalArgumentException {
 
-	try {
-	    if (sqlConnection == null || sqlConnection.isClosed()) {
-		throw new IllegalArgumentException("Fehler bei der SQL Verbindung!");
-	    }
-	} catch (SQLException e) {
-	    e.printStackTrace();
+	if (sqlConnection2 == null) {
+	    throw new IllegalArgumentException("Fehler bei der SQL Verbindung: Bitte prüfen sie den SQLite File Path:" + SQLITE_FILE_PATH);
 	}
     }
 }

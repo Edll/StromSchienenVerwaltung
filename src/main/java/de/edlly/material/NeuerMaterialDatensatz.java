@@ -2,6 +2,7 @@ package de.edlly.material;
 
 import java.sql.*;
 
+import de.edlly.db.SQLiteConnect;
 import de.edlly.db.SQLitePreparedStatement;
 import de.edlly.material.MaterialKonstanten;
 
@@ -13,11 +14,9 @@ import de.edlly.material.MaterialKonstanten;
  */
 public class NeuerMaterialDatensatz extends MaterialDatensatz {
     private SQLitePreparedStatement sqlLite;
-    private Connection sqlConnection;
 
-    public NeuerMaterialDatensatz(Connection sqlConnection) {
+    public NeuerMaterialDatensatz(SQLiteConnect sqlConnection) throws IllegalArgumentException {
 	super(sqlConnection);
-	this.sqlConnection = sqlConnection;
 	sqlLite = new SQLitePreparedStatement(sqlConnection);
 
     }
@@ -131,7 +130,7 @@ public class NeuerMaterialDatensatz extends MaterialDatensatz {
 	    throw new IllegalArgumentException("Die materialSorteId darf nicht Negativ sein.");
 	}
 
-	MaterialSorte sorteVorhanden = new MaterialSorte(sqlConnection);
+	MaterialSorte sorteVorhanden = new MaterialSorte(getSqlConnection());
 	if (!sorteVorhanden.materialsorteIdVorhanden(materialSorteId)) {
 	    throw new IllegalArgumentException("Die materialSorteId ist nicht vorhanden.");
 	}

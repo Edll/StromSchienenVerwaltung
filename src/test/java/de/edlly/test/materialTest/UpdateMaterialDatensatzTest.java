@@ -1,6 +1,4 @@
 package de.edlly.test.materialTest;
-
-import java.sql.Connection;
 import java.sql.SQLException;
 
 import de.edlly.db.SQLiteConnect;
@@ -9,11 +7,12 @@ import junit.framework.TestCase;
 
 public class UpdateMaterialDatensatzTest extends TestCase {
 
-    private Connection sqlConnection;
+    private SQLiteConnect sqlConnection;
 
     @Override
     public void setUp() throws IllegalArgumentException, SQLException {
-	sqlConnection = SQLiteConnect.dbConnection();
+	sqlConnection = new SQLiteConnect();
+	sqlConnection.dbConnection();
 
     }
 
@@ -34,8 +33,8 @@ public class UpdateMaterialDatensatzTest extends TestCase {
     }
 
     @Override
-    public void tearDown() {
-	SQLiteConnect.closeSqlConnection(sqlConnection);
+    public void tearDown() throws SQLException {
+	sqlConnection.closeSqlConnection();
 
     }
 
@@ -51,7 +50,7 @@ public class UpdateMaterialDatensatzTest extends TestCase {
 
     private Boolean setMaterialId() {
 	try {
-	    UpdateMaterialDatensatz materialDatensetzten = new UpdateMaterialDatensatz(sqlConnection);
+	    UpdateMaterialDatensatz materialDatensetzten = new UpdateMaterialDatensatz(sqlConnection.getSqlConnection());
 
 	    materialDatensetzten.setMaterialId(1);
 	    materialDatensetzten.setMaterialId(2);

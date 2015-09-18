@@ -2,6 +2,7 @@ package de.edlly.material;
 
 import java.sql.*;
 
+import de.edlly.db.SQLiteConnect;
 import de.edlly.db.SQLiteStatement;
 
 /**
@@ -17,7 +18,8 @@ public class MaterialIds extends Material {
     private int[] idListe = new int[] { 0 };
     SQLiteStatement sqlLite;
 
-    public MaterialIds(Connection sqlConnection) {
+    public MaterialIds(SQLiteConnect sqlConnection) {
+	super(sqlConnection);
 	sqlLite = new SQLiteStatement(sqlConnection);
     }
 
@@ -64,7 +66,7 @@ public class MaterialIds extends Material {
 		    zaehlerDesArrayIndexes++;
 		}
 	    }
-	    sqlLite.closeStatmentUndResult();
+	    sqlLite.closeStatmentAndResult();
 
 	} catch (SQLException sqlException) {
 	    throw new SQLException(sqlException);
@@ -73,14 +75,14 @@ public class MaterialIds extends Material {
 	    throw new IllegalArgumentException(illegalException);
 
 	} finally {
-	    sqlLite.closeStatmentUndResult();
+	    sqlLite.closeStatmentAndResult();
 	}
     }
 
     public int anzahlDatenseatze() {
 	int anzahlDerDatensatze = 0;
 
-	try {
+	try{
 	    sqlLite.statmentVorbereitenUndStarten(sqlLite.getQuery());
 
 	    while (sqlLite.getResult().next()) {

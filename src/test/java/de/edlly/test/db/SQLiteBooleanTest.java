@@ -2,7 +2,7 @@ package de.edlly.test.db;
 
 import org.junit.Test;
 
-import de.edlly.db.SQLiteBoolean;
+import de.edlly.db.SQLiteUtil;
 import junit.framework.TestCase;
 
 /**
@@ -15,24 +15,24 @@ import junit.framework.TestCase;
 
 public class SQLiteBooleanTest extends TestCase {
 
-    SQLiteBoolean booleanTransformer = new SQLiteBoolean();
+    SQLiteUtil booleanTransformer = new SQLiteUtil();
 
     @Test
     public void testToBoolean() {
-	int integreReturnEins = SQLiteBoolean.booleanToInteger(true);
+	int integreReturnEins = SQLiteUtil.booleanToInteger(true);
 	assertSame("Sollte 1 sein", 1, integreReturnEins);
 
-	int integreReturnNull = SQLiteBoolean.booleanToInteger(false);
+	int integreReturnNull = SQLiteUtil.booleanToInteger(false);
 	assertSame("Sollte 0 sein", 0, integreReturnNull);
 
     }
 
     @Test
     public void testToInteger() {
-	boolean boolReturnTrue = SQLiteBoolean.integerToBoolean(1);
+	boolean boolReturnTrue = SQLiteUtil.integerToBoolean(1);
 	assertTrue(boolReturnTrue);
 
-	boolean boolReturnFalse = SQLiteBoolean.integerToBoolean(0);
+	boolean boolReturnFalse = SQLiteUtil.integerToBoolean(0);
 	assertFalse(boolReturnFalse);
 
     }

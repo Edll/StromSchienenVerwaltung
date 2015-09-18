@@ -13,13 +13,13 @@ import de.edlly.db.*;
  */
 public class SQLiteAbfrageTest extends TestCase {
     SQLiteQueryAndResult sqlAbfrage;
-    Connection sqlConnection;
+    SQLiteConnect sqlConnection;
 
     @Override
     public void setUp() throws IllegalArgumentException, SQLException {
-	sqlConnection = SQLiteConnect.dbConnection();
-	sqlAbfrage = new SQLiteQueryAndResult();
-	sqlAbfrage.setSqlConnection(sqlConnection);
+	sqlConnection = new SQLiteConnect();
+	sqlConnection.dbConnection();
+	sqlAbfrage = new SQLiteQueryAndResult(sqlConnection);
     }
 
     @Test
@@ -39,8 +39,10 @@ public class SQLiteAbfrageTest extends TestCase {
 	    sqlAbfrage.setSqlConnection(null);
 	    fail("Muss eine IllegalArgumentException auslösen");
 	} catch (IllegalArgumentException exception) {
-	    String erwarteteException = "Fehler bei der SQL Verbindung!";
-	    assertEquals(erwarteteException, exception.getMessage());
+	    String bekommenException = exception.getMessage();
+	    String erwarteteException = "Fehler bei der SQL Verbindung";
+	    boolean check = bekommenException.contains(erwarteteException);
+	    assertTrue("Sollte \"Fehler bei der SQL Verbindung. Bitte prüfen sie den SQLite File\" werfen " ,check);
 	}
 
     }
@@ -55,7 +57,7 @@ public class SQLiteAbfrageTest extends TestCase {
     }
 
     @Override
-    public void tearDown() {
-	SQLiteConnect.closeSqlConnection(sqlConnection);
+    public void tearDown() throws SQLException {
+	sqlConnection.closeSqlConnection();
     }
 }

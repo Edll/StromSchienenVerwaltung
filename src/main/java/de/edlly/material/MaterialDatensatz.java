@@ -2,6 +2,7 @@ package de.edlly.material;
 
 import java.sql.*;
 
+import de.edlly.db.SQLiteConnect;
 import de.edlly.db.SQLiteStatement;
 
 /**
@@ -19,7 +20,8 @@ public class MaterialDatensatz extends Material {
     private int materialId;
     SQLiteStatement sqlLite;
 
-    public MaterialDatensatz(Connection sqlConnection) {
+    public MaterialDatensatz(SQLiteConnect sqlConnection) throws IllegalArgumentException{
+	super(sqlConnection);
 	sqlLite = new SQLiteStatement(sqlConnection);
     }
 
@@ -71,14 +73,14 @@ public class MaterialDatensatz extends Material {
 		materialDatensatz[getOrdinal("SICHTBARKEIT")] = sqlLite.getResult().getInt(6); // visibly
 	    }
 
-	    sqlLite.closeStatmentUndResult();
+	    sqlLite.closeStatmentAndResult();
 
 	} catch (SQLException e) {
 	    throw new SQLException(e);
 
 	} finally {
 	    try {
-		sqlLite.closeStatmentUndResult();
+		sqlLite.closeStatmentAndResult();
 
 	    } catch (SQLException e) {
 		e.printStackTrace();
