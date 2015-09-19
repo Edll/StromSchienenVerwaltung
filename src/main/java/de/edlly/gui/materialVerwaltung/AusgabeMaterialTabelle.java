@@ -64,6 +64,15 @@ public class AusgabeMaterialTabelle extends TabMaterialVerwaltung {
 	sqlConnection.close();
 
     }
+    
+    public int getSelectedMaterialId(){
+	int materialId = Integer.parseInt((materialTabelle.getValueAt(materialTabelle.getSelectedRow(), 0)).toString());
+	
+	if(materialId == -1){
+	    materialId = 0;
+	}
+	return materialId;
+    }
 
     private void scrollpaneErstellen() {
 	tabellenBereich = new JScrollPane();

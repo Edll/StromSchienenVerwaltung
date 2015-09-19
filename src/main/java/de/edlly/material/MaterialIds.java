@@ -16,6 +16,7 @@ public class MaterialIds extends Material {
 
     private boolean ausgeblendetDatenAnzeigen;
     private int[] idListe = new int[] { 0 };
+    private int id = 0;
     SQLiteStatement sqlLite;
 
     public MaterialIds(SQLiteConnect sqlConnection) throws IllegalArgumentException, SQLException {
@@ -32,12 +33,21 @@ public class MaterialIds extends Material {
 	return idListe;
     }
 
-    public boolean materialIdVorhanden(int materialId) throws IllegalArgumentException, SQLException {
-	setAusgeblendetDatenAnzeigen(false);
+    public int getId() {
+	return id;
+    }
 
+    public void setId(int id) throws IllegalArgumentException, SQLException {
+	if (!materialIdVorhanden(id)) {
+	    throw new IllegalArgumentException("Material Id nicht vorhanden");
+	}
+	this.id = id;
+    }
+
+    public boolean materialIdVorhanden(int materialId) throws IllegalArgumentException, SQLException {
+	setAusgeblendetDatenAnzeigen(true);
 	int[] idListe = getIdListe();
 	for (int id : idListe) {
-
 	    if (id == materialId) {
 		return true;
 	    }
@@ -46,7 +56,7 @@ public class MaterialIds extends Material {
     }
 
     public void materialListeErstellen() throws SQLException, IllegalArgumentException {
-
+	idListe = new int[] { 0 };
 	try {
 	    queryAuswahl();
 	    int anzahlDerDatensatze = anzahlDatenseatze();
@@ -82,7 +92,7 @@ public class MaterialIds extends Material {
     public int anzahlDatenseatze() {
 	int anzahlDerDatensatze = 0;
 
-	try{
+	try {
 	    sqlLite.statmentVorbereitenUndStarten(sqlLite.getQuery());
 
 	    while (sqlLite.getResult().next()) {

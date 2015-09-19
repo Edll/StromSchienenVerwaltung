@@ -17,20 +17,21 @@ import de.edlly.db.SQLiteStatement;
 public class MaterialDatensatz extends Material {
 
     private int[] materialDatensatz = new int[6];
-    private int materialId;
+    private MaterialIds materialId;
     SQLiteStatement sqlLite;
 
     public MaterialDatensatz(SQLiteConnect sqlConnection) throws IllegalArgumentException, SQLException{
 	super(sqlConnection);
 	sqlLite = new SQLiteStatement(sqlConnection);
+	materialId = new MaterialIds(sqlConnection);
     }
 
-    public void setMaterialId(int materialId) {
-	this.materialId = materialId;
+    public void setMaterialId(int id) throws IllegalArgumentException, SQLException {
+	  materialId.setId(id);
     }
 
     public int getMaterialId() {
-	return materialId;
+	return materialId.getId();
     }
 
     public int[] getMaterialDatensatzAusDatenbank(int materialId) throws IllegalArgumentException, SQLException {
@@ -58,7 +59,7 @@ public class MaterialDatensatz extends Material {
 	try {
 
 	    sqlLite.setQuery("SELECT id, MaterialSorteId, x, z, yMax, visibly FROM Material WHERE id = \""
-		    + this.materialId + "\" ");
+		    + this.materialId.getId() + "\" ");
 	    sqlLite.statmentVorbereitenUndStarten(sqlLite.getQuery());
 
 	    if (sqlLite.resultOhneErgebniss(sqlLite.getResult())) {

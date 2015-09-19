@@ -33,7 +33,7 @@ public class MaterialTabelle extends Material {
 	}
 	return materialTabellenModel;
     }
-
+    
     public class MaterialTabelleModel extends DefaultTableModel {
 
 	private static final long serialVersionUID = 1L;
