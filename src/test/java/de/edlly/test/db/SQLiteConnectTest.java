@@ -1,25 +1,77 @@
 package de.edlly.test.db;
 
+import java.sql.SQLException;
+
 import org.junit.Test;
 
 import de.edlly.db.SQLiteConnect;
+import de.edlly.db.SQLiteException;
 import junit.framework.TestCase;
 
 public class SQLiteConnectTest extends TestCase {
     SQLiteConnect sqlConnection;
 
+    @Override
+    public void setUp() throws IllegalArgumentException, SQLException {
+	sqlConnection = new SQLiteConnect();
+    }
+
     @Test
-    public void testSqlConnectionCloseorNull() {
-	sqlConnection = null;
-
+    public void testDbConnectKlasseFehlt() {
 	try {
-	    SQLiteConnect.sqlConnectionCloseorNull(sqlConnection);
-
-	    fail("Sollte einen Fehler werfen: IllegalArgumentException: Fehler bei der SQL Verbindung!");
-
-	} catch (IllegalArgumentException expected) {
-
-	    assertEquals(IllegalArgumentException.class, expected.getClass());
+	    sqlConnection.dbConnect("foo.bar.Test", "");
+	    fail("Exception nicht ausgelöst");
+	} catch (SQLiteException expected) {
+	    String erwartet = "Fehler bei der SQL Verbidung: Treiber Klasse nicht gefunden.";
+	    boolean check = expected.getLocalizedMessage().contains(erwartet);
+	    assertTrue("Fehler falsche Exception: " + expected.getLocalizedMessage(), check);
 	}
+    }
+
+    @Test
+    public void testDbConnectDBFehlt() {
+	try {
+	    sqlConnection.dbConnect("org.sqlite.JDBC", "");
+	    fail("Exception nicht ausgelöst");
+	} catch (SQLiteException expected) {
+	    String erwartet = "Fehler bei der SQL Verbidung:";
+	    boolean check = expected.getLocalizedMessage().contains(erwartet);
+	    assertTrue("Fehler falsche Exception: " + expected.getLocalizedMessage(), check);
+	}
+    }
+
+    @Test
+    public void testSqlConnectionCloseorNull() throws SQLException {
+	sqlConnection.dbConnect();
+	sqlConnection.close();
+	try {
+	    SQLiteConnect.isClosedOrNull(sqlConnection);
+	    fail("Sollte einen Fehler werfen: IllegalArgumentException: Fehler bei der SQL Verbindung:...");
+	} catch (SQLiteException expected) {
+	    String erwartet = "Fehler bei der SQL Verbindung:";
+	    boolean check = expected.getLocalizedMessage().contains(erwartet);
+	    assertTrue("Fehler falsche Exception", check);
+
+	}
+
+    }
+
+    @Test
+    public void testSqlConnectionIsClosed() throws SQLException {
+	sqlConnection.dbConnect();
+	sqlConnection.close();
+	try {
+	    SQLiteConnect.isClosed(sqlConnection);
+	    fail("Sollte einen Fehler werfen: IllegalArgumentException: Fehler bei der SQL Verbindung:...");
+	} catch (SQLiteException expected) {
+	    String erwartet = "Fehler bei der SQL Verbindung:";
+	    boolean check = expected.getLocalizedMessage().contains(erwartet);
+	    assertTrue("Fehler falsche Exception", check);
+	}
+    }
+
+    @Override
+    public void tearDown() throws SQLException {
+	sqlConnection.close();
     }
 }

@@ -34,7 +34,7 @@ public class NeuerMaterialDatensatzTest extends TestCase {
     @Override
     public void setUp() throws IllegalArgumentException, SQLException {
 	sqlConnection = new SQLiteConnect();
-	sqlConnection.dbConnection();
+	sqlConnection.dbConnect();
 	materialDatensatz = new NeuerMaterialDatensatz(sqlConnection);
     }
 
@@ -104,7 +104,7 @@ public class NeuerMaterialDatensatzTest extends TestCase {
 
     @Override
     public void tearDown() throws SQLException {
-	sqlConnection.closeSqlConnection();
+	sqlConnection.close();
 
     }
 

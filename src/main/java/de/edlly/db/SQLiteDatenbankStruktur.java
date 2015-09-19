@@ -13,7 +13,7 @@ import java.sql.*;
 
 public class SQLiteDatenbankStruktur extends SQLitePreparedStatement {
 
-    public SQLiteDatenbankStruktur(SQLiteConnect sqlConnection) throws IllegalArgumentException {
+    public SQLiteDatenbankStruktur(SQLiteConnect sqlConnection) throws IllegalArgumentException, SQLException {
 	super(sqlConnection);
     }
 

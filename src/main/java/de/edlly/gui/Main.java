@@ -46,10 +46,10 @@ public class Main {
 
 	try {
 	    SQLiteConnect sqlConnection = new SQLiteConnect();
-	    sqlConnection.dbConnection();
+	    sqlConnection.dbConnect();
 	    SQLiteDatenbankStruktur datenbankCheck = new SQLiteDatenbankStruktur(sqlConnection);
 	    datenbankCheck.datenbankCheckUndAnlegen();
-	    sqlConnection.closeSqlConnection();
+	    sqlConnection.close();
 	} catch (SQLException e) {
 	    e.printStackTrace();
 	} catch (IllegalArgumentException e) {

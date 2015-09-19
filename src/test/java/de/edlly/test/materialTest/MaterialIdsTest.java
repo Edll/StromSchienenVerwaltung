@@ -24,7 +24,7 @@ public class MaterialIdsTest extends TestCase {
     @Before
     public void setUp() throws IllegalArgumentException, SQLException {
 	sqlConnection = new SQLiteConnect();
-	sqlConnection.dbConnection();
+	sqlConnection.dbConnect();
 	materialIds = new MaterialIds(sqlConnection);
     }
 
@@ -105,7 +105,7 @@ public class MaterialIdsTest extends TestCase {
 
     @After
     public void tearDown() throws SQLException {
-	sqlConnection.closeSqlConnection();
+	sqlConnection.close();
     }
 
 }

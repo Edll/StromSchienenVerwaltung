@@ -6,7 +6,7 @@ public class SQLiteStatement extends SQLiteQueryAndResult {
 
     private Statement statment = null;
 
-    public SQLiteStatement(SQLiteConnect sqlConnection) throws IllegalArgumentException {
+    public SQLiteStatement(SQLiteConnect sqlConnection) throws IllegalArgumentException, SQLException {
 	super(sqlConnection);
     }
 

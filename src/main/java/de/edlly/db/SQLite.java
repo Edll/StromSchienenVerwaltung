@@ -1,6 +1,7 @@
 package de.edlly.db;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
 public abstract class SQLite{
     private SQLiteConnect sqlConnection;
@@ -13,8 +14,8 @@ public abstract class SQLite{
 	return sqlConnection.getSqlConnection();
     }
 
-    public void setSqlConnection(SQLiteConnect sqlConnection) throws IllegalArgumentException{
-	SQLiteConnect.sqlConnectionCloseorNull(sqlConnection);
+    public void setSqlConnection(SQLiteConnect sqlConnection) throws IllegalArgumentException, SQLException{
+	SQLiteConnect.isClosedOrNull(sqlConnection);
 	this.sqlConnection = sqlConnection;
     }
     

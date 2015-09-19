@@ -18,7 +18,7 @@ public class MaterialSorte extends Material {
     private String[] materialSorteNameListe = new String[0];
     SQLiteStatement sqlLite;
 
-    public MaterialSorte(SQLiteConnect sqlConnection) {
+    public MaterialSorte(SQLiteConnect sqlConnection) throws IllegalArgumentException, SQLException {
 	super(sqlConnection);
 	sqlLite = new SQLiteStatement(sqlConnection);
     }

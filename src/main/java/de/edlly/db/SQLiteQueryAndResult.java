@@ -16,8 +16,8 @@ public class SQLiteQueryAndResult extends SQLite {
     private ResultSet result = null;
     private String query = "";
 
-    public SQLiteQueryAndResult(SQLiteConnect sqlConnection) throws IllegalArgumentException {
-	SQLiteConnect.sqlConnectionCloseorNull(sqlConnection);
+    public SQLiteQueryAndResult(SQLiteConnect sqlConnection) throws IllegalArgumentException, SQLException {
+	SQLiteConnect.isClosedOrNull(sqlConnection);
 	setSqlConnection(sqlConnection);
     }
 

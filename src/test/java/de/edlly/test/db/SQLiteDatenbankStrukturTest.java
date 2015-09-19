@@ -15,7 +15,7 @@ public class SQLiteDatenbankStrukturTest extends TestCase {
     @Override
     public void setUp() throws IllegalArgumentException, SQLException {
 	sqlConnection = new SQLiteConnect();
-	sqlConnection.dbConnection();
+	sqlConnection.dbConnect();
 	datenbank = new SQLiteDatenbankStruktur(sqlConnection);
 
     }
@@ -28,6 +28,6 @@ public class SQLiteDatenbankStrukturTest extends TestCase {
 
     @Override
     public void tearDown() throws SQLException {
-	sqlConnection.closeSqlConnection();
+	sqlConnection.close();
     }
 }

@@ -40,14 +40,14 @@ public class AusgabeMaterialTabelle extends TabMaterialVerwaltung {
 	scrollpaneErstellen();
 
 	SQLiteConnect sqlConnection = new SQLiteConnect();
-	sqlConnection.dbConnection();
+	sqlConnection.dbConnect();
 
 	materialModel = new MaterialTabelle(sqlConnection);
 	materialTabelle = new JTable(materialModel.tabelleErstellen(true));
 
 	tabellenBereich.setViewportView(materialTabelle);
 
-	sqlConnection.closeSqlConnection();
+	sqlConnection.close();
 
 	return tabellenBereich;
     }
@@ -55,13 +55,13 @@ public class AusgabeMaterialTabelle extends TabMaterialVerwaltung {
     public void refreshMaterialTabelle() throws SQLException {
 
 	SQLiteConnect sqlConnection = new SQLiteConnect();
-	sqlConnection.dbConnection();
+	sqlConnection.dbConnect();
 
 	materialModel = new MaterialTabelle(sqlConnection);
 	materialTabelle = new JTable(materialModel.tabelleErstellen(true));
 	tabellenBereich.setViewportView(materialTabelle);
 
-	sqlConnection.closeSqlConnection();
+	sqlConnection.close();
 
     }
 

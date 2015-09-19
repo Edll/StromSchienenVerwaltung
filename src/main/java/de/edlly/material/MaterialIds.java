@@ -18,7 +18,7 @@ public class MaterialIds extends Material {
     private int[] idListe = new int[] { 0 };
     SQLiteStatement sqlLite;
 
-    public MaterialIds(SQLiteConnect sqlConnection) {
+    public MaterialIds(SQLiteConnect sqlConnection) throws IllegalArgumentException, SQLException {
 	super(sqlConnection);
 	sqlLite = new SQLiteStatement(sqlConnection);
     }

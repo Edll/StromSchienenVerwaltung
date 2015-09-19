@@ -14,7 +14,7 @@ public class SQLitePreparedStatementTest extends TestCase {
     @Override
     public void setUp() throws IllegalArgumentException, SQLException {
 	sqlConnection = new SQLiteConnect();
-	sqlConnection.dbConnection();
+	sqlConnection.dbConnect();
 	preparedStatement = new SQLitePreparedStatement(sqlConnection);
 
     }
@@ -58,7 +58,7 @@ public class SQLitePreparedStatementTest extends TestCase {
     @Override
     public void tearDown() throws SQLException {
 
-	sqlConnection.closeSqlConnection();
+	sqlConnection.close();
     }
 
 }

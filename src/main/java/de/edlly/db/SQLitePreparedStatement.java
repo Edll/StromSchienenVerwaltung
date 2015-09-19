@@ -5,7 +5,7 @@ import java.sql.*;
 public class SQLitePreparedStatement extends SQLiteQueryAndResult {
     public PreparedStatement preparedStatment;
 
-    public SQLitePreparedStatement(SQLiteConnect sqlConnection) throws IllegalArgumentException {
+    public SQLitePreparedStatement(SQLiteConnect sqlConnection) throws IllegalArgumentException, SQLException {
 	super(sqlConnection);
     }
 

@@ -62,7 +62,7 @@ public class AusgabeMaterialAnlegen extends TabMaterialVerwaltung {
 
 		try {
 
-		    sqlConnection.dbConnection();
+		    sqlConnection.dbConnect();
 
 		    MaterialSorte materialSorteId = new MaterialSorte(sqlConnection);
 		    int MaterialSorteSelectId = materialSorteId
@@ -84,7 +84,7 @@ public class AusgabeMaterialAnlegen extends TabMaterialVerwaltung {
 
 		    materialEingabeBereich.repaint();
 
-		    sqlConnection.closeSqlConnection();
+		    sqlConnection.close();
 		} catch (NumberFormatException e) {
 		    JOptionPane.showMessageDialog(null, "Bitte eine gültige Zahl eingeben.");
 
@@ -95,7 +95,7 @@ public class AusgabeMaterialAnlegen extends TabMaterialVerwaltung {
 		    sqlException.printStackTrace();
 		} finally {
 		    try {
-			sqlConnection.closeSqlConnection();
+			sqlConnection.close();
 		    } catch (SQLException e) {
 
 			e.printStackTrace();
@@ -108,12 +108,12 @@ public class AusgabeMaterialAnlegen extends TabMaterialVerwaltung {
 
     public void materialSortenListe(JPanel materialEingabeBereich) throws SQLException {
 	sqlConnection = new SQLiteConnect();
-	sqlConnection.dbConnection();
+	sqlConnection.dbConnect();
 	MaterialSorte materialDB = new MaterialSorte(sqlConnection);
 	materialSortenAuswahl = new JComboBox(materialDB.materialSorteNamensListe());
 	materialSortenAuswahl.setBounds(156, 50, 96, 20);
 	materialEingabeBereich.add(materialSortenAuswahl);
-	sqlConnection.closeSqlConnection();
+	sqlConnection.close();
     }
 
     public void buttonMaterialHinzufuegen(JPanel materialEingabeBereich) {

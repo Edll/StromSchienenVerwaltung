@@ -15,7 +15,7 @@ public class MaterialSorteTest extends TestCase {
     @Override
     public void setUp() throws IllegalArgumentException, SQLException {
 	sqlConnection = new SQLiteConnect();
-	sqlConnection.dbConnection();
+	sqlConnection.dbConnect();
 	materialSorte = new MaterialSorte(sqlConnection);
     }
 
@@ -75,7 +75,7 @@ public class MaterialSorteTest extends TestCase {
 
     @Override
     public void tearDown() throws SQLException {
-	sqlConnection.closeSqlConnection();
+	sqlConnection.close();
     }
 
 }

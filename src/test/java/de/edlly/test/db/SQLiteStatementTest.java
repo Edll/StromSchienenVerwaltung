@@ -16,7 +16,7 @@ public class SQLiteStatementTest extends TestCase {
     @Override
     public void setUp() throws IllegalArgumentException, SQLException {
 	sqlConnection = new SQLiteConnect();
-	sqlConnection.dbConnection();
+	sqlConnection.dbConnect();
 	statement = new SQLiteStatement(sqlConnection);
     }
 
@@ -77,6 +77,6 @@ public class SQLiteStatementTest extends TestCase {
 	} catch (SQLException e) {
 	    e.printStackTrace();
 	}
-	sqlConnection.closeSqlConnection();
+	sqlConnection.close();
     }
 }

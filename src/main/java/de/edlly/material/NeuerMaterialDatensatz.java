@@ -15,7 +15,7 @@ import de.edlly.material.MaterialKonstanten;
 public class NeuerMaterialDatensatz extends MaterialDatensatz {
     private SQLitePreparedStatement sqlLite;
 
-    public NeuerMaterialDatensatz(SQLiteConnect sqlConnection) throws IllegalArgumentException {
+    public NeuerMaterialDatensatz(SQLiteConnect sqlConnection) throws IllegalArgumentException, SQLException {
 	super(sqlConnection);
 	sqlLite = new SQLitePreparedStatement(sqlConnection);
 

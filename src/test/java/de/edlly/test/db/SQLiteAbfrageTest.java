@@ -18,7 +18,7 @@ public class SQLiteAbfrageTest extends TestCase {
     @Override
     public void setUp() throws IllegalArgumentException, SQLException {
 	sqlConnection = new SQLiteConnect();
-	sqlConnection.dbConnection();
+	sqlConnection.dbConnect();
 	sqlAbfrage = new SQLiteQueryAndResult(sqlConnection);
     }
 
@@ -34,11 +34,11 @@ public class SQLiteAbfrageTest extends TestCase {
     }
 
     @Test
-    public void testSetSqlConnection() {
+    public void testSetSqlConnection() throws SQLException {
 	try {
 	    sqlAbfrage.setSqlConnection(null);
 	    fail("Muss eine IllegalArgumentException auslösen");
-	} catch (IllegalArgumentException exception) {
+	} catch (SQLiteException exception) {
 	    String bekommenException = exception.getMessage();
 	    String erwarteteException = "Fehler bei der SQL Verbindung";
 	    boolean check = bekommenException.contains(erwarteteException);
@@ -58,6 +58,6 @@ public class SQLiteAbfrageTest extends TestCase {
 
     @Override
     public void tearDown() throws SQLException {
-	sqlConnection.closeSqlConnection();
+	sqlConnection.close();
     }
 }

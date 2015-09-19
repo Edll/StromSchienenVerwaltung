@@ -20,7 +20,7 @@ public class MaterialDatensatz extends Material {
     private int materialId;
     SQLiteStatement sqlLite;
 
-    public MaterialDatensatz(SQLiteConnect sqlConnection) throws IllegalArgumentException{
+    public MaterialDatensatz(SQLiteConnect sqlConnection) throws IllegalArgumentException, SQLException{
 	super(sqlConnection);
 	sqlLite = new SQLiteStatement(sqlConnection);
     }
