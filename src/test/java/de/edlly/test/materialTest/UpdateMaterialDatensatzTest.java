@@ -10,7 +10,7 @@ public class UpdateMaterialDatensatzTest extends TestCase {
     private SQLiteConnect sqlConnection;
 
     @Override
-    public void setUp() throws IllegalArgumentException, SQLException {
+    public void setUp() throws IllegalArgumentException {
 	sqlConnection = new SQLiteConnect();
 	sqlConnection.dbConnect();
 

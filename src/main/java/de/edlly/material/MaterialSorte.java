@@ -115,7 +115,7 @@ public class MaterialSorte extends Material {
 
 	    materialSorteNameListe = new String[anzahlDerDatensatze];
 
-	    sqlLite.statmentAusfuehren(sqlLite.getQuery()); // nötig um den Datensatz zurück zu setzten. SQLite bietet
+	    sqlLite.statmentExecute(sqlLite.getQuery()); // nötig um den Datensatz zurück zu setzten. SQLite bietet
 							    // hier keine
 	    // bessere Möglichkeit.
 	    int count = 0;

@@ -60,7 +60,7 @@ public class MaterialIds extends Material {
 	try {
 	    queryAuswahl();
 	    int anzahlDerDatensatze = anzahlDatenseatze();
-	    sqlLite.statmentAusfuehren(sqlLite.getQuery());
+	    sqlLite.statmentExecute(sqlLite.getQuery());
 
 	    if (anzahlDerDatensatze == 0) {
 

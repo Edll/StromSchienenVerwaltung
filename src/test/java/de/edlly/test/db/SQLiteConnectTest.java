@@ -12,7 +12,7 @@ public class SQLiteConnectTest extends TestCase {
     SQLiteConnect sqlConnection;
 
     @Override
-    public void setUp() throws IllegalArgumentException, SQLException {
+    public void setUp() throws IllegalArgumentException {
 	sqlConnection = new SQLiteConnect();
     }
 

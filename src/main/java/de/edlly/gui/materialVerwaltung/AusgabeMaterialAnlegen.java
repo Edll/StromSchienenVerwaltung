@@ -76,9 +76,8 @@ public class AusgabeMaterialAnlegen extends TabMaterialVerwaltung {
 		    MaterialDatensatzAnlegen.setMaterialDaten(koordianteX, koordianteZ, koordinateyMax,
 			    MaterialSorteSelectId);
 		    if (MaterialDatensatzAnlegen.datensatzAusObjektWertenAnlegen()) {
-
+			JOptionPane.showMessageDialog(null, "Das neue Material ist erfolgreich eingefügt worden.");
 		    }
-		    JOptionPane.showMessageDialog(null, "Das neue Material ist erfolgreich eingefügt worden.");
 
 		    materialTabelle.refreshMaterialTabelle();
 

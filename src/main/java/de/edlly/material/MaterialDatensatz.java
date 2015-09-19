@@ -20,14 +20,14 @@ public class MaterialDatensatz extends Material {
     private MaterialIds materialId;
     SQLiteStatement sqlLite;
 
-    public MaterialDatensatz(SQLiteConnect sqlConnection) throws IllegalArgumentException, SQLException{
+    public MaterialDatensatz(SQLiteConnect sqlConnection) throws IllegalArgumentException, SQLException {
 	super(sqlConnection);
 	sqlLite = new SQLiteStatement(sqlConnection);
 	materialId = new MaterialIds(sqlConnection);
     }
 
     public void setMaterialId(int id) throws IllegalArgumentException, SQLException {
-	  materialId.setId(id);
+	materialId.setId(id);
     }
 
     public int getMaterialId() {
@@ -82,7 +82,6 @@ public class MaterialDatensatz extends Material {
 	} finally {
 	    try {
 		sqlLite.closeStatmentAndResult();
-
 	    } catch (SQLException e) {
 		e.printStackTrace();
 	    }

@@ -24,7 +24,7 @@ public class SQLiteStatementTest extends TestCase {
     public void testCloseStatmentUndResult() {
 	try {
 	    statement.statmentVorbereiten();
-	    statement.statmentAusfuehren("SELECT * FROM material");
+	    statement.statmentExecute("SELECT * FROM material");
 	    statement.closeStatmentAndResult();
 	} catch (Exception e) {
 	    fail("Sollte keine Exception werfen, ist aber:" + e.getMessage() + e.getLocalizedMessage());
@@ -35,7 +35,7 @@ public class SQLiteStatementTest extends TestCase {
     @Test
     public void testStatmentAusfuehren() {
 	try {
-	    statement.statmentAusfuehren(null);
+	    statement.statmentExecute(null);
 	    fail("Muss eine IllegalArgumentException auslösen");
 	} catch (IllegalArgumentException exception) {
 	    String erwarteteException = "Der SQL Query String darf nicht null sein.";
@@ -48,7 +48,7 @@ public class SQLiteStatementTest extends TestCase {
     @Test
     public void testResultOhneErgebniss() throws SQLException {
 	statement.statmentVorbereiten();
-	statement.statmentAusfuehren("SELECT * FROM material");
+	statement.statmentExecute("SELECT * FROM material");
 	boolean ergebniss = statement.resultOhneErgebniss(statement.getResult());
 
 	assertFalse(ergebniss);

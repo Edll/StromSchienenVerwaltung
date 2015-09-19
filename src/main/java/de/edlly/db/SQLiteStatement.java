@@ -20,18 +20,28 @@ public class SQLiteStatement extends SQLiteQueryAndResult {
 
     public void statmentVorbereitenUndStarten(String query) throws SQLException {
 	statmentVorbereiten();
-	statmentAusfuehren(query);
+	statmentExecute(query);
+    }
+    
+    public void statmentVorbereitenUndUpdate(String query) throws SQLException {
+	statmentVorbereiten();
+	statmentUpdaten(query);
     }
 
     public void statmentVorbereiten() throws SQLException {
 	statment = getSqlConnection().createStatement();
     }
 
-    public void statmentAusfuehren(String query) throws SQLException {
+    public void statmentExecute(String query) throws SQLException {
 	queryNotNull(query);
 	setResult(statment.executeQuery(query));
     }
-
+    
+    public void statmentUpdaten(String query) throws SQLException {
+	queryNotNull(query);
+	statment.executeUpdate(query);
+    }
+    
     public void closeStatmentAndResult() throws SQLException {
 	closeStatment();
 	closeResult();
