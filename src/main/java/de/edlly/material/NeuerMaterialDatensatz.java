@@ -4,7 +4,6 @@ import java.sql.*;
 
 import de.edlly.db.SQLiteConnect;
 import de.edlly.db.SQLitePreparedStatement;
-import de.edlly.material.MaterialKonstanten;
 
 /**
  * Legt einen neuen Material Datensatz an nutzt dabei MaterialDatensatz.
@@ -85,13 +84,13 @@ public class NeuerMaterialDatensatz extends MaterialDatensatz {
 
     public Boolean koordinateXIstImDefinitionsbereich(int koordinateX) throws IllegalArgumentException {
 
-	if (koordinateX < MaterialKonstanten.MINIMALER_X_WERT) {
+	if (koordinateX < MINIMALER_X_WERT) {
 	    throw new IllegalArgumentException("Die Materialbreite darf nicht Negativ oder 0 sein.");
 	}
 
-	if (koordinateX > MaterialKonstanten.MAXIMALER_X_WERT) {
+	if (koordinateX > MAXIMALER_X_WERT) {
 	    throw new IllegalArgumentException(
-		    "Die maximal Materialbreite ist: " + MaterialKonstanten.MAXIMALER_X_WERT);
+		    "Die maximal Materialbreite ist: " + MAXIMALER_X_WERT);
 	}
 
 	return true;
@@ -99,12 +98,12 @@ public class NeuerMaterialDatensatz extends MaterialDatensatz {
 
     public Boolean koordinateZIstImDefinitionsbereich(int koordinateZ) throws IllegalArgumentException {
 
-	if (koordinateZ < MaterialKonstanten.MINIMALER_Z_WERT) {
+	if (koordinateZ < MINIMALER_Z_WERT) {
 	    throw new IllegalArgumentException("Die Materialbreite darf nicht Negativ oder 0 sein.");
 	}
 
-	if (koordinateZ > MaterialKonstanten.MAXIMALER_Z_WERT) {
-	    throw new IllegalArgumentException("Die maximal Materialdicke ist: " + MaterialKonstanten.MAXIMALER_Z_WERT);
+	if (koordinateZ > MAXIMALER_Z_WERT) {
+	    throw new IllegalArgumentException("Die maximal Materialdicke ist: " + MAXIMALER_Z_WERT);
 	}
 
 	return true;
@@ -112,13 +111,13 @@ public class NeuerMaterialDatensatz extends MaterialDatensatz {
 
     public Boolean koordinateyMaxIstImDefinitionsbereich(int koordinatey) throws IllegalArgumentException {
 
-	if (koordinatey < MaterialKonstanten.MINIMALER_Y_WERT) {
+	if (koordinatey < MINIMALER_Y_WERT) {
 	    throw new IllegalArgumentException("Die Materialbreite darf nicht Negativ sein.");
 	}
 
-	if (koordinatey > MaterialKonstanten.MAXIMALER_Y_WERT) {
+	if (koordinatey > MAXIMALER_Y_WERT) {
 	    throw new IllegalArgumentException(
-		    "Die maximal Material Länge ist: " + MaterialKonstanten.MAXIMALER_Y_WERT);
+		    "Die maximal Material Länge ist: " + MAXIMALER_Y_WERT);
 	}
 
 	return true;

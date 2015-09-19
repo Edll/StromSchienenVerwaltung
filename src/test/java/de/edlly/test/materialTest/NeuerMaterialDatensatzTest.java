@@ -3,7 +3,7 @@ package de.edlly.test.materialTest;
 import java.sql.SQLException;
 
 import de.edlly.db.SQLiteConnect;
-import de.edlly.material.MaterialKonstanten;
+import de.edlly.material.Material;
 import de.edlly.material.NeuerMaterialDatensatz;
 
 import junit.framework.TestCase;
@@ -21,13 +21,13 @@ public class NeuerMaterialDatensatzTest extends TestCase {
     private NeuerMaterialDatensatz materialDatensatz;
     private SQLiteConnect sqlConnection;
 
-    private int koordinatenMaxX = MaterialKonstanten.MAXIMALER_X_WERT;
-    private int koordiantenMaxY = MaterialKonstanten.MAXIMALER_Y_WERT;
-    private int koordiantenMaxZ = MaterialKonstanten.MAXIMALER_Z_WERT;
+    private int koordinatenMaxX = Material.MAXIMALER_X_WERT;
+    private int koordiantenMaxY = Material.MAXIMALER_Y_WERT;
+    private int koordiantenMaxZ = Material.MAXIMALER_Z_WERT;
 
-    private int koordinatenMinX = MaterialKonstanten.MINIMALER_X_WERT;
-    private int koordinatenMinY = MaterialKonstanten.MINIMALER_Y_WERT;
-    private int koordiantenMinZ = MaterialKonstanten.MINIMALER_Z_WERT;
+    private int koordinatenMinX = Material.MINIMALER_X_WERT;
+    private int koordinatenMinY = Material.MINIMALER_Y_WERT;
+    private int koordiantenMinZ = Material.MINIMALER_Z_WERT;
 
     private int sortenId = 1;
 
