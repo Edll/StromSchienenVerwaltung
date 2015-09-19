@@ -1,10 +1,7 @@
 package werkstueck;
 
-import java.sql.Connection;
 import java.sql.SQLException;
-
 import org.junit.Test;
-
 import de.edlly.db.SQLiteConnect;
 import de.edlly.db.SQLiteException;
 import junit.framework.TestCase;
@@ -42,14 +39,14 @@ public class WerkstueckTest extends TestCase {
 	}
 
     }
-    
+
     @Test
-    public void testGetSqlConnection(){
+    public void testGetSqlConnection() {
 	SQLiteConnect connection = werkstueck.getSqlConnection();
 	try {
 	    SQLiteConnect.isClosed(connection);
 	} catch (SQLiteException e) {
-	    fail("Verbindung wurde Fehlerhaft übergeben.");  
+	    fail("Verbindung wurde Fehlerhaft übergeben.");
 	} catch (SQLException e) {
 	    fail("Verbindung wurde Fehlerhaft übergeben.");
 	}
