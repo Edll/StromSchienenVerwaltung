@@ -1,4 +1,4 @@
-package de.edlly.test.materialTest;
+package de.edlly.test.material;
 
 import org.junit.Test;
 import junit.framework.TestCase;

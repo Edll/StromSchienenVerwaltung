@@ -1,4 +1,4 @@
-package de.edlly.test.materialTest;
+package de.edlly.test.material;
 
 import java.sql.SQLException;
 

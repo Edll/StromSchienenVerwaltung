@@ -1,7 +1,7 @@
 package de.edlly.test;
 
 import de.edlly.test.db.*;
-import de.edlly.test.materialTest.*;
+import de.edlly.test.material.*;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
