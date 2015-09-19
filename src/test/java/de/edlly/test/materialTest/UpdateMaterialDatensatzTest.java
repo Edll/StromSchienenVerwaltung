@@ -24,7 +24,7 @@ public class UpdateMaterialDatensatzTest extends TestCase {
 	assertTrue("Set Material Visibly in Objekt", setMaterialVisibly());
     }
 
-    public void testSetMaterialId()  {
+    public void testSetMaterialId() throws SQLException  {
 	assertTrue("Set Material Id in Objekt", setMaterialId());
     }
 
@@ -48,9 +48,9 @@ public class UpdateMaterialDatensatzTest extends TestCase {
 	return true;
     }
 
-    private Boolean setMaterialId() {
+    private Boolean setMaterialId() throws SQLException {
 	try {
-	    UpdateMaterialDatensatz materialDatensetzten = new UpdateMaterialDatensatz(sqlConnection.getSqlConnection());
+	    UpdateMaterialDatensatz materialDatensetzten = new UpdateMaterialDatensatz(sqlConnection);
 
 	    materialDatensetzten.setMaterialId(1);
 	    materialDatensetzten.setMaterialId(2);

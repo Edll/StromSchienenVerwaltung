@@ -2,7 +2,11 @@ package de.edlly.material;
 
 import java.sql.*;
 
-public class UpdateMaterialDatensatz {
+import de.edlly.db.SQLiteConnect;
+import de.edlly.db.SQLitePreparedStatement;
+
+public class UpdateMaterialDatensatz extends MaterialDatensatz {
+    SQLitePreparedStatement sqlLite;
 
     @SuppressWarnings("unused")
     private int materialId;
@@ -17,10 +21,9 @@ public class UpdateMaterialDatensatz {
     @SuppressWarnings("unused")
     private int visibly;
 
-    private Connection sqlConnection;
-
-    public UpdateMaterialDatensatz(Connection sqLiteConnect) {
-	this.sqlConnection = sqLiteConnect;
+    public UpdateMaterialDatensatz(SQLiteConnect sqlConnection) throws IllegalArgumentException, SQLException {
+	super(sqlConnection);
+	sqlLite = new SQLitePreparedStatement(sqlConnection);
     }
 
     public void setMaterialDaten(int materialId, int koordinateX, int koordinateZ, int koordinateyMax,
@@ -57,8 +60,6 @@ public class UpdateMaterialDatensatz {
 
     public void updateVisibly(int id, int visibly) {
 
-	PreparedStatement pst = null;
-
 	if (id == 0) {
 	    throw new IllegalArgumentException("Die Material id darf nicht 0 sein.");
 	}
@@ -67,18 +68,18 @@ public class UpdateMaterialDatensatz {
 	}
 
 	try {
-	    String query = "UPDATE \"main\".\"Material\" SET \"visibly\" = ?1 WHERE  \"id\" = " + id;
-	    pst = ((Connection) sqlConnection).prepareStatement(query);
-	    pst.setInt(1, visibly);
-	    pst.executeUpdate();
-
+	    sqlLite.setQuery( "UPDATE \"main\".\"Material\" SET \"visibly\" = ?1 WHERE  \"id\" = " + id);
+	    sqlLite.preparedStatmentVorbereiten(sqlLite.getQuery());
+	    sqlLite.getPreparedStatment().setInt(1, visibly);
+	    sqlLite.preparedStatmentAusfuehren();
+	    sqlLite.closePrepareStatment();
+	    
 	} catch (SQLException e) {
 
 	    throw new IllegalArgumentException(e);
 	} finally {
 	    try {
-
-		pst.close();
+		    sqlLite.closePrepareStatment();
 	    } catch (Exception e) {
 		throw new IllegalArgumentException(e);
 	    }

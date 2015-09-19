@@ -6,17 +6,15 @@ import javax.swing.table.DefaultTableModel;
 
 import de.edlly.db.SQLiteConnect;
 
-public class MaterialTabelle {
-
-    private SQLiteConnect sqlConnection;
+public class MaterialTabelle extends Material {
 
     public MaterialTabelle(SQLiteConnect sqlConnection) {
-	this.sqlConnection = sqlConnection;
+	super(sqlConnection);
     }
 
     public MaterialTabelleModel tabelleErstellen(boolean ausgeblendeteAnzeigen) throws SQLException {
 
-	MaterialListe kompletteMaterialListe = new MaterialListe(sqlConnection);
+	MaterialListe kompletteMaterialListe = new MaterialListe(getSqlConnection());
 	kompletteMaterialListe.setAusgeblendetDatenAnzeigen(true);
 
 	MaterialTabelleModel materialTabellenModel = new MaterialTabelleModel();
