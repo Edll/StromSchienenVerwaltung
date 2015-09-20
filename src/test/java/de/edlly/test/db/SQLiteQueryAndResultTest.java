@@ -11,7 +11,7 @@ import de.edlly.db.*;
  * @author Edlly java@edlly.de
  *
  */
-public class SQLiteAbfrageTest extends TestCase {
+public class SQLiteQueryAndResultTest extends TestCase {
     SQLiteQueryAndResult sqlAbfrage;
     SQLiteConnect sqlConnection;
 
