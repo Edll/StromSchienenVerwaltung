@@ -9,11 +9,13 @@ import de.edlly.db.SQLiteConnect;
 import junit.framework.TestCase;
 
 public class WerkstueckDatensatzTest extends TestCase {
+    
     IWerkstueckDatensatz<?> datensatz;
-
+    SQLiteConnect sqlConnection;
+    
     @Override
     public void setUp() throws WerkstueckException {
-	SQLiteConnect sqlConnection = new SQLiteConnect();
+	sqlConnection = new SQLiteConnect();
 	sqlConnection.dbConnect();
 	datensatz = new WerkstueckDatensatz<IWerkstueckDatensatz<?>>(sqlConnection);
     }
@@ -128,7 +130,8 @@ public class WerkstueckDatensatzTest extends TestCase {
     }
 
     @Override
-    public void tearDown() {
+    public void tearDown() throws SQLException {
+	sqlConnection.close();
     }
 
 }
