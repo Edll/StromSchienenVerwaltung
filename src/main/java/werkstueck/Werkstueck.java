@@ -16,7 +16,7 @@ public class Werkstueck implements IWerkstueck {
 
     public void setId(int id) throws WerkstueckException {
 	IWerkstueckIds idPruefung = new WerkstueckIds(sqlConnection);
-	if (idPruefung.IdVorhanden(id)) {
+	if (!idPruefung.IdVorhanden(id)) {
 	    throw new WerkstueckException("Fehler bei der Werkstückid, die angebene id: " + id + " gibt es nicht.");
 	}
     }

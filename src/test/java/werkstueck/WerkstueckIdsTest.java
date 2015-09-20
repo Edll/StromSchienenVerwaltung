@@ -19,16 +19,15 @@ public class WerkstueckIdsTest extends TestCase {
     public void testIdVorhanden() {
 	int id = 0;
 	boolean check = werkstueckIds.IdVorhanden(id);
-	assertTrue("Bei einer 0 sollte ein False anzeigt werden.", check);	
+	assertTrue("Bei einer 0 sollte ein False anzeigt werden.", check);
     }
+
     @Test
-    public void testGetIdList(){
+    public void testGetIdList() {
 	int[] list = werkstueckIds.getIdList();
-	int[] listGet = {1, 2, 3, 4, 5};
- 	assertArrayEquals(listGet, list);
+	int[] listGet = { 1, 2, 3, 4, 5 };
+	assertArrayEquals(listGet, list);
     }
-    
-    
 
     @Override
     public void tearDown() {

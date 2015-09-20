@@ -1,6 +1,6 @@
 package werkstueck;
 
-public interface IWerkstueckIds {
+public interface IWerkstueckIds extends IWerkstueck {
     
     /**
      * Prüft ob die Id in der Datenbank vorhanden ist
