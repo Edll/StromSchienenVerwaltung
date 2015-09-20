@@ -108,7 +108,7 @@ public class WerkstueckDatensatz<T> extends Werkstueck implements IWerkstueckDat
 	// Eintrage
 	// return true!
 
-	return false;
+	return true;
     }
 
     public List<IWerkstueckDatensatz<?>> getDatensatz(int id) throws WerkstueckException {

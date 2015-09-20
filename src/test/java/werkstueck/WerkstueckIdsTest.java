@@ -19,7 +19,7 @@ public class WerkstueckIdsTest extends TestCase {
     public void testIdVorhanden() {
 	int id = 0;
 	boolean check = werkstueckIds.IdVorhanden(id);
-	assertTrue("Bei einer 0 sollte ein False anzeigt werden.", check);
+	assertFalse("Bei einer 0 sollte ein False anzeigt werden.", check);
     }
 
     @Test
