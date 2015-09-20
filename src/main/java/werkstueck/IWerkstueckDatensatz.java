@@ -92,7 +92,7 @@ public interface IWerkstueckDatensatz<T> extends IWerkstueck {
      * @return
      */
 
-    public Integer getErstellDatum();
+    public long getErstellDatum();
 
     /**
      * Die ProjektNr wozu das Werkstück gehört
@@ -101,7 +101,7 @@ public interface IWerkstueckDatensatz<T> extends IWerkstueck {
      * @param projektNr
      */
 
-    public void setErstellDatum(Integer erstellDatum) throws WerkstueckException;
+    public void setErstellDatum(long erstellDatum) throws WerkstueckException;
 
     /**
      * Setzt alle Werte eines Objekt in einem zug
@@ -110,7 +110,7 @@ public interface IWerkstueckDatensatz<T> extends IWerkstueck {
      *            Name des Werkstücks
      * @param materialId
      *            Material das verwendet wird.
-     * @param erstellDatum
+     * @param l
      *            Datum Datum wann das Werkstück erstellt worden ist.
      * @param projektNr
      *            Projekt des des Werkstücks
@@ -119,6 +119,6 @@ public interface IWerkstueckDatensatz<T> extends IWerkstueck {
      * @throws IllegalArgumentException 
      */
 
-    public void setDatensatz(String name, int materialId, int erstellDatum, int projektNr) throws WerkstueckException, IllegalArgumentException, SQLException;
+    public void setDatensatz(String name, int materialId, long l, int projektNr) throws WerkstueckException, IllegalArgumentException, SQLException;
 
 }

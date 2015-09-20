@@ -82,8 +82,8 @@ public class WerkstueckDatensatzTest extends TestCase {
 
     @Test
     public void testGetErstellDatum() {
-	int actual = datensatz.getErstellDatum();
-	int expected = 0;
+	long actual = datensatz.getErstellDatum();
+	long expected = 0;
 
 	assertEquals("Fehler bei der Datums übergabe", expected, actual);
     }

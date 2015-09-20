@@ -13,7 +13,7 @@ public class WerkstueckDatensatz<T> extends Werkstueck implements IWerkstueckDat
     @SuppressWarnings("unused")
     private Integer projektNr;
     @SuppressWarnings("unused")
-    private Integer erstellDatum;
+    private long erstellDatum;
     SQLiteStatement sql;
 
     public WerkstueckDatensatz(SQLiteConnect sqlConnection) throws WerkstueckException {
@@ -67,11 +67,11 @@ public class WerkstueckDatensatz<T> extends Werkstueck implements IWerkstueckDat
 	this.projektNr = projektNr;
     }
 
-    public Integer getErstellDatum() {
+    public long getErstellDatum() {
 	return 0;
     }
 
-    public void setErstellDatum(Integer erstellDatum) throws WerkstueckException {
+    public void setErstellDatum(long erstellDatum) throws WerkstueckException {
 	if (erstellDatum <= 0) {
 	    this.erstellDatum = 0;
 	    throw new WerkstueckException("Das Datum darf nicht in der Vergangenheit liegen.");
@@ -79,7 +79,7 @@ public class WerkstueckDatensatz<T> extends Werkstueck implements IWerkstueckDat
 	this.erstellDatum = erstellDatum;
     }
 
-    public void setDatensatz(String name, int materialId, int erstellDatum, int projektNr) throws WerkstueckException {
+    public void setDatensatz(String name, int materialId, long erstellDatum, int projektNr) throws WerkstueckException {
 
 	try {
 	    setErstellDatum(erstellDatum);
