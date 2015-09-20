@@ -18,7 +18,10 @@ public class Werkstueck implements IWerkstueck {
 	IWerkstueckIds idPruefung = new WerkstueckIds(sqlConnection);
 	if (!idPruefung.IdVorhanden(id)) {
 	    throw new WerkstueckException("Fehler bei der Werkstückid, die angebene id: " + id + " gibt es nicht.");
+	}else{
+	   this.id = id; 
 	}
+	
     }
 
     public SQLiteConnect getSqlConnection() {

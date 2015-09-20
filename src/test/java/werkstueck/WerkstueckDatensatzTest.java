@@ -98,7 +98,7 @@ public class WerkstueckDatensatzTest extends TestCase {
     }
     
     @Test
-    public void testDatensatz() {
+    public void testSetDatensatz() {
 	try {
 	    datensatz.setDatensatz("", 0, 0, 0);
 	    fail("Muss Fehler auslösen");
@@ -111,17 +111,13 @@ public class WerkstueckDatensatzTest extends TestCase {
 
     @Test
     public void testGetDatensatz() throws WerkstueckException {
-	List<IWerkstueckDatensatz<?>> list = datensatz.getDatensatz(0);
-	List<IWerkstueckDatensatz<?>> listDummy = datensatz.getDummyDatensatz(0);
-	IWerkstueckDatensatz<?> name;
-	IWerkstueckDatensatz<?> name2;
-	name = list.get(0);
-	name2 = list.get(1);
-
-	System.out.println(name.getName());
-	System.out.println(name2.getName());
-
-	assertEquals("Die test Liste stimmt nicht mit der Dummy Liste über einen!", listDummy, list);
+	List<IWerkstueckDatensatz<?>> list = datensatz.getDatensatz(1);
+	IWerkstueckDatensatz<?> actual =  list.get(0);
+	
+	List<IWerkstueckDatensatz<?>> mock = datensatz.getDatensatz(1);
+	IWerkstueckDatensatz<?> expected =  mock.get(0);
+	
+	assertEquals("Die test Liste stimmt nicht mit der Dummy Liste über einen!", expected, actual);
     }
     @Test
     public void testEintragenInDb() throws IllegalArgumentException, WerkstueckException, SQLException {

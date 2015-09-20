@@ -31,7 +31,7 @@ public class AllTests extends TestSuite {
 
 	materialDatensatz.addTestSuite(SQLiteBooleanTest.class);
 	materialDatensatz.addTestSuite(SQLiteConnectTest.class);
-	materialDatensatz.addTestSuite(SQLiteAbfrageTest.class);
+	materialDatensatz.addTestSuite(SQLiteQueryAndResultTest.class);
 	materialDatensatz.addTestSuite(SQLiteStatementTest.class);
 	materialDatensatz.addTestSuite(SQLitePreparedStatementTest.class);
 	
