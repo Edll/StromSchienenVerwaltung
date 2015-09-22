@@ -4,9 +4,7 @@ import de.edlly.test.db.*;
 import de.edlly.test.material.*;
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import werkstueck.WerkstueckDatensatzTest;
-import werkstueck.WerkstueckIdsTest;
-import werkstueck.WerkstueckTest;
+import de.edlly.test.werkstueck.*;
 
 /**
  * Lädt die einzelnen tests.
@@ -27,9 +25,8 @@ public class AllTests extends TestSuite {
 	materialDatensatz.addTestSuite(MaterialSorteTest.class);
 	materialDatensatz.addTestSuite(MaterialLoeschenTest.class);
 	
-	materialDatensatz.addTestSuite(WerkstueckTest.class);
-	materialDatensatz.addTestSuite(WerkstueckIdsTest.class);
-	materialDatensatz.addTestSuite(WerkstueckDatensatzTest.class);
+	materialDatensatz.addTestSuite(PartTest.class);
+	materialDatensatz.addTestSuite(PartDataTest.class);
 
 	materialDatensatz.addTestSuite(SQLiteBooleanTest.class);
 	materialDatensatz.addTestSuite(SQLiteConnectTest.class);

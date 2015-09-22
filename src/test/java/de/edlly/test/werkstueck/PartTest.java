@@ -1,37 +1,40 @@
-package werkstueck;
+package de.edlly.test.werkstueck;
 
 import java.sql.SQLException;
 import org.junit.Test;
 import de.edlly.db.SQLiteConnect;
 import de.edlly.db.SQLiteException;
 import junit.framework.TestCase;
+import werkstueck.IPart;
+import werkstueck.PartException;
+import werkstueck.Part;
 
-public class WerkstueckTest extends TestCase {
+public class PartTest extends TestCase {
 
-    IWerkstueck werkstueck;
+    IPart werkstueck;
 
     @Override
-    public void setUp() {
+    public void setUp() throws PartException {
 	SQLiteConnect sqlConnection = new SQLiteConnect();
 	sqlConnection.dbConnect();
 
-	werkstueck = new Werkstueck(sqlConnection);
+	werkstueck = new Part(sqlConnection);
     }
 
     @Test
-    public void testGetWerkstueckId() {
+    public void testGetId() {
 	int id = werkstueck.getId();
 	assertEquals(0, id);
     }
 
     @Test
-    public void testSetWerkstueckId() {
+    public void testSetId() {
 	int id = 0;
 
 	try {
 	    werkstueck.setId(id);
 	    fail("Wenn die id 0 ist muss es eine Exception geben.");
-	} catch (WerkstueckException e) {
+	} catch (PartException e) {
 	    String erwartet = "Fehler bei der Werkstückid, die angebene id:";
 	    boolean check = e.getLocalizedMessage().contains(erwartet);
 	    assertTrue("Die Exception Meldung entsprach nicht den vorgaben", check);

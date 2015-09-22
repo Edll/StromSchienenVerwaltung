@@ -5,23 +5,23 @@ import java.sql.SQLException;
 import de.edlly.db.SQLiteConnect;
 import de.edlly.db.SQLitePreparedStatement;
 
-public class WerkstuckEintragen<T> extends WerkstueckDatensatz<T> {
+public class PartDataAdd<T> extends PartData<T> {
     SQLitePreparedStatement sql;
 
-    public WerkstuckEintragen(SQLiteConnect sqlConnection) throws WerkstueckException {
+    public PartDataAdd(SQLiteConnect sqlConnection) throws PartException {
 	super(sqlConnection);
 	try {
 	sql = new SQLitePreparedStatement(sqlConnection);
 	} catch (IllegalArgumentException e) {
 
-	    throw new WerkstueckException("Format Fehler:" + e.getLocalizedMessage() + " in " + e.getClass());
+	    throw new PartException("Format Fehler:" + e.getLocalizedMessage() + " in " + e.getClass());
 	} catch (SQLException e) {
 
-	    throw new WerkstueckException("SQL Fehler:" + e.getLocalizedMessage() + " in " + e.getClass());
+	    throw new PartException("SQL Fehler:" + e.getLocalizedMessage() + " in " + e.getClass());
 	}
     }
     
-    public boolean dbAdd() throws WerkstueckException{
+    public boolean dbAdd() throws PartException{
 	try {
 	    sql.setQuery("INSERT INTO Werkstueck (\"materialId\",\"name\",\"projektNr\",\"erstellDatum\") VALUES (?1,?2,?3,?4)");
 	    
@@ -36,12 +36,12 @@ public class WerkstuckEintragen<T> extends WerkstueckDatensatz<T> {
 	    return true;
 	} catch (SQLException e) {
 	    
-	    throw new WerkstueckException("SQL Fehler:" + e.getLocalizedMessage() + " in " + e.getClass());
+	    throw new PartException("SQL Fehler:" + e.getLocalizedMessage() + " in " + e.getClass());
 	}finally{
 	    try {
 		sql.closePrepareStatment(); 
 	    } catch (SQLException e) {
-		  throw new WerkstueckException("SQL Fehler:" + e.getLocalizedMessage() + " in " + e.getClass());
+		  throw new PartException("SQL Fehler:" + e.getLocalizedMessage() + " in " + e.getClass());
 	    }
 	}
     }

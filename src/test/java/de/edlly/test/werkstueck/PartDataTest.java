@@ -1,23 +1,28 @@
-package werkstueck;
+package de.edlly.test.werkstueck;
 
 import org.junit.Test;
+
+import static org.junit.Assert.assertArrayEquals;
 
 import java.sql.SQLException;
 import java.util.List;
 
 import de.edlly.db.SQLiteConnect;
 import junit.framework.TestCase;
+import werkstueck.IPartData;
+import werkstueck.PartException;
+import werkstueck.PartData;
 
-public class WerkstueckDatensatzTest extends TestCase {
-    
-    IWerkstueckDatensatz<?> datensatz;
+public class PartDataTest extends TestCase {
+
+    IPartData<?> datensatz;
     SQLiteConnect sqlConnection;
-    
+
     @Override
-    public void setUp() throws WerkstueckException {
+    public void setUp() throws PartException {
 	sqlConnection = new SQLiteConnect();
 	sqlConnection.dbConnect();
-	datensatz = new WerkstueckDatensatz<IWerkstueckDatensatz<?>>(sqlConnection);
+	datensatz = new PartData<IPartData<?>>(sqlConnection);
     }
 
     @Test
@@ -33,13 +38,13 @@ public class WerkstueckDatensatzTest extends TestCase {
 	try {
 	    datensatz.setName("");
 	    fail("Name nicht angeben Exception nicht ausgelösen!");
-	} catch (WerkstueckException e) {
+	} catch (PartException e) {
 
 	    boolean condition = e.getLocalizedMessage().contains("Es wurde kein Name angegeben!");
 	    assertTrue("Der fehler String ist nicht korrekt.", condition);
 	}
     }
-    
+
     @Test
     public void testGetMaterialId() {
 	int actual = datensatz.getMaterialId();
@@ -62,7 +67,7 @@ public class WerkstueckDatensatzTest extends TestCase {
     }
 
     @Test
-    public void testGetProjektNr() throws WerkstueckException {
+    public void testGetProjektNr() throws PartException {
 	datensatz.setProjektNr(1);
 	int actual = datensatz.getProjektNr();
 	int expected = 1;
@@ -75,7 +80,7 @@ public class WerkstueckDatensatzTest extends TestCase {
 	try {
 	    datensatz.setProjektNr(0);
 	    fail("Projekt Nummer 0 Exception nicht ausgelöst");
-	} catch (WerkstueckException e) {
+	} catch (PartException e) {
 	    boolean condition = e.getLocalizedMessage().contains("Es wurde keine ProjektNr angegeben!");
 	    assertTrue("Der fehler String ist nicht korrekt.", condition);
 	}
@@ -88,22 +93,22 @@ public class WerkstueckDatensatzTest extends TestCase {
 
 	assertEquals("Fehler bei der Datums übergabe", expected, actual);
     }
-    
+
     @Test
     public void testSetErstellDatum() {
 	try {
 	    datensatz.setErstellDatum(0);
 	    fail("Datum in der Vergangheit muss fehler Auslösen");
-	} catch (WerkstueckException e) {
+	} catch (PartException e) {
 	    boolean condition = e.getLocalizedMessage().contains("Das Datum darf nicht in der Vergangenheit liegen.");
 	    assertTrue("Der fehler String ist nicht korrekt.", condition);
 	}
     }
-    
+
     @Test
     public void testSetDatensatz() {
 	try {
-	    datensatz.setDatensatz("", 0, 0, 0);
+	    datensatz.setData("", 0, 0, 0);
 	    fail("Muss Fehler auslösen");
 	} catch (Exception e) {
 	    boolean condition = e.getLocalizedMessage().contains("Angaben nicht korrekt: ");
@@ -113,21 +118,28 @@ public class WerkstueckDatensatzTest extends TestCase {
     }
 
     @Test
-    public void testGetDatensatz() throws WerkstueckException {
-	List<IWerkstueckDatensatz<?>> list = datensatz.getDatensatz(1);
-	IWerkstueckDatensatz<?> actual =  list.get(0);
-	
-	List<IWerkstueckDatensatz<?>> mock = datensatz.getDatensatz(1);
-	IWerkstueckDatensatz<?> expected =  mock.get(0);
-	
+    public void testGetDatensatz() throws PartException {
+	List<IPartData<?>> list = datensatz.getData(1);
+	IPartData<?> actual = list.get(0);
+
+	List<IPartData<?>> mock = datensatz.getData(1);
+	IPartData<?> expected = mock.get(0);
+
 	assertEquals("Die test Liste stimmt nicht mit der Dummy Liste über einen!", expected, actual);
     }
-    
+
     @Test
-    public void testEintragenInDb() throws IllegalArgumentException, WerkstueckException, SQLException {
-	datensatz.setDatensatz("TestWerkstueck", 1, 1, 1);
-	boolean condition = datensatz.eintragenInDb();
-	assertTrue(condition);
+    public void testIdVorhanden() {
+	int id = 0;
+	boolean check = datensatz.IdVorhanden(id);
+	assertFalse("Bei einer 0 sollte ein False anzeigt werden.", check);
+    }
+
+    @Test
+    public void testGetIdList() {
+	int[] list = datensatz.getIdList();
+	int[] listGet = { 1, 2, 3, 4, 5 };
+	assertArrayEquals(listGet, list);
     }
 
     @Override

@@ -12,7 +12,7 @@ import javax.swing.border.LineBorder;
 
 import de.edlly.gui.materialVerwaltung.TabMaterialVerwaltung;
 import de.edlly.gui.werkstueckVerwaltung.WerkstueckVerwaltung;
-import werkstueck.WerkstueckException;
+import werkstueck.PartException;
 import de.edlly.db.*;
 
 /**
@@ -81,7 +81,7 @@ public class Main {
 	    tabMenu.addTab("Material Verwaltung", null, materialVerwaltung.materialVerwaltungsPanel(), null);
 	} catch (SQLException e) {
 	    e.printStackTrace();
-	} catch (WerkstueckException e) {
+	} catch (PartException e) {
 	    // TODO Auto-generated catch block
 	    e.printStackTrace();
 	}

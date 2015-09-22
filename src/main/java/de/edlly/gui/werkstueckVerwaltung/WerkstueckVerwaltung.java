@@ -11,9 +11,9 @@ import javax.swing.table.DefaultTableModel;
 
 import de.edlly.db.SQLiteConnect;
 import de.edlly.gui.Formatierung;
-import werkstueck.IWerkstueckDatensatz;
-import werkstueck.WerkstueckDatensatz;
-import werkstueck.WerkstueckException;
+import werkstueck.IPartData;
+import werkstueck.PartData;
+import werkstueck.PartException;
 
 /**
  * Anzeige der Werkstück Verwaltung
@@ -22,11 +22,11 @@ import werkstueck.WerkstueckException;
  *
  */
 public class WerkstueckVerwaltung {
-    IWerkstueckDatensatz<?> datensatz;
+    IPartData<?> datensatz;
     SQLiteConnect sqlConnection = new SQLiteConnect();
     private JTable materialTabelle;
 
-    public JPanel werkstueckVerwaltungsPanel() throws SQLException, WerkstueckException {
+    public JPanel werkstueckVerwaltungsPanel() throws SQLException, PartException {
 
 	JPanel werkstueckVerwaltung = new JPanel();
 	werkstueckVerwaltung.setLayout(null);
@@ -44,12 +44,12 @@ public class WerkstueckVerwaltung {
 	werkstueckVerwaltung.add(headerWerkstueckVerwaltung);
     }
 
-    private void tabelleWerkstuecke(JPanel werkstueckVerwaltung) throws SQLException, WerkstueckException {
+    private void tabelleWerkstuecke(JPanel werkstueckVerwaltung) throws SQLException, PartException {
 
 	sqlConnection.dbConnect();
-	datensatz = new WerkstueckDatensatz<IWerkstueckDatensatz<?>>(sqlConnection);
+	datensatz = new PartData<IPartData<?>>(sqlConnection);
 
-	List<IWerkstueckDatensatz<?>> list = datensatz.getDatensatz(3);
+	List<IPartData<?>> list = datensatz.getData(3);
 
 	WerkstueckTabelleModel materialTabellenModel = new WerkstueckTabelleModel();
 	materialTabellenModel.addColumn("Id");
@@ -58,7 +58,7 @@ public class WerkstueckVerwaltung {
 	materialTabellenModel.addColumn("Projekt");
 	materialTabellenModel.addColumn("Erstellt am");
 
-	IWerkstueckDatensatz<?> d = list.get(0);
+	IPartData<?> d = list.get(0);
 	materialTabellenModel.addRow(
 		new Object[] { d.getId(), d.getName(), d.getMaterialId(), d.getProjektNr(), d.getErstellDatum() });
 

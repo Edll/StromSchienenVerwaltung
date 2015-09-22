@@ -1,4 +1,4 @@
-package werkstueck;
+package de.edlly.test.werkstueck;
 
 import java.sql.SQLException;
 
@@ -6,22 +6,25 @@ import org.junit.Test;
 
 import de.edlly.db.SQLiteConnect;
 import junit.framework.TestCase;
+import werkstueck.IPartData;
+import werkstueck.PartException;
+import werkstueck.PartDataAdd;
 
 public class WerkstuckEintragenTest extends TestCase {
     SQLiteConnect sqlConnection;
-    WerkstuckEintragen<?> datensatz;
+    PartDataAdd<?> datensatz;
     
     @Override
-    public void setUp() throws WerkstueckException {
+    public void setUp() throws PartException {
 	sqlConnection = new SQLiteConnect();
 	sqlConnection.dbConnect();
-	datensatz = new  WerkstuckEintragen<IWerkstueckDatensatz<?>>(sqlConnection);
+	datensatz = new  PartDataAdd<IPartData<?>>(sqlConnection);
     }
 
     @Test
-    public void testDBAdd() throws IllegalArgumentException, WerkstueckException {
+    public void testDBAdd() throws IllegalArgumentException, PartException {
 	 java.util.Date date = new java.util.Date();
-	datensatz.setDatensatz("TestDaten", 1, 666, date.getTime());
+	datensatz.setData("TestDaten", 1, 666, date.getTime());
 	
 	boolean condition = datensatz.dbAdd();
 	
