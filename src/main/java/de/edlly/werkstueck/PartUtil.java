@@ -20,8 +20,7 @@ public abstract class PartUtil extends Part {
 	Pattern p = Pattern.compile("\\w*");
 	Matcher m = p.matcher(Name);
 	if (1 > Name.length() | !m.matches() | 30 < Name.length()) {
-	    throw new PartException(
-		    "Der Name darf nur A-Z, a-z und 0-9 enthalten und Maximal 30 Zeichen lang sein.");
+	    throw new PartException("Der Name darf nur A-Z, a-z und 0-9 enthalten und Maximal 30 Zeichen lang sein.");
 
 	}
     }

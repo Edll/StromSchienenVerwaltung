@@ -47,6 +47,7 @@ public class PartUtilTest extends TestCase {
 	PartUtil.checkPartName(klein);
 	PartUtil.checkPartName(gross);
     }
+
     @Test
     public void testcheckPartNameSonderzeichenNichtOk() {
 	String zeichen = "!\"§$%&/()=?`*'!\"§$%/()/&'";
