@@ -41,66 +41,27 @@ public interface IPartData<T> extends IPart {
      * @param projektNr
      *            Projekt des des Werkstücks
      * @throws PartException
-     * @throws SQLException 
-     * @throws IllegalArgumentException 
+     * @throws SQLException
+     * @throws IllegalArgumentException
      */
 
-    public void setData(String name, int materialId, int projektNr, long erstellDatum) throws PartException, IllegalArgumentException, SQLException;
-
- 
-
- 
-    public String getName();
+    public void setData(String name, int materialId, int projektNr, long erstellDatum)
+	    throws PartException, IllegalArgumentException, SQLException;
 
     /**
-     * Name des Werkstücks in die Objektwerte setzten
+     * Prüft in der Datenbank ob eine PartId vorhanden ist
      * 
-     * @param name
+     * @param id
+     *            Id die geprüft werden soll
+     * @return
      */
-
-    public void setName(String name) throws PartException;
+    boolean IdVorhanden(int id);
 
     /**
-     * Id des Materials das bei diesem Werkstück verwendet worden ist aus der Datenbank holen
-     * 
-     * @return Integer id
-     */
-
-    public Integer getProjektNr();
-
-    /**
-     * Timestamp wann das Werkstück erstellt worden ist setzten.
-     * 
-     * @param erstellDatum
-     *            Timestamp
-     *
-     */
-
-    public void setProjektNr(Integer projektNr) throws PartException;
-
-    /**
-     * Die ProjektNr des Werkstücks auslesen
+     * Gibt eine komplette liste mit allen Ids zurück
      * 
      * @return
      */
-
-    public long getErstellDatum();
-
-    /**
-     * Die ProjektNr wozu das Werkstück gehört
-     * 
-     * 
-     * @param projektNr
-     */
-
-    public void setErstellDatum(long erstellDatum) throws PartException;
-    
-    /**
-     * Prüft ob die Id in der Datenbank vorhanden ist
-     * @param id
-     * @return false wenn diese nicht vorhanden ist.
-     */
-    boolean IdVorhanden(int id);
 
     int[] getIdList();
 }

@@ -6,10 +6,7 @@ import java.util.ArrayList;
 import de.edlly.db.*;
 
 public class PartData<T> extends Part implements IPartData<T> {
-    private String name;
 
-    private Integer projektNr;
-    private long erstellDatum;
     SQLiteStatement sql;
 
     public PartData(SQLiteConnect sqlConnection) throws PartException {
@@ -25,48 +22,6 @@ public class PartData<T> extends Part implements IPartData<T> {
 	}
     }
 
-    public String getName() {
-	if (name == null || name.isEmpty()) {
-	    return "N/A";
-	} else {
-	    return name;
-	}
-    }
-
-    public void setName(String name) throws PartException {
-	if (name == null || name.isEmpty()) {
-	    throw new PartException("Es wurde kein Name angegeben!");
-	} else {
-	    this.name = name;
-	}
-
-    }
-
-
-
-    public Integer getProjektNr() {
-	return this.projektNr;
-    }
-
-    public void setProjektNr(Integer projektNr) throws PartException {
-	if (projektNr == 0) {
-	    this.projektNr = 0;
-	    throw new PartException("Es wurde keine ProjektNr angegeben!");
-	}
-	this.projektNr = projektNr;
-    }
-
-    public long getErstellDatum() {
-	return this.erstellDatum;
-    }
-
-    public void setErstellDatum(long erstellDatum) throws PartException {
-	if (erstellDatum <= 0L) {
-	    this.erstellDatum = 0L;
-	    throw new PartException("Das Datum darf nicht in der Vergangenheit liegen.");
-	}
-	this.erstellDatum = erstellDatum;
-    }
     public boolean IdVorhanden(int id) {
 	if (id == 0) {
 	    return false;
@@ -78,7 +33,6 @@ public class PartData<T> extends Part implements IPartData<T> {
 	// TODO: Platzhalte code!
 	return new int[] { 1, 2, 3, 4, 5 };
     }
-
 
     public void setData(String name, int materialId, int projektNr, long erstellDatum) throws PartException {
 
