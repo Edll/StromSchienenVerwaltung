@@ -1,11 +1,19 @@
 package de.edlly.gui.werkstueckVerwaltung;
 
+import java.sql.SQLException;
+import java.util.List;
+
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
+import de.edlly.db.SQLiteConnect;
 import de.edlly.gui.Formatierung;
+import werkstueck.IWerkstueckDatensatz;
+import werkstueck.WerkstueckDatensatz;
+import werkstueck.WerkstueckException;
 
 /**
  * Anzeige der Werkstück Verwaltung
@@ -14,8 +22,11 @@ import de.edlly.gui.Formatierung;
  *
  */
 public class WerkstueckVerwaltung {
+    IWerkstueckDatensatz<?> datensatz;
+    SQLiteConnect sqlConnection = new SQLiteConnect();
+    private JTable materialTabelle;
 
-    public JPanel werkstueckVerwaltungsPanel() {
+    public JPanel werkstueckVerwaltungsPanel() throws SQLException, WerkstueckException {
 
 	JPanel werkstueckVerwaltung = new JPanel();
 	werkstueckVerwaltung.setLayout(null);
@@ -33,20 +44,56 @@ public class WerkstueckVerwaltung {
 	werkstueckVerwaltung.add(headerWerkstueckVerwaltung);
     }
 
-    private void tabelleWerkstuecke(JPanel werkstueckVerwaltung) {
-	JTable tableWerkstueckDB;
-	String[][] werkstueckDBData = { { "Winkel", "1304" }, { "Winkel1", "240" }, { "Etage 20", "220" },
-		{ "Bla", "217" }, { "Test System", "215" } };
+    private void tabelleWerkstuecke(JPanel werkstueckVerwaltung) throws SQLException, WerkstueckException {
 
-	String[] werkstueckDBColNames = { "Werkst\u00FCck", "Länge" };
+	sqlConnection.dbConnect();
+	datensatz = new WerkstueckDatensatz<IWerkstueckDatensatz<?>>(sqlConnection);
 
-	tableWerkstueckDB = new JTable(werkstueckDBData, werkstueckDBColNames);
-	tableWerkstueckDB.setFont(Formatierung.tableFont());
+	List<IWerkstueckDatensatz<?>> list = datensatz.getDatensatz(3);
+
+	WerkstueckTabelleModel materialTabellenModel = new WerkstueckTabelleModel();
+	materialTabellenModel.addColumn("Id");
+	materialTabellenModel.addColumn("Name");
+	materialTabellenModel.addColumn("Material");
+	materialTabellenModel.addColumn("Projekt");
+	materialTabellenModel.addColumn("Erstellt am");
+
+	IWerkstueckDatensatz<?> d = list.get(0);
+	materialTabellenModel.addRow(
+		new Object[] { d.getId(), d.getName(), d.getMaterialId(), d.getProjektNr(), d.getErstellDatum() });
+
+	sqlConnection.close();
+	materialTabelle = new JTable(materialTabellenModel);
 
 	JScrollPane scrollPane = new JScrollPane();
 	scrollPane.setBounds(10, 40, 747, 424);
 	werkstueckVerwaltung.add(scrollPane);
 
-	scrollPane.setViewportView(tableWerkstueckDB);
+	scrollPane.setViewportView(materialTabelle);
+    }
+
+    public class WerkstueckTabelleModel extends DefaultTableModel {
+
+	private static final long serialVersionUID = 1L;
+
+	public int getColumnCount() {
+
+	    return 5;
+	}
+
+	public boolean isCellEditable(int r, int c) {
+
+	    return c == 4;
+	}
+
+	@SuppressWarnings("rawtypes")
+	Class[] types = new Class[] { java.lang.Object.class, java.lang.Object.class, java.lang.Object.class,
+		java.lang.Object.class, java.lang.Object.class, };
+
+	public Class<?> getColumnClass(int columnIndex) {
+
+	    return types[columnIndex];
+	}
+
     }
 }
