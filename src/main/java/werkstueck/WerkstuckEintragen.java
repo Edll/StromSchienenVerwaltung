@@ -24,11 +24,12 @@ public class WerkstuckEintragen<T> extends WerkstueckDatensatz<T> {
     public boolean dbAdd() throws WerkstueckException{
 	try {
 	    sql.setQuery("INSERT INTO Werkstueck (\"materialId\",\"name\",\"projektNr\",\"erstellDatum\") VALUES (?1,?2,?3,?4)");
+	    
 	    sql.preparedStatmentVorbereiten(sql.getQuery());
 	    sql.getPreparedStatment().setInt(1, getMaterialId());
 	    sql.getPreparedStatment().setString(2, getName());
-	    sql.getPreparedStatment().setInt(1, getProjektNr());
-	    sql.getPreparedStatment().setLong(1, getErstellDatum());
+	    sql.getPreparedStatment().setInt(3, getProjektNr());	    
+	    sql.getPreparedStatment().setLong(4, getErstellDatum());
 	    
 	    sql.preparedStatmentAusfuehren();
 	    sql.closePrepareStatment();

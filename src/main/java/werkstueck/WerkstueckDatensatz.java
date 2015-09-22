@@ -10,9 +10,7 @@ import de.edlly.material.MaterialIds;
 public class WerkstueckDatensatz<T> extends Werkstueck implements IWerkstueckDatensatz<T> {
     private String name;
     private MaterialIds materialId;
-    @SuppressWarnings("unused")
     private Integer projektNr;
-    @SuppressWarnings("unused")
     private long erstellDatum;
     SQLiteStatement sql;
 
@@ -48,15 +46,15 @@ public class WerkstueckDatensatz<T> extends Werkstueck implements IWerkstueckDat
     }
 
     public Integer getMaterialId() {
-	return this.materialId.getId();
+	 return materialId.getId();
     }
 
-    public void setMaterialId(Integer materialId) throws IllegalArgumentException, SQLException {
-	this.materialId.setId(materialId);
+    public void setMaterialId(Integer materialId) throws SQLException {
+		this.materialId.setId(materialId);
     }
 
     public Integer getProjektNr() {
-	return 0;
+	return this.projektNr;
     }
 
     public void setProjektNr(Integer projektNr) throws WerkstueckException {
@@ -68,18 +66,18 @@ public class WerkstueckDatensatz<T> extends Werkstueck implements IWerkstueckDat
     }
 
     public long getErstellDatum() {
-	return 0;
+	return this.erstellDatum;
     }
 
     public void setErstellDatum(long erstellDatum) throws WerkstueckException {
-	if (erstellDatum <= 0) {
-	    this.erstellDatum = 0;
+	if (erstellDatum <= 0L) {
+	    this.erstellDatum = 0L;
 	    throw new WerkstueckException("Das Datum darf nicht in der Vergangenheit liegen.");
 	}
 	this.erstellDatum = erstellDatum;
     }
 
-    public void setDatensatz(String name, int materialId, long erstellDatum, int projektNr) throws WerkstueckException {
+    public void setDatensatz(String name, int materialId, int projektNr, long erstellDatum) throws WerkstueckException {
 
 	try {
 	    setErstellDatum(erstellDatum);
@@ -133,7 +131,7 @@ public class WerkstueckDatensatz<T> extends Werkstueck implements IWerkstueckDat
 	    setMaterialId(sql.getResult().getInt(1));
 	    setName(sql.getResult().getString(2));
 	    setProjektNr(sql.getResult().getInt(3));
-	    setErstellDatum(sql.getResult().getInt(4));
+	    setErstellDatum(sql.getResult().getLong(4));
 
 	    sql.closeStatmentAndResult();
 
@@ -153,9 +151,9 @@ public class WerkstueckDatensatz<T> extends Werkstueck implements IWerkstueckDat
 	List<IWerkstueckDatensatz<?>> datensatz = new ArrayList<IWerkstueckDatensatz<?>>();
 	IWerkstueckDatensatz<?> daten2 = new WerkstueckDatensatz<String>(getSqlConnection());
 	daten2.setId(1);
-	daten2.setName("Test");
-	daten2.setProjektNr(0);
-	daten2.setErstellDatum(0);
+	daten2.setName("TestDaten");
+	daten2.setProjektNr(666);
+	daten2.setErstellDatum(1442940229642L);
 
 	datensatz.add(daten2);
 

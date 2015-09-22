@@ -119,6 +119,6 @@ public interface IWerkstueckDatensatz<T> extends IWerkstueck {
      * @throws IllegalArgumentException 
      */
 
-    public void setDatensatz(String name, int materialId, long l, int projektNr) throws WerkstueckException, IllegalArgumentException, SQLException;
+    public void setDatensatz(String name, int materialId, int projektNr, long erstellDatum) throws WerkstueckException, IllegalArgumentException, SQLException;
 
 }

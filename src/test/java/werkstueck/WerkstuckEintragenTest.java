@@ -21,7 +21,7 @@ public class WerkstuckEintragenTest extends TestCase {
     @Test
     public void testDBAdd() throws IllegalArgumentException, WerkstueckException {
 	 java.util.Date date = new java.util.Date();
-	datensatz.setDatensatz("TestDaten", 1, date.getTime(), 666);
+	datensatz.setDatensatz("TestDaten", 1, 666, date.getTime());
 	
 	boolean condition = datensatz.dbAdd();
 	

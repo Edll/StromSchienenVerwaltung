@@ -62,9 +62,10 @@ public class WerkstueckDatensatzTest extends TestCase {
     }
 
     @Test
-    public void testGetProjektNr() {
+    public void testGetProjektNr() throws WerkstueckException {
+	datensatz.setProjektNr(1);
 	int actual = datensatz.getProjektNr();
-	int expected = 0;
+	int expected = 1;
 
 	assertEquals("Die Projekt nummer ist nicht korrekt übergeben worden", expected, actual);
     }
