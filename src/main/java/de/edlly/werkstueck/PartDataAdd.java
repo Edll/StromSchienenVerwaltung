@@ -1,11 +1,10 @@
-package werkstueck;
+package de.edlly.werkstueck;
 
 import java.sql.SQLException;
 
-import de.edlly.db.SQLiteConnect;
-import de.edlly.db.SQLitePreparedStatement;
+import de.edlly.db.*;
 
-public class PartDataAdd<T> extends PartData<T> {
+public class PartDataAdd<T> extends PartData<T> implements IPartData<T> {
     SQLitePreparedStatement sql;
 
     public PartDataAdd(SQLiteConnect sqlConnection) throws PartException {

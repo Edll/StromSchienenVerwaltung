@@ -4,10 +4,10 @@ import java.sql.SQLException;
 import org.junit.Test;
 import de.edlly.db.SQLiteConnect;
 import de.edlly.db.SQLiteException;
+import de.edlly.werkstueck.IPart;
+import de.edlly.werkstueck.Part;
+import de.edlly.werkstueck.PartException;
 import junit.framework.TestCase;
-import werkstueck.IPart;
-import werkstueck.PartException;
-import werkstueck.Part;
 
 public class PartTest extends TestCase {
 

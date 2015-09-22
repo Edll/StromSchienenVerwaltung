@@ -5,10 +5,10 @@ import java.sql.SQLException;
 import org.junit.Test;
 
 import de.edlly.db.SQLiteConnect;
+import de.edlly.werkstueck.IPartData;
+import de.edlly.werkstueck.PartDataAdd;
+import de.edlly.werkstueck.PartException;
 import junit.framework.TestCase;
-import werkstueck.IPartData;
-import werkstueck.PartException;
-import werkstueck.PartDataAdd;
 
 public class WerkstuckEintragenTest extends TestCase {
     SQLiteConnect sqlConnection;

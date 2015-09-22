@@ -11,9 +11,9 @@ import javax.swing.table.DefaultTableModel;
 
 import de.edlly.db.SQLiteConnect;
 import de.edlly.gui.Formatierung;
-import werkstueck.IPartData;
-import werkstueck.PartData;
-import werkstueck.PartException;
+import de.edlly.werkstueck.IPartData;
+import de.edlly.werkstueck.PartData;
+import de.edlly.werkstueck.PartException;
 
 /**
  * Anzeige der Werkstück Verwaltung

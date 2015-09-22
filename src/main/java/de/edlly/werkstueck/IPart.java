@@ -1,4 +1,4 @@
-package werkstueck;
+package de.edlly.werkstueck;
 
 import java.sql.SQLException;
 
@@ -14,12 +14,18 @@ public interface IPart {
     public int getId();
 
     /**
-     * Setzen der Werkstück Id
+     * Setzen der Werkstück Id. Dabei wird geprüft ob diese vorhanden ist. Ist sie es nicht gibt es eine Part Exception.
      * 
      * @param id
      * @throws PartException
      */
     public void setId(int id) throws PartException;
+
+    /**
+     * Name des Werkstücks abrufen der im Objekt steht.
+     * 
+     * @return String
+     */
 
     public String getName();
 

@@ -12,7 +12,7 @@ import javax.swing.border.LineBorder;
 
 import de.edlly.gui.materialVerwaltung.TabMaterialVerwaltung;
 import de.edlly.gui.werkstueckVerwaltung.WerkstueckVerwaltung;
-import werkstueck.PartException;
+import de.edlly.werkstueck.PartException;
 import de.edlly.db.*;
 
 /**
