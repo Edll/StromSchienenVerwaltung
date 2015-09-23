@@ -10,7 +10,7 @@ import de.edlly.werkstueck.PartDataAdd;
 import de.edlly.werkstueck.PartException;
 import junit.framework.TestCase;
 
-public class WerkstuckEintragenTest extends TestCase {
+public class PartDataAddTest extends TestCase {
     SQLiteConnect sqlConnection;
     PartDataAdd<?> datensatz;
 
