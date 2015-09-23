@@ -49,7 +49,7 @@ public class WerkstueckVerwaltung {
 	sqlConnection.dbConnect();
 	datensatz = new PartData<IPartData<?>>(sqlConnection);
 
-	List<IPartData<?>> list = datensatz.getData(3);
+	List<IPartData<?>> list = datensatz.getDataList();
 
 	WerkstueckTabelleModel materialTabellenModel = new WerkstueckTabelleModel();
 	materialTabellenModel.addColumn("Id");
@@ -58,9 +58,13 @@ public class WerkstueckVerwaltung {
 	materialTabellenModel.addColumn("Projekt");
 	materialTabellenModel.addColumn("Erstellt am");
 
-	IPartData<?> d = list.get(0);
-	materialTabellenModel.addRow(
-		new Object[] { d.getId(), d.getName(), d.getMaterialId(), d.getProjektNr(), d.getErstellDatum() });
+	int i = 0;
+	while (i < list.size()) {
+	    IPartData<?> d = list.get(i);
+	    materialTabellenModel.addRow(
+		    new Object[] { d.getId(), d.getName(), d.getMaterialId(), d.getProjektNr(), d.getErstellDatum() });
+	    i++;
+	}
 
 	sqlConnection.close();
 	materialTabelle = new JTable(materialTabellenModel);

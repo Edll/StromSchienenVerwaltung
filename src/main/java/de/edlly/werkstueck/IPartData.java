@@ -6,15 +6,43 @@ import java.util.List;
 public interface IPartData<T> extends IPart {
 
     /**
-     * Gibt das Werkstück zurück das mit id angefragt worden ist.
+     * Abfragen eines einzelnen Datensatzes aus der Datenbank.
      * 
      * @param id
-     *            Id des Werkstücks in der Datenbank
-     * @return List Objekt mit dem Generic Typ
+     *            des Datensatzes in der Datenbank
+     * @return
+     * @return Gibt das Objekt selber zurück als Typ IPartData
      * @throws PartException
      */
 
-    public List<IPartData<?>> getData(int id) throws PartException;
+    List<Integer> getIdList() throws SQLException;
+
+    /**
+     * Gibt eine komplette liste mit allen Ids zurück
+     * 
+     * @return
+     */
+    public IPartData<T> getData(int id) throws PartException;
+
+    /**
+     * Erstellt eine Liste mit allen Werkstücken in der Datenbank
+     * 
+     * @return List Objekt mit dem Generic Typ IPartData
+     * @throws PartException
+     */
+
+    public List<IPartData<?>> getDataList() throws PartException, SQLException;
+
+    /**
+     * Erstellt eine Liste mit den Werkstücken die in der Id Liste abgefragt worden sind.
+     * 
+     * @param id
+     *            Integre als Array
+     * @return List Objekt mit dem Generic Typ IPartData
+     * @throws PartException
+     */
+
+    public List<IPartData<?>> getDataList(int... id) throws PartException;
 
     /**
      * MOCK Objekt
@@ -58,10 +86,12 @@ public interface IPartData<T> extends IPart {
     boolean IdVorhanden(int id);
 
     /**
-     * Gibt eine komplette liste mit allen Ids zurück
+     * Abfrage eines Datensatzes aus der DB Ergebiss wird ins Objekt geschrieben.
      * 
-     * @return
+     * @param id
+     *            Die Id des Datensatzes der abgefragt werden soll
+     *
      */
 
-    int[] getIdList();
+    public void datensatzAusDbAbfragen(int id) throws IllegalArgumentException, PartException;
 }

@@ -3,6 +3,7 @@ package de.edlly.werkstueck;
 import java.util.List;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
 import de.edlly.db.*;
 
 public class PartData<T> extends Part implements IPartData<T> {
@@ -22,16 +23,53 @@ public class PartData<T> extends Part implements IPartData<T> {
 	}
     }
 
+    public List<Integer> getIdList() throws SQLException {
+
+	List<Integer> idList = new ArrayList<Integer>();
+	idListeAusDbAbfragen(idList);
+	return idList;
+    }
+    
+    /**
+     * TODO: CODE Erstellen
+     */
     public boolean IdVorhanden(int id) {
-	if (id == 0) {
-	    return false;
-	}
-	return true;
+	// Muster CODE!
+ 	if (id == 0) {
+ 	    return false;
+ 	}
+ 	return true;
+     }
+
+    public IPartData<T> getData(int id) throws PartException {
+	IPartData<T> data = new PartData<T>(getSqlConnection());
+	data.datensatzAusDbAbfragen(id);
+
+	return data;
     }
 
-    public int[] getIdList() {
-	// TODO: Platzhalte code!
-	return new int[] { 1, 2, 3, 4, 5 };
+    public List<IPartData<?>> getDataList() throws PartException, SQLException {
+	List<IPartData<?>> datensatz = new ArrayList<IPartData<?>>();
+
+	int i = 0;
+
+	while (i < getIdList().size()) {
+	    datensatz.add(i, getData(getIdList().get(i)));
+	    i++;
+	}
+	return datensatz;
+    }
+
+    public List<IPartData<?>> getDataList(int... id) throws PartException {
+	List<IPartData<?>> datensatz = new ArrayList<IPartData<?>>();
+
+	int i = 0;
+
+	while (i < id.length) {
+	    datensatz.add(i, getData(id[i]));
+	    i++;
+	}
+	return datensatz;
     }
 
     public void setData(String name, int materialId, int projektNr, long erstellDatum) throws PartException {
@@ -52,30 +90,36 @@ public class PartData<T> extends Part implements IPartData<T> {
 
     }
 
-    public boolean eintragenInDb() {
-	/*
-	 * erstellDatum projektNr name materialId
-	 */
-	// Prüfen ob Objekt wert korrekt
-	// return false!
-	// UnterObjekt NeuerDatensatz erstellen
-	// Objekt werte übergeben
-	// Eintrage
-	// return true!
+    private void idListeAusDbAbfragen(List<Integer> idList) throws SQLException, IllegalArgumentException {
+	try {
+	    sql.setQuery("Select id From Werkstueck");
 
-	return true;
+	    int anzahlDerDatensatze = sql.anzahlDatenseatze();
+	    sql.statmentExecute(sql.getQuery());
+
+	    if (anzahlDerDatensatze == 0) {
+
+		idList.add(new Integer(0));
+	    } else {
+		while (sql.getResult().next()) {
+
+		    idList.add(sql.getResult().getInt(1));
+		}
+	    }
+	    sql.closeStatmentAndResult();
+
+	} catch (SQLException sqlException) {
+	    throw new SQLException(sqlException);
+
+	} catch (IllegalArgumentException illegalException) {
+	    throw new IllegalArgumentException(illegalException);
+
+	} finally {
+	    sql.closeStatmentAndResult();
+	}
     }
 
-    public List<IPartData<?>> getData(int id) throws PartException {
-	List<IPartData<?>> datensatz = new ArrayList<IPartData<?>>();
-
-	dbAbfrageDatensatz(id);
-	datensatz.add(this);
-
-	return datensatz;
-    }
-
-    private void dbAbfrageDatensatz(int id) throws IllegalArgumentException, PartException {
+    public void datensatzAusDbAbfragen(int id) throws IllegalArgumentException, PartException {
 	try {
 	    setId(id);
 	    sql.setQuery("SELECT materialId, name, projektNr, erstellDatum FROM Werkstueck WHERE id = " + getId());

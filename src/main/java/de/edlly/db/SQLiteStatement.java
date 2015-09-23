@@ -22,7 +22,7 @@ public class SQLiteStatement extends SQLiteQueryAndResult {
 	statmentVorbereiten();
 	statmentExecute(query);
     }
-    
+
     public void statmentVorbereitenUndUpdate(String query) throws SQLException {
 	statmentVorbereiten();
 	statmentUpdaten(query);
@@ -36,12 +36,12 @@ public class SQLiteStatement extends SQLiteQueryAndResult {
 	queryNotNull(query);
 	setResult(statment.executeQuery(query));
     }
-    
+
     public void statmentUpdaten(String query) throws SQLException {
 	queryNotNull(query);
 	statment.executeUpdate(query);
     }
-    
+
     public void closeStatmentAndResult() throws SQLException {
 	closeStatment();
 	closeResult();
@@ -51,6 +51,23 @@ public class SQLiteStatement extends SQLiteQueryAndResult {
 	if (statment != null && statment.isClosed()) {
 	    statment.close();
 	}
+    }
+
+    public int anzahlDatenseatze() {
+	int anzahlDerDatensatze = 0;
+
+	try {
+	    statmentVorbereitenUndStarten(getQuery());
+
+	    while (getResult().next()) {
+		anzahlDerDatensatze++;
+	    }
+	} catch (SQLException sqlException) {
+
+	    anzahlDerDatensatze = 0;
+	}
+
+	return anzahlDerDatensatze;
     }
 
 }

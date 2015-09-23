@@ -24,18 +24,17 @@ public class AllTests extends TestSuite {
 	materialDatensatz.addTestSuite(MaterialIdsTest.class);
 	materialDatensatz.addTestSuite(MaterialSorteTest.class);
 	materialDatensatz.addTestSuite(MaterialLoeschenTest.class);
-	
+
 	materialDatensatz.addTestSuite(PartTest.class);
 	materialDatensatz.addTestSuite(PartDataTest.class);
+	materialDatensatz.addTestSuite(PartDataAddTest.class);
 
 	materialDatensatz.addTestSuite(SQLiteBooleanTest.class);
 	materialDatensatz.addTestSuite(SQLiteConnectTest.class);
 	materialDatensatz.addTestSuite(SQLiteQueryAndResultTest.class);
 	materialDatensatz.addTestSuite(SQLiteStatementTest.class);
 	materialDatensatz.addTestSuite(SQLitePreparedStatementTest.class);
-	
-	
-	
+
 	return materialDatensatz;
     }
 }

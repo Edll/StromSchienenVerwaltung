@@ -1,16 +1,12 @@
 package de.edlly.test.werkstueck;
 
 import org.junit.Test;
-
-import static org.junit.Assert.assertArrayEquals;
-
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
-
 import de.edlly.db.SQLiteConnect;
-import de.edlly.werkstueck.IPartData;
-import de.edlly.werkstueck.PartData;
-import de.edlly.werkstueck.PartException;
+import de.edlly.werkstueck.*;
+
 import junit.framework.TestCase;
 
 public class PartDataTest extends TestCase {
@@ -106,7 +102,7 @@ public class PartDataTest extends TestCase {
     }
 
     @Test
-    public void testSetDatensatz() {
+    public void testSetData() {
 	try {
 	    datensatz.setData("", 0, 0, 0);
 	    fail("Muss Fehler auslösen");
@@ -118,14 +114,39 @@ public class PartDataTest extends TestCase {
     }
 
     @Test
-    public void testGetDatensatz() throws PartException {
-	List<IPartData<?>> list = datensatz.getData(1);
-	IPartData<?> actual = list.get(0);
+    public void testGetData() throws PartException {
+	IPartData<?> data = new PartData<IPartData<?>>(sqlConnection);
+	data = datensatz.getData(1);
 
-	List<IPartData<?>> mock = datensatz.getData(1);
-	IPartData<?> expected = mock.get(0);
+	int actual = data.getId();
+	int expected = 1;
 
-	assertEquals("Die test Liste stimmt nicht mit der Dummy Liste über einen!", expected, actual);
+	assertEquals("Die erhaltene Id weicht von der erwarteten ab.", expected, actual);
+    }
+
+    @Test
+    public void testGetDataListAll() throws PartException, SQLException {
+	List<IPartData<?>> list = datensatz.getDataList();
+
+	assertEquals("Das erste Listenelement Stimmt nicht", 1, list.get(0).getId());
+	assertEquals("Das zweite Listenelement Stimmt nicht", 2, list.get(1).getId());
+	assertEquals("Das zweite Listenelement Stimmt nicht", 3, list.get(2).getId());
+
+    }
+
+    /**
+     * 
+     * TODO: umstellen auf ein Mock Objekt?
+     */
+    @Test
+    public void testGetDataListId() throws PartException {
+	List<IPartData<?>> list = datensatz.getDataList(new int[] { 1, 2, 3 });
+
+	assertEquals("Das erste Listenelement Stimmt nicht", 1, list.get(0).getId());
+	assertEquals("Das zweite Listenelement Stimmt nicht", 2, list.get(1).getId());
+	assertEquals("Das zweite Listenelement Stimmt nicht", 3, list.get(2).getId());
+
+	assertEquals("Die größe ist nicht korrekt", 3, list.size());
     }
 
     @Test
@@ -136,10 +157,17 @@ public class PartDataTest extends TestCase {
     }
 
     @Test
-    public void testGetIdList() {
-	int[] list = datensatz.getIdList();
-	int[] listGet = { 1, 2, 3, 4, 5 };
-	assertArrayEquals(listGet, list);
+    public void testGetIdList() throws SQLException {
+	List<Integer> list = datensatz.getIdList();
+	List<Integer> idTestList = new ArrayList<Integer>();
+
+	idTestList.add(new Integer(1));
+	idTestList.add(new Integer(2));
+	idTestList.add(new Integer(3));
+
+	assertEquals("Das erste Listenelement Stimmt nicht", idTestList.get(0), list.get(0));
+	assertEquals("Das zweite Listenelement Stimmt nicht", idTestList.get(1), list.get(1));
+	assertEquals("Das dritte Listenelement Stimmt nicht", idTestList.get(2), list.get(2));
     }
 
     @Override
