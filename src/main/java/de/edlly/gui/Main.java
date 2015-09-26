@@ -3,7 +3,8 @@ package de.edlly.gui;
 import java.awt.EventQueue;
 import java.sql.SQLException;
 import javax.swing.*;
-import de.edlly.gui.werkstueckVerwaltung.PartVerwaltung;
+
+import de.edlly.gui.part.PartListe;
 import de.edlly.werkstueck.PartException;
 
 /**
@@ -15,7 +16,7 @@ import de.edlly.werkstueck.PartException;
 
 public class Main {
     private JFrame frame;
-    PartVerwaltung werkstueckVerwaltung;
+    PartListe werkstueckVerwaltung;
     JPanel testpanel;
 
     public Main() {
@@ -41,7 +42,7 @@ public class Main {
 	Menu menu = new Menu(frame);
 	menu.getMenu();
 
-	PartVerwaltung werkstueckVerwaltung = new PartVerwaltung();
+	PartListe werkstueckVerwaltung = new PartListe();
 	try {
 	    frame.getContentPane().add(werkstueckVerwaltung.addPartListPanel());
 	} catch (SQLException e1) {

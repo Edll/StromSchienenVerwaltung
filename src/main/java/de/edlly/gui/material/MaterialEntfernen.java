@@ -1,4 +1,4 @@
-package de.edlly.gui.materialVerwaltung;
+package de.edlly.gui.material;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,13 +12,13 @@ import de.edlly.db.SQLiteConnect;
 import de.edlly.gui.Formatierung;
 import de.edlly.material.MaterialLoeschen;
 
-public class AusgabeMaterialLoeschen {
+public class MaterialEntfernen{
     private JButton makiertesMaterialLoeschen;
-    private AusgabeMaterialTabelle materialTabelle;
+    private MaterialListe materialTabelle;
     private MaterialLoeschen materialLoeschen;
     private SQLiteConnect sqlConnection = new SQLiteConnect();
 
-    public AusgabeMaterialLoeschen(AusgabeMaterialTabelle materialTabelle) {
+    public MaterialEntfernen(MaterialListe materialTabelle) {
 	this.materialTabelle = materialTabelle;
 
     }

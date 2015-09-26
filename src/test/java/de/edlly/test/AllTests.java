@@ -2,9 +2,9 @@ package de.edlly.test;
 
 import de.edlly.test.db.*;
 import de.edlly.test.material.*;
+import de.edlly.test.part.*;
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import de.edlly.test.werkstueck.*;
 
 /**
  * Lädt die einzelnen tests.

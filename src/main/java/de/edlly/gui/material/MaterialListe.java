@@ -1,4 +1,4 @@
-package de.edlly.gui.materialVerwaltung;
+package de.edlly.gui.material;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,10 +19,10 @@ import de.edlly.material.MaterialTabelle;
  *
  */
 
-public class AusgabeMaterialTabelle {
+public class MaterialListe {
     private MaterialTabelle materialModel;
     private JTable materialTabelle;
-    private AusgabeMaterialTabelle ausgabeMaterialTabelle;
+    private MaterialListe ausgabeMaterialTabelle;
     private JButton makiertesMaterialLoeschen;
     private MaterialLoeschen materialLoeschen;
     private JScrollPane tabellenBereich = new JScrollPane();

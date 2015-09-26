@@ -6,9 +6,10 @@ import java.sql.SQLException;
 
 import javax.swing.*;
 
-import de.edlly.gui.materialVerwaltung.AusgabeMaterialAnlegen;
-import de.edlly.gui.materialVerwaltung.AusgabeMaterialTabelle;
-import de.edlly.gui.werkstueckVerwaltung.PartVerwaltung;
+import de.edlly.gui.material.MaterialListe;
+import de.edlly.gui.material.MaterialNeu;
+import de.edlly.gui.part.PartNeu;
+import de.edlly.gui.part.PartListe;
 import de.edlly.werkstueck.PartException;
 
 public class Menu {
@@ -39,7 +40,7 @@ public class Menu {
 		frame.getContentPane().removeAll();
 
 		try {
-		    PartVerwaltung werkstueckVerwaltung = new PartVerwaltung();
+		    PartListe werkstueckVerwaltung = new PartListe();
 		    frame.getContentPane().add(werkstueckVerwaltung.addPartListPanel());
 		} catch (SQLException e1) {
 		    // TODO Auto-generated catch block
@@ -56,6 +57,16 @@ public class Menu {
 
 	itemNeuPart.addActionListener(new ActionListener() {
 	    public void actionPerformed(ActionEvent e) {
+		    PartNeu werkstueckVerwaltung = new PartNeu();
+			frame.getContentPane().removeAll();
+		    try {
+			frame.getContentPane().add(werkstueckVerwaltung.loadPanel());
+		    } catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		    }
+			frame.repaint();
+			frame.validate();
 	    }
 	});
 
@@ -70,7 +81,7 @@ public class Menu {
 
 		frame.getContentPane().removeAll();
 
-		AusgabeMaterialAnlegen neuesMaterialAnlegen = new AusgabeMaterialAnlegen();
+		MaterialNeu neuesMaterialAnlegen = new MaterialNeu();
 		try {
 
 		    frame.getContentPane().add(neuesMaterialAnlegen.materialEingabeBereich(10, 420));
@@ -90,7 +101,7 @@ public class Menu {
 		frame.getContentPane().removeAll();
 
 		try {
-		    AusgabeMaterialTabelle materialVerwaltung = new AusgabeMaterialTabelle();
+		    MaterialListe materialVerwaltung = new MaterialListe();
 		    frame.getContentPane().add(materialVerwaltung.materialTabellePanel(10, 10));
 		} catch (SQLException e1) {
 		    // TODO Auto-generated catch block

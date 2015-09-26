@@ -1,4 +1,4 @@
-package de.edlly.test.werkstueck;
+package de.edlly.test.part;
 
 import java.sql.SQLException;
 import org.junit.Test;

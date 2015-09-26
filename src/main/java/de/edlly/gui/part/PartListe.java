@@ -1,4 +1,4 @@
-package de.edlly.gui.werkstueckVerwaltung;
+package de.edlly.gui.part;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -21,7 +21,7 @@ import de.edlly.werkstueck.PartException;
  * @author Edlly java@edlly.de
  *
  */
-public class PartVerwaltung {
+public class PartListe {
     IPartData<?> datensatz;
     SQLiteConnect sqlConnection = new SQLiteConnect();
     private JTable materialTabelle;

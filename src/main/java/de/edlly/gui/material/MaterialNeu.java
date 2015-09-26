@@ -1,4 +1,4 @@
-package de.edlly.gui.materialVerwaltung;
+package de.edlly.gui.material;
 
 import java.awt.event.ActionEvent;
 
@@ -23,7 +23,7 @@ import de.edlly.material.NeuerMaterialDatensatz;
  *
  */
 
-public class AusgabeMaterialAnlegen {
+public class MaterialNeu {
 
     private JTextField eingabeKoordinateX;
     private JTextField eingabeKoordinateZ;
@@ -33,7 +33,7 @@ public class AusgabeMaterialAnlegen {
     private JPanel materialEingabeBereich = new JPanel();
     private SQLiteConnect sqlConnection = new SQLiteConnect();
 
-    public AusgabeMaterialAnlegen() {
+    public MaterialNeu() {
     } 
     
 
