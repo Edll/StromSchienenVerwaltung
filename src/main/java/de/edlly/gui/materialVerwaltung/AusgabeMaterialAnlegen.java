@@ -23,7 +23,7 @@ import de.edlly.material.NeuerMaterialDatensatz;
  *
  */
 
-public class AusgabeMaterialAnlegen extends TabMaterialVerwaltung {
+public class AusgabeMaterialAnlegen {
 
     private JTextField eingabeKoordinateX;
     private JTextField eingabeKoordinateZ;
@@ -31,12 +31,11 @@ public class AusgabeMaterialAnlegen extends TabMaterialVerwaltung {
     private JButton materialHinzufuegen;
     private JComboBox materialSortenAuswahl;
     private JPanel materialEingabeBereich = new JPanel();
-    private AusgabeMaterialTabelle materialTabelle;
     private SQLiteConnect sqlConnection = new SQLiteConnect();
 
-    public AusgabeMaterialAnlegen(AusgabeMaterialTabelle materialTabelle) {
-	this.materialTabelle = materialTabelle;
-    }
+    public AusgabeMaterialAnlegen() {
+    } 
+    
 
     public JPanel materialEingabeBereich(int PositionX, int PositionY) throws SQLException {
 
@@ -78,10 +77,6 @@ public class AusgabeMaterialAnlegen extends TabMaterialVerwaltung {
 		    if (MaterialDatensatzAnlegen.datensatzAusObjektWertenAnlegen()) {
 			JOptionPane.showMessageDialog(null, "Das neue Material ist erfolgreich eingefügt worden.");
 		    }
-
-		    materialTabelle.refreshMaterialTabelle();
-
-		    materialEingabeBereich.repaint();
 
 		    sqlConnection.close();
 		} catch (NumberFormatException e) {

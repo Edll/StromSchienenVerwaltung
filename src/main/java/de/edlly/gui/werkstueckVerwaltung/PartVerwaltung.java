@@ -21,12 +21,12 @@ import de.edlly.werkstueck.PartException;
  * @author Edlly java@edlly.de
  *
  */
-public class WerkstueckVerwaltung {
+public class PartVerwaltung {
     IPartData<?> datensatz;
     SQLiteConnect sqlConnection = new SQLiteConnect();
     private JTable materialTabelle;
 
-    public JPanel werkstueckVerwaltungsPanel() throws SQLException, PartException {
+    public JPanel addPartListPanel() throws SQLException, PartException {
 
 	JPanel werkstueckVerwaltung = new JPanel();
 	werkstueckVerwaltung.setLayout(null);

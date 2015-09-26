@@ -1,11 +1,13 @@
 package de.edlly.gui.materialVerwaltung;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.*;
 import javax.swing.*;
 
 import de.edlly.db.SQLiteConnect;
 import de.edlly.gui.Formatierung;
-
+import de.edlly.material.MaterialLoeschen;
 import de.edlly.material.MaterialTabelle;
 
 /**
@@ -17,10 +19,15 @@ import de.edlly.material.MaterialTabelle;
  *
  */
 
-public class AusgabeMaterialTabelle extends TabMaterialVerwaltung {
+public class AusgabeMaterialTabelle {
     private MaterialTabelle materialModel;
     private JTable materialTabelle;
+    private AusgabeMaterialTabelle ausgabeMaterialTabelle;
+    private JButton makiertesMaterialLoeschen;
+    private MaterialLoeschen materialLoeschen;
     private JScrollPane tabellenBereich = new JScrollPane();
+    private SQLiteConnect sqlConnection = new SQLiteConnect();
+
 
     public JPanel materialTabellePanel(int PositionX, int PositionY) throws SQLException {
 
@@ -31,8 +38,50 @@ public class AusgabeMaterialTabelle extends TabMaterialVerwaltung {
 
 	tabellenAnzeigeBereich.add(headerMaterialDatenbank());
 	tabellenAnzeigeBereich.add(bereichMaterialDatenbank());
-
+	tabellenAnzeigeBereich.add(auswahlLoeschenPanel(550, 420));
 	return tabellenAnzeigeBereich;
+    }
+
+    public JPanel auswahlLoeschenPanel(int positionX, int positionY) {
+
+	JPanel materialLoeschenAnzeigeBereich = new JPanel();
+	materialLoeschenAnzeigeBereich.setBorder(Formatierung.rahmenUmEingabebereiche());
+	materialLoeschenAnzeigeBereich.setLayout(null);
+	materialLoeschenAnzeigeBereich.setBounds(550, 420, 170, 100);
+
+	makiertesMaterialLoeschen = new JButton("Makierte Löschen");
+	makiertesMaterialLoeschen.setFont(Formatierung.buttonFont());
+	makiertesMaterialLoeschen.setBounds(10, 10, 150, 23);
+	materialLoeschenAnzeigeBereich.add(makiertesMaterialLoeschen);
+
+	makiertesMaterialLoeschen.addActionListener(new ActionListener() {
+	    public void actionPerformed(ActionEvent arg0) {
+		int selectedId = ausgabeMaterialTabelle.getSelectedMaterialId();
+		try {
+
+		    sqlConnection.dbConnect();
+		    materialLoeschen = new MaterialLoeschen(sqlConnection);
+		    if (materialLoeschen.loschen(selectedId)) {
+			JOptionPane.showMessageDialog(null, "Das ausgewählte Material ist gelöscht worden.");
+			ausgabeMaterialTabelle.refreshMaterialTabelle();
+		    }
+		    sqlConnection.close();
+		} catch (SQLException e) {
+		    e.printStackTrace();
+
+		} finally {
+		    try {
+			sqlConnection.close();
+		    } catch (SQLException e) {
+
+			e.printStackTrace();
+		    }
+		}
+
+	    }
+	});
+
+	return materialLoeschenAnzeigeBereich;
     }
 
     public JScrollPane bereichMaterialDatenbank() throws SQLException {
@@ -64,11 +113,11 @@ public class AusgabeMaterialTabelle extends TabMaterialVerwaltung {
 	sqlConnection.close();
 
     }
-    
-    public int getSelectedMaterialId(){
+
+    public int getSelectedMaterialId() {
 	int materialId = Integer.parseInt((materialTabelle.getValueAt(materialTabelle.getSelectedRow(), 0)).toString());
-	
-	if(materialId == -1){
+
+	if (materialId == -1) {
 	    materialId = 0;
 	}
 	return materialId;

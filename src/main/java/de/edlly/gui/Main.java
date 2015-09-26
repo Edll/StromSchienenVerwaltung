@@ -2,18 +2,9 @@ package de.edlly.gui;
 
 import java.awt.EventQueue;
 import java.sql.SQLException;
-import java.awt.Color;
-import java.awt.BorderLayout;
-
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.JTabbedPane;
-import javax.swing.border.LineBorder;
-
-import de.edlly.gui.materialVerwaltung.TabMaterialVerwaltung;
-import de.edlly.gui.werkstueckVerwaltung.WerkstueckVerwaltung;
+import javax.swing.*;
+import de.edlly.gui.werkstueckVerwaltung.PartVerwaltung;
 import de.edlly.werkstueck.PartException;
-import de.edlly.db.*;
 
 /**
  * Programm Main Loader
@@ -23,7 +14,9 @@ import de.edlly.db.*;
  */
 
 public class Main {
-    private JFrame mainFrame;
+    private JFrame frame;
+    PartVerwaltung werkstueckVerwaltung;
+    JPanel testpanel;
 
     public Main() {
 	initialize();
@@ -34,60 +27,37 @@ public class Main {
 	    public void run() {
 
 		Main window = new Main();
-		window.mainFrame.setVisible(true);
+		window.frame.setVisible(true);
 
 	    }
 	});
     }
 
     private void initialize() {
-	mainFrame = new JFrame();
-	mainFrame.setBounds(0, 0, 800, 600);
-	mainFrame.getContentPane().setLayout(null);
-	
-	
-	Menu menu = new Menu(mainFrame);
+	frame = new JFrame();
+	frame.setBounds(0, 0, 800, 600);
+	frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.X_AXIS));
+
+	Menu menu = new Menu(frame);
 	menu.getMenu();
 
+	PartVerwaltung werkstueckVerwaltung = new PartVerwaltung();
 	try {
-	    SQLiteConnect sqlConnection = new SQLiteConnect();
-	    sqlConnection.dbConnect();
-	    SQLiteDatenbankStruktur datenbankCheck = new SQLiteDatenbankStruktur(sqlConnection);
-	    datenbankCheck.datenbankCheckUndAnlegen();
-	    sqlConnection.close();
-	} catch (SQLException e) {
-	    e.printStackTrace();
-	} catch (IllegalArgumentException e) {
-	    JOptionPane.showMessageDialog(null, e.getMessage());
+	    frame.getContentPane().add(werkstueckVerwaltung.addPartListPanel());
+	} catch (SQLException e1) {
+	    // TODO Auto-generated catch block
+	    e1.printStackTrace();
+	} catch (PartException e1) {
+	    // TODO Auto-generated catch block
+	    e1.printStackTrace();
 	}
 
-//	JTabbedPane tabMenu = tabMenuErstellen();
-
-	//mainFrame.getContentPane().add(tabMenu);
-    }
-
-    private JTabbedPane tabMenuErstellen() {
-	JTabbedPane tabMenu = new JTabbedPane(JTabbedPane.TOP);
-	tabMenu.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
-	tabMenu.setBorder(new LineBorder(new Color(0, 0, 0)));
-
-	tabsHinzufuegen(tabMenu);
-
-	return tabMenu;
-    }
-
-    private void tabsHinzufuegen(JTabbedPane tabMenu) {
-	/*try {
-	    WerkstueckVerwaltung werkstueckVerwaltung = new WerkstueckVerwaltung();
-	    tabMenu.addTab("Werkst\u00FCck Verwaltung", null, werkstueckVerwaltung.werkstueckVerwaltungsPanel(), null);
-
-	    TabMaterialVerwaltung materialVerwaltung = new TabMaterialVerwaltung();
-	    tabMenu.addTab("Material Verwaltung", null, materialVerwaltung.materialVerwaltungsPanel(), null);
-	} catch (SQLException e) {
-	    e.printStackTrace();
-	} catch (PartException e) {
-	    // TODO Auto-generated catch block
-	    e.printStackTrace();
-	}*/
+	/*
+	 * TODO: Dies ist ein Test Code er ist ausgeklammert da das Modul nicht fertig ist. try { SQLiteConnect
+	 * sqlConnection = new SQLiteConnect(); sqlConnection.dbConnect(); SQLiteDatenbankStruktur datenbankCheck = new
+	 * SQLiteDatenbankStruktur(sqlConnection); datenbankCheck.datenbankCheckUndAnlegen(); sqlConnection.close(); }
+	 * catch (SQLException e) { e.printStackTrace(); } catch (IllegalArgumentException e) {
+	 * JOptionPane.showMessageDialog(null, e.getMessage()); }
+	 */
     }
 }
