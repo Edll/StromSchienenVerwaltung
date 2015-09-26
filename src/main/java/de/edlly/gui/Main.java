@@ -43,7 +43,11 @@ public class Main {
     private void initialize() {
 	mainFrame = new JFrame();
 	mainFrame.setBounds(0, 0, 800, 600);
-	mainFrame.getContentPane().setLayout(new BorderLayout(0, 0));
+	mainFrame.getContentPane().setLayout(null);
+	
+	
+	Menu menu = new Menu(mainFrame);
+	menu.getMenu();
 
 	try {
 	    SQLiteConnect sqlConnection = new SQLiteConnect();
@@ -57,9 +61,9 @@ public class Main {
 	    JOptionPane.showMessageDialog(null, e.getMessage());
 	}
 
-	JTabbedPane tabMenu = tabMenuErstellen();
+//	JTabbedPane tabMenu = tabMenuErstellen();
 
-	mainFrame.getContentPane().add(tabMenu);
+	//mainFrame.getContentPane().add(tabMenu);
     }
 
     private JTabbedPane tabMenuErstellen() {
@@ -73,7 +77,7 @@ public class Main {
     }
 
     private void tabsHinzufuegen(JTabbedPane tabMenu) {
-	try {
+	/*try {
 	    WerkstueckVerwaltung werkstueckVerwaltung = new WerkstueckVerwaltung();
 	    tabMenu.addTab("Werkst\u00FCck Verwaltung", null, werkstueckVerwaltung.werkstueckVerwaltungsPanel(), null);
 
@@ -84,6 +88,6 @@ public class Main {
 	} catch (PartException e) {
 	    // TODO Auto-generated catch block
 	    e.printStackTrace();
-	}
+	}*/
     }
 }
