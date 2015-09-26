@@ -8,9 +8,9 @@ import com.jgoodies.forms.layout.*;
 import net.miginfocom.swing.MigLayout;
 import de.edlly.db.SQLiteConnect;
 import de.edlly.gui.material.MaterialListe;
-import de.edlly.werkstueck.IPartData;
-import de.edlly.werkstueck.PartDataAdd;
-import de.edlly.werkstueck.PartException;
+import de.edlly.part.IPartData;
+import de.edlly.part.PartDataAdd;
+import de.edlly.part.PartException;
 
 public class PartNeu {
     private JTextField inputName;

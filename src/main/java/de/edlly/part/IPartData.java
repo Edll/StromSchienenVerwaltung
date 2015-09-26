@@ -1,4 +1,4 @@
-package de.edlly.werkstueck;
+package de.edlly.part;
 
 import java.sql.SQLException;
 import java.util.List;

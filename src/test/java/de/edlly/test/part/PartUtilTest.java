@@ -1,9 +1,10 @@
 package de.edlly.test.part;
 
 import org.junit.Test;
+
+import de.edlly.part.PartException;
+import de.edlly.part.PartUtil;
 import junit.framework.TestCase;
-import de.edlly.werkstueck.PartException;
-import de.edlly.werkstueck.PartUtil;
 
 public class PartUtilTest extends TestCase {
 

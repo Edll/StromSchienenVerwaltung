@@ -1,9 +1,9 @@
-package de.edlly.werkstueck;
+package de.edlly.part;
 
 import java.sql.*;
 import de.edlly.db.*;
 import de.edlly.material.*;
-import de.edlly.werkstueck.PartUtil;
+import de.edlly.part.PartUtil;
 
 public class Part implements IPart {
     private SQLiteConnect sqlConnection;

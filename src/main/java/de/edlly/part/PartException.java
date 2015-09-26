@@ -1,4 +1,4 @@
-package de.edlly.werkstueck;
+package de.edlly.part;
 
 @SuppressWarnings("serial")
 public class PartException extends Exception {

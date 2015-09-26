@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import javax.swing.*;
 
 import de.edlly.gui.part.PartListe;
-import de.edlly.werkstueck.PartException;
+import de.edlly.part.PartException;
 
 /**
  * Programm Main Loader

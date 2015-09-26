@@ -1,4 +1,4 @@
-package de.edlly.werkstueck;
+package de.edlly.part;
 
 import java.util.regex.*;
 import de.edlly.db.*;

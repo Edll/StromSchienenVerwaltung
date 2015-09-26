@@ -5,9 +5,9 @@ import java.sql.SQLException;
 import org.junit.Test;
 
 import de.edlly.db.SQLiteConnect;
-import de.edlly.werkstueck.IPartData;
-import de.edlly.werkstueck.PartDataAdd;
-import de.edlly.werkstueck.PartException;
+import de.edlly.part.IPartData;
+import de.edlly.part.PartDataAdd;
+import de.edlly.part.PartException;
 import junit.framework.TestCase;
 
 public class PartDataAddTest extends TestCase {

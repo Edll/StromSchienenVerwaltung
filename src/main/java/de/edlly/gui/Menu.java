@@ -9,8 +9,8 @@ import javax.swing.*;
 import de.edlly.gui.material.MaterialListe;
 import de.edlly.gui.material.MaterialNeu;
 import de.edlly.gui.part.PartNeu;
+import de.edlly.part.PartException;
 import de.edlly.gui.part.PartListe;
-import de.edlly.werkstueck.PartException;
 
 public class Menu {
     private JFrame frame;

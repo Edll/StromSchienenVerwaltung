@@ -5,8 +5,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import de.edlly.db.SQLiteConnect;
-import de.edlly.werkstueck.*;
-
+import de.edlly.part.*;
 import junit.framework.TestCase;
 
 public class PartDataTest extends TestCase {
