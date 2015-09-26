@@ -1,6 +1,7 @@
 package de.edlly.gui.part;
 
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.swing.JLabel;
@@ -11,9 +12,9 @@ import javax.swing.table.DefaultTableModel;
 
 import de.edlly.db.SQLiteConnect;
 import de.edlly.gui.Formatierung;
-import de.edlly.werkstueck.IPartData;
-import de.edlly.werkstueck.PartData;
-import de.edlly.werkstueck.PartException;
+import de.edlly.part.IPartData;
+import de.edlly.part.PartData;
+import de.edlly.part.PartException;
 
 /**
  * Anzeige der Werkstück Verwaltung
@@ -61,8 +62,13 @@ public class PartListe {
 	int i = 0;
 	while (i < list.size()) {
 	    IPartData<?> d = list.get(i);
+		java.util.Date date = new java.util.Date();
+		date.setTime(d.getErstellDatum());
+		SimpleDateFormat df = new SimpleDateFormat( "dd-MM-yyyy HH:mm" );
+
+		
 	    materialTabellenModel.addRow(
-		    new Object[] { d.getId(), d.getName(), d.getMaterialId(), d.getProjektNr(), d.getErstellDatum() });
+		    new Object[] { d.getId(), d.getName(), d.getMaterialId(), d.getProjektNr(), df.format(date) });
 	    i++;
 	}
 
