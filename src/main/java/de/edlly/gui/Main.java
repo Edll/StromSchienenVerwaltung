@@ -1,11 +1,10 @@
 package de.edlly.gui;
 
 import java.awt.EventQueue;
-import java.sql.SQLException;
 import javax.swing.*;
 
-import de.edlly.gui.part.PartListe;
-import de.edlly.part.PartException;
+import de.edlly.gui.part.ElementPartListe;
+import net.miginfocom.swing.MigLayout;
 
 /**
  * Programm Main Loader
@@ -16,7 +15,7 @@ import de.edlly.part.PartException;
 
 public class Main {
     private JFrame frame;
-    PartListe werkstueckVerwaltung;
+    ElementPartListe werkstueckVerwaltung;
     JPanel testpanel;
 
     public Main() {
@@ -37,21 +36,17 @@ public class Main {
     private void initialize() {
 	frame = new JFrame();
 	frame.setBounds(0, 0, 800, 600);
-	frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.X_AXIS));
+	frame.getContentPane().setLayout(new MigLayout("", "[grow,left]", "[grow,top]"));
 
 	Menu menu = new Menu(frame);
 	menu.getMenu();
 
-	PartListe werkstueckVerwaltung = new PartListe();
-	try {
-	    frame.getContentPane().add(werkstueckVerwaltung.addPartListPanel());
-	} catch (SQLException e1) {
-	    // TODO Auto-generated catch block
-	    e1.printStackTrace();
-	} catch (PartException e1) {
-	    // TODO Auto-generated catch block
-	    e1.printStackTrace();
-	}
+	ElementPartListe werkstueckVerwaltung = new ElementPartListe();
+	frame.setTitle("Werkstück Verwaltung");
+	
+	frame.getContentPane().add(werkstueckVerwaltung.createAndGet());
+	    
+
 
 	/*
 	 * TODO: Dies ist ein Test Code er ist ausgeklammert da das Modul nicht fertig ist. try { SQLiteConnect

@@ -9,8 +9,7 @@ import javax.swing.*;
 import de.edlly.gui.material.MaterialListe;
 import de.edlly.gui.material.MaterialNeu;
 import de.edlly.gui.part.PartNeu;
-import de.edlly.part.PartException;
-import de.edlly.gui.part.PartListe;
+import de.edlly.gui.part.ElementPartListe;
 
 public class Menu {
     private JFrame frame;
@@ -38,17 +37,10 @@ public class Menu {
 	    public void actionPerformed(ActionEvent e) {
 
 		frame.getContentPane().removeAll();
+		frame.setTitle("Werkstück Liste");
 
-		try {
-		    PartListe werkstueckVerwaltung = new PartListe();
-		    frame.getContentPane().add(werkstueckVerwaltung.addPartListPanel());
-		} catch (SQLException e1) {
-		    // TODO Auto-generated catch block
-		    e1.printStackTrace();
-		} catch (PartException e1) {
-		    // TODO Auto-generated catch block
-		    e1.printStackTrace();
-		}
+		ElementPartListe werkstueckVerwaltung = new ElementPartListe();
+		frame.getContentPane().add(werkstueckVerwaltung.createAndGet());
 
 		frame.repaint();
 		frame.validate();
@@ -57,22 +49,17 @@ public class Menu {
 
 	itemNeuPart.addActionListener(new ActionListener() {
 	    public void actionPerformed(ActionEvent e) {
-		    PartNeu werkstueckVerwaltung = new PartNeu();
-			frame.getContentPane().removeAll();
-		    try {
-			frame.getContentPane().add(werkstueckVerwaltung.loadPanel());
-		    } catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		    }
-			frame.repaint();
-			frame.validate();
-	    }
-	});
-
-	itemMaterial.addActionListener(new ActionListener() {
-	    public void actionPerformed(ActionEvent e) {
-
+		PartNeu werkstueckVerwaltung = new PartNeu();
+		frame.getContentPane().removeAll();
+		frame.setTitle("Werkstück Anlegen");
+		try {
+		    frame.getContentPane().add(werkstueckVerwaltung.loadPanel());
+		} catch (SQLException e1) {
+		    // TODO Auto-generated catch block
+		    e1.printStackTrace();
+		}
+		frame.repaint();
+		frame.validate();
 	    }
 	});
 
@@ -80,6 +67,7 @@ public class Menu {
 	    public void actionPerformed(ActionEvent e) {
 
 		frame.getContentPane().removeAll();
+		frame.setTitle("Material Liste");
 
 		MaterialNeu neuesMaterialAnlegen = new MaterialNeu();
 		try {
@@ -99,14 +87,10 @@ public class Menu {
 	itemListMaterial.addActionListener(new ActionListener() {
 	    public void actionPerformed(ActionEvent e) {
 		frame.getContentPane().removeAll();
+		frame.setTitle("Material Anlegen");
 
-		try {
-		    MaterialListe materialVerwaltung = new MaterialListe();
-		    frame.getContentPane().add(materialVerwaltung.materialTabellePanel(10, 10));
-		} catch (SQLException e1) {
-		    // TODO Auto-generated catch block
-		    e1.printStackTrace();
-		}
+		MaterialListe materialVerwaltung = new MaterialListe();
+		frame.getContentPane().add(materialVerwaltung.createAndGet());
 
 		frame.repaint();
 		frame.validate();

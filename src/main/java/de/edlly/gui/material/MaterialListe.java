@@ -6,7 +6,9 @@ import java.sql.*;
 import javax.swing.*;
 
 import de.edlly.db.SQLiteConnect;
+import de.edlly.gui.Element;
 import de.edlly.gui.Formatierung;
+import de.edlly.gui.IElement;
 import de.edlly.material.MaterialLoeschen;
 import de.edlly.material.MaterialTabelle;
 
@@ -19,25 +21,34 @@ import de.edlly.material.MaterialTabelle;
  *
  */
 
-public class MaterialListe {
+public class MaterialListe extends Element implements IElement  {
+    
+    
     private MaterialTabelle materialModel;
     private JTable materialTabelle;
     private MaterialListe ausgabeMaterialTabelle;
     private JButton makiertesMaterialLoeschen;
     private MaterialLoeschen materialLoeschen;
-    private JScrollPane tabellenBereich = new JScrollPane();
-    private SQLiteConnect sqlConnection = new SQLiteConnect();
+    private JScrollPane tabellenBereich;
+    private SQLiteConnect sqlConnection;
 
+    public MaterialListe() {
+	 tabellenBereich = new JScrollPane();
+	 sqlConnection = new SQLiteConnect();
+    }
 
-    public JPanel materialTabellePanel(int PositionX, int PositionY) throws SQLException {
+    public JPanel createAndGet() {
 
 	JPanel tabellenAnzeigeBereich = new JPanel();
-	tabellenAnzeigeBereich.setBorder(Formatierung.rahmenUmEingabebereiche());
 	tabellenAnzeigeBereich.setLayout(null);
-	tabellenAnzeigeBereich.setBounds(PositionX, PositionY, 738, 380);
-
+	
 	tabellenAnzeigeBereich.add(headerMaterialDatenbank());
-	tabellenAnzeigeBereich.add(bereichMaterialDatenbank());
+	try {
+	    tabellenAnzeigeBereich.add(bereichMaterialDatenbank());
+	} catch (SQLException e) {
+	    // TODO Auto-generated catch block
+	    e.printStackTrace();
+	}
 	tabellenAnzeigeBereich.add(auswahlLoeschenPanel(550, 420));
 	return tabellenAnzeigeBereich;
     }
@@ -138,4 +149,10 @@ public class MaterialListe {
 
 	return header;
     }
+
+    public void create() {
+	// TODO Auto-generated method stub
+	
+    }
+
 }
