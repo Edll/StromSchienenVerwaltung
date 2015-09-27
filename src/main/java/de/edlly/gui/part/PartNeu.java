@@ -20,13 +20,13 @@ public class PartNeu {
     private ElementMaterialListe materialListe;
     private SQLiteConnect sqlConnection = new SQLiteConnect();
 
-    public JPanel loadPanel() throws SQLException {
+    public JPanel loadPanel() {
 
 	createSteps();
 	return panel;
     }
 
-    public void createSteps() throws SQLException {
+    public void createSteps() {
 	if (step == 1) {
 	    panel.removeAll();
 	} else {
@@ -34,7 +34,7 @@ public class PartNeu {
 	}
     }
 
-    public JPanel addStepOne() throws SQLException {
+    public JPanel addStepOne() {
 	JPanel mainPanel = new JPanel();
 	mainPanel.setLayout(new MigLayout("", "[608.00px,left]", "[215px,top][400px:n,grow,top][bottom]"));
 

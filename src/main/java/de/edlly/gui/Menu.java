@@ -52,12 +52,9 @@ public class Menu {
 		PartNeu werkstueckVerwaltung = new PartNeu();
 		frame.getContentPane().removeAll();
 		frame.setTitle("Werkstück Anlegen");
-		try {
-		    frame.getContentPane().add(werkstueckVerwaltung.loadPanel());
-		} catch (SQLException e1) {
-		    // TODO Auto-generated catch block
-		    e1.printStackTrace();
-		}
+
+		frame.getContentPane().add(werkstueckVerwaltung.loadPanel());
+
 		frame.repaint();
 		frame.validate();
 	    }
