@@ -8,50 +8,60 @@ import java.sql.SQLException;
 import javax.swing.*;
 
 import de.edlly.db.*;
+import de.edlly.gui.Element;
 import de.edlly.gui.Formatierung;
+import de.edlly.gui.IElement;
 import de.edlly.material.MaterialSorte;
 import de.edlly.material.NeuerMaterialDatensatz;
+import net.miginfocom.swing.MigLayout;
 
 /**
  * Erzeugt ein JPanel das die Eingabefelder für einen neuen Datensatz beinhaltet. Enthält eine ActionListener für den
  * "+" Knopf der die Daten in das Objekt f�r einen neuen Material Datensatz legt und dann ein Anlegen des Datensatz
  * auslöst.
  * 
- * TODO: Code ist Wip muss neu strukturiert werden!
+ * TODO: Form Layout!
  * 
  * @author Edlly java@edlly.de
  *
  */
 
-public class MaterialNeu {
+public class ElementMaterialNeu extends Element implements IElement {
+    private JPanel panel;
+    private SQLiteConnect sqlConnection;
 
     private JTextField eingabeKoordinateX;
     private JTextField eingabeKoordinateZ;
     private JTextField eingabeKoordinatenMaxY;
     private JButton materialHinzufuegen;
     private JComboBox materialSortenAuswahl;
-    private JPanel materialEingabeBereich = new JPanel();
-    private SQLiteConnect sqlConnection = new SQLiteConnect();
 
-    public MaterialNeu() {
-    } 
-    
+    public ElementMaterialNeu() {
+	panel = new JPanel();
+	sqlConnection = new SQLiteConnect();
+    }
 
-    public JPanel materialEingabeBereich(int PositionX, int PositionY) throws SQLException {
+    public JPanel createAndGet() {
+	create();
 
-	materialEingabeBereich.setBorder(Formatierung.rahmenUmEingabebereiche());
-	materialEingabeBereich.setLayout(null);
-	materialEingabeBereich.setBounds(PositionX, PositionY, 500, 100);
+	return panel;
+    }
 
-	headerMaterialAnlegen(materialEingabeBereich);
-	labelsDerEingabeFelder(materialEingabeBereich);
-	eingabeFelderKoordinaten(materialEingabeBereich);
-	materialSortenListe(materialEingabeBereich);
-	buttonMaterialHinzufuegen(materialEingabeBereich);
+    @Override
+    public void create() {
+	panel.setLayout(new MigLayout("", Formatierung.MIG_ELEMENT_PANEL_LEFT, Formatierung.MIG_ELEMENT_PANEL_TOP));
+
+	labelsDerEingabeFelder();
+	eingabeFelderKoordinaten();
+	try {
+	    materialSortenListe();
+	} catch (SQLException e) {
+	    systemExceptionHandling(e.getLocalizedMessage());
+	}
+	buttonMaterialHinzufuegen();
 
 	actionMaterialHinzu();
 
-	return materialEingabeBereich;
     }
 
     public void actionMaterialHinzu() {
@@ -100,70 +110,61 @@ public class MaterialNeu {
 	});
     }
 
-    public void materialSortenListe(JPanel materialEingabeBereich) throws SQLException {
+    public void materialSortenListe() throws SQLException {
 	sqlConnection = new SQLiteConnect();
 	sqlConnection.dbConnect();
 	MaterialSorte materialDB = new MaterialSorte(sqlConnection);
 	materialSortenAuswahl = new JComboBox(materialDB.materialSorteNamensListe());
 	materialSortenAuswahl.setBounds(156, 50, 96, 20);
-	materialEingabeBereich.add(materialSortenAuswahl);
+	panel.add(materialSortenAuswahl);
 	sqlConnection.close();
     }
 
-    public void buttonMaterialHinzufuegen(JPanel materialEingabeBereich) {
+    public void buttonMaterialHinzufuegen() {
 	materialHinzufuegen = new JButton("+");
 	materialHinzufuegen.setFont(Formatierung.buttonFont());
 	materialHinzufuegen.setBounds(392, 50, 43, 23);
-	materialEingabeBereich.add(materialHinzufuegen);
+	panel.add(materialHinzufuegen);
     }
 
-    public void headerMaterialAnlegen(JPanel materialEingabeBereich) {
-
-	JLabel headerMaterialAnlegen = new JLabel("Material anlegen");
-	headerMaterialAnlegen.setFont(Formatierung.headerFont());
-	headerMaterialAnlegen.setBounds(Formatierung.HEADER_POSITION_X, Formatierung.HEADER_POSITION_Y, 138, 20);
-	materialEingabeBereich.add(headerMaterialAnlegen);
-    }
-
-    public void eingabeFelderKoordinaten(JPanel materialEingabeBereich) {
+    public void eingabeFelderKoordinaten() {
 
 	eingabeKoordinateX = new JTextField();
 	eingabeKoordinateX.setBounds(10, 50, 50, 20);
-	materialEingabeBereich.add(eingabeKoordinateX);
+	panel.add(eingabeKoordinateX);
 	eingabeKoordinateX.setColumns(10);
 
 	eingabeKoordinateZ = new JTextField();
 	eingabeKoordinateZ.setBounds(86, 50, 50, 20);
-	materialEingabeBereich.add(eingabeKoordinateZ);
+	panel.add(eingabeKoordinateZ);
 	eingabeKoordinateZ.setColumns(10);
 
 	eingabeKoordinatenMaxY = new JTextField();
 	eingabeKoordinatenMaxY.setBounds(280, 50, 86, 20);
-	materialEingabeBereich.add(eingabeKoordinatenMaxY);
+	panel.add(eingabeKoordinatenMaxY);
 	eingabeKoordinatenMaxY.setColumns(10);
     }
 
-    public void labelsDerEingabeFelder(JPanel materialEingabeBereich) {
+    public void labelsDerEingabeFelder() {
 
 	JLabel lblMaterialGroesse = new JLabel("Größe");
 	lblMaterialGroesse.setFont(Formatierung.eingabeFeldLabel());
 	lblMaterialGroesse.setBounds(10, 30, 34, 14);
-	materialEingabeBereich.add(lblMaterialGroesse);
+	panel.add(lblMaterialGroesse);
 
 	JLabel lblX = new JLabel("x");
 	lblX.setFont(Formatierung.eingabeFeldLabel());
 	lblX.setBounds(70, 50, 7, 14);
-	materialEingabeBereich.add(lblX);
+	panel.add(lblX);
 
 	JLabel lblMaterialSorte = new JLabel("Material Sorte");
 	lblMaterialSorte.setFont(Formatierung.eingabeFeldLabel());
 	lblMaterialSorte.setBounds(156, 30, 81, 14);
-	materialEingabeBereich.add(lblMaterialSorte);
+	panel.add(lblMaterialSorte);
 
 	JLabel lblMaximaleLaenge = new JLabel("Maximale Länge");
 	lblMaximaleLaenge.setFont(Formatierung.eingabeFeldLabel());
 	lblMaximaleLaenge.setBounds(280, 30, 92, 14);
-	materialEingabeBereich.add(lblMaximaleLaenge);
+	panel.add(lblMaximaleLaenge);
     }
-
 }

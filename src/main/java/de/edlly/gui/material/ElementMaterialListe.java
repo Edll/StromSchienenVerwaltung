@@ -14,9 +14,7 @@ import de.edlly.material.MaterialTable;
 import net.miginfocom.swing.MigLayout;
 
 /**
- * Material Tabellen erstellen, dass Tabellenmodell kommt aus der Klasse material.MaterialTabelle.
- * 
- * TODO: Das refresh des Models ist nicht gut gelöst so. Überarbeiten!
+ * TODO: refresh der Table Models
  * 
  * @author Edlly
  *

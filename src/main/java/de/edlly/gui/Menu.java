@@ -2,12 +2,11 @@ package de.edlly.gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
 
 import javax.swing.*;
 
 import de.edlly.gui.material.ElementMaterialListe;
-import de.edlly.gui.material.MaterialNeu;
+import de.edlly.gui.material.ElementMaterialNeu;
 import de.edlly.gui.part.PartNeu;
 import de.edlly.gui.part.ElementPartListe;
 
@@ -66,14 +65,8 @@ public class Menu {
 		frame.getContentPane().removeAll();
 		frame.setTitle("Material Liste");
 
-		MaterialNeu neuesMaterialAnlegen = new MaterialNeu();
-		try {
-
-		    frame.getContentPane().add(neuesMaterialAnlegen.materialEingabeBereich(10, 420));
-		} catch (SQLException e1) {
-		    // TODO Auto-generated catch block
-		    e1.printStackTrace();
-		}
+		ElementMaterialNeu neuesMaterialAnlegen = new ElementMaterialNeu();
+		frame.getContentPane().add(neuesMaterialAnlegen.createAndGet());
 
 		frame.repaint();
 		frame.validate();
