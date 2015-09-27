@@ -6,7 +6,6 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import de.edlly.db.SQLiteConnect;
 
-
 public class PartTable {
     private SQLiteConnect sqLite;
     private IPartData<?> datensatz;
@@ -20,9 +19,8 @@ public class PartTable {
 	makePartTable();
 	return partTable;
     }
-    
-    
-    public void makePartTable() throws SQLException, PartException{
+
+    public void makePartTable() throws SQLException, PartException {
 	PartTableModel model = new PartTableModel();
 
 	model.addColumn("Id");
@@ -31,22 +29,21 @@ public class PartTable {
 	model.addColumn("Projekt Nr.");
 	model.addColumn("Erstellt am");
 
-	sqLite.dbConnect();
-
 	datensatz = new PartData<IPartData<?>>(sqLite);
 	List<IPartData<?>> list = datensatz.getDataList();
-	
-	for (int i = 0; i < list.size();   i++) {
-	    
+
+	for (int i = 0; i < list.size(); i++) {
+
 	    IPartData<?> d = list.get(i);
-	    
-	    model.addRow(new Object[] { d.getId(), d.getName(), d.getMaterialId(), d.getProjektNr(), PartUtil.erstellDatumFormatieren(d.getErstellDatum()) });
-	  
+
+	    model.addRow(new Object[] { d.getId(), d.getName(), d.getMaterialId(), d.getProjektNr(),
+		    PartUtil.erstellDatumFormatieren(d.getErstellDatum()) });
+
 	}
 	sqLite.close();
 
 	partTable = new JTable(model);
-	partTable.setSelectionMode( javax.swing.ListSelectionModel.SINGLE_SELECTION); 
+	partTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
     }
 
     public class PartTableModel extends DefaultTableModel {
@@ -58,7 +55,7 @@ public class PartTable {
 
 	    return 5;
 	}
-	
+
 	@Override
 	public boolean isCellEditable(int r, int c) {
 
