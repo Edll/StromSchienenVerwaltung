@@ -47,7 +47,17 @@ public class MaterialTable {
 
 	materialTable = new JTable(model);
 	materialTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+	
+	sqLite.close();
+    }
+    
+    public int getSelectedMaterialId() {
+	int materialId = Integer.parseInt((materialTable.getValueAt(materialTable.getSelectedRow(), 0)).toString());
 
+	if (materialId == -1) {
+	    materialId = 0;
+	}
+	return materialId;
     }
 
     public class MaterialTabelModel extends DefaultTableModel {

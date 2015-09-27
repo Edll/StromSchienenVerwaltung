@@ -7,7 +7,7 @@ import javax.swing.*;
 import com.jgoodies.forms.layout.*;
 import net.miginfocom.swing.MigLayout;
 import de.edlly.db.SQLiteConnect;
-import de.edlly.gui.material.MaterialListe;
+import de.edlly.gui.material.ElementMaterialListe;
 import de.edlly.part.IPartData;
 import de.edlly.part.PartDataAdd;
 import de.edlly.part.PartException;
@@ -17,7 +17,7 @@ public class PartNeu {
     private JTextField inputProjektNr;
     private JPanel panel = new JPanel();
     private int step;
-    private MaterialListe materialListe;
+    private ElementMaterialListe materialListe;
     private SQLiteConnect sqlConnection = new SQLiteConnect();
 
     public JPanel loadPanel() throws SQLException {
@@ -66,8 +66,8 @@ public class PartNeu {
 	JButton btnWeiter = new JButton("Weiter");
 	mainPanel.add(btnWeiter, "cell 0 2,alignx right,growy");
 
-	materialListe = new MaterialListe();
-	mainPanel.add(materialListe.bereichMaterialDatenbank(), "cell 0 1,alignx left,growy");
+	materialListe = new ElementMaterialListe();
+	mainPanel.add(materialListe.createAndGet(), "cell 0 1,alignx left,growy");
 
 	btnWeiter.addActionListener(new ActionListener() {
 	    public void actionPerformed(ActionEvent arg0) {
@@ -79,7 +79,8 @@ public class PartNeu {
 		    PartDataAdd<?> partNew = new PartDataAdd<IPartData<?>>(sqlConnection);
 		    java.util.Date date = new java.util.Date();
 
-		    partNew.setData(inputName.getText(), materialListe.getSelectedMaterialId(),
+		    // FIXME getMaterialID!
+		    partNew.setData(inputName.getText(), 1,
 			    Integer.parseInt(inputProjektNr.getText()), date.getTime());
 
 		    partNew.dbAdd();

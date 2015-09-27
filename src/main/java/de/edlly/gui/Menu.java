@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 import javax.swing.*;
 
-import de.edlly.gui.material.MaterialListe;
+import de.edlly.gui.material.ElementMaterialListe;
 import de.edlly.gui.material.MaterialNeu;
 import de.edlly.gui.part.PartNeu;
 import de.edlly.gui.part.ElementPartListe;
@@ -89,7 +89,7 @@ public class Menu {
 		frame.getContentPane().removeAll();
 		frame.setTitle("Material Anlegen");
 
-		MaterialListe materialVerwaltung = new MaterialListe();
+		ElementMaterialListe materialVerwaltung = new ElementMaterialListe();
 		frame.getContentPane().add(materialVerwaltung.createAndGet());
 
 		frame.repaint();

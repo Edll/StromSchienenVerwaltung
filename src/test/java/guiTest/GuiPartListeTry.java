@@ -40,10 +40,12 @@ public class GuiPartListeTry {
 	frame = new JFrame();
 	frame.setBounds(100, 100, 889, 549);
 	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	frame.getContentPane().setLayout(new MigLayout("", "[grow,left]", "[grow,top]"));
+	frame.getContentPane().setLayout(new MigLayout("", "[grow,left]", "[grow,top][100px:n,top]"));
 	
 	JPanel panel = new JPanel();
-	frame.getContentPane().add(panel, "cell 0 0,alignx left,aligny top");
-	panel.setLayout(new MigLayout("", "[grow]", "[grow]"));
+	frame.getContentPane().add(panel, "cell 0 0,grow");
+	
+	JPanel panel_1 = new JPanel();
+	frame.getContentPane().add(panel_1, "cell 0 1,grow");
     }
 }

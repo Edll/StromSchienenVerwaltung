@@ -28,7 +28,9 @@ public class PartTable {
 	model.addColumn("Material");
 	model.addColumn("Projekt Nr.");
 	model.addColumn("Erstellt am");
-
+	
+	sqLite.dbConnect();
+	
 	datensatz = new PartData<IPartData<?>>(sqLite);
 	List<IPartData<?>> list = datensatz.getDataList();
 
