@@ -40,20 +40,20 @@ public class MaterialTable {
 	datensatz.setAusgeblendetDatenAnzeigen(ausgeblendeteAnzeigen);
 
 	Object[][] materialListe = datensatz.getMaterialListeFormatiert();
-	
-	    if (ausgeblendeteAnzeigen) {
-		for (int anzahlDerDatensatze = 0; anzahlDerDatensatze != materialListe.length; anzahlDerDatensatze++) {
-		    model.addRow(new Object[] { materialListe[anzahlDerDatensatze][0], materialListe[anzahlDerDatensatze][1],
-			    materialListe[anzahlDerDatensatze][2], materialListe[anzahlDerDatensatze][3],
-			    materialListe[anzahlDerDatensatze][4] });
-		}
-	    } else {
-		for (int anzahlDerDatensatze = 0; anzahlDerDatensatze != materialListe.length; anzahlDerDatensatze++) {
-		    model.addRow(new Object[] { materialListe[anzahlDerDatensatze][0], materialListe[anzahlDerDatensatze][1],
-			    materialListe[anzahlDerDatensatze][2], materialListe[anzahlDerDatensatze][3] });
-		}
-	    }
 
+	if (ausgeblendeteAnzeigen) {
+	    for (int anzahlDerDatensatze = 0; anzahlDerDatensatze != materialListe.length; anzahlDerDatensatze++) {
+		model.addRow(new Object[] { materialListe[anzahlDerDatensatze][0],
+			materialListe[anzahlDerDatensatze][1], materialListe[anzahlDerDatensatze][2],
+			materialListe[anzahlDerDatensatze][3], materialListe[anzahlDerDatensatze][4] });
+	    }
+	} else {
+	    for (int anzahlDerDatensatze = 0; anzahlDerDatensatze != materialListe.length; anzahlDerDatensatze++) {
+		model.addRow(
+			new Object[] { materialListe[anzahlDerDatensatze][0], materialListe[anzahlDerDatensatze][1],
+				materialListe[anzahlDerDatensatze][2], materialListe[anzahlDerDatensatze][3] });
+	    }
+	}
 
 	materialTable = new JTable(model);
 	materialTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
@@ -85,9 +85,9 @@ public class MaterialTable {
 
 	public boolean isCellEditable(int r, int c) {
 	    if (ausgeblendeteAnzeigen) {
-		 return c == 4;
+		return c == 4;
 	    } else {
-		return c==0;
+		return c == 0;
 	    }
 
 	}
