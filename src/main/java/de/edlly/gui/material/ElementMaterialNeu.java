@@ -11,9 +11,14 @@ import de.edlly.db.*;
 import de.edlly.gui.Element;
 import de.edlly.gui.Formatierung;
 import de.edlly.gui.IElement;
+import de.edlly.material.Material;
 import de.edlly.material.MaterialSorte;
 import de.edlly.material.NeuerMaterialDatensatz;
 import net.miginfocom.swing.MigLayout;
+import com.jgoodies.forms.layout.FormLayout;
+import com.jgoodies.forms.layout.ColumnSpec;
+import com.jgoodies.forms.layout.FormSpecs;
+import com.jgoodies.forms.layout.RowSpec;
 
 /**
  * Erzeugt ein JPanel das die Eingabefelder für einen neuen Datensatz beinhaltet. Enthält eine ActionListener für den
@@ -28,81 +33,79 @@ import net.miginfocom.swing.MigLayout;
 
 public class ElementMaterialNeu extends Element implements IElement {
     private JPanel panel;
-    private SQLiteConnect sqlConnection;
-
-    private JTextField eingabeKoordinateX;
-    private JTextField eingabeKoordinateZ;
-    private JTextField eingabeKoordinatenMaxY;
-    private JButton materialHinzufuegen;
-    private JComboBox materialSortenAuswahl;
+    private SQLiteConnect sqLite;
+    private MaterialSorte materialSorteListe;
+    String[] materialListe;
+    private JTextField inputX;
+    private JTextField inputZ;
+    private JTextField inputY;
+    private JButton save;
+    private JComboBox sortenAuswahl;
+    private JPanel formPanel;
 
     public ElementMaterialNeu() {
 	panel = new JPanel();
-	sqlConnection = new SQLiteConnect();
+	formPanel = new JPanel();
+	sqLite = new SQLiteConnect();
+
     }
 
     public JPanel createAndGet() {
 	create();
-
 	return panel;
     }
 
-    @Override
     public void create() {
-	panel.setLayout(new MigLayout("", Formatierung.MIG_ELEMENT_PANEL_LEFT, Formatierung.MIG_ELEMENT_PANEL_TOP));
+	panel.setLayout(new MigLayout("", "[grow,left]", "[grow,top]"));
 
-	labelsDerEingabeFelder();
-	eingabeFelderKoordinaten();
 	try {
-	    materialSortenListe();
+	    createForm();
+	    actionMaterialHinzu();
+
 	} catch (SQLException e) {
 	    systemExceptionHandling(e.getLocalizedMessage());
 	}
-	buttonMaterialHinzufuegen();
-
-	actionMaterialHinzu();
 
     }
 
     public void actionMaterialHinzu() {
 
-	materialHinzufuegen.addActionListener(new ActionListener() {
+	save.addActionListener(new ActionListener() {
 	    public void actionPerformed(ActionEvent arg0) {
 
 		try {
-
-		    sqlConnection.dbConnect();
-
-		    MaterialSorte materialSorteId = new MaterialSorte(sqlConnection);
+		    sqLite.dbConnect();
+		    MaterialSorte materialSorteId = new MaterialSorte(sqLite);
+		    
 		    int MaterialSorteSelectId = materialSorteId
-			    .getMaterialSorteId((String) materialSortenAuswahl.getSelectedItem());
+			    .getMaterialSorteId((String) sortenAuswahl.getSelectedItem());
 
-		    int koordianteX = Integer.parseInt(eingabeKoordinateX.getText());
-		    int koordianteZ = Integer.parseInt(eingabeKoordinateZ.getText());
-		    int koordinateyMax = Integer.parseInt(eingabeKoordinatenMaxY.getText());
+		    int x = Integer.parseInt(inputX.getText());
+		    int z = Integer.parseInt(inputZ.getText());
+		    int yMax = Integer.parseInt(inputY.getText());
 
-		    NeuerMaterialDatensatz MaterialDatensatzAnlegen = new NeuerMaterialDatensatz(sqlConnection);
-		    MaterialDatensatzAnlegen.setMaterialDaten(koordianteX, koordianteZ, koordinateyMax,
+		    NeuerMaterialDatensatz MaterialDatensatzAnlegen = new NeuerMaterialDatensatz(sqLite);
+		    MaterialDatensatzAnlegen.setMaterialDaten(x, z, yMax,
 			    MaterialSorteSelectId);
+		    
 		    if (MaterialDatensatzAnlegen.datensatzAusObjektWertenAnlegen()) {
-			JOptionPane.showMessageDialog(null, "Das neue Material ist erfolgreich eingefügt worden.");
+			userSuccessHandling("Das neue Material ist erfolgreich eingefügt worden.");
 		    }
 
-		    sqlConnection.close();
+		    sqLite.close();
 		} catch (NumberFormatException e) {
-		    JOptionPane.showMessageDialog(null, "Bitte eine gültige Zahl eingeben.");
-
+		    
+		    userExceptionHandling("Bitte eine gültige Zahl eingeben.");
 		} catch (IllegalArgumentException e) {
-		    JOptionPane.showMessageDialog(null, e.getMessage());
+		    userExceptionHandling(e.getLocalizedMessage());
 
-		} catch (SQLException sqlException) {
-		    sqlException.printStackTrace();
+		} catch (SQLException e) {
+		    systemExceptionHandling(e.getLocalizedMessage());
 		} finally {
 		    try {
-			sqlConnection.close();
+			sqLite.close();
 		    } catch (SQLException e) {
-
-			e.printStackTrace();
+			systemExceptionHandling(e.getLocalizedMessage());
 		    }
 		}
 
@@ -110,61 +113,67 @@ public class ElementMaterialNeu extends Element implements IElement {
 	});
     }
 
-    public void materialSortenListe() throws SQLException {
-	sqlConnection = new SQLiteConnect();
-	sqlConnection.dbConnect();
-	MaterialSorte materialDB = new MaterialSorte(sqlConnection);
-	materialSortenAuswahl = new JComboBox(materialDB.materialSorteNamensListe());
-	materialSortenAuswahl.setBounds(156, 50, 96, 20);
-	panel.add(materialSortenAuswahl);
-	sqlConnection.close();
+    public void createForm() throws SQLException {
+
+	formPanel.setLayout(new FormLayout(
+		new ColumnSpec[] { ColumnSpec.decode("left:max(69dlu;min)"),
+			ColumnSpec.decode("left:max(85dlu;default)"), },
+		new RowSpec[] { FormSpecs.LINE_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC,
+			FormSpecs.DEFAULT_ROWSPEC, FormSpecs.LINE_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC,
+			FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC,
+			FormSpecs.DEFAULT_ROWSPEC, }));
+
+	JLabel lblSortenAuswahl = new JLabel("Material Sorte");
+	lblSortenAuswahl.setFont(Formatierung.eingabeFeldLabel());
+	
+	materialSortenListeAbfragen();
+	sortenAuswahl = new JComboBox(materialListe);
+	sortenAuswahl.setFont(Formatierung.eingabeFeldLabel());
+	
+	JLabel lblInputX = new JLabel("Breite");
+	lblInputX.setFont(Formatierung.eingabeFeldLabel());
+	
+	inputX = new JTextField();
+	inputX.setToolTipText("Maximal Breite " + Material.MAXIMALER_X_WERT + " mm");
+	inputX.setColumns(10);
+	
+	JLabel lblInputeZ = new JLabel("Dicke");
+	lblInputeZ.setFont(Formatierung.eingabeFeldLabel());
+
+	inputZ = new JTextField();
+	inputZ.setToolTipText("Maximal Dicke " + Material.MAXIMALER_Z_WERT + " mm");
+	inputZ.setColumns(10);
+
+	JLabel lblInputeY = new JLabel("Maximale Länge");
+	lblInputeY.setFont(Formatierung.eingabeFeldLabel());
+
+	inputY = new JTextField();
+	inputY.setToolTipText("Maximal Länge " + Material.MAXIMALER_Y_WERT + " mm");
+	inputY.setColumns(10);
+	
+	save = new JButton("Speichern");
+	save.setFont(Formatierung.buttonFont());
+
+	formPanel.add(lblSortenAuswahl, "1, 2, default, top");
+	formPanel.add(sortenAuswahl, "2, 2, default, center");
+	formPanel.add(lblInputX, "1, 4, default, top");
+	formPanel.add(inputX, "2, 4, default, center");
+	formPanel.add(lblInputeZ, "1, 6, default, top");
+	formPanel.add(inputZ, "2, 6, default, center");
+	formPanel.add(lblInputeY, "1, 8, default, top");
+	formPanel.add(inputY, "2, 8, left, center");
+	formPanel.add(save, "1, 10, default, top");
+	
+
+	
+	panel.add(formPanel, "flowx,cell 0 0");
     }
 
-    public void buttonMaterialHinzufuegen() {
-	materialHinzufuegen = new JButton("+");
-	materialHinzufuegen.setFont(Formatierung.buttonFont());
-	materialHinzufuegen.setBounds(392, 50, 43, 23);
-	panel.add(materialHinzufuegen);
-    }
-
-    public void eingabeFelderKoordinaten() {
-
-	eingabeKoordinateX = new JTextField();
-	eingabeKoordinateX.setBounds(10, 50, 50, 20);
-	panel.add(eingabeKoordinateX);
-	eingabeKoordinateX.setColumns(10);
-
-	eingabeKoordinateZ = new JTextField();
-	eingabeKoordinateZ.setBounds(86, 50, 50, 20);
-	panel.add(eingabeKoordinateZ);
-	eingabeKoordinateZ.setColumns(10);
-
-	eingabeKoordinatenMaxY = new JTextField();
-	eingabeKoordinatenMaxY.setBounds(280, 50, 86, 20);
-	panel.add(eingabeKoordinatenMaxY);
-	eingabeKoordinatenMaxY.setColumns(10);
-    }
-
-    public void labelsDerEingabeFelder() {
-
-	JLabel lblMaterialGroesse = new JLabel("Größe");
-	lblMaterialGroesse.setFont(Formatierung.eingabeFeldLabel());
-	lblMaterialGroesse.setBounds(10, 30, 34, 14);
-	panel.add(lblMaterialGroesse);
-
-	JLabel lblX = new JLabel("x");
-	lblX.setFont(Formatierung.eingabeFeldLabel());
-	lblX.setBounds(70, 50, 7, 14);
-	panel.add(lblX);
-
-	JLabel lblMaterialSorte = new JLabel("Material Sorte");
-	lblMaterialSorte.setFont(Formatierung.eingabeFeldLabel());
-	lblMaterialSorte.setBounds(156, 30, 81, 14);
-	panel.add(lblMaterialSorte);
-
-	JLabel lblMaximaleLaenge = new JLabel("Maximale Länge");
-	lblMaximaleLaenge.setFont(Formatierung.eingabeFeldLabel());
-	lblMaximaleLaenge.setBounds(280, 30, 92, 14);
-	panel.add(lblMaximaleLaenge);
+    private void materialSortenListeAbfragen() throws SQLiteException, IllegalArgumentException, SQLException {
+	sqLite = new SQLiteConnect();
+	sqLite.dbConnect();
+	materialSorteListe = new MaterialSorte(sqLite);
+	materialListe = materialSorteListe.materialSorteNamensListe();
+	sqLite.close();
     }
 }
