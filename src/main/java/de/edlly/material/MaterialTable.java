@@ -30,7 +30,9 @@ public class MaterialTable {
 	model.addColumn("Sorte");
 	model.addColumn("Größe");
 	model.addColumn("Maximale Länge");
-	model.addColumn("Sichtbar");
+	if (ausgeblendeteAnzeigen) {
+	    model.addColumn("Sichtbar");
+	}
 
 	sqLite.dbConnect();
 
@@ -38,19 +40,27 @@ public class MaterialTable {
 	datensatz.setAusgeblendetDatenAnzeigen(ausgeblendeteAnzeigen);
 
 	Object[][] materialListe = datensatz.getMaterialListeFormatiert();
+	
+	    if (ausgeblendeteAnzeigen) {
+		for (int anzahlDerDatensatze = 0; anzahlDerDatensatze != materialListe.length; anzahlDerDatensatze++) {
+		    model.addRow(new Object[] { materialListe[anzahlDerDatensatze][0], materialListe[anzahlDerDatensatze][1],
+			    materialListe[anzahlDerDatensatze][2], materialListe[anzahlDerDatensatze][3],
+			    materialListe[anzahlDerDatensatze][4] });
+		}
+	    } else {
+		for (int anzahlDerDatensatze = 0; anzahlDerDatensatze != materialListe.length; anzahlDerDatensatze++) {
+		    model.addRow(new Object[] { materialListe[anzahlDerDatensatze][0], materialListe[anzahlDerDatensatze][1],
+			    materialListe[anzahlDerDatensatze][2], materialListe[anzahlDerDatensatze][3] });
+		}
+	    }
 
-	for (int anzahlDerDatensatze = 0; anzahlDerDatensatze != materialListe.length; anzahlDerDatensatze++) {
-	    model.addRow(new Object[] { materialListe[anzahlDerDatensatze][0], materialListe[anzahlDerDatensatze][1],
-		    materialListe[anzahlDerDatensatze][2], materialListe[anzahlDerDatensatze][3],
-		    materialListe[anzahlDerDatensatze][4] });
-	}
 
 	materialTable = new JTable(model);
 	materialTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-	
+
 	sqLite.close();
     }
-    
+
     public int getSelectedMaterialId() {
 	int materialId = Integer.parseInt((materialTable.getValueAt(materialTable.getSelectedRow(), 0)).toString());
 
@@ -65,13 +75,21 @@ public class MaterialTable {
 	private static final long serialVersionUID = 1L;
 
 	public int getColumnCount() {
+	    if (ausgeblendeteAnzeigen) {
+		return 5;
+	    } else {
+		return 4;
+	    }
 
-	    return 5;
 	}
 
 	public boolean isCellEditable(int r, int c) {
+	    if (ausgeblendeteAnzeigen) {
+		 return c == 4;
+	    } else {
+		return c==0;
+	    }
 
-	    return c == 4;
 	}
 
 	@SuppressWarnings("rawtypes")
