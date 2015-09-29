@@ -24,7 +24,6 @@ public class ElementMaterialListe extends Element implements IElement {
 
     private MaterialTable table;
     private MaterialLoeschen materialLoeschen;
-
     private JPanel panel;
     private JButton jBLoeschen;
     private SQLiteConnect sqLite;

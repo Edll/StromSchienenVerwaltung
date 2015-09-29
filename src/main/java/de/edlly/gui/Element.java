@@ -14,4 +14,8 @@ public abstract class Element implements IElement{
 	JOptionPane.showMessageDialog(null, message, "Fehler bei der Eingabe", JOptionPane.ERROR_MESSAGE);
     }
 
+    public void userSuccessHandling(String message){
+	JOptionPane.showMessageDialog(null, message, "Erfolgreich", JOptionPane.INFORMATION_MESSAGE);
+    }
+
 }
