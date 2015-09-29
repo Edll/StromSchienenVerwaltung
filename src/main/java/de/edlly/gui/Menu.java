@@ -7,7 +7,7 @@ import javax.swing.*;
 
 import de.edlly.gui.material.ElementMaterialListe;
 import de.edlly.gui.material.ElementMaterialNeu;
-import de.edlly.gui.part.PartNeu;
+import de.edlly.gui.part.ElementPartNeu;
 import de.edlly.gui.part.ElementPartListe;
 
 public class Menu {
@@ -48,11 +48,11 @@ public class Menu {
 
 	itemNeuPart.addActionListener(new ActionListener() {
 	    public void actionPerformed(ActionEvent e) {
-		PartNeu werkstueckVerwaltung = new PartNeu();
+		ElementPartNeu werkstueckVerwaltung = new ElementPartNeu();
 		frame.getContentPane().removeAll();
 		frame.setTitle("Werkstück Anlegen");
 
-		frame.getContentPane().add(werkstueckVerwaltung.loadPanel());
+		frame.getContentPane().add(werkstueckVerwaltung.createAndGet());
 
 		frame.repaint();
 		frame.validate();
