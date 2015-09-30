@@ -3,7 +3,7 @@ package de.edlly.gui;
 import java.awt.EventQueue;
 import javax.swing.*;
 
-import de.edlly.gui.part.ElementPartListe;
+import de.edlly.gui.elements.ElementPartListe;
 import net.miginfocom.swing.MigLayout;
 
 /**

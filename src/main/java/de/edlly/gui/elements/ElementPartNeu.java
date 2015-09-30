@@ -1,4 +1,4 @@
-package de.edlly.gui.part;
+package de.edlly.gui.elements;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

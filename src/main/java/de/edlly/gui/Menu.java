@@ -5,10 +5,10 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
-import de.edlly.gui.material.ElementMaterialListe;
-import de.edlly.gui.material.ElementMaterialNeu;
-import de.edlly.gui.part.ElementPartNeu;
-import de.edlly.gui.part.ElementPartListe;
+import de.edlly.gui.elements.ElementMaterialListe;
+import de.edlly.gui.elements.ElementMaterialNeu;
+import de.edlly.gui.elements.ElementPartListe;
+import de.edlly.gui.elements.ElementPartNeu;
 
 public class Menu {
     private JFrame frame;

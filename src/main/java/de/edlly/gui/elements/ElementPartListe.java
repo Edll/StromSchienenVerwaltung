@@ -1,4 +1,4 @@
-package de.edlly.gui.part;
+package de.edlly.gui.elements;
 
 import java.sql.SQLException;
 import javax.swing.*;
