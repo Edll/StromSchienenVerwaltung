@@ -21,17 +21,17 @@ public class PartBendTest extends TestCase {
 
     @Test
     public void testSetBend() {
-	bend.setBend(null);
+	bend.addBend(null);
     }
     
     @Test
     public void testGetBend() {
-	bend.getBend(0);
+	bend.getBends(0);
     }
     
     @Test
     public void isBendKolision() {
-	bend.isBendKolision(null);
+	bend.isBendKollision(null);
     }
 
     @Override

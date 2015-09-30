@@ -1,24 +1,26 @@
 package de.edlly.part;
 
+import java.util.List;
+
 public interface IPartBend extends IPart {
 
     /**
-     * Setz das bend in das das Objekt. Dies wird geprüft auf Kollisionen.
+     * Fügt eine Biegung der Liste Hinzu.
      * 
      * @param bend
      *            Als IPartBend Objekt.
      */
-    public void setBend(IPartBend bend);
+    public void addBend(IPartBend bend);
 
     /**
      * Fragt das Objekt Bend anhand der ID ab.
      * 
-     * @param id
+     * @param partId
      *            der Bend in der DB.
      * @return IPartBend Objekt
      */
 
-    public IPartBend getBend(int id);
+    public List<IPartBend> getBends(int partId);
 
     /**
      * Prüft ob es eine Kollision innerhalb des Werkstücks gibt.
@@ -27,6 +29,6 @@ public interface IPartBend extends IPart {
      * @return boolean wert True wenn es eine Kollision gibt.
      */
 
-    public boolean isBendKolision(IPartBend bend);
+    public boolean isBendKollision(IPartBend bend);
 
 }
