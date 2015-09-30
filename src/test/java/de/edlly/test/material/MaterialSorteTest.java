@@ -3,9 +3,8 @@ package de.edlly.test.material;
 import org.junit.Test;
 import junit.framework.TestCase;
 
-import java.sql.SQLException;
-
 import de.edlly.db.SQLiteConnect;
+import de.edlly.db.SQLiteException;
 import de.edlly.material.MaterialSorte;
 
 public class MaterialSorteTest extends TestCase {
@@ -13,49 +12,49 @@ public class MaterialSorteTest extends TestCase {
     SQLiteConnect sqlConnection;
 
     @Override
-    public void setUp() throws IllegalArgumentException, SQLException {
+    public void setUp() throws IllegalArgumentException, SQLiteException {
 	sqlConnection = new SQLiteConnect();
 	sqlConnection.dbConnect();
 	materialSorte = new MaterialSorte(sqlConnection);
     }
 
     @Test
-    public void testGetMaterialSorteNameNichtVorhanden() throws SQLException {
+    public void testGetMaterialSorteNameNichtVorhanden() throws SQLiteException {
 	String nameBekommen = materialSorte.getMaterialSorteName(0);
 	String nameErwartet = "N/A";
 	assertEquals(nameErwartet, nameBekommen);
     }
 
     @Test
-    public void testGetMaterialSorteNameVorhanden() throws SQLException {
+    public void testGetMaterialSorteNameVorhanden() throws SQLiteException {
 	String nameBekommen = materialSorte.getMaterialSorteName(1);
 	String nameErwartet = "Kupfer";
 	assertEquals(nameErwartet, nameBekommen);
     }
 
     @Test
-    public void testGetMaterialSorteIdNichtVorhanden() throws SQLException {
+    public void testGetMaterialSorteIdNichtVorhanden() throws SQLiteException {
 	int idBekommen = materialSorte.getMaterialSorteId("FooBar");
 	int idErwartet = 0;
 	assertEquals(idErwartet, idBekommen);
     }
 
     @Test
-    public void testGetMaterialSorteIdVorhanden() throws SQLException {
+    public void testGetMaterialSorteIdVorhanden() throws SQLiteException {
 	int idBekommen = materialSorte.getMaterialSorteId("Kupfer");
 	int idErwartet = 1;
 	assertEquals(idErwartet, idBekommen);
     }
 
     @Test
-    public void testGetMaterialSorteIdNameNull() throws SQLException {
+    public void testGetMaterialSorteIdNameNull() throws SQLiteException {
 	int idBekommen = materialSorte.getMaterialSorteId(null);
 	int idErwartet = 0;
 
 	assertEquals(idErwartet, idBekommen);
     }
 
-    public void testMaterialSorteListe() throws SQLException {
+    public void testMaterialSorteListe() throws SQLiteException {
 	String[] materialSorteListe = materialSorte.materialSorteNamensListe();
 	String[] materialSorteVergleichsListe = new String[] { "Kupfer", "Kupfer Verz.", "Alu" };
 
@@ -65,7 +64,7 @@ public class MaterialSorteTest extends TestCase {
     }
 
     @Test
-    public void testMateriaSorteIdVorhande() throws SQLException {
+    public void testMateriaSorteIdVorhande() throws SQLiteException {
 	boolean nichtVorhanden = materialSorte.materialsorteIdVorhanden(0);
 	assertFalse(nichtVorhanden);
 
@@ -74,7 +73,7 @@ public class MaterialSorteTest extends TestCase {
     }
 
     @Override
-    public void tearDown() throws SQLException {
+    public void tearDown() throws SQLiteException {
 	sqlConnection.close();
     }
 

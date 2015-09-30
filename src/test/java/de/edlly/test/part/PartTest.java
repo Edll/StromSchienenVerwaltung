@@ -1,6 +1,5 @@
 package de.edlly.test.part;
 
-import java.sql.SQLException;
 import org.junit.Test;
 import de.edlly.db.SQLiteConnect;
 import de.edlly.db.SQLiteException;
@@ -14,7 +13,7 @@ public class PartTest extends TestCase {
     IPart werkstueck;
 
     @Override
-    public void setUp() throws PartException {
+    public void setUp() throws PartException, SQLiteException {
 	SQLiteConnect sqlConnection = new SQLiteConnect();
 	sqlConnection.dbConnect();
 
@@ -49,8 +48,6 @@ public class PartTest extends TestCase {
 	try {
 	    SQLiteConnect.isClosed(connection);
 	} catch (SQLiteException e) {
-	    fail("Verbindung wurde Fehlerhaft übergeben.");
-	} catch (SQLException e) {
 	    fail("Verbindung wurde Fehlerhaft übergeben.");
 	}
     }

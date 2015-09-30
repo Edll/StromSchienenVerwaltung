@@ -1,10 +1,9 @@
 package de.edlly.test.db;
 
-import java.sql.SQLException;
-
 import org.junit.Test;
 
 import de.edlly.db.SQLiteConnect;
+import de.edlly.db.SQLiteException;
 import de.edlly.db.SQLiteStatement;
 import junit.framework.TestCase;
 
@@ -14,7 +13,7 @@ public class SQLiteStatementTest extends TestCase {
     SQLiteConnect sqlConnection;
 
     @Override
-    public void setUp() throws IllegalArgumentException, SQLException {
+    public void setUp() throws IllegalArgumentException, SQLiteException {
 	sqlConnection = new SQLiteConnect();
 	sqlConnection.dbConnect();
 	statement = new SQLiteStatement(sqlConnection);
@@ -37,16 +36,14 @@ public class SQLiteStatementTest extends TestCase {
 	try {
 	    statement.statmentExecute(null);
 	    fail("Muss eine IllegalArgumentException auslösen");
-	} catch (IllegalArgumentException exception) {
+	} catch (SQLiteException exception) {
 	    String erwarteteException = "Der SQL Query String darf nicht null sein.";
 	    assertEquals(erwarteteException, exception.getMessage());
-	} catch (SQLException e) {
-	    e.printStackTrace();
 	}
     }
 
     @Test
-    public void testResultOhneErgebniss() throws SQLException {
+    public void testResultOhneErgebniss() throws SQLiteException {
 	statement.statmentVorbereiten();
 	statement.statmentExecute("SELECT * FROM material");
 	boolean ergebniss = statement.resultOhneErgebniss(statement.getResult());
@@ -55,7 +52,7 @@ public class SQLiteStatementTest extends TestCase {
     }
 
     @Test
-    public void testAbfrageVorbereitenUndStarten() throws SQLException {
+    public void testAbfrageVorbereitenUndStarten() throws SQLiteException {
 	statement.statmentVorbereitenUndStarten("SELECT * FROM material");
 	boolean ergebniss = statement.resultOhneErgebniss(statement.getResult());
 
@@ -64,17 +61,17 @@ public class SQLiteStatementTest extends TestCase {
 	try {
 	    statement.statmentVorbereitenUndStarten(null);
 	    fail("Muss eine IllegalArgumentException auslösen");
-	} catch (IllegalArgumentException exception) {
+	} catch (SQLiteException exception) {
 	    String erwarteteException = "Der SQL Query String darf nicht null sein.";
 	    assertEquals(erwarteteException, exception.getMessage());
 	}
     }
 
     @Override
-    public void tearDown() throws SQLException {
+    public void tearDown() throws SQLiteException {
 	try {
 	    statement.closeStatmentAndResult();
-	} catch (SQLException e) {
+	} catch (SQLiteException e) {
 	    e.printStackTrace();
 	}
 	sqlConnection.close();

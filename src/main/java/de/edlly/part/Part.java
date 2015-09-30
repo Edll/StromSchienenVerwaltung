@@ -1,6 +1,5 @@
 package de.edlly.part;
 
-import java.sql.*;
 import de.edlly.db.*;
 import de.edlly.material.*;
 import de.edlly.part.PartUtil;
@@ -22,7 +21,7 @@ public class Part implements IPart {
 	} catch (IllegalArgumentException e) {
 
 	    throw new PartException("Format Fehler:" + e.getLocalizedMessage() + " in " + e.getClass());
-	} catch (SQLException e) {
+	} catch (SQLiteException e) {
 
 	    throw new PartException("SQL Fehler:" + e.getLocalizedMessage() + " in " + e.getClass());
 	}
@@ -87,7 +86,7 @@ public class Part implements IPart {
 	return materialId.getId();
     }
 
-    public void setMaterialId(Integer materialId) throws SQLException {
+    public void setMaterialId(Integer materialId) throws SQLiteException {
 	this.materialId.setId(materialId);
     }
 

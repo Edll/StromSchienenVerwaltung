@@ -1,12 +1,11 @@
 package de.edlly.db;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 
-public abstract class SQLite{
+public abstract class SQLite {
     private SQLiteConnect sqlConnection;
 
-    public SQLite(){
+    public SQLite() {
 
     }
 
@@ -14,10 +13,10 @@ public abstract class SQLite{
 	return sqlConnection.getSqlConnection();
     }
 
-    public void setSqlConnection(SQLiteConnect sqlConnection) throws IllegalArgumentException, SQLException{
+    public void setSqlConnection(SQLiteConnect sqlConnection) throws IllegalArgumentException, SQLiteException {
 	SQLiteConnect.isClosedOrNull(sqlConnection);
 	this.sqlConnection = sqlConnection;
     }
-    
+
     public static final String SQLITE_FILE_PATH = "kupfer.sqlite";
 }

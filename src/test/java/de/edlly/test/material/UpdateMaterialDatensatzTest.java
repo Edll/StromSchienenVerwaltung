@@ -1,7 +1,9 @@
 package de.edlly.test.material;
+
 import java.sql.SQLException;
 
 import de.edlly.db.SQLiteConnect;
+import de.edlly.db.SQLiteException;
 import de.edlly.material.UpdateMaterialDatensatz;
 import junit.framework.TestCase;
 
@@ -10,7 +12,7 @@ public class UpdateMaterialDatensatzTest extends TestCase {
     private SQLiteConnect sqlConnection;
 
     @Override
-    public void setUp() throws IllegalArgumentException {
+    public void setUp() throws IllegalArgumentException, SQLiteException {
 	sqlConnection = new SQLiteConnect();
 	sqlConnection.dbConnect();
 
@@ -24,18 +26,12 @@ public class UpdateMaterialDatensatzTest extends TestCase {
 	assertTrue("Set Material Visibly in Objekt", setMaterialVisibly());
     }
 
-    public void testSetMaterialId() throws SQLException  {
+    public void testSetMaterialId() throws SQLiteException {
 	assertTrue("Set Material Id in Objekt", setMaterialId());
     }
 
     public void testUpdateVisibly() {
 	assertTrue("Update Visibly in Objekt", updateVisibly());
-    }
-
-    @Override
-    public void tearDown() throws SQLException {
-	sqlConnection.close();
-
     }
 
     private Boolean setMaterialDaten() {
@@ -48,7 +44,7 @@ public class UpdateMaterialDatensatzTest extends TestCase {
 	return true;
     }
 
-    private Boolean setMaterialId() throws SQLException {
+    private Boolean setMaterialId() throws SQLiteException {
 	try {
 	    UpdateMaterialDatensatz materialDatensetzten = new UpdateMaterialDatensatz(sqlConnection);
 
@@ -66,6 +62,12 @@ public class UpdateMaterialDatensatzTest extends TestCase {
     private Boolean updateVisibly() {
 	// TODO: Funktion einbauen
 	return true;
+    }
+
+    @Override
+    public void tearDown() throws SQLException, SQLiteException {
+	sqlConnection.close();
+
     }
 
 }

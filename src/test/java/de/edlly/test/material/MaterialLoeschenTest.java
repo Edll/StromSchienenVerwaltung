@@ -1,10 +1,9 @@
 package de.edlly.test.material;
 
-import java.sql.SQLException;
-
 import org.junit.Test;
 
 import de.edlly.db.SQLiteConnect;
+import de.edlly.db.SQLiteException;
 import de.edlly.material.Material;
 import de.edlly.material.MaterialIds;
 import de.edlly.material.MaterialLoeschen;
@@ -17,14 +16,14 @@ public class MaterialLoeschenTest extends TestCase {
     SQLiteConnect sqlConnection;
 
     @Override
-    public void setUp() throws IllegalArgumentException, SQLException {
+    public void setUp() throws IllegalArgumentException, SQLiteException {
 	sqlConnection = new SQLiteConnect();
 	sqlConnection.dbConnect();
 	materialLoeschen = new MaterialLoeschen(sqlConnection);
     }
 
     @Test
-    public void testLoeschenIdNichtVorhanden() throws SQLException {
+    public void testLoeschenIdNichtVorhanden() throws SQLiteException {
 	try {
 	    materialLoeschen.loschen(0);
 	    fail("Exception fehlt: Material nicht vorhanden");
@@ -36,7 +35,7 @@ public class MaterialLoeschenTest extends TestCase {
     }
 
     @Test
-    public void testLoeschen() throws SQLException {
+    public void testLoeschen() throws SQLiteException {
 
 	NeuerMaterialDatensatz materialDatensatz = new NeuerMaterialDatensatz(sqlConnection);
 	materialDatensatz.setMaterialDaten(Material.MAXIMALER_X_WERT, Material.MAXIMALER_Z_WERT,
@@ -45,7 +44,7 @@ public class MaterialLoeschenTest extends TestCase {
 
 	MaterialIds materialid = new MaterialIds(sqlConnection);
 	int[] id = materialid.getIdListe();
-	int lastId = id[id.length-1];
+	int lastId = id[id.length - 1];
 
 	boolean check = materialLoeschen.loschen(lastId);
 
@@ -53,7 +52,7 @@ public class MaterialLoeschenTest extends TestCase {
     }
 
     @Override
-    public void tearDown() throws SQLException {
+    public void tearDown() throws SQLiteException {
 	sqlConnection.close();
     }
 }

@@ -3,6 +3,7 @@ package de.edlly.material;
 import java.sql.*;
 
 import de.edlly.db.SQLiteConnect;
+import de.edlly.db.SQLiteException;
 import de.edlly.db.SQLiteStatement;
 
 /**
@@ -19,7 +20,7 @@ public class MaterialIds extends Material {
     private int id = 0;
     SQLiteStatement sqlLite;
 
-    public MaterialIds(SQLiteConnect sqlConnection) throws IllegalArgumentException, SQLException {
+    public MaterialIds(SQLiteConnect sqlConnection) throws IllegalArgumentException, SQLiteException {
 	super(sqlConnection);
 	sqlLite = new SQLiteStatement(sqlConnection);
     }
@@ -28,7 +29,7 @@ public class MaterialIds extends Material {
 	this.ausgeblendetDatenAnzeigen = ausgelendeteDatensatzeBeruecksichtigen;
     }
 
-    public int[] getIdListe() throws IllegalArgumentException, SQLException {
+    public int[] getIdListe() throws IllegalArgumentException, SQLiteException {
 	materialListeErstellen();
 	return idListe;
     }
@@ -37,14 +38,14 @@ public class MaterialIds extends Material {
 	return id;
     }
 
-    public void setId(int id) throws IllegalArgumentException, SQLException {
+    public void setId(int id) throws IllegalArgumentException, SQLiteException {
 	if (!materialIdVorhanden(id)) {
 	    throw new IllegalArgumentException("Material Id nicht vorhanden");
 	}
 	this.id = id;
     }
 
-    public boolean materialIdVorhanden(int materialId) throws IllegalArgumentException, SQLException {
+    public boolean materialIdVorhanden(int materialId) throws IllegalArgumentException, SQLiteException {
 	setAusgeblendetDatenAnzeigen(true);
 	int[] idListe = getIdListe();
 	for (int id : idListe) {
@@ -55,7 +56,7 @@ public class MaterialIds extends Material {
 	return false;
     }
 
-    public void materialListeErstellen() throws SQLException, IllegalArgumentException {
+    public void materialListeErstellen() throws SQLiteException, IllegalArgumentException {
 	idListe = new int[] { 0 };
 	try {
 	    queryAuswahl();
@@ -79,7 +80,7 @@ public class MaterialIds extends Material {
 	    sqlLite.closeStatmentAndResult();
 
 	} catch (SQLException sqlException) {
-	    throw new SQLException(sqlException);
+	    throw new SQLiteException(sqlException.getLocalizedMessage());
 
 	} catch (IllegalArgumentException illegalException) {
 	    throw new IllegalArgumentException(illegalException);
@@ -89,7 +90,7 @@ public class MaterialIds extends Material {
 	}
     }
 
-    public int anzahlDatenseatze() {
+    public int anzahlDatenseatze() throws SQLiteException {
 	int anzahlDerDatensatze = 0;
 
 	try {
@@ -106,7 +107,7 @@ public class MaterialIds extends Material {
 	return anzahlDerDatensatze;
     }
 
-    public void queryAuswahl() {
+    public void queryAuswahl() throws SQLiteException {
 	if (ausgeblendetDatenAnzeigen) {
 
 	    sqlLite.setQuery("SELECT id FROM Material");

@@ -17,29 +17,29 @@ public class PartData<T> extends Part implements IPartData<T> {
 	} catch (IllegalArgumentException e) {
 
 	    throw new PartException("Format Fehler:" + e.getLocalizedMessage() + " in " + e.getClass());
-	} catch (SQLException e) {
+	} catch (SQLiteException e) {
 
 	    throw new PartException("SQL Fehler:" + e.getLocalizedMessage() + " in " + e.getClass());
 	}
     }
 
-    public List<Integer> getIdList() throws SQLException {
+    public List<Integer> getIdList() throws SQLiteException {
 
 	List<Integer> idList = new ArrayList<Integer>();
 	idListeAusDbAbfragen(idList);
 	return idList;
     }
-    
+
     /**
      * TODO: CODE Erstellen
      */
     public boolean IdVorhanden(int id) {
 	// Muster CODE!
- 	if (id == 0) {
- 	    return false;
- 	}
- 	return true;
-     }
+	if (id == 0) {
+	    return false;
+	}
+	return true;
+    }
 
     public IPartData<T> getData(int id) throws PartException {
 	IPartData<T> data = new PartData<T>(getSqlConnection());
@@ -48,7 +48,7 @@ public class PartData<T> extends Part implements IPartData<T> {
 	return data;
     }
 
-    public List<IPartData<?>> getDataList() throws PartException, SQLException {
+    public List<IPartData<?>> getDataList() throws PartException, SQLiteException {
 	List<IPartData<?>> datensatz = new ArrayList<IPartData<?>>();
 
 	int i = 0;
@@ -84,13 +84,13 @@ public class PartData<T> extends Part implements IPartData<T> {
 	} catch (IllegalArgumentException e) {
 	    throw new PartException("Angaben nicht korrekt: " + e.getLocalizedMessage() + " in " + e.getClass());
 
-	} catch (SQLException e) {
+	} catch (SQLiteException e) {
 	    throw new PartException("SQL Fehler:" + e.getLocalizedMessage() + " in " + e.getClass());
 	}
 
     }
 
-    private void idListeAusDbAbfragen(List<Integer> idList) throws SQLException, IllegalArgumentException {
+    private void idListeAusDbAbfragen(List<Integer> idList) throws SQLiteException, IllegalArgumentException {
 	try {
 	    sql.setQuery("Select id From Werkstueck");
 
@@ -109,7 +109,7 @@ public class PartData<T> extends Part implements IPartData<T> {
 	    sql.closeStatmentAndResult();
 
 	} catch (SQLException sqlException) {
-	    throw new SQLException(sqlException);
+	    throw new SQLiteException(sqlException.getLocalizedMessage());
 
 	} catch (IllegalArgumentException illegalException) {
 	    throw new IllegalArgumentException(illegalException);
@@ -136,12 +136,14 @@ public class PartData<T> extends Part implements IPartData<T> {
 
 	    sql.closeStatmentAndResult();
 
+	} catch (SQLiteException e) {
+	    throw new PartException("SQL Fehler:" + e.getLocalizedMessage() + " in " + e.getClass());
 	} catch (SQLException e) {
 	    throw new PartException("SQL Fehler:" + e.getLocalizedMessage() + " in " + e.getClass());
 	} finally {
 	    try {
 		sql.closeStatmentAndResult();
-	    } catch (SQLException e) {
+	    } catch (SQLiteException e) {
 		throw new PartException("SQL Fehler:" + e.getLocalizedMessage() + " in " + e.getClass());
 	    }
 	}

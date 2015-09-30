@@ -1,8 +1,8 @@
 package de.edlly.gui.elements;
 
-import java.sql.SQLException;
 import javax.swing.*;
 
+import de.edlly.db.SQLiteException;
 import de.edlly.gui.*;
 import de.edlly.part.*;
 import net.miginfocom.swing.MigLayout;
@@ -35,7 +35,7 @@ public class ElementPartListe extends Element implements IElement {
 
 	try {
 	    scrollPane.setViewportView(partTable.getPartTable());
-	} catch (SQLException e) {
+	} catch (SQLiteException e) {
 	    systemExceptionHandling(e.getLocalizedMessage());
 	} catch (PartException e) {
 	    userExceptionHandling(e.getLocalizedMessage());

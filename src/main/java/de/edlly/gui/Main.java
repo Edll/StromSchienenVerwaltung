@@ -43,10 +43,8 @@ public class Main {
 
 	ElementPartListe werkstueckVerwaltung = new ElementPartListe();
 	frame.setTitle("Werkstück Verwaltung");
-	
-	frame.getContentPane().add(werkstueckVerwaltung.createAndGet());
-	    
 
+	frame.getContentPane().add(werkstueckVerwaltung.createAndGet());
 
 	/*
 	 * TODO: Dies ist ein Test Code er ist ausgeklammert da das Modul nicht fertig ist. try { SQLiteConnect

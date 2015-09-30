@@ -38,7 +38,7 @@ public abstract class PartUtil extends Part {
 	    dateActual.setTime(date);
 	    SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy HH:mm");
 	    df.format(date);
-	    
+
 	    return df.format(date);
 	}
 

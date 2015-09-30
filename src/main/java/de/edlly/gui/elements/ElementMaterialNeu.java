@@ -3,8 +3,6 @@ package de.edlly.gui.elements;
 import java.awt.event.ActionEvent;
 
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
-
 import javax.swing.*;
 
 import de.edlly.db.*;
@@ -62,7 +60,7 @@ public class ElementMaterialNeu extends Element implements IElement {
 	    createForm();
 	    actionMaterialHinzu();
 
-	} catch (SQLException e) {
+	} catch (SQLiteException e) {
 	    systemExceptionHandling(e.getLocalizedMessage());
 	}
 
@@ -76,7 +74,7 @@ public class ElementMaterialNeu extends Element implements IElement {
 		try {
 		    sqLite.dbConnect();
 		    MaterialSorte materialSorteId = new MaterialSorte(sqLite);
-		    
+
 		    int MaterialSorteSelectId = materialSorteId
 			    .getMaterialSorteId((String) sortenAuswahl.getSelectedItem());
 
@@ -85,26 +83,25 @@ public class ElementMaterialNeu extends Element implements IElement {
 		    int yMax = Integer.parseInt(inputY.getText());
 
 		    NeuerMaterialDatensatz MaterialDatensatzAnlegen = new NeuerMaterialDatensatz(sqLite);
-		    MaterialDatensatzAnlegen.setMaterialDaten(x, z, yMax,
-			    MaterialSorteSelectId);
-		    
+		    MaterialDatensatzAnlegen.setMaterialDaten(x, z, yMax, MaterialSorteSelectId);
+
 		    if (MaterialDatensatzAnlegen.datensatzAusObjektWertenAnlegen()) {
 			userSuccessHandling("Das neue Material ist erfolgreich eingefügt worden.");
 		    }
 
 		    sqLite.close();
 		} catch (NumberFormatException e) {
-		    
+
 		    userExceptionHandling("Bitte eine gültige Zahl eingeben.");
 		} catch (IllegalArgumentException e) {
 		    userExceptionHandling(e.getLocalizedMessage());
 
-		} catch (SQLException e) {
+		} catch (SQLiteException e) {
 		    systemExceptionHandling(e.getLocalizedMessage());
 		} finally {
 		    try {
 			sqLite.close();
-		    } catch (SQLException e) {
+		    } catch (SQLiteException e) {
 			systemExceptionHandling(e.getLocalizedMessage());
 		    }
 		}
@@ -113,7 +110,7 @@ public class ElementMaterialNeu extends Element implements IElement {
 	});
     }
 
-    public void createForm() throws SQLException {
+    public void createForm() throws SQLiteException {
 
 	formPanel.setLayout(new FormLayout(
 		new ColumnSpec[] { ColumnSpec.decode("left:max(69dlu;min)"),
@@ -125,18 +122,18 @@ public class ElementMaterialNeu extends Element implements IElement {
 
 	JLabel lblSortenAuswahl = new JLabel("Material Sorte");
 	lblSortenAuswahl.setFont(Formatierung.eingabeFeldLabel());
-	
+
 	materialSortenListeAbfragen();
 	sortenAuswahl = new JComboBox(materialListe);
 	sortenAuswahl.setFont(Formatierung.eingabeFeldLabel());
-	
+
 	JLabel lblInputX = new JLabel("Breite");
 	lblInputX.setFont(Formatierung.eingabeFeldLabel());
-	
+
 	inputX = new JTextField();
 	inputX.setToolTipText("Maximal Breite " + Material.MAXIMALER_X_WERT + " mm");
 	inputX.setColumns(10);
-	
+
 	JLabel lblInputeZ = new JLabel("Dicke");
 	lblInputeZ.setFont(Formatierung.eingabeFeldLabel());
 
@@ -150,7 +147,7 @@ public class ElementMaterialNeu extends Element implements IElement {
 	inputY = new JTextField();
 	inputY.setToolTipText("Maximal Länge " + Material.MAXIMALER_Y_WERT + " mm");
 	inputY.setColumns(10);
-	
+
 	save = new JButton("Speichern");
 	save.setFont(Formatierung.buttonFont());
 
@@ -163,13 +160,11 @@ public class ElementMaterialNeu extends Element implements IElement {
 	formPanel.add(lblInputeY, "1, 8, default, top");
 	formPanel.add(inputY, "2, 8, left, center");
 	formPanel.add(save, "1, 10, default, top");
-	
 
-	
 	panel.add(formPanel, "flowx,cell 0 0");
     }
 
-    private void materialSortenListeAbfragen() throws SQLiteException, IllegalArgumentException, SQLException {
+    private void materialSortenListeAbfragen() throws SQLiteException, IllegalArgumentException {
 	sqLite = new SQLiteConnect();
 	sqLite.dbConnect();
 	materialSorteListe = new MaterialSorte(sqLite);

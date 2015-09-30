@@ -1,10 +1,10 @@
 package de.edlly.test.material;
 
-import java.sql.SQLException;
 import org.junit.Test;
 import junit.framework.TestCase;
 
 import de.edlly.db.SQLiteConnect;
+import de.edlly.db.SQLiteException;
 import de.edlly.material.MaterialDatensatz;
 
 /**
@@ -22,14 +22,14 @@ public class MaterialDatensatzTest extends TestCase {
     int[] materialIdList = new int[] { 0, 1, 2, 3, 4 };
 
     @Override
-    public void setUp() throws IllegalArgumentException, SQLException {
+    public void setUp() throws IllegalArgumentException, SQLiteException {
 	sqlConnection = new SQLiteConnect();
 	sqlConnection.dbConnect();
 	materialDatensatz = new MaterialDatensatz(sqlConnection);
     }
 
     @Test
-    public void testSetMaterialIdNull() throws SQLException{
+    public void testSetMaterialIdNull() throws SQLiteException {
 
 	try {
 	    materialDatensatz.setMaterialId(0);
@@ -42,7 +42,7 @@ public class MaterialDatensatzTest extends TestCase {
     }
 
     @Test
-    public void testSetMaterialIdEins() throws IllegalArgumentException, SQLException {
+    public void testSetMaterialIdEins() throws IllegalArgumentException, SQLiteException {
 	materialDatensatz.setMaterialId(1);
 
 	assertEquals(1, materialDatensatz.getMaterialId());
@@ -54,7 +54,7 @@ public class MaterialDatensatzTest extends TestCase {
     }
 
     @Test
-    public void testGetMaterialDatensatz() throws SQLException {
+    public void testGetMaterialDatensatz() throws SQLiteException {
 	int[] testDatensatzEins = { 1, 1, 50, 10, 4000, 1 };
 
 	int[] abfrageErgebnissEins = materialDatensatz.getMaterialDatensatzAusDatenbank(1);
@@ -85,7 +85,7 @@ public class MaterialDatensatzTest extends TestCase {
     }
 
     @Override
-    public void tearDown() throws SQLException {
+    public void tearDown() throws SQLiteException {
 	sqlConnection.close();
     }
 }

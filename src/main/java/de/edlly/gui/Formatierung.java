@@ -12,13 +12,13 @@ import javax.swing.border.LineBorder;
  *
  */
 
-public  abstract class Formatierung {
+public abstract class Formatierung {
 
     // Formatierung Standard ElementPanel
-    
+
     public static final String MIG_ELEMENT_PANEL_LEFT = "[grow,left]";
     public static final String MIG_ELEMENT_PANEL_TOP = "[grow,top]";
-    
+
     // Position eines headers
     public static final int HEADER_POSITION_X = 5;
     public static final int HEADER_POSITION_Y = 5;

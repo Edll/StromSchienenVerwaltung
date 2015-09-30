@@ -1,10 +1,10 @@
 package de.edlly.test.part;
 
 import org.junit.Test;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import de.edlly.db.SQLiteConnect;
+import de.edlly.db.SQLiteException;
 import de.edlly.part.*;
 import junit.framework.TestCase;
 
@@ -14,7 +14,7 @@ public class PartDataTest extends TestCase {
     SQLiteConnect sqlConnection;
 
     @Override
-    public void setUp() throws PartException {
+    public void setUp() throws PartException, SQLiteException {
 	sqlConnection = new SQLiteConnect();
 	sqlConnection.dbConnect();
 	datensatz = new PartData<IPartData<?>>(sqlConnection);
@@ -49,7 +49,7 @@ public class PartDataTest extends TestCase {
     }
 
     @Test
-    public void testSetMaterialId() throws SQLException {
+    public void testSetMaterialId() throws SQLiteException {
 
 	try {
 	    datensatz.setMaterialId(0);
@@ -124,7 +124,7 @@ public class PartDataTest extends TestCase {
     }
 
     @Test
-    public void testGetDataListAll() throws PartException, SQLException {
+    public void testGetDataListAll() throws PartException, SQLiteException {
 	List<IPartData<?>> list = datensatz.getDataList();
 
 	assertEquals("Das erste Listenelement Stimmt nicht", 1, list.get(0).getId());
@@ -156,7 +156,7 @@ public class PartDataTest extends TestCase {
     }
 
     @Test
-    public void testGetIdList() throws SQLException {
+    public void testGetIdList() throws SQLiteException {
 	List<Integer> list = datensatz.getIdList();
 	List<Integer> idTestList = new ArrayList<Integer>();
 
@@ -170,7 +170,7 @@ public class PartDataTest extends TestCase {
     }
 
     @Override
-    public void tearDown() throws SQLException {
+    public void tearDown() throws SQLiteException {
 	sqlConnection.close();
     }
 

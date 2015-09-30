@@ -3,6 +3,7 @@ package de.edlly.material;
 import java.sql.*;
 
 import de.edlly.db.SQLiteConnect;
+import de.edlly.db.SQLiteException;
 import de.edlly.db.SQLitePreparedStatement;
 
 public class UpdateMaterialDatensatz extends MaterialDatensatz {
@@ -21,7 +22,7 @@ public class UpdateMaterialDatensatz extends MaterialDatensatz {
     @SuppressWarnings("unused")
     private int visibly;
 
-    public UpdateMaterialDatensatz(SQLiteConnect sqlConnection) throws IllegalArgumentException, SQLException {
+    public UpdateMaterialDatensatz(SQLiteConnect sqlConnection) throws IllegalArgumentException, SQLiteException {
 	super(sqlConnection);
 	sqlLite = new SQLitePreparedStatement(sqlConnection);
     }
@@ -58,7 +59,7 @@ public class UpdateMaterialDatensatz extends MaterialDatensatz {
 
     }
 
-    public void updateVisibly(int id, int visibly) {
+    public void updateVisibly(int id, int visibly) throws SQLiteException {
 
 	if (id == 0) {
 	    throw new IllegalArgumentException("Die Material id darf nicht 0 sein.");
@@ -68,18 +69,18 @@ public class UpdateMaterialDatensatz extends MaterialDatensatz {
 	}
 
 	try {
-	    sqlLite.setQuery( "UPDATE \"main\".\"Material\" SET \"visibly\" = ?1 WHERE  \"id\" = " + id);
+	    sqlLite.setQuery("UPDATE \"main\".\"Material\" SET \"visibly\" = ?1 WHERE  \"id\" = " + id);
 	    sqlLite.preparedStatmentVorbereiten(sqlLite.getQuery());
 	    sqlLite.getPreparedStatment().setInt(1, visibly);
 	    sqlLite.preparedStatmentAusfuehren();
 	    sqlLite.closePrepareStatment();
-	    
+
 	} catch (SQLException e) {
 
-	    throw new IllegalArgumentException(e);
+	    throw new SQLiteException(e.getLocalizedMessage());
 	} finally {
 	    try {
-		    sqlLite.closePrepareStatment();
+		sqlLite.closePrepareStatment();
 	    } catch (Exception e) {
 		throw new IllegalArgumentException(e);
 	    }

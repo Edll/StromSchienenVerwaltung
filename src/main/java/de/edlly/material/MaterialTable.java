@@ -1,11 +1,10 @@
 package de.edlly.material;
 
-import java.sql.*;
-
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import de.edlly.db.SQLiteConnect;
+import de.edlly.db.SQLiteException;
 
 public class MaterialTable {
     private SQLiteConnect sqLite;
@@ -17,14 +16,14 @@ public class MaterialTable {
 	sqLite = new SQLiteConnect();
     }
 
-    public JTable getMaterialTabel(boolean ausgeblendeteAnzeigen) throws IllegalArgumentException, SQLException {
+    public JTable getMaterialTabel(boolean ausgeblendeteAnzeigen) throws IllegalArgumentException, SQLiteException {
 	this.ausgeblendeteAnzeigen = ausgeblendeteAnzeigen;
 	makePartTable();
 
 	return materialTable;
     }
 
-    public void makePartTable() throws IllegalArgumentException, SQLException {
+    public void makePartTable() throws IllegalArgumentException, SQLiteException {
 	MaterialTabelModel model = new MaterialTabelModel();
 	model.addColumn("Id");
 	model.addColumn("Sorte");

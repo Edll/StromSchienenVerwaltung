@@ -3,6 +3,7 @@ package de.edlly.material;
 import java.sql.*;
 
 import de.edlly.db.SQLiteConnect;
+import de.edlly.db.SQLiteException;
 import de.edlly.db.SQLitePreparedStatement;
 
 /**
@@ -14,14 +15,14 @@ import de.edlly.db.SQLitePreparedStatement;
 public class NeuerMaterialDatensatz extends MaterialDatensatz {
     private SQLitePreparedStatement sqlLite;
 
-    public NeuerMaterialDatensatz(SQLiteConnect sqlConnection) throws IllegalArgumentException, SQLException {
+    public NeuerMaterialDatensatz(SQLiteConnect sqlConnection) throws IllegalArgumentException, SQLiteException {
 	super(sqlConnection);
 	sqlLite = new SQLitePreparedStatement(sqlConnection);
 
     }
 
     public void setMaterialDaten(int koordinateX, int koordinateZ, int koordinateyMax, int materialSorteId)
-	    throws IllegalArgumentException, SQLException {
+	    throws IllegalArgumentException, SQLiteException {
 	int[] materialDatensatz = new int[6];
 	try {
 
@@ -50,7 +51,7 @@ public class NeuerMaterialDatensatz extends MaterialDatensatz {
 	}
     }
 
-    public Boolean datensatzAusObjektWertenAnlegen() throws SQLException, IllegalArgumentException {
+    public Boolean datensatzAusObjektWertenAnlegen() throws SQLiteException, IllegalArgumentException {
 	int[] materialDatensatz = getMaterialDatensatz();
 
 	if (objektWerteSindNull()) {
@@ -75,7 +76,7 @@ public class NeuerMaterialDatensatz extends MaterialDatensatz {
 
 	} catch (SQLException sqlException) {
 
-	    throw new SQLException(sqlException);
+	    throw new SQLiteException(sqlException.getLocalizedMessage());
 	} finally {
 	    sqlLite.closePrepareStatment();
 	}
@@ -89,8 +90,7 @@ public class NeuerMaterialDatensatz extends MaterialDatensatz {
 	}
 
 	if (koordinateX > MAXIMALER_X_WERT) {
-	    throw new IllegalArgumentException(
-		    "Die maximal Materialbreite ist: " + MAXIMALER_X_WERT);
+	    throw new IllegalArgumentException("Die maximal Materialbreite ist: " + MAXIMALER_X_WERT);
 	}
 
 	return true;
@@ -116,14 +116,13 @@ public class NeuerMaterialDatensatz extends MaterialDatensatz {
 	}
 
 	if (koordinatey > MAXIMALER_Y_WERT) {
-	    throw new IllegalArgumentException(
-		    "Die maximal Material Länge ist: " + MAXIMALER_Y_WERT);
+	    throw new IllegalArgumentException("Die maximal Material Länge ist: " + MAXIMALER_Y_WERT);
 	}
 
 	return true;
     }
 
-    public Boolean materialSorteIdIstVorhanden(int materialSorteId) throws IllegalArgumentException, SQLException {
+    public Boolean materialSorteIdIstVorhanden(int materialSorteId) throws IllegalArgumentException, SQLiteException {
 
 	if (materialSorteId < 0) {
 	    throw new IllegalArgumentException("Die materialSorteId darf nicht Negativ sein.");

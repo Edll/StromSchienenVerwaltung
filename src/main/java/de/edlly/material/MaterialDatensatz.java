@@ -3,6 +3,7 @@ package de.edlly.material;
 import java.sql.*;
 
 import de.edlly.db.SQLiteConnect;
+import de.edlly.db.SQLiteException;
 import de.edlly.db.SQLiteStatement;
 
 /**
@@ -20,13 +21,13 @@ public class MaterialDatensatz extends Material {
     private MaterialIds materialId;
     SQLiteStatement sqlLite;
 
-    public MaterialDatensatz(SQLiteConnect sqlConnection) throws IllegalArgumentException, SQLException {
+    public MaterialDatensatz(SQLiteConnect sqlConnection) throws IllegalArgumentException, SQLiteException {
 	super(sqlConnection);
 	sqlLite = new SQLiteStatement(sqlConnection);
 	materialId = new MaterialIds(sqlConnection);
     }
 
-    public void setMaterialId(int id) throws IllegalArgumentException, SQLException {
+    public void setMaterialId(int id) throws IllegalArgumentException, SQLiteException {
 	materialId.setId(id);
     }
 
@@ -34,7 +35,7 @@ public class MaterialDatensatz extends Material {
 	return materialId.getId();
     }
 
-    public int[] getMaterialDatensatzAusDatenbank(int materialId) throws IllegalArgumentException, SQLException {
+    public int[] getMaterialDatensatzAusDatenbank(int materialId) throws IllegalArgumentException, SQLiteException {
 	setMaterialId(materialId);
 
 	materialDatenAbrufen();
@@ -54,7 +55,7 @@ public class MaterialDatensatz extends Material {
 	this.materialDatensatz = materialDatensatz;
     }
 
-    private void materialDatenAbrufen() throws SQLException {
+    private void materialDatenAbrufen() throws SQLiteException {
 
 	try {
 
@@ -77,12 +78,12 @@ public class MaterialDatensatz extends Material {
 	    sqlLite.closeStatmentAndResult();
 
 	} catch (SQLException e) {
-	    throw new SQLException(e);
+	    throw new SQLiteException(e.getLocalizedMessage());
 
 	} finally {
 	    try {
 		sqlLite.closeStatmentAndResult();
-	    } catch (SQLException e) {
+	    } catch (SQLiteException e) {
 		e.printStackTrace();
 	    }
 

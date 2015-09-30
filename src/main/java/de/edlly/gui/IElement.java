@@ -26,6 +26,6 @@ public interface IElement {
     /**
      * Beinhaltetet die Behandlung Von User Exceptions die durch Falsche eingaben auftretten können.
      */
-    
+
     public void userExceptionHandling(String message);
 }

@@ -16,7 +16,7 @@ public class SQLiteQueryAndResultTest extends TestCase {
     SQLiteConnect sqlConnection;
 
     @Override
-    public void setUp() throws IllegalArgumentException, SQLException {
+    public void setUp() throws IllegalArgumentException, SQLiteException {
 	sqlConnection = new SQLiteConnect();
 	sqlConnection.dbConnect();
 	sqlAbfrage = new SQLiteQueryAndResult(sqlConnection);
@@ -27,7 +27,7 @@ public class SQLiteQueryAndResultTest extends TestCase {
 	try {
 	    sqlAbfrage.setQuery(null);
 	    fail("Muss eine IllegalArgumentException auslösen");
-	} catch (IllegalArgumentException exception) {
+	} catch (SQLiteException exception) {
 	    String erwarteteException = "Der SQL Query String darf nicht null sein.";
 	    assertEquals(erwarteteException, exception.getMessage());
 	}
@@ -42,13 +42,13 @@ public class SQLiteQueryAndResultTest extends TestCase {
 	    String bekommenException = exception.getMessage();
 	    String erwarteteException = "Fehler bei der SQL Verbindung";
 	    boolean check = bekommenException.contains(erwarteteException);
-	    assertTrue("Sollte \"Fehler bei der SQL Verbindung. Bitte prüfen sie den SQLite File\" werfen " ,check);
+	    assertTrue("Sollte \"Fehler bei der SQL Verbindung. Bitte prüfen sie den SQLite File\" werfen ", check);
 	}
 
     }
 
     @Test
-    public void testGetQuery() {
+    public void testGetQuery() throws SQLiteException {
 	String erwartet = "TestQuery";
 	sqlAbfrage.setQuery(erwartet);
 	String bekommen = sqlAbfrage.getQuery();
@@ -57,7 +57,7 @@ public class SQLiteQueryAndResultTest extends TestCase {
     }
 
     @Override
-    public void tearDown() throws SQLException {
+    public void tearDown() throws SQLiteException {
 	sqlConnection.close();
     }
 }

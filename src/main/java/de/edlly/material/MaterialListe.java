@@ -1,6 +1,5 @@
 package de.edlly.material;
 
-import java.sql.SQLException;
 import de.edlly.db.*;
 
 /**
@@ -26,20 +25,20 @@ public class MaterialListe extends Material {
 	this.ausgeblendetDatenAnzeigen = ausgeblendetDatenAnzeigen;
     }
 
-    public Object[][] getMaterialListe() throws SQLException, IllegalArgumentException {
+    public Object[][] getMaterialListe() throws SQLiteException, IllegalArgumentException {
 
 	materialListeAusDatenbankAbrufen();
 	return materialListeUnformatiert;
     }
 
-    public Object[][] getMaterialListeFormatiert() throws SQLException, IllegalArgumentException {
+    public Object[][] getMaterialListeFormatiert() throws SQLiteException, IllegalArgumentException {
 
 	materialListeAusDatenbankAbrufen();
 	materialListeFormatieren();
 	return materialListeFormatiert;
     }
 
-    private void materialListeFormatieren() throws SQLException {
+    private void materialListeFormatieren() throws SQLiteException {
 	materialListeFormatiert = new Object[materialListeUnformatiert.length][5];
 	MaterialSorte materialSorte = new MaterialSorte(getSqlConnection());
 	for (int DatensatzCounter = 0; DatensatzCounter != materialListeUnformatiert.length; DatensatzCounter++) {
@@ -58,7 +57,7 @@ public class MaterialListe extends Material {
 	}
     }
 
-    private void materialListeAusDatenbankAbrufen() throws SQLException, IllegalArgumentException {
+    private void materialListeAusDatenbankAbrufen() throws SQLiteException, IllegalArgumentException {
 	int[] materialIds = new int[0];
 
 	MaterialIds abfrageMaterialIds = new MaterialIds(getSqlConnection());

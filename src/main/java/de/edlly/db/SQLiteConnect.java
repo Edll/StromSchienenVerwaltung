@@ -23,7 +23,11 @@ public class SQLiteConnect extends SQLite {
 	return connection;
     }
 
-    public void setSqlConnection(SQLiteConnect connection) {
+    @Override
+    public void setSqlConnection(SQLiteConnect connection) throws SQLiteException {
+	if (connection == null) {
+	    throw new SQLiteException("Fehler bei der SQL Verbindung");
+	}
 	this.connection = connection.getSqlConnection();
     }
 
@@ -47,27 +51,34 @@ public class SQLiteConnect extends SQLite {
 	}
     }
 
-    public void close() throws SQLException {
-	if (connection != null && !connection.isClosed()) {
-	    connection.close();
+    public void close() throws SQLiteException {
+	try {
+	    if (connection != null && !connection.isClosed()) {
+		    connection.close();
+	    }
+	} catch (SQLException e) {
+	    throw new SQLiteException(e.getLocalizedMessage());
 	}
+
     }
 
-    public static void isClosedOrNull(SQLiteConnect sqlConnection) throws SQLiteException, SQLException {
+    public static void isClosedOrNull(SQLiteConnect sqlConnection) throws SQLiteException {
 
 	if (sqlConnection == null) {
-	    throw new SQLiteException(
-		    "Fehler bei der SQL Verbindung: Die Verbindung ist nicht initialisiert worde.");
+	    throw new SQLiteException("Fehler bei der SQL Verbindung: Die Verbindung ist nicht initialisiert worde.");
 	} else {
 	    isClosed(sqlConnection);
 	}
     }
 
-    public static void isClosed(SQLiteConnect connection) throws SQLiteException, SQLException {
+    public static void isClosed(SQLiteConnect connection) throws SQLiteException {
 	Connection sqlConnectionGet = connection.getSqlConnection();
-	if (sqlConnectionGet == null || sqlConnectionGet.isClosed()) {
-	    throw new SQLiteException(
-		    "Fehler bei der SQL Verbindung: Die Verbindung ist nicht gesetzt worden.");
+	try {
+	    if (sqlConnectionGet == null || sqlConnectionGet.isClosed()) {
+		throw new SQLiteException("Fehler bei der SQL Verbindung: Die Verbindung ist nicht gesetzt worden.");
+	    }
+	} catch (SQLException e) {
+	    throw new SQLiteException(e.getLocalizedMessage());
 	}
     }
 }

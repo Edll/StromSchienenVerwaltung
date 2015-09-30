@@ -2,10 +2,10 @@ package de.edlly.gui.elements;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.*;
 import javax.swing.*;
 
 import de.edlly.db.SQLiteConnect;
+import de.edlly.db.SQLiteException;
 import de.edlly.gui.Element;
 import de.edlly.gui.Formatierung;
 import de.edlly.gui.IElement;
@@ -58,7 +58,7 @@ public class ElementMaterialListe extends Element implements IElement {
 	} catch (IllegalArgumentException e) {
 
 	    userExceptionHandling(e.getLocalizedMessage());
-	} catch (SQLException e) {
+	} catch (SQLiteException e) {
 
 	    systemExceptionHandling(e.getLocalizedMessage());
 	}
@@ -85,13 +85,13 @@ public class ElementMaterialListe extends Element implements IElement {
 		    }
 		    addMaterialTable();
 		    sqLite.close();
-		} catch (SQLException e) {
+		} catch (SQLiteException e) {
 		    e.printStackTrace();
 
 		} finally {
 		    try {
 			sqLite.close();
-		    } catch (SQLException e) {
+		    } catch (SQLiteException e) {
 
 			e.printStackTrace();
 		    }

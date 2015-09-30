@@ -3,6 +3,7 @@ package de.edlly.material;
 import java.sql.*;
 
 import de.edlly.db.SQLiteConnect;
+import de.edlly.db.SQLiteException;
 import de.edlly.db.SQLiteStatement;
 
 /**
@@ -18,12 +19,12 @@ public class MaterialSorte extends Material {
     private String[] materialSorteNameListe = new String[0];
     SQLiteStatement sqlLite;
 
-    public MaterialSorte(SQLiteConnect sqlConnection) throws IllegalArgumentException, SQLException {
+    public MaterialSorte(SQLiteConnect sqlConnection) throws IllegalArgumentException, SQLiteException {
 	super(sqlConnection);
 	sqlLite = new SQLiteStatement(sqlConnection);
     }
 
-    public int getMaterialSorteId(String materialSorteName) throws IllegalArgumentException, SQLException {
+    public int getMaterialSorteId(String materialSorteName) throws IllegalArgumentException, SQLiteException {
 	setMaterialSorteName(materialSorteName);
 	materialSorteNameToId();
 
@@ -34,7 +35,7 @@ public class MaterialSorte extends Material {
 	this.materialSorteId = materialSorteId;
     }
 
-    public String getMaterialSorteName(int materialSorteId) throws SQLException {
+    public String getMaterialSorteName(int materialSorteId) throws SQLiteException {
 	setMaterialSorteId(materialSorteId);
 	materialSortenIdToName();
 
@@ -49,7 +50,7 @@ public class MaterialSorte extends Material {
 	return materialSorteNameListe;
     }
 
-    public void materialSortenIdToName() throws SQLException {
+    public void materialSortenIdToName() throws SQLiteException {
 	try {
 	    sqlLite.setQuery("SELECT MaterialSorte FROM MaterialSorten Where id=" + materialSorteId);
 	    sqlLite.statmentVorbereitenUndStarten(sqlLite.getQuery());
@@ -63,17 +64,17 @@ public class MaterialSorte extends Material {
 		sqlLite.closeStatmentAndResult();
 	    }
 	} catch (SQLException sqlException) {
-	    throw new SQLException(sqlException);
+	    throw new SQLiteException(sqlException.getLocalizedMessage());
 	} finally {
 	    try {
 		sqlLite.closeStatmentAndResult();
-	    } catch (SQLException sqlException) {
+	    } catch (SQLiteException sqlException) {
 		sqlException.printStackTrace();
 	    }
 	}
     }
 
-    public void materialSorteNameToId() throws SQLException, IllegalArgumentException {
+    public void materialSorteNameToId() throws SQLiteException, IllegalArgumentException {
 	try {
 	    if (materialSorteName == null) {
 		materialSorteId = 0;
@@ -92,18 +93,18 @@ public class MaterialSorte extends Material {
 	    }
 	} catch (SQLException sqlException) {
 
-	    throw new SQLException(sqlException);
+	    throw new SQLiteException(sqlException.getLocalizedMessage());
 
 	} finally {
 	    try {
 		sqlLite.closeStatmentAndResult();
-	    } catch (SQLException sqlException) {
+	    } catch (SQLiteException sqlException) {
 		sqlException.printStackTrace();
 	    }
 	}
     }
 
-    public String[] materialSorteNamensListe() throws SQLException {
+    public String[] materialSorteNamensListe() throws SQLiteException {
 	try {
 	    sqlLite.setQuery("SELECT MaterialSorte FROM MaterialSorten");
 	    sqlLite.statmentVorbereitenUndStarten(sqlLite.getQuery());
@@ -116,7 +117,7 @@ public class MaterialSorte extends Material {
 	    materialSorteNameListe = new String[anzahlDerDatensatze];
 
 	    sqlLite.statmentExecute(sqlLite.getQuery()); // nötig um den Datensatz zurück zu setzten. SQLite bietet
-							    // hier keine
+							 // hier keine
 	    // bessere Möglichkeit.
 	    int count = 0;
 	    while (sqlLite.getResult().next()) {
@@ -128,18 +129,18 @@ public class MaterialSorte extends Material {
 	    return materialSorteNameListe;
 
 	} catch (SQLException sqlException) {
-	    throw new SQLException(sqlException);
+	    throw new SQLiteException(sqlException.getLocalizedMessage());
 
 	} finally {
 	    try {
 		sqlLite.closeStatmentAndResult();
-	    } catch (SQLException sqlException) {
+	    } catch (SQLiteException sqlException) {
 		sqlException.printStackTrace();
 	    }
 	}
     }
 
-    public boolean materialsorteIdVorhanden(int id) throws SQLException {
+    public boolean materialsorteIdVorhanden(int id) throws SQLiteException {
 	if (getMaterialSorteName(id) == "N/A") {
 	    return false;
 	} else {

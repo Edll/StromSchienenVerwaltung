@@ -1,10 +1,9 @@
 package de.edlly.test.part;
 
-import java.sql.SQLException;
-
 import org.junit.Test;
 
 import de.edlly.db.SQLiteConnect;
+import de.edlly.db.SQLiteException;
 import de.edlly.part.IPartData;
 import de.edlly.part.PartDataAdd;
 import de.edlly.part.PartException;
@@ -15,7 +14,7 @@ public class PartDataAddTest extends TestCase {
     PartDataAdd<?> datensatz;
 
     @Override
-    public void setUp() throws PartException {
+    public void setUp() throws PartException, SQLiteException {
 	sqlConnection = new SQLiteConnect();
 	sqlConnection.dbConnect();
 	datensatz = new PartDataAdd<IPartData<?>>(sqlConnection);
@@ -32,7 +31,7 @@ public class PartDataAddTest extends TestCase {
     }
 
     @Override
-    public void tearDown() throws SQLException {
+    public void tearDown() throws SQLiteException {
 	sqlConnection.close();
     }
 

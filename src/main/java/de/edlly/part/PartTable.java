@@ -1,10 +1,10 @@
 package de.edlly.part;
 
-import java.sql.SQLException;
 import java.util.List;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import de.edlly.db.SQLiteConnect;
+import de.edlly.db.SQLiteException;
 
 public class PartTable {
     private SQLiteConnect sqLite;
@@ -15,12 +15,12 @@ public class PartTable {
 	sqLite = new SQLiteConnect();
     }
 
-    public JTable getPartTable() throws SQLException, PartException {
+    public JTable getPartTable() throws SQLiteException, PartException {
 	makePartTable();
 	return partTable;
     }
 
-    public void makePartTable() throws SQLException, PartException {
+    public void makePartTable() throws SQLiteException, PartException {
 	PartTableModel model = new PartTableModel();
 
 	model.addColumn("Id");
@@ -28,9 +28,9 @@ public class PartTable {
 	model.addColumn("Material");
 	model.addColumn("Projekt Nr.");
 	model.addColumn("Erstellt am");
-	
+
 	sqLite.dbConnect();
-	
+
 	datensatz = new PartData<IPartData<?>>(sqLite);
 	List<IPartData<?>> list = datensatz.getDataList();
 

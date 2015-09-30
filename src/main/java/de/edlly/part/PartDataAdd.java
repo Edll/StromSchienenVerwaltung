@@ -14,7 +14,7 @@ public class PartDataAdd<T> extends PartData<T>implements IPartData<T> {
 	} catch (IllegalArgumentException e) {
 
 	    throw new PartException("Format Fehler:" + e.getLocalizedMessage() + " in " + e.getClass());
-	} catch (SQLException e) {
+	} catch (SQLiteException e) {
 
 	    throw new PartException("SQL Fehler:" + e.getLocalizedMessage() + " in " + e.getClass());
 	}
@@ -34,13 +34,15 @@ public class PartDataAdd<T> extends PartData<T>implements IPartData<T> {
 	    sql.preparedStatmentAusfuehren();
 	    sql.closePrepareStatment();
 	    return true;
-	} catch (SQLException e) {
+	} catch (SQLiteException e) {
 
+	    throw new PartException("SQL Fehler:" + e.getLocalizedMessage() + " in " + e.getClass());
+	} catch (SQLException e) {
 	    throw new PartException("SQL Fehler:" + e.getLocalizedMessage() + " in " + e.getClass());
 	} finally {
 	    try {
 		sql.closePrepareStatment();
-	    } catch (SQLException e) {
+	    } catch (SQLiteException e) {
 		throw new PartException("SQL Fehler:" + e.getLocalizedMessage() + " in " + e.getClass());
 	    }
 	}

@@ -1,12 +1,11 @@
 package de.edlly.test.material;
 
-import java.sql.SQLException;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import de.edlly.db.SQLiteConnect;
+import de.edlly.db.SQLiteException;
 import de.edlly.material.MaterialIds;
 import junit.framework.TestCase;
 
@@ -22,14 +21,14 @@ public class MaterialIdsTest extends TestCase {
     MaterialIds materialIds;
 
     @Before
-    public void setUp() throws IllegalArgumentException, SQLException {
+    public void setUp() throws IllegalArgumentException, SQLiteException {
 	sqlConnection = new SQLiteConnect();
 	sqlConnection.dbConnect();
 	materialIds = new MaterialIds(sqlConnection);
     }
 
     @Test
-    public void testGetIdListeDatensatzeTrue() throws SQLException, IllegalArgumentException {
+    public void testGetIdListeDatensatzeTrue() throws SQLiteException, IllegalArgumentException {
 	boolean ausgelendeteDatensatzeNichtAnzeigen = true;
 	materialIds.setAusgeblendetDatenAnzeigen(ausgelendeteDatensatzeNichtAnzeigen);
 	int[] idListeBekommen = materialIds.getIdListe();
@@ -38,7 +37,7 @@ public class MaterialIdsTest extends TestCase {
     }
 
     @Test
-    public void testGetIdListeDatensatzeFalse() throws SQLException, IllegalArgumentException {
+    public void testGetIdListeDatensatzeFalse() throws SQLiteException, IllegalArgumentException {
 	boolean ausgelendeteDatensatzeNichtAnzeigen = false;
 
 	materialIds.setAusgeblendetDatenAnzeigen(ausgelendeteDatensatzeNichtAnzeigen);
@@ -48,7 +47,7 @@ public class MaterialIdsTest extends TestCase {
     }
 
     @Test
-    public void testQueryAuswahlFalse() {
+    public void testQueryAuswahlFalse() throws SQLiteException {
 	materialIds.setAusgeblendetDatenAnzeigen(false);
 	materialIds.queryAuswahl();
 
@@ -59,7 +58,7 @@ public class MaterialIdsTest extends TestCase {
     }
 
     @Test
-    public void testQueryAuswahlTrue() {
+    public void testQueryAuswahlTrue() throws SQLiteException {
 	materialIds.setAusgeblendetDatenAnzeigen(true);
 	materialIds.queryAuswahl();
 
@@ -70,7 +69,7 @@ public class MaterialIdsTest extends TestCase {
     }
 
     @Test
-    public void testanzahlDerDatensatze() {
+    public void testanzahlDerDatensatze() throws SQLiteException {
 	materialIds.setAusgeblendetDatenAnzeigen(false);
 	materialIds.queryAuswahl();
 	int anzahlBekommen = materialIds.anzahlDatenseatze();
@@ -83,20 +82,20 @@ public class MaterialIdsTest extends TestCase {
 	try {
 	    materialIds.anzahlDatenseatze();
 	    fail("muss eine IllegalArgumentException ergeben da Query String nicht gesezt worden ist.");
-	} catch (IllegalArgumentException e) {
+	} catch (SQLiteException e) {
 	    assertEquals("Der SQL Query String darf nicht null sein.", e.getLocalizedMessage());
 	}
     }
 
     @Test
-    public void testMaterialIdVorhandenFalse() throws IllegalArgumentException, SQLException {
+    public void testMaterialIdVorhandenFalse() throws IllegalArgumentException, SQLiteException {
 	boolean idnichtvorhanden = materialIds.materialIdVorhanden(0);
 
 	assertFalse("Wenn 0 als id abgefragt wird sollte das ergebniss false sein", idnichtvorhanden);
     }
 
     @Test
-    public void testMaterialIdVorhandenTrue() throws IllegalArgumentException, SQLException {
+    public void testMaterialIdVorhandenTrue() throws IllegalArgumentException, SQLiteException {
 	int[] idListeBekommen = materialIds.getIdListe();
 	boolean idvorhanden = materialIds.materialIdVorhanden(idListeBekommen[0]);
 
@@ -104,7 +103,7 @@ public class MaterialIdsTest extends TestCase {
     }
 
     @After
-    public void tearDown() throws SQLException {
+    public void tearDown() throws SQLiteException {
 	sqlConnection.close();
     }
 

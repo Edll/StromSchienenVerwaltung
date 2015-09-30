@@ -3,6 +3,8 @@ package de.edlly.part;
 import java.sql.SQLException;
 import java.util.List;
 
+import de.edlly.db.SQLiteException;
+
 public interface IPartData<T> extends IPart {
 
     /**
@@ -15,7 +17,7 @@ public interface IPartData<T> extends IPart {
      * @throws PartException
      */
 
-    List<Integer> getIdList() throws SQLException;
+    List<Integer> getIdList() throws SQLiteException;
 
     /**
      * Gibt eine komplette liste mit allen Ids zurück
@@ -31,7 +33,7 @@ public interface IPartData<T> extends IPart {
      * @throws PartException
      */
 
-    public List<IPartData<?>> getDataList() throws PartException, SQLException;
+    public List<IPartData<?>> getDataList() throws PartException, SQLiteException;
 
     /**
      * Erstellt eine Liste mit den Werkstücken die in der Id Liste abgefragt worden sind.

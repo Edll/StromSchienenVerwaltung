@@ -2,7 +2,6 @@ package de.edlly.gui.elements;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
 import javax.swing.*;
 import com.jgoodies.forms.layout.*;
 import net.miginfocom.swing.MigLayout;
@@ -39,14 +38,13 @@ public class ElementPartNeu extends Element implements IElement {
 		addStepOne();
 	    } catch (IllegalArgumentException e) {
 		userExceptionHandling(e.getLocalizedMessage());
-	    } catch (SQLException e) {
-		// TODO Auto-generated catch block
+	    } catch (SQLiteException e) {
 		systemExceptionHandling(e.getLocalizedMessage());
 	    }
 	}
     }
 
-    public void addStepOne() throws IllegalArgumentException, SQLException {
+    public void addStepOne() throws IllegalArgumentException, SQLiteException {
 	panel.setLayout(new MigLayout("", "[608.00px,left]", "[215px,top][400px:n,grow,top][center]"));
 
 	JPanel formPanel = new JPanel();
@@ -108,7 +106,7 @@ public class ElementPartNeu extends Element implements IElement {
 		    partNew.dbAdd();
 		    sqLite.close();
 
-		} catch (SQLException e) {
+		} catch (SQLiteException e) {
 		    JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
 		} catch (NumberFormatException e) {
 		    JOptionPane.showMessageDialog(null, "Bitte eine gültige Zahl eingeben.");
@@ -119,7 +117,7 @@ public class ElementPartNeu extends Element implements IElement {
 		} finally {
 		    try {
 			sqLite.close();
-		    } catch (SQLException e) {
+		    } catch (SQLiteException e) {
 			JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
 		    }
 		}

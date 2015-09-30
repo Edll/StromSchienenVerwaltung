@@ -1,8 +1,7 @@
 package de.edlly.part;
 
-import java.sql.SQLException;
-
 import de.edlly.db.SQLiteConnect;
+import de.edlly.db.SQLiteException;
 
 public interface IPart {
 
@@ -49,10 +48,10 @@ public interface IPart {
      * Id das Material in das Objekt Setzten
      * 
      * @param id
-     * @throws SQLException
+     * @throws SQLiteException
      */
 
-    public void setMaterialId(Integer materialId) throws IllegalArgumentException, SQLException;
+    public void setMaterialId(Integer materialId) throws SQLiteException;
 
     /**
      * Timestamp wann das Werkstück erstellt worden ist.

@@ -1,7 +1,5 @@
 package de.edlly.db;
 
-import java.sql.*;
-
 /**
  * 
  * Beim ersten start des Programms wird die Datenbank Struktur geprüft sollte diese nicht vorhanden sein wird sie
@@ -11,38 +9,37 @@ import java.sql.*;
  *
  */
 
-public class SQLiteDatenbankStruktur extends SQLitePreparedStatement {
+public class SQLiteDatenbankStruktur {
+    SQLitePreparedStatement sqLite;
 
-    public SQLiteDatenbankStruktur(SQLiteConnect sqlConnection) throws IllegalArgumentException, SQLException {
-	super(sqlConnection);
+    public SQLiteDatenbankStruktur(SQLiteConnect sqLite) throws IllegalArgumentException, SQLiteException {
+	this.sqLite = new SQLitePreparedStatement(sqLite);
     }
 
-    public void datenbankCheckUndAnlegen() throws IllegalArgumentException, SQLException {
-	getSqlConnection();
+    public void datenbankCheckUndAnlegen() throws SQLiteException {
 	boolean tableMaterialVorhanden = tableMaterialVorhanden();
 	boolean tableMaterialSorteVorhanden = tableMaterialSorteVorhanden();
 	boolean tableBiegenVorhanden = tableBiegenVorhanden();
 	if (tableMaterialVorhanden || tableMaterialSorteVorhanden || tableBiegenVorhanden) {
-	    throw new IllegalArgumentException(
-		    "Die Datenbank war nicht vorhanden. Eine neue leere Datenbank wurde angelegt.");
+	    throw new SQLiteException("Die Datenbank war nicht vorhanden. Eine neue leere Datenbank wurde angelegt.");
 	}
     }
 
-    public boolean tableMaterialVorhanden() throws SQLException, IllegalArgumentException {
+    public boolean tableMaterialVorhanden() throws SQLiteException {
 	try {
-	    setQuery("SELECT * FROM Material");
-	    preparedStatmentVorbereiten(getQuery());
-	    preparedStatmentAusfuehren();
-	    closePrepareStatment();
-	} catch (SQLException e) {
+	    sqLite.setQuery("SELECT * FROM Material");
+	    sqLite.preparedStatmentVorbereiten(sqLite.getQuery());
+	    sqLite.preparedStatmentAusfuehren();
+	    sqLite.closePrepareStatment();
+	} catch (SQLiteException e) {
 	    String errorErwartet = "no such table: Material";
 	    String errorBekommen = e.getLocalizedMessage();
 	    if (errorBekommen.contains(errorErwartet)) {
-		setQuery(
+		sqLite.setQuery(
 			"CREATE TABLE \"Material\" (\"id\" INTEGER PRIMARY KEY  NOT NULL ,\"MaterialSorteId\" INTEGER DEFAULT (null) ,\"x\" INTEGER,\"z\" INTEGER,\"yMax\" INTEGER,\"visibly\" BOOL NOT NULL  DEFAULT (1) )");
-		preparedStatmentVorbereiten(getQuery());
-		preparedStatmentAusfuehren();
-		closePrepareStatment();
+		sqLite.preparedStatmentVorbereiten(sqLite.getQuery());
+		sqLite.preparedStatmentAusfuehren();
+		sqLite.closePrepareStatment();
 		return true;
 	    }
 
@@ -50,35 +47,36 @@ public class SQLiteDatenbankStruktur extends SQLitePreparedStatement {
 	return false;
     }
 
-    public boolean tableMaterialSorteVorhanden() throws SQLException, IllegalArgumentException {
+    public boolean tableMaterialSorteVorhanden() throws SQLiteException {
 	try {
-	    setQuery("SELECT * FROM MaterialSorten");
-	    preparedStatmentVorbereiten(getQuery());
-	    preparedStatmentAusfuehren();
-	    closePrepareStatment();
-	} catch (SQLException e) {
+	    sqLite.setQuery("SELECT * FROM MaterialSorten");
+	    sqLite.preparedStatmentVorbereiten(sqLite.getQuery());
+	    sqLite.preparedStatmentAusfuehren();
+	    sqLite.closePrepareStatment();
+	} catch (SQLiteException e) {
 	    String errorErwartet = "no such table: MaterialSorten";
 	    String errorBekommen = e.getLocalizedMessage();
 	    if (errorBekommen.contains(errorErwartet)) {
-		setQuery(
+		sqLite.setQuery(
 			"CREATE TABLE \"MaterialSorten\" (\"id\" INTEGER PRIMARY KEY  NOT NULL  UNIQUE , \"MaterialSorte\" TEXT)");
-		preparedStatmentVorbereiten(getQuery());
-		preparedStatmentAusfuehren();
-		closePrepareStatment();
+		sqLite.preparedStatmentVorbereiten(sqLite.getQuery());
+		sqLite.preparedStatmentAusfuehren();
+		sqLite.closePrepareStatment();
 
 		// TODO: SQLite Befehl so umstricken das er alles Datensätze auf einmal einträgt!
-		setQuery("INSERT INTO MaterialSorten  (\"id\",\"MaterialSorte\") VALUES (\"1\",\"Kupfer\") ");
-		preparedStatmentVorbereiten(getQuery());
-		preparedStatmentAusfuehren();
-		closePrepareStatment();
-		setQuery("INSERT INTO MaterialSorten  (\"id\",\"MaterialSorte\") VALUES (\"2\",\"Kupfer Verz.\") ");
-		preparedStatmentVorbereiten(getQuery());
-		preparedStatmentAusfuehren();
-		closePrepareStatment();
-		setQuery("INSERT INTO MaterialSorten  (\"id\",\"MaterialSorte\") VALUES (\"3\",\"Alu\") ");
-		preparedStatmentVorbereiten(getQuery());
-		preparedStatmentAusfuehren();
-		closePrepareStatment();
+		sqLite.setQuery("INSERT INTO MaterialSorten  (\"id\",\"MaterialSorte\") VALUES (\"1\",\"Kupfer\") ");
+		sqLite.preparedStatmentVorbereiten(sqLite.getQuery());
+		sqLite.preparedStatmentAusfuehren();
+		sqLite.closePrepareStatment();
+		sqLite.setQuery(
+			"INSERT INTO MaterialSorten  (\"id\",\"MaterialSorte\") VALUES (\"2\",\"Kupfer Verz.\") ");
+		sqLite.preparedStatmentVorbereiten(sqLite.getQuery());
+		sqLite.preparedStatmentAusfuehren();
+		sqLite.closePrepareStatment();
+		sqLite.setQuery("INSERT INTO MaterialSorten  (\"id\",\"MaterialSorte\") VALUES (\"3\",\"Alu\") ");
+		sqLite.preparedStatmentVorbereiten(sqLite.getQuery());
+		sqLite.preparedStatmentAusfuehren();
+		sqLite.closePrepareStatment();
 		return true;
 	    }
 
@@ -86,22 +84,22 @@ public class SQLiteDatenbankStruktur extends SQLitePreparedStatement {
 	return false;
     }
 
-    public boolean tableBiegenVorhanden() throws SQLException, IllegalArgumentException {
+    public boolean tableBiegenVorhanden() throws SQLiteException {
 	try {
-	    setQuery("SELECT * FROM Biegen");
-	    preparedStatmentVorbereiten(getQuery());
-	    preparedStatmentAusfuehren();
-	    closePrepareStatment();
+	    sqLite.setQuery("SELECT * FROM Biegen");
+	    sqLite.preparedStatmentVorbereiten(sqLite.getQuery());
+	    sqLite.preparedStatmentAusfuehren();
+	    sqLite.closePrepareStatment();
 
-	} catch (SQLException e) {
+	} catch (SQLiteException e) {
 	    String errorErwartet = "no such table: Biegen";
 	    String errorBekommen = e.getLocalizedMessage();
 	    if (errorBekommen.contains(errorErwartet)) {
-		setQuery(
+		sqLite.setQuery(
 			"CREATE TABLE \"Biegen\" (\"id\" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE , \"WerkstueckId\" INTEGER NOT NULL , \"y\" INTEGER, \"Winkel\" INTEGER, \"Richtung\" TEXT)");
-		preparedStatmentVorbereiten(getQuery());
-		preparedStatmentAusfuehren();
-		closePrepareStatment();
+		sqLite.preparedStatmentVorbereiten(sqLite.getQuery());
+		sqLite.preparedStatmentAusfuehren();
+		sqLite.closePrepareStatment();
 		return true;
 	    }
 	}

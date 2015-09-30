@@ -12,11 +12,11 @@ import java.sql.*;
  * @author Edlly java@edlly.de
  *
  */
-public class SQLiteQueryAndResult extends SQLite {
+public class SQLiteQueryAndResult extends SQLiteConnect {
     private ResultSet result = null;
     private String query = "";
 
-    public SQLiteQueryAndResult(SQLiteConnect sqlConnection) throws IllegalArgumentException, SQLException {
+    public SQLiteQueryAndResult(SQLiteConnect sqlConnection) throws SQLiteException {
 	SQLiteConnect.isClosedOrNull(sqlConnection);
 	setSqlConnection(sqlConnection);
     }
@@ -29,21 +29,25 @@ public class SQLiteQueryAndResult extends SQLite {
 	return result;
     }
 
-    public void setQuery(String query) throws IllegalArgumentException {
+    public void setQuery(String query) throws SQLiteException {
 	queryNotNull(query);
 	this.query = query;
     }
 
-    public void closeResult() throws SQLException {
-
-	if (this.result != null && !this.result.isClosed()) {
-	    this.result.close();
+    public void closeResult() throws SQLiteException {
+	try {
+	    if (this.result != null && !this.result.isClosed()) {
+		this.result.close();
+	    }
+	} catch (SQLException e) {
+	    throw new SQLiteException(e.getLocalizedMessage());
 	}
+
     }
 
-    protected void queryNotNull(String query) throws IllegalArgumentException {
+    protected void queryNotNull(String query) throws SQLiteException {
 	if (query == null || query == "") {
-	    throw new IllegalArgumentException("Der SQL Query String darf nicht null sein.");
+	    throw new SQLiteException("Der SQL Query String darf nicht null sein.");
 	}
     }
 
@@ -51,7 +55,12 @@ public class SQLiteQueryAndResult extends SQLite {
 	return this.query;
     }
 
-    public boolean resultOhneErgebniss(ResultSet result) throws SQLException {
-	return !result.isBeforeFirst();
+    public boolean resultOhneErgebniss(ResultSet result) throws SQLiteException {
+
+	try {
+	    return !result.isBeforeFirst();
+	} catch (SQLException e) {
+	    throw new SQLiteException(e.getLocalizedMessage());
+	}
     }
 }

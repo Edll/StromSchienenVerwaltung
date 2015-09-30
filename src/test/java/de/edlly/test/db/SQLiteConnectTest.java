@@ -1,7 +1,5 @@
 package de.edlly.test.db;
 
-import java.sql.SQLException;
-
 import org.junit.Test;
 
 import de.edlly.db.SQLiteConnect;
@@ -41,7 +39,7 @@ public class SQLiteConnectTest extends TestCase {
     }
 
     @Test
-    public void testSqlConnectionCloseorNull() throws SQLException {
+    public void testSqlConnectionCloseorNull() throws SQLiteException {
 	sqlConnection.dbConnect();
 	sqlConnection.close();
 	try {
@@ -57,7 +55,7 @@ public class SQLiteConnectTest extends TestCase {
     }
 
     @Test
-    public void testSqlConnectionIsClosed() throws SQLException {
+    public void testSqlConnectionIsClosed() throws SQLiteException {
 	sqlConnection.dbConnect();
 	sqlConnection.close();
 	try {
@@ -71,7 +69,7 @@ public class SQLiteConnectTest extends TestCase {
     }
 
     @Override
-    public void tearDown() throws SQLException {
+    public void tearDown() throws SQLiteException {
 	sqlConnection.close();
     }
 }

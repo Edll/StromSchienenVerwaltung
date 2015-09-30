@@ -1,8 +1,7 @@
 package de.edlly.test.material;
 
-import java.sql.SQLException;
-
 import de.edlly.db.SQLiteConnect;
+import de.edlly.db.SQLiteException;
 import de.edlly.material.Material;
 import de.edlly.material.NeuerMaterialDatensatz;
 
@@ -32,14 +31,14 @@ public class NeuerMaterialDatensatzTest extends TestCase {
     private int sortenId = 1;
 
     @Override
-    public void setUp() throws IllegalArgumentException, SQLException {
+    public void setUp() throws IllegalArgumentException, SQLiteException {
 	sqlConnection = new SQLiteConnect();
 	sqlConnection.dbConnect();
 	materialDatensatz = new NeuerMaterialDatensatz(sqlConnection);
     }
 
     @Test
-    public void testSetMaximaleMaterialDatenPlusEins() throws SQLException {
+    public void testSetMaximaleMaterialDatenPlusEins() throws SQLiteException {
 	try {
 	    materialDatensatz.setMaterialDaten(koordinatenMaxX + 1, koordiantenMaxZ - 1, koordiantenMaxY - 1,
 		    sortenId - 1); // wirft eine: IllegalArgumentException
@@ -59,14 +58,14 @@ public class NeuerMaterialDatensatzTest extends TestCase {
     }
 
     @Test
-    public void testSetMaximaleMaterialDaten() throws IllegalArgumentException, SQLException {
+    public void testSetMaximaleMaterialDaten() throws IllegalArgumentException, SQLiteException {
 	materialDatensatz.setMaterialDaten(koordinatenMaxX, koordiantenMaxZ, koordiantenMaxY, sortenId);
 
 	assertFalse("Maximalewerte sind nicht gesetzt worden", materialDatensatz.objektWerteSindNull());
     }
 
     @Test
-    public void testMinimaleObjektDatensetzenMinusEins() throws SQLException {
+    public void testMinimaleObjektDatensetzenMinusEins() throws SQLiteException {
 	try {
 	    materialDatensatz.setMaterialDaten(koordinatenMinX - 1, koordiantenMinZ + 1, koordinatenMinY + 1,
 		    sortenId + 1); // wirft eine: IllegalArgumentException
@@ -87,13 +86,13 @@ public class NeuerMaterialDatensatzTest extends TestCase {
     }
 
     @Test
-    public void testMinimaleObjektDatensetzen() throws IllegalArgumentException, SQLException {
+    public void testMinimaleObjektDatensetzen() throws IllegalArgumentException, SQLiteException {
 	materialDatensatz.setMaterialDaten(koordinatenMinX, koordiantenMinZ, koordinatenMinY, sortenId);
 	assertFalse("Minimalewerte sind nicht gesetzt worden", materialDatensatz.objektWerteSindNull());
     }
 
     @Test
-    public void testNeuerDatensatztausObjektDaten() throws IllegalArgumentException, SQLException {
+    public void testNeuerDatensatztausObjektDaten() throws IllegalArgumentException, SQLiteException {
 
 	materialDatensatz.setMaterialDaten(koordinatenMinX, koordiantenMinZ, koordinatenMinY, sortenId);
 
@@ -103,7 +102,7 @@ public class NeuerMaterialDatensatzTest extends TestCase {
     }
 
     @Override
-    public void tearDown() throws SQLException {
+    public void tearDown() throws SQLiteException {
 	sqlConnection.close();
 
     }

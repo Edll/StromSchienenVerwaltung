@@ -1,11 +1,10 @@
 package de.edlly.test.gui.part;
 
-import java.sql.SQLException;
-
 import javax.swing.JTable;
 
 import org.junit.Test;
 
+import de.edlly.db.SQLiteException;
 import de.edlly.part.PartException;
 import de.edlly.part.PartTable;
 import junit.framework.TestCase;
@@ -19,7 +18,7 @@ public class PartTableTest extends TestCase {
     }
 
     @Test
-    public void test() throws SQLException, PartException {
+    public void test() throws SQLiteException, PartException {
 	JTable actual = table.getPartTable();
 	JTable expected = new JTable();
 

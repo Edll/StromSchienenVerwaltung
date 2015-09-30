@@ -6,7 +6,7 @@ public class SQLiteStatement extends SQLiteQueryAndResult {
 
     private Statement statment = null;
 
-    public SQLiteStatement(SQLiteConnect sqlConnection) throws IllegalArgumentException, SQLException {
+    public SQLiteStatement(SQLiteConnect sqlConnection) throws SQLiteException {
 	super(sqlConnection);
     }
 
@@ -18,38 +18,54 @@ public class SQLiteStatement extends SQLiteQueryAndResult {
 	this.statment = statment;
     }
 
-    public void statmentVorbereitenUndStarten(String query) throws SQLException {
+    public void statmentVorbereitenUndStarten(String query) throws SQLiteException {
 	statmentVorbereiten();
 	statmentExecute(query);
     }
 
-    public void statmentVorbereitenUndUpdate(String query) throws SQLException {
+    public void statmentVorbereitenUndUpdate(String query) throws SQLiteException {
 	statmentVorbereiten();
 	statmentUpdaten(query);
     }
 
-    public void statmentVorbereiten() throws SQLException {
-	statment = getSqlConnection().createStatement();
+    public void statmentVorbereiten() throws SQLiteException {
+	try {
+	    statment = getSqlConnection().createStatement();
+	} catch (SQLException e) {
+	    throw new SQLiteException(e.getLocalizedMessage());
+	}
     }
 
-    public void statmentExecute(String query) throws SQLException {
-	queryNotNull(query);
-	setResult(statment.executeQuery(query));
+    public void statmentExecute(String query) throws SQLiteException {
+	try {
+	    queryNotNull(query);
+	    setResult(statment.executeQuery(query));
+	} catch (SQLException e) {
+	    throw new SQLiteException(e.getLocalizedMessage());
+	}
     }
 
-    public void statmentUpdaten(String query) throws SQLException {
-	queryNotNull(query);
-	statment.executeUpdate(query);
+    public void statmentUpdaten(String query) throws SQLiteException {
+	try {
+	    queryNotNull(query);
+	    statment.executeUpdate(query);
+	} catch (SQLException e) {
+	    throw new SQLiteException(e.getLocalizedMessage());
+	}
     }
 
-    public void closeStatmentAndResult() throws SQLException {
+    public void closeStatmentAndResult() throws SQLiteException {
 	closeStatment();
 	closeResult();
     }
 
-    public void closeStatment() throws SQLException {
-	if (statment != null && statment.isClosed()) {
-	    statment.close();
+    public void closeStatment() throws SQLiteException {
+	try {
+	    if (statment != null && statment.isClosed()) {
+		statment.close();
+	    }
+	} catch (SQLException e) {
+	    throw new SQLiteException(e.getLocalizedMessage());
 	}
     }
 
@@ -62,8 +78,10 @@ public class SQLiteStatement extends SQLiteQueryAndResult {
 	    while (getResult().next()) {
 		anzahlDerDatensatze++;
 	    }
-	} catch (SQLException sqlException) {
+	} catch (SQLiteException sqlException) {
+	    anzahlDerDatensatze = 0;
 
+	} catch (SQLException e) {
 	    anzahlDerDatensatze = 0;
 	}
 
