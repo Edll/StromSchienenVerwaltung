@@ -31,9 +31,11 @@ public class Part implements IPart {
 	return id;
     }
 
-    public void setId(int id) throws PartException {
+    public void setId(int id) throws PartException, SQLiteException {
 	IPartData<Integer> idPruefung = new PartData<Integer>(sqlConnection);
-	if (!idPruefung.IdVorhanden(id)) {
+	if(id == 0){
+	    this.id = 0; 
+	}else if (!idPruefung.idVorhanden(id)) {
 	    throw new PartException("Fehler bei der Werkstückid, die angebene id: " + id + " gibt es nicht.");
 	} else {
 	    this.id = id;

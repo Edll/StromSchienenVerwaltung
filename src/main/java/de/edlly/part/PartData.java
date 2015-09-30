@@ -32,13 +32,27 @@ public class PartData<T> extends Part implements IPartData<T> {
 
     /**
      * TODO: CODE Erstellen
+     * 
+     * @throws SQLiteException
      */
-    public boolean IdVorhanden(int id) {
+    public boolean idVorhanden(int id) throws SQLiteException {
+
 	// Muster CODE!
-	if (id == 0) {
+	if (getIdList().get(0) == 0) {
 	    return false;
+	} else {
+
+	    for (int i = 0; i < getIdList().size(); i++) {
+
+		if (getIdList().get(i) == id) {
+		    return true;
+		}
+
+	    }
+	    return false;
+
 	}
-	return true;
+
     }
 
     public IPartData<T> getData(int id) throws PartException {
@@ -126,8 +140,10 @@ public class PartData<T> extends Part implements IPartData<T> {
 	    sql.statmentVorbereitenUndStarten(sql.getQuery());
 
 	    if (sql.resultOhneErgebniss(sql.getResult())) {
-		throw new PartException("SQL Fehler: Kein Datensatz unter dieser Id vorhanden");
-
+		    setMaterialId(0);
+		    setName("KeinDatensatzVorhanden");
+		    setProjektNr(1);
+		    setErstellDatum(1);
 	    }
 	    setMaterialId(sql.getResult().getInt(1));
 	    setName(sql.getResult().getString(2));
@@ -149,7 +165,7 @@ public class PartData<T> extends Part implements IPartData<T> {
 	}
     }
 
-    public List<IPartData<?>> getDummyData(int id) throws PartException {
+    public List<IPartData<?>> getDummyData(int id) throws PartException, SQLiteException {
 	// MOCK OBJEKT
 	List<IPartData<?>> datensatz = new ArrayList<IPartData<?>>();
 	IPartData<?> daten2 = new PartData<String>(getSqlConnection());

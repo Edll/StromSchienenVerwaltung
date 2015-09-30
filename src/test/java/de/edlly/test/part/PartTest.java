@@ -27,18 +27,10 @@ public class PartTest extends TestCase {
     }
 
     @Test
-    public void testSetId() {
+    public void testSetId() throws SQLiteException, PartException {
 	int id = 0;
-
-	try {
 	    werkstueck.setId(id);
-	    fail("Wenn die id 0 ist muss es eine Exception geben.");
-	} catch (PartException e) {
-	    String erwartet = "Fehler bei der Werkstückid, die angebene id:";
-	    boolean check = e.getLocalizedMessage().contains(erwartet);
-	    assertTrue("Die Exception Meldung entsprach nicht den vorgaben", check);
-	    assertEquals("Die id Wurde nicht übernommen", id, werkstueck.getId());
-	}
+	assertEquals(0, werkstueck.getId());
 
     }
 

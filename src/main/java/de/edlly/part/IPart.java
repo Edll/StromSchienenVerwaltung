@@ -17,8 +17,9 @@ public interface IPart {
      * 
      * @param id
      * @throws PartException
+     * @throws SQLiteException 
      */
-    public void setId(int id) throws PartException;
+    public void setId(int id) throws PartException, SQLiteException;
 
     /**
      * Name des Werkstücks abrufen der im Objekt steht.

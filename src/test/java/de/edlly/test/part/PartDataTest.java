@@ -149,9 +149,9 @@ public class PartDataTest extends TestCase {
     }
 
     @Test
-    public void testIdVorhanden() {
+    public void testIdVorhanden() throws SQLiteException {
 	int id = 0;
-	boolean check = datensatz.IdVorhanden(id);
+	boolean check = datensatz.idVorhanden(id);
 	assertFalse("Bei einer 0 sollte ein False anzeigt werden.", check);
     }
 

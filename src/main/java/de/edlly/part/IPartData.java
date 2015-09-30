@@ -55,9 +55,10 @@ public interface IPartData<T> extends IPart {
      *            Id des Werkstücks in der Datenbank
      * @return List Objekt mit dem Generic Typ
      * @throws PartException
+     * @throws SQLiteException 
      */
 
-    public List<IPartData<?>> getDummyData(int id) throws PartException;
+    public List<IPartData<?>> getDummyData(int id) throws PartException, SQLiteException;
 
     /**
      * Setzt alle Werte eines Part.
@@ -84,8 +85,9 @@ public interface IPartData<T> extends IPart {
      * @param id
      *            Id die geprüft werden soll
      * @return
+     * @throws SQLiteException 
      */
-    boolean IdVorhanden(int id);
+    boolean idVorhanden(int id) throws SQLiteException;
 
     /**
      * Abfrage eines Datensatzes aus der DB Ergebiss wird ins Objekt geschrieben.
