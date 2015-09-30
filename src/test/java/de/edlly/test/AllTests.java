@@ -1,6 +1,7 @@
 package de.edlly.test;
 
 import de.edlly.test.db.*;
+import de.edlly.test.gui.part.PartTableTest;
 import de.edlly.test.material.*;
 import de.edlly.test.part.*;
 import junit.framework.Test;
@@ -31,7 +32,9 @@ public class AllTests extends TestSuite {
 	materialDatensatz.addTestSuite(PartDataTest.class);
 	materialDatensatz.addTestSuite(PartDataAddTest.class);
 	materialDatensatz.addTestSuite(PartUtilTest.class);
-
+	materialDatensatz.addTestSuite(PartTableTest.class);
+	
+	
 	materialDatensatz.addTestSuite(SQLiteBooleanTest.class);
 	materialDatensatz.addTestSuite(SQLiteConnectTest.class);
 	materialDatensatz.addTestSuite(SQLiteQueryAndResultTest.class);

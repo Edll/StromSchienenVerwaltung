@@ -1,5 +1,7 @@
 package de.edlly.test.db;
 
+import java.io.File;
+
 import org.junit.Test;
 
 import de.edlly.db.SQLiteDatenbankStruktur;
@@ -13,20 +15,32 @@ public class SQLiteDatenbankStrukturTest extends TestCase {
 
     @Override
     public void setUp() throws IllegalArgumentException, SQLiteException {
+	
 	sqlConnection = new SQLiteConnect();
-	sqlConnection.dbConnect();
+	sqlConnection.dbConnect("org.sqlite.JDBC", "kupferTest.sqlite");
+	
 	datenbank = new SQLiteDatenbankStruktur(sqlConnection);
 
     }
 
     @Test
-    public void testDatenbankCheckUndAnlegen() throws IllegalArgumentException, SQLiteException {
-	// TODO: SetUp schreiben mit dem der Datenbankpfad umgelenkt werden kann damit eine Exception ausgelöst wird!
-	datenbank.datenbankCheckUndAnlegen();
+    public void testDatenbankCheckUndAnlegen(){
+	try {
+	    datenbank.datenbankCheckUndAnlegen();
+	    fail("Muss eine Exception auslösen da eine neue Datenbank Angelegt worden ist.");
+	} catch (SQLiteException e) {
+	    boolean condition = e.getLocalizedMessage().contains("Die Struktur in der Datenbank war nicht korrekt.");
+	    assertTrue("Der Fehlerstring ist nicht korrekt.", condition);
+	}
     }
 
     @Override
     public void tearDown() throws SQLiteException {
 	sqlConnection.close();
+	
+        File file = new File("kupferTest.sqlite");      
+        if(file.exists()){
+           file.delete();
+        }
     }
 }

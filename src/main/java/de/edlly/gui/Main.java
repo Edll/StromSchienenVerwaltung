@@ -3,6 +3,9 @@ package de.edlly.gui;
 import java.awt.EventQueue;
 import javax.swing.*;
 
+import de.edlly.db.SQLiteConnect;
+import de.edlly.db.SQLiteDatenbankStruktur;
+import de.edlly.db.SQLiteException;
 import de.edlly.gui.elements.ElementPartListe;
 import net.miginfocom.swing.MigLayout;
 
@@ -34,6 +37,8 @@ public class Main {
     }
 
     private void initialize() {
+	testDatabankStruktur();
+	
 	frame = new JFrame();
 	frame.setBounds(0, 0, 800, 600);
 	frame.getContentPane().setLayout(new MigLayout("", "[grow,left]", "[grow,top]"));
@@ -45,13 +50,17 @@ public class Main {
 	frame.setTitle("Werkstück Verwaltung");
 
 	frame.getContentPane().add(werkstueckVerwaltung.createAndGet());
+    }
 
-	/*
-	 * TODO: Dies ist ein Test Code er ist ausgeklammert da das Modul nicht fertig ist. try { SQLiteConnect
-	 * sqlConnection = new SQLiteConnect(); sqlConnection.dbConnect(); SQLiteDatenbankStruktur datenbankCheck = new
-	 * SQLiteDatenbankStruktur(sqlConnection); datenbankCheck.datenbankCheckUndAnlegen(); sqlConnection.close(); }
-	 * catch (SQLException e) { e.printStackTrace(); } catch (IllegalArgumentException e) {
-	 * JOptionPane.showMessageDialog(null, e.getMessage()); }
-	 */
+    private void testDatabankStruktur() {
+	try {
+	    SQLiteConnect sqlConnection = new SQLiteConnect();
+	    sqlConnection.dbConnect();
+	    SQLiteDatenbankStruktur datenbankCheck = new SQLiteDatenbankStruktur(sqlConnection);
+	    datenbankCheck.datenbankCheckUndAnlegen();
+	    sqlConnection.close();
+	} catch (SQLiteException e) {
+	    JOptionPane.showMessageDialog(null, e.getMessage());
+	} 
     }
 }

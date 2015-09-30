@@ -2,6 +2,8 @@ package de.edlly.db;
 
 import java.sql.*;
 
+import javax.swing.JOptionPane;
+
 /**
  * 
  * Verbindung zur SQLite Datenbank Verwalten.
@@ -79,6 +81,19 @@ public class SQLiteConnect extends SQLite {
 	    }
 	} catch (SQLException e) {
 	    throw new SQLiteException(e.getLocalizedMessage());
+	}
+    }
+    public void testDatabankStruktur() {
+	try {
+	    SQLiteConnect sqlConnection = new SQLiteConnect();
+	    sqlConnection.dbConnect();
+	    SQLiteDatenbankStruktur datenbankCheck = new SQLiteDatenbankStruktur(sqlConnection);
+	    datenbankCheck.datenbankCheckUndAnlegen();
+	    sqlConnection.close();
+	} catch (SQLiteException e) {
+	    e.printStackTrace();
+	} catch (IllegalArgumentException e) {
+	    JOptionPane.showMessageDialog(null, e.getMessage());
 	}
     }
 }
