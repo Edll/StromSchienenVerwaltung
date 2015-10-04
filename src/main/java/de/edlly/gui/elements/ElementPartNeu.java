@@ -12,6 +12,7 @@ import de.edlly.part.*;
 
 public class ElementPartNeu extends Element implements IElement {
     private JPanel panel;
+    private IElement panelBend;
     private MaterialTable table;
     private SQLiteConnect sqLite;
 
@@ -20,8 +21,9 @@ public class ElementPartNeu extends Element implements IElement {
     private JButton btnWeiter;
     private int step;
 
-    public ElementPartNeu() {
+    public ElementPartNeu(){
 	panel = new JPanel();
+	panelBend = new ElementsPartBend();
 	sqLite = new SQLiteConnect();
     }
 
@@ -33,6 +35,7 @@ public class ElementPartNeu extends Element implements IElement {
     public void create() {
 	if (step == 1) {
 	    panel.removeAll();
+	    panel.add(panelBend.createAndGet());
 	} else {
 	    try {
 		addStepOne();
@@ -48,7 +51,6 @@ public class ElementPartNeu extends Element implements IElement {
 	panel.setLayout(new MigLayout("", "[608.00px,left]", "[215px,top][400px:n,grow,top][center]"));
 
 	JPanel formPanel = new JPanel();
-	formPanel.setBounds(10, 43, 682, 66);
 	formPanel
 		.setLayout(new FormLayout(
 			new ColumnSpec[] { FormSpecs.MIN_COLSPEC, FormSpecs.RELATED_GAP_COLSPEC,
@@ -93,27 +95,23 @@ public class ElementPartNeu extends Element implements IElement {
 	    public void actionPerformed(ActionEvent arg0) {
 		step = 1;
 		try {
-		    create();
+	
 		    sqLite.dbConnect();
-
 		    PartDataAdd partNew = new PartDataAdd(sqLite);
 		    java.util.Date date = new java.util.Date();
 
-		    // FIXME getMaterialID!
 		    partNew.setData(inputName.getText(), table.getSelectedMaterialId(),
 			    Integer.parseInt(inputProjektNr.getText()), date.getTime());
 
-		    partNew.dbAdd();
-		    sqLite.close();
-
-		} catch (SQLiteException e) {
-		    JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
+	    create();
 		} catch (NumberFormatException e) {
 		    JOptionPane.showMessageDialog(null, "Bitte eine gültige Zahl eingeben.");
 
 		} catch (PartException e) {
 		    JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
 
+		} catch (SQLiteException e) {
+		   systemExceptionHandling(e.getLocalizedMessage());
 		} finally {
 		    try {
 			sqLite.close();
