@@ -2,21 +2,7 @@ package de.edlly.part;
 
 import java.util.List;
 
-import de.edlly.material.Material;
-
 public interface IPartBend extends IPart {
-
-    /**
-     * Grenzwerte für den Angel
-     */
-
-    public final static Number ANGEL_MAX = 90;
-    public final static Number ANGEL_MIN = -90;
-
-    /**
-     * Minimaler Grenzwert für Y. 
-     */
-    public final static Number Y_MIN = Material.MAX_Y;
 
     /**
      * Fügt eine Biegung der Liste Hinzu.
@@ -44,6 +30,5 @@ public interface IPartBend extends IPart {
      */
 
     public boolean isBendKollision(IPartBend bend);
-  
 
 }
