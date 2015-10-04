@@ -21,9 +21,19 @@ public interface IBend<T extends Number> {
     public final static Number ANGEL_MIN = -90;
 
     /**
-     * Minimaler Grenzwert für Y.
+     * Minimaler Grenzwert für Y
      */
     public final static Number Y_MIN = Material.MIN_Y;
+
+    /**
+     * Abstand zwischen zwei Biegungen
+     */
+    public final static Number ABSTAND_BEND = 75;
+
+    /**
+     * Abstand zum Part Rand
+     */
+    public final static Number ABSTAND_RAND = 45;
 
     /**
      * Maximaler wert den y annehmen kann.
@@ -78,7 +88,7 @@ public interface IBend<T extends Number> {
      * 
      * @param angel
      * @param y
-     * @throws PartException 
+     * @throws PartException
      */
     public void create(T angel, T y) throws PartException;
 
