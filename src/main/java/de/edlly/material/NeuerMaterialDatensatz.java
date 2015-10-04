@@ -85,12 +85,12 @@ public class NeuerMaterialDatensatz extends MaterialDatensatz {
 
     public Boolean koordinateXIstImDefinitionsbereich(int koordinateX) throws IllegalArgumentException {
 
-	if (koordinateX < MINIMALER_X_WERT) {
+	if (koordinateX < MIN_X) {
 	    throw new IllegalArgumentException("Die Materialbreite darf nicht Negativ oder 0 sein.");
 	}
 
-	if (koordinateX > MAXIMALER_X_WERT) {
-	    throw new IllegalArgumentException("Die maximal Materialbreite ist: " + MAXIMALER_X_WERT);
+	if (koordinateX > MAX_X) {
+	    throw new IllegalArgumentException("Die maximal Materialbreite ist: " + MAX_X);
 	}
 
 	return true;
@@ -98,12 +98,12 @@ public class NeuerMaterialDatensatz extends MaterialDatensatz {
 
     public Boolean koordinateZIstImDefinitionsbereich(int koordinateZ) throws IllegalArgumentException {
 
-	if (koordinateZ < MINIMALER_Z_WERT) {
+	if (koordinateZ < MIN_Z) {
 	    throw new IllegalArgumentException("Die Materialbreite darf nicht Negativ oder 0 sein.");
 	}
 
-	if (koordinateZ > MAXIMALER_Z_WERT) {
-	    throw new IllegalArgumentException("Die maximal Materialdicke ist: " + MAXIMALER_Z_WERT);
+	if (koordinateZ > MAX_Z) {
+	    throw new IllegalArgumentException("Die maximal Materialdicke ist: " + MAX_Z);
 	}
 
 	return true;
@@ -111,12 +111,12 @@ public class NeuerMaterialDatensatz extends MaterialDatensatz {
 
     public Boolean koordinateyMaxIstImDefinitionsbereich(int koordinatey) throws IllegalArgumentException {
 
-	if (koordinatey < MINIMALER_Y_WERT) {
+	if (koordinatey < MIN_Y) {
 	    throw new IllegalArgumentException("Die Materialbreite darf nicht Negativ sein.");
 	}
 
-	if (koordinatey > MAXIMALER_Y_WERT) {
-	    throw new IllegalArgumentException("Die maximal Material Länge ist: " + MAXIMALER_Y_WERT);
+	if (koordinatey > MAX_Y) {
+	    throw new IllegalArgumentException("Die maximal Material Länge ist: " + MAX_Y);
 	}
 
 	return true;

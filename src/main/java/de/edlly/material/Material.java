@@ -12,13 +12,13 @@ import de.edlly.db.SQLiteConnect;
 public class Material {
     private SQLiteConnect sqlConnection;
 
-    public static final int MAXIMALER_X_WERT = 200;
-    public static final int MAXIMALER_Z_WERT = 30;
-    public static final int MAXIMALER_Y_WERT = 12000;
+    public static final int MAX_X = 200;
+    public static final int MAX_Z = 30;
+    public static final int MAX_Y = 12000;
 
-    public static final int MINIMALER_X_WERT = 1;
-    public static final int MINIMALER_Z_WERT = 1;
-    public static final int MINIMALER_Y_WERT = 1;
+    public static final int MIN_X = 1;
+    public static final int MIN_Z = 1;
+    public static final int MIN_Y = 1;
 
     public SQLiteConnect getSqlConnection() {
 	return sqlConnection;
