@@ -10,14 +10,14 @@ import junit.framework.TestCase;
 
 public class PartDataTest extends TestCase {
 
-    IPartData<?> datensatz;
+    IPartData datensatz;
     SQLiteConnect sqlConnection;
 
     @Override
     public void setUp() throws PartException, SQLiteException {
 	sqlConnection = new SQLiteConnect();
 	sqlConnection.dbConnect();
-	datensatz = new PartData<IPartData<?>>(sqlConnection);
+	datensatz = new PartData(sqlConnection);
     }
 
     @Test
@@ -114,7 +114,7 @@ public class PartDataTest extends TestCase {
 
     @Test
     public void testGetData() throws PartException {
-	IPartData<?> data = new PartData<IPartData<?>>(sqlConnection);
+	IPartData data = new PartData(sqlConnection);
 	data = datensatz.getData(1);
 
 	int actual = data.getId();
@@ -125,7 +125,7 @@ public class PartDataTest extends TestCase {
 
     @Test
     public void testGetDataListAll() throws PartException, SQLiteException {
-	List<IPartData<?>> list = datensatz.getDataList();
+	List<IPartData> list = datensatz.getDataList();
 
 	assertEquals("Das erste Listenelement Stimmt nicht", 1, list.get(0).getId());
 	assertEquals("Das zweite Listenelement Stimmt nicht", 2, list.get(1).getId());
@@ -139,7 +139,7 @@ public class PartDataTest extends TestCase {
      */
     @Test
     public void testGetDataListId() throws PartException {
-	List<IPartData<?>> list = datensatz.getDataList(new int[] { 1, 2, 3 });
+	List<IPartData> list = datensatz.getDataList(new int[] { 1, 2, 3 });
 
 	assertEquals("Das erste Listenelement Stimmt nicht", 1, list.get(0).getId());
 	assertEquals("Das zweite Listenelement Stimmt nicht", 2, list.get(1).getId());

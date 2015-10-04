@@ -32,7 +32,7 @@ public class Part implements IPart {
     }
 
     public void setId(int id) throws PartException, SQLiteException {
-	IPartData<Integer> idPruefung = new PartData<Integer>(sqlConnection);
+	IPartData idPruefung = new PartData(sqlConnection);
 	if(id == 0){
 	    this.id = 0; 
 	}else if (!idPruefung.idVorhanden(id)) {

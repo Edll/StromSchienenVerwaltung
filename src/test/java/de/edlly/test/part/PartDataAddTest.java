@@ -4,20 +4,20 @@ import org.junit.Test;
 
 import de.edlly.db.SQLiteConnect;
 import de.edlly.db.SQLiteException;
-import de.edlly.part.IPartData;
+
 import de.edlly.part.PartDataAdd;
 import de.edlly.part.PartException;
 import junit.framework.TestCase;
 
 public class PartDataAddTest extends TestCase {
     SQLiteConnect sqlConnection;
-    PartDataAdd<?> datensatz;
+    PartDataAdd datensatz;
 
     @Override
     public void setUp() throws PartException, SQLiteException {
 	sqlConnection = new SQLiteConnect();
 	sqlConnection.dbConnect();
-	datensatz = new PartDataAdd<IPartData<?>>(sqlConnection);
+	datensatz = new PartDataAdd(sqlConnection);
     }
 
     @Test

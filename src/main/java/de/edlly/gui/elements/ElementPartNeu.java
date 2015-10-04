@@ -96,7 +96,7 @@ public class ElementPartNeu extends Element implements IElement {
 		    create();
 		    sqLite.dbConnect();
 
-		    PartDataAdd<?> partNew = new PartDataAdd<IPartData<?>>(sqLite);
+		    PartDataAdd partNew = new PartDataAdd(sqLite);
 		    java.util.Date date = new java.util.Date();
 
 		    // FIXME getMaterialID!

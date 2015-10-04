@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 import de.edlly.db.*;
 
-public class PartData<T> extends Part implements IPartData<T> {
+public class PartData extends Part implements IPartData {
 
     SQLiteStatement sql;
 
@@ -55,15 +55,15 @@ public class PartData<T> extends Part implements IPartData<T> {
 
     }
 
-    public IPartData<T> getData(int id) throws PartException {
-	IPartData<T> data = new PartData<T>(getSqlConnection());
+    public IPartData getData(int id) throws PartException {
+	IPartData data = new PartData(getSqlConnection());
 	data.datensatzAusDbAbfragen(id);
 
 	return data;
     }
 
-    public List<IPartData<?>> getDataList() throws PartException, SQLiteException {
-	List<IPartData<?>> datensatz = new ArrayList<IPartData<?>>();
+    public List<IPartData> getDataList() throws PartException, SQLiteException {
+	List<IPartData> datensatz = new ArrayList<IPartData>();
 
 	int i = 0;
 
@@ -74,8 +74,8 @@ public class PartData<T> extends Part implements IPartData<T> {
 	return datensatz;
     }
 
-    public List<IPartData<?>> getDataList(int... id) throws PartException {
-	List<IPartData<?>> datensatz = new ArrayList<IPartData<?>>();
+    public List<IPartData> getDataList(int... id) throws PartException {
+	List<IPartData> datensatz = new ArrayList<IPartData>();
 
 	int i = 0;
 
@@ -165,10 +165,10 @@ public class PartData<T> extends Part implements IPartData<T> {
 	}
     }
 
-    public List<IPartData<?>> getDummyData(int id) throws PartException, SQLiteException {
+    public List<IPartData> getDummyData(int id) throws PartException, SQLiteException {
 	// MOCK OBJEKT
-	List<IPartData<?>> datensatz = new ArrayList<IPartData<?>>();
-	IPartData<?> daten2 = new PartData<String>(getSqlConnection());
+	List<IPartData> datensatz = new ArrayList<IPartData>();
+	IPartData daten2 = new PartData(getSqlConnection());
 	daten2.setId(1);
 	daten2.setName("TestDaten");
 	daten2.setProjektNr(666);

@@ -8,7 +8,7 @@ import de.edlly.db.SQLiteException;
 
 public class PartTable {
     private SQLiteConnect sqLite;
-    private IPartData<?> datensatz;
+    private IPartData datensatz;
     private JTable partTable;
 
     public PartTable() {
@@ -31,12 +31,12 @@ public class PartTable {
 
 	sqLite.dbConnect();
 
-	datensatz = new PartData<IPartData<?>>(sqLite);
-	List<IPartData<?>> list = datensatz.getDataList();
+	datensatz = new PartData(sqLite);
+	List<IPartData> list = datensatz.getDataList();
 
 	for (int i = 0; i < list.size(); i++) {
 
-	    IPartData<?> d = list.get(i);
+	    IPartData d = list.get(i);
 
 	    model.addRow(new Object[] { d.getId(), d.getName(), d.getMaterialId(), d.getProjektNr(),
 		    PartUtil.erstellDatumFormatieren(d.getErstellDatum()) });

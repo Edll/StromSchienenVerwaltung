@@ -5,7 +5,7 @@ import java.util.List;
 
 import de.edlly.db.SQLiteException;
 
-public interface IPartData<T> extends IPart {
+public interface IPartData extends IPart {
 
     /**
      * Abfragen eines einzelnen Datensatzes aus der Datenbank.
@@ -24,7 +24,7 @@ public interface IPartData<T> extends IPart {
      * 
      * @return
      */
-    public IPartData<T> getData(int id) throws PartException;
+    public IPartData getData(int id) throws PartException;
 
     /**
      * Erstellt eine Liste mit allen Werkstücken in der Datenbank
@@ -33,7 +33,7 @@ public interface IPartData<T> extends IPart {
      * @throws PartException
      */
 
-    public List<IPartData<?>> getDataList() throws PartException, SQLiteException;
+    public List<IPartData> getDataList() throws PartException, SQLiteException;
 
     /**
      * Erstellt eine Liste mit den Werkstücken die in der Id Liste abgefragt worden sind.
@@ -44,7 +44,7 @@ public interface IPartData<T> extends IPart {
      * @throws PartException
      */
 
-    public List<IPartData<?>> getDataList(int... id) throws PartException;
+    public List<IPartData> getDataList(int... id) throws PartException;
 
     /**
      * MOCK Objekt
@@ -58,7 +58,7 @@ public interface IPartData<T> extends IPart {
      * @throws SQLiteException 
      */
 
-    public List<IPartData<?>> getDummyData(int id) throws PartException, SQLiteException;
+    public List<IPartData> getDummyData(int id) throws PartException, SQLiteException;
 
     /**
      * Setzt alle Werte eines Part.
