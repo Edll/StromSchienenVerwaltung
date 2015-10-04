@@ -10,39 +10,50 @@ import junit.framework.TestCase;
 
 public class PartTest extends TestCase {
 
-    IPart werkstueck;
+    IPart part;
 
     @Override
     public void setUp() throws PartException, SQLiteException {
 	SQLiteConnect sqlConnection = new SQLiteConnect();
 	sqlConnection.dbConnect();
 
-	werkstueck = new Part(sqlConnection);
+	part = new Part(sqlConnection);
     }
 
     @Test
     public void testGetId() {
-	int id = werkstueck.getId();
+	int id = part.getId();
 	assertEquals(0, id);
     }
 
     @Test
     public void testSetId() throws SQLiteException, PartException {
 	int id = 0;
-	    werkstueck.setId(id);
-	assertEquals(0, werkstueck.getId());
+	    part.setId(id);
+	assertEquals(0, part.getId());
 
     }
 
     @Test
     public void testGetSqlConnection() {
-	SQLiteConnect connection = werkstueck.getSqlConnection();
+	SQLiteConnect connection = part.getSqlConnection();
 	try {
 	    SQLiteConnect.isClosed(connection);
 	} catch (SQLiteException e) {
 	    fail("Verbindung wurde Fehlerhaft übergeben.");
 	}
     }
+    
+    @Test
+    public void testGetMaterialYMax() throws IllegalArgumentException, SQLiteException {
+	part.setMaterialId(1);
+	int actual = part.getMaterialYMax();
+	int expected = 4000;
+	assertEquals(expected, actual);
+
+    }
+    
+
 
     @Override
     public void tearDown() {

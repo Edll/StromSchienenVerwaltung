@@ -53,6 +53,15 @@ public interface IPart {
      */
 
     public void setMaterialId(Integer materialId) throws SQLiteException;
+    
+    /**
+     * Gibt den YMax wert des ausgewählten Materials zurück. Vorher muss die MaterialId gesetzt worden sein.
+     * @return
+     * @throws SQLiteException 
+     * @throws IllegalArgumentException 
+     */
+    
+    public int getMaterialYMax() throws IllegalArgumentException, SQLiteException;
 
     /**
      * Timestamp wann das Werkstück erstellt worden ist.

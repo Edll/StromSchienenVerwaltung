@@ -20,13 +20,13 @@ public class NeuerMaterialDatensatzTest extends TestCase {
     private NeuerMaterialDatensatz materialDatensatz;
     private SQLiteConnect sqlConnection;
 
-    private int koordinatenMaxX = Material.MAXIMALER_X_WERT;
-    private int koordiantenMaxY = Material.MAXIMALER_Y_WERT;
-    private int koordiantenMaxZ = Material.MAXIMALER_Z_WERT;
+    private int koordinatenMaxX = Material.MAX_X;
+    private int koordiantenMaxY = Material.MAX_Y;
+    private int koordiantenMaxZ = Material.MAX_Z;
 
-    private int koordinatenMinX = Material.MINIMALER_X_WERT;
-    private int koordinatenMinY = Material.MINIMALER_Y_WERT;
-    private int koordiantenMinZ = Material.MINIMALER_Z_WERT;
+    private int koordinatenMinX = Material.MIN_X;
+    private int koordinatenMinY = Material.MIN_Y;
+    private int koordiantenMinZ = Material.MIN_Z;
 
     private int sortenId = 1;
 

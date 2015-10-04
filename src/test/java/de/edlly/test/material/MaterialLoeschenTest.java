@@ -38,8 +38,8 @@ public class MaterialLoeschenTest extends TestCase {
     public void testLoeschen() throws SQLiteException {
 
 	NeuerMaterialDatensatz materialDatensatz = new NeuerMaterialDatensatz(sqlConnection);
-	materialDatensatz.setMaterialDaten(Material.MAXIMALER_X_WERT, Material.MAXIMALER_Z_WERT,
-		Material.MAXIMALER_Y_WERT, 1);
+	materialDatensatz.setMaterialDaten(Material.MAX_X, Material.MAX_Z,
+		Material.MAX_Y, 1);
 	materialDatensatz.datensatzAusObjektWertenAnlegen();
 
 	MaterialIds materialid = new MaterialIds(sqlConnection);

@@ -91,6 +91,14 @@ public class Part implements IPart {
     public void setMaterialId(Integer materialId) throws SQLiteException {
 	this.materialId.setId(materialId);
     }
+    
+
+    public int getMaterialYMax() throws IllegalArgumentException, SQLiteException {
+	MaterialDatensatz abfrage = new MaterialDatensatz(sqlConnection);
+	int[] daten =  abfrage.getMaterialDatensatzAusDatenbank(getMaterialId());
+	
+	return daten[4];
+    }
 
     public SQLiteConnect getSqlConnection() {
 	return sqlConnection;
