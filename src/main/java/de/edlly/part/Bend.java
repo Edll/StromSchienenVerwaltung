@@ -8,6 +8,12 @@ public class Bend<T extends Number> implements IBend<T> {
     public Bend(T yMax) {
 	setYMax(yMax);
     }
+    
+    public Bend(T yMax, T angel, T y) throws PartException {
+	setYMax(yMax);
+	create(angel, y);
+    }
+    
 
     public void setAngel(T angel) throws PartException {
 	checkAngel(angel);
@@ -49,5 +55,11 @@ public class Bend<T extends Number> implements IBend<T> {
 	} else if (y.doubleValue() < IBend.Y_MIN.doubleValue()) {
 	    throw new PartException("Der Angegebene Y Wert ist zu klein. Minimal:" + IBend.Y_MIN);
 	}
+    }
+
+
+    public void create(T angel, T y) throws PartException {
+	setAngel(angel);
+	setY(y);
     }
 }

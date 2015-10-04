@@ -105,6 +105,13 @@ public class BendTest extends TestCase {
 
     }
 
+    @Test
+    public void testCreate() throws PartException {
+	double angel = IBend.ANGEL_MAX.doubleValue();
+	double y = IBend.Y_MIN.doubleValue();
+	bend.create(angel, y);
+    }
+
     @Override
     public void tearDown() throws SQLiteException {
 	sqLite.close();

@@ -73,4 +73,13 @@ public interface IBend<T extends Number> {
 
     public T getY();
 
+    /**
+     * Erzeugt ein neues Bend;
+     * 
+     * @param angel
+     * @param y
+     * @throws PartException 
+     */
+    public void create(T angel, T y) throws PartException;
+
 }
