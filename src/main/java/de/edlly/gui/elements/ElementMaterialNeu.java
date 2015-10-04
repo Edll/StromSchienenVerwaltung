@@ -131,21 +131,21 @@ public class ElementMaterialNeu extends Element implements IElement {
 	lblInputX.setFont(Formatierung.eingabeFeldLabel());
 
 	inputX = new JTextField();
-	inputX.setToolTipText("Maximal Breite " + Material.MAXIMALER_X_WERT + " mm");
+	inputX.setToolTipText("Maximal Breite " + Material.MAX_X + " mm");
 	inputX.setColumns(10);
 
 	JLabel lblInputeZ = new JLabel("Dicke");
 	lblInputeZ.setFont(Formatierung.eingabeFeldLabel());
 
 	inputZ = new JTextField();
-	inputZ.setToolTipText("Maximal Dicke " + Material.MAXIMALER_Z_WERT + " mm");
+	inputZ.setToolTipText("Maximal Dicke " + Material.MAX_Z + " mm");
 	inputZ.setColumns(10);
 
 	JLabel lblInputeY = new JLabel("Maximale Länge");
 	lblInputeY.setFont(Formatierung.eingabeFeldLabel());
 
 	inputY = new JTextField();
-	inputY.setToolTipText("Maximal Länge " + Material.MAXIMALER_Y_WERT + " mm");
+	inputY.setToolTipText("Maximal Länge " + Material.MAX_Y + " mm");
 	inputY.setColumns(10);
 
 	save = new JButton("Speichern");
