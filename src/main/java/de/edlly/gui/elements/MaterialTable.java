@@ -1,10 +1,11 @@
-package de.edlly.material;
+package de.edlly.gui.elements;
 
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import de.edlly.db.SQLiteConnect;
 import de.edlly.db.SQLiteException;
+import de.edlly.material.MaterialListe;
 
 public class MaterialTable {
     private SQLiteConnect sqLite;

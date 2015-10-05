@@ -1,10 +1,14 @@
-package de.edlly.part;
+package de.edlly.gui.elements;
 
 import java.util.List;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import de.edlly.db.SQLiteConnect;
 import de.edlly.db.SQLiteException;
+import de.edlly.part.IPartData;
+import de.edlly.part.PartData;
+import de.edlly.part.PartException;
+import de.edlly.part.PartUtil;
 
 public class PartTable {
     private SQLiteConnect sqLite;
