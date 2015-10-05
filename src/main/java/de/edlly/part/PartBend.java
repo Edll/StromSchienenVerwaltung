@@ -30,6 +30,31 @@ public class PartBend extends Part implements IPartBend {
 	return null;
     }
 
+    @Override
+    public void sortList() {
+	// TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void setPartId(int id) {
+	// TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public int getPartId() {
+	// TODO Auto-generated method stub
+	return 0;
+    }
+
+    @Override
+    public boolean addListToDB() {
+	return false;
+	// TODO Auto-generated method stub
+
+    }
+
     public boolean isBendKollision(IBend<?> bend) {
 	for (int i = 0; i < bendList.size(); i++) {
 
@@ -38,10 +63,13 @@ public class PartBend extends Part implements IPartBend {
 
 	    if (isY == getY) {
 		return true;
+
 	    } else if (isY > getY) {
+
 		if (isY < getY + IBend.ABSTAND_BEND.doubleValue()) {
 		    return true;
 		}
+
 	    } else {
 		if (isY > getY - IBend.ABSTAND_BEND.doubleValue()) {
 		    return true;

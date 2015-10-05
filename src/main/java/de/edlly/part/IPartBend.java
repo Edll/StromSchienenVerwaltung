@@ -3,13 +3,29 @@ package de.edlly.part;
 import java.util.List;
 
 /**
- * Erstellt aus einem Bend Objekt eine Liste. Prüft ob es eine Kollision innerhalb der Liste gibt.
+ * Erstellt aus einem Bend Objekt eine Liste und verwaltet dieses Prüft ob es eine Kollision innerhalb der Liste gibt.
+ * Sortiert die Liste neu wenn ein Objekt hinzugefügt wird.
  * 
  * @author Edlly java@edlly.de
  *
  */
 
 public interface IPartBend extends IPart {
+
+    /**
+     * PartId zu der das Objekt gehört
+     * 
+     * @param id
+     *            PartId
+     */
+    public void setPartId(int id);
+
+    /**
+     * PartId zu der das Objekt gehört
+     * 
+     * @return PartId
+     */
+    public int getPartId();
 
     /**
      * Fügt eine Biegung der Liste hinzu. Prüft davor ob es eine Kollision auf dem Werkstück gibt.
@@ -45,4 +61,14 @@ public interface IPartBend extends IPart {
      */
 
     public boolean isBendKollision(IBend<?> bend);
+
+    /**
+     * Sortiert die Liste
+     */
+    public void sortList();
+
+    /**
+     * Fügt die Liste in die Datenbank ein.
+     */
+    public boolean addListToDB();
 }
