@@ -7,12 +7,12 @@ import com.jgoodies.forms.layout.*;
 import net.miginfocom.swing.MigLayout;
 import de.edlly.db.*;
 import de.edlly.gui.*;
-import de.edlly.material.*;
 import de.edlly.part.*;
 
 public class ElementPartNeu extends Element implements IElement {
     private JPanel panel;
-    private IElement panelBend;
+    private ElementPartBend panelBend;
+    private PartDataAdd partNew;
     private MaterialTable table;
     private SQLiteConnect sqLite;
 
@@ -23,7 +23,7 @@ public class ElementPartNeu extends Element implements IElement {
 
     public ElementPartNeu(){
 	panel = new JPanel();
-	panelBend = new ElementsPartBend();
+	panelBend = new ElementPartBend();
 	sqLite = new SQLiteConnect();
     }
 
@@ -35,7 +35,7 @@ public class ElementPartNeu extends Element implements IElement {
     public void create() {
 	if (step == 1) {
 	    panel.removeAll();
-	    panel.add(panelBend.createAndGet());
+	    panel.add(panelBend.createAndGet(partNew));
 	} else {
 	    try {
 		addStepOne();
@@ -64,12 +64,14 @@ public class ElementPartNeu extends Element implements IElement {
 	inputName = new JTextField();
 	inputName.setText("");
 	inputName.setColumns(30);
+	inputName.setFont(Formatierung.eingabeFeldLabel());
 
 	JLabel lblProjektNummer = new JLabel("Projekt Nummer");
 	lblProjektNummer.setFont(Formatierung.eingabeFeldLabel());
 
 	inputProjektNr = new JTextField();
 	inputProjektNr.setColumns(30);
+	inputProjektNr.setFont(Formatierung.eingabeFeldLabel());
 
 	formPanel.add(lblName, "1, 2");
 	formPanel.add(inputName, "3, 2, left, center");
@@ -97,9 +99,8 @@ public class ElementPartNeu extends Element implements IElement {
 		try {
 	
 		    sqLite.dbConnect();
-		    PartDataAdd partNew = new PartDataAdd(sqLite);
+		    partNew = new PartDataAdd(sqLite);
 		    java.util.Date date = new java.util.Date();
-
 		    partNew.setData(inputName.getText(), table.getSelectedMaterialId(),
 			    Integer.parseInt(inputProjektNr.getText()), date.getTime());
 

@@ -5,8 +5,8 @@ import javax.swing.JTable;
 import org.junit.Test;
 
 import de.edlly.db.SQLiteException;
+import de.edlly.gui.elements.PartTable;
 import de.edlly.part.PartException;
-import de.edlly.part.PartTable;
 import junit.framework.TestCase;
 
 public class PartTableTest extends TestCase {

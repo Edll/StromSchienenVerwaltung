@@ -10,7 +10,6 @@ import de.edlly.gui.Element;
 import de.edlly.gui.Formatierung;
 import de.edlly.gui.IElement;
 import de.edlly.material.MaterialLoeschen;
-import de.edlly.material.MaterialTable;
 import net.miginfocom.swing.MigLayout;
 
 /**
