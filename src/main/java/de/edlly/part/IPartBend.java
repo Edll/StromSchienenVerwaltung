@@ -28,7 +28,9 @@ public interface IPartBend extends IPart {
     public int getPartId();
 
     /**
-     * Fügt eine Biegung der Liste hinzu. Prüft davor ob es eine Kollision auf dem Werkstück gibt.
+     * Fügt eine Biegung der Liste hinzu. Prüft davor ob es eine Kollision auf dem Werkstück gibt. Sortiert diese dann
+     * direkt nach der Größe von Y.
+     * 
      * 
      * @param bend
      *            Als IPartBend Objekt.

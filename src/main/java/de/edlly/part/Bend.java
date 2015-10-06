@@ -1,6 +1,6 @@
 package de.edlly.part;
 
-public class Bend<T extends Number> implements IBend<T> {
+public class Bend<T extends Number & Comparable<T>> implements IBend<T>, Comparable<IBend<?>> {
     T angel;
     T y;
     T yMax;
@@ -54,6 +54,15 @@ public class Bend<T extends Number> implements IBend<T> {
 
     public T getYMax() {
 	return yMax;
+    }
+
+    /**
+     * Suppress Warning ist für für den cast von bend auf T
+     */
+    @SuppressWarnings("unchecked")
+    @Override
+    public int compareTo(IBend<?> bend) {
+	return this.y.compareTo((T) bend.getY());
     }
 
     public void create(T angel, T y) throws PartException {

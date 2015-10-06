@@ -1,6 +1,7 @@
 package de.edlly.part;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import de.edlly.db.SQLiteConnect;
@@ -19,9 +20,11 @@ public class PartBend extends Part implements IPartBend {
 		    + IBend.ABSTAND_BEND.doubleValue());
 	}
 	bendList.add(bend);
+	sortList();
     }
 
     public List<IBend<?>> getBends() {
+
 	return bendList;
     }
 
@@ -30,10 +33,8 @@ public class PartBend extends Part implements IPartBend {
 	return null;
     }
 
-    @Override
     public void sortList() {
-	// TODO Auto-generated method stub
-
+	Collections.sort(bendList);
     }
 
     @Override

@@ -13,7 +13,7 @@ import de.edlly.material.Material;
  * @param <T>
  */
 
-public interface IBend<T extends Number> {
+public interface IBend<T extends Number & Comparable<T>> extends Comparable<IBend<?>>  {
 
     /**
      * Konstanten
@@ -94,5 +94,4 @@ public interface IBend<T extends Number> {
      * @throws PartException
      */
     public void create(T angel, T y) throws PartException;
-
 }

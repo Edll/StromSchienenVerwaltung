@@ -8,19 +8,19 @@ import de.edlly.part.*;
 import junit.framework.TestCase;
 
 public class BendTest extends TestCase {
-    IBend<Number> bend;
+    IBend<Double> bend;
     SQLiteConnect sqLite;
 
     @Override
     public void setUp() throws SQLiteException {
-	bend = new Bend<Number>(1000);
+	bend = new Bend<Double>(1000D);
 	sqLite = new SQLiteConnect();
 	sqLite.dbConnect();
     }
 
     @Test
     public void testSetGetAngel() throws PartException {
-	float expected = 89.9F;
+	Double expected = 89.9D;
 	bend.setAngel(expected);
 
 	Number actual = bend.getAngel();
@@ -30,7 +30,7 @@ public class BendTest extends TestCase {
     @Test
     public void testSetOverMaxAngel() {
 	try {
-	    float expected = IBend.ANGEL_MAX.floatValue();
+	    Double expected = IBend.ANGEL_MAX.doubleValue();
 	    expected++;
 	    bend.setAngel(expected);
 	    fail("PartException muss ausgelöst werden da Winkel größer als erlaubt.");
@@ -59,7 +59,7 @@ public class BendTest extends TestCase {
 
     @Test
     public void testSetGetY() throws PartException {
-	int expected = 1000;
+	Double expected = 1000D;
 	bend.setY(expected);
 	Number actual = bend.getY();
 	assertEquals(expected, actual);
@@ -71,9 +71,9 @@ public class BendTest extends TestCase {
 	    IPartData part = new PartData(sqLite);
 	    part.setMaterialId(1);
 	    int expected = part.getMaterialYMax();
-	    bend.setYMax(expected);
+	    bend.setYMax((double) expected);
 	    expected++;
-	    bend.setY(expected);
+	    bend.setY((double) expected);
 	    fail("Wert ist größer als erlaubt muss eine Exption auslösen");
 	} catch (Exception actual) {
 	    String expected = "Der Angegebene Y Wert ist zu größ. Maximal";
@@ -87,7 +87,7 @@ public class BendTest extends TestCase {
 	try {
 	    int expected = IBend.ANGEL_MIN.intValue();
 	    expected--;
-	    bend.setY(expected);
+	    bend.setY((double) expected);
 	    fail("Wert ist kleiner als erlaubt muss eine Exption auslösen");
 	} catch (Exception actual) {
 	    String expected = "Der Angegebene Y Wert ist zu klein. Minimal";
