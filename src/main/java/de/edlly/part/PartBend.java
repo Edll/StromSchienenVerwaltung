@@ -13,15 +13,20 @@ public class PartBend extends Part implements IPartBend {
 	super(sqlConnection);
 	bendList = new ArrayList<IBend<?>>();
     }
-
+    
     public void addBend(IBend<?> bend) throws PartException {
 	if (isBendKollision(bend)) {
 	    throw new PartException("Fehler: Der minimal Abstand ist nicht eingehalten worden +- : "
 		    + IBend.ABSTAND_BEND.doubleValue());
 	}
 	bendList.add(bend);
+    }
+    
+    public void addBendSort(IBend<?> bend) throws PartException {
+	addBend(bend);
 	sortList();
     }
+    
 
     public List<IBend<?>> getBends() {
 

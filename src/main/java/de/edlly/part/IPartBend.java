@@ -26,6 +26,16 @@ public interface IPartBend extends IPart {
      * @return PartId
      */
     public int getPartId();
+    
+    /**
+     * Fügt eine Biegung der Liste hinzu. Prüft davor ob es eine Kollision auf dem Werkstück gibt. 
+     * 
+     * 
+     * @param bend
+     *            Als IPartBend Objekt.
+     * @throws PartException
+     */
+    public void addBend(IBend<?> bend) throws PartException;
 
     /**
      * Fügt eine Biegung der Liste hinzu. Prüft davor ob es eine Kollision auf dem Werkstück gibt. Sortiert diese dann
@@ -36,7 +46,7 @@ public interface IPartBend extends IPart {
      *            Als IPartBend Objekt.
      * @throws PartException
      */
-    public void addBend(IBend<?> bend) throws PartException;
+    public void addBendSort(IBend<?> bend) throws PartException;
 
     /**
      * Fragt das Objekt Bend anhand der ID ab.

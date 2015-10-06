@@ -150,7 +150,7 @@ public class ElementPartBend extends Element implements IElement {
 			angelGet = angelGet * -1;
 		    }
 		    IBend<Double> bend = new Bend<Double>(yMax, angelGet, YGet);
-		    partBend.addBend(bend);
+		    partBend.addBendSort(bend);
 
 		    bendTable.addData(partBend);
 		    bendTable.setTableModel();

@@ -6,7 +6,6 @@ import junit.framework.TestCase;
 import de.edlly.db.*;
 import de.edlly.part.*;
 
-
 public class PartBendTest extends TestCase {
     SQLiteConnect sql;
     IPartBend partBend;
@@ -24,9 +23,9 @@ public class PartBendTest extends TestCase {
 	IBend<Double> bend2 = new Bend<Double>(4000D, 70D, 200D);
 	IBend<Double> bend3 = new Bend<Double>(4000D, -80D, 400D);
 
-	partBend.addBend(bend1);
-	partBend.addBend(bend2);
-	partBend.addBend(bend3);
+	partBend.addBendSort(bend1);
+	partBend.addBendSort(bend2);
+	partBend.addBendSort(bend3);
 
 	List<IBend<?>> list = partBend.getBends();
 
@@ -42,8 +41,8 @@ public class PartBendTest extends TestCase {
 	IBend<Double> bend2 = new Bend<Double>(4000D, 70D, 100D);
 
 	try {
-	    partBend.addBend(bend1);
-	    partBend.addBend(bend2);
+	    partBend.addBendSort(bend1);
+	    partBend.addBendSort(bend2);
 	    fail("Fehler Kollision zweier Bends");
 	} catch (Exception actual) {
 	    String expected = "Fehler: Der minimal Abstand ist nicht eingehalten worden ";
@@ -60,16 +59,16 @@ public class PartBendTest extends TestCase {
 	IBend<Double> bend4 = new Bend<Double>(4000D, -80D, 400D + IBend.ABSTAND_BEND.doubleValue() - 1D);
 	IBend<Double> bend5 = new Bend<Double>(4000D, -80D, 400D - IBend.ABSTAND_BEND.doubleValue() + 1D);
 
-	partBend.addBend(bend1);
+	partBend.addBendSort(bend1);
 	boolean condition = partBend.isBendKollision(bend1);
 
 	assertTrue("Kollision auf dem Objekt wurde erwartet", condition);
 
-	partBend.addBend(bend2);
+	partBend.addBendSort(bend2);
 	boolean condition2 = partBend.isBendKollision(bend3);
 	assertFalse("Keine Kollision", condition2);
 
-	partBend.addBend(bend3);
+	partBend.addBendSort(bend3);
 	boolean condition3 = partBend.isBendKollision(bend3);
 	assertTrue("Kollision auf dem Objekt wurde erwartet", condition3);
 
@@ -80,6 +79,38 @@ public class PartBendTest extends TestCase {
 	assertTrue("Kollision auf dem Objekt wurde erwartet", condition5);
     }
 
+    @Test
+    public void testSortList() throws Exception {
+	IBend<Double> bend1 = new Bend<Double>(4000D, 80D, 100D);
+	IBend<Double> bend2 = new Bend<Double>(4000D, 70D, 200D);
+	IBend<Double> bend3 = new Bend<Double>(4000D, 60D, 300D);
+	IBend<Double> bend4 = new Bend<Double>(4000D, 50D, 400D);
+	IBend<Double> bend5 = new Bend<Double>(4000D, 40D, 500D);
+	
+	partBend.addBend(bend1);
+	partBend.addBend(bend3);
+	partBend.addBend(bend5);
+	partBend.addBend(bend4);
+	partBend.addBend(bend2);
+	
+	List<IBend<?>> list = partBend.getBends();
+	
+	assertEquals(list.get(0), bend1);
+	assertEquals(list.get(1), bend3);
+	assertEquals(list.get(2), bend5);
+	assertEquals(list.get(3), bend4);
+	assertEquals(list.get(4), bend2);
+	
+	partBend.sortList();
+	
+	List<IBend<?>> listSort = partBend.getBends();
+	
+	assertEquals(listSort.get(0), bend1);
+	assertEquals(listSort.get(1), bend2);
+	assertEquals(listSort.get(2), bend3);
+	assertEquals(listSort.get(3), bend4);
+	assertEquals(listSort.get(4), bend5);
+    }
 
     @Override
     public void tearDown() throws SQLiteException {
