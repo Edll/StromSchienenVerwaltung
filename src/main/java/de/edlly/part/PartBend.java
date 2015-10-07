@@ -55,10 +55,11 @@ public class PartBend implements IPartBend {
     }
 
     public int getPartId() {
+	// FIXME: Rückgabe darf nicht 0 sein!
 	return part.getId();
     }
 
-    public boolean addListToDB() throws PartException{
+    public boolean addListToDB() throws PartException {
 
 	if (bendList == null || bendList.isEmpty()) {
 	    throw new PartException("Liste wurde nicht angelegt");
@@ -77,7 +78,7 @@ public class PartBend implements IPartBend {
 		sqLite.getPreparedStatment().setDouble(1, partId);
 		sqLite.getPreparedStatment().setDouble(2, bendList.get(i).getAngel().doubleValue());
 		sqLite.getPreparedStatment().setDouble(3, bendList.get(i).getY().doubleValue());
-		
+
 		sqLite.preparedStatmentAusfuehren();
 		sqLite.closePrepareStatmentAndResult();
 	    }
@@ -87,7 +88,7 @@ public class PartBend implements IPartBend {
 	    throw new PartException("Fehler beim eintragen in die Datenbank.\n" + e.getLocalizedMessage());
 	} catch (SQLException e) {
 	    throw new PartException("Fehler beim eintragen in die Datenbank.\n" + e.getLocalizedMessage());
-	} 
+	}
     }
 
     public boolean isBendKollision(IBend<?> bend) {

@@ -14,6 +14,12 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * FIXME: PART ID fürs eintragen -> Konzept?
+ * 
+ * @author Edlly java@edlly.de
+ *
+ */
 public class ElementPartBend extends Element implements IElement {
     private JPanel panel = new JPanel();
     private JPanel formPanel = new JPanel();
@@ -32,6 +38,7 @@ public class ElementPartBend extends Element implements IElement {
     private JLabel lblYMax = new JLabel();
     private JLabel lblProjektNr = new JLabel();
     private JButton btnSave;
+    PartDataAdd partNew;
 
     public ElementPartBend() {
     }
@@ -42,14 +49,15 @@ public class ElementPartBend extends Element implements IElement {
     }
 
     public JPanel createAndGet(PartDataAdd partNew) {
+	this.partNew = partNew;
 	create();
 	try {
 
-	    this.yMax = partNew.getMaterialYMax();
-	    this.lblName.setText("Name: " + partNew.getName());
-	    this.lblYMax.setText("Maximale länge: " + Integer.toString(partNew.getMaterialYMax()));
-	    this.lblMaterialSize.setText("Material Id: " + Integer.toString(partNew.getMaterialId()));
-	    this.lblProjektNr.setText("Projekt Nr: " + Integer.toString(partNew.getProjektNr()));
+	    this.yMax = this.partNew.getMaterialYMax();
+	    this.lblName.setText("Name: " + this.partNew.getName());
+	    this.lblYMax.setText("Maximale länge: " + Integer.toString(this.partNew.getMaterialYMax()));
+	    this.lblMaterialSize.setText("Material Id: " + Integer.toString(this.partNew.getMaterialId()));
+	    this.lblProjektNr.setText("Projekt Nr: " + Integer.toString(this.partNew.getProjektNr()));
 
 	} catch (IllegalArgumentException e) {
 	    userExceptionHandling(e.getLocalizedMessage());
@@ -155,6 +163,7 @@ public class ElementPartBend extends Element implements IElement {
 		    if (richtung == 1) {
 			angelGet = angelGet * -1;
 		    }
+
 		    IBend<Double> bend = new Bend<Double>(yMax, angelGet, YGet);
 		    partBend.addBendSort(bend);
 
