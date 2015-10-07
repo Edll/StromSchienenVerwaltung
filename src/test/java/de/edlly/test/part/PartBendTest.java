@@ -7,14 +7,11 @@ import de.edlly.db.*;
 import de.edlly.part.*;
 
 public class PartBendTest extends TestCase {
-    SQLiteConnect sql;
     IPartBend partBend;
 
     @Override
     public void setUp() throws PartException, SQLiteException {
-	sql = new SQLiteConnect();
-	sql.dbConnect();
-	partBend = new PartBend(sql);
+	partBend = new PartBend();
     }
 
     @Test
@@ -86,25 +83,25 @@ public class PartBendTest extends TestCase {
 	IBend<Double> bend3 = new Bend<Double>(4000D, 60D, 300D);
 	IBend<Double> bend4 = new Bend<Double>(4000D, 50D, 400D);
 	IBend<Double> bend5 = new Bend<Double>(4000D, 40D, 500D);
-	
+
 	partBend.addBend(bend1);
 	partBend.addBend(bend3);
 	partBend.addBend(bend5);
 	partBend.addBend(bend4);
 	partBend.addBend(bend2);
-	
+
 	List<IBend<?>> list = partBend.getBends();
-	
+
 	assertEquals(list.get(0), bend1);
 	assertEquals(list.get(1), bend3);
 	assertEquals(list.get(2), bend5);
 	assertEquals(list.get(3), bend4);
 	assertEquals(list.get(4), bend2);
-	
+
 	partBend.sortList();
-	
+
 	List<IBend<?>> listSort = partBend.getBends();
-	
+
 	assertEquals(listSort.get(0), bend1);
 	assertEquals(listSort.get(1), bend2);
 	assertEquals(listSort.get(2), bend3);
@@ -112,9 +109,37 @@ public class PartBendTest extends TestCase {
 	assertEquals(listSort.get(4), bend5);
     }
 
+    @Test
+    public void testAddListToDBListNull() throws SQLiteException {
+	try {
+	    partBend.addListToDB();
+	    fail("Fehler wurde nicht ausgelöst: Liste wurde nicht angeleget.");
+	} catch (PartException actual) {
+
+	    String expected = "Liste wurde nicht angelegt";
+	    boolean check = actual.getLocalizedMessage().contains(expected);
+	    assertTrue("Fehler: falsche Exception: " + actual.getLocalizedMessage(), check);
+	}
+
+    }
+
+    @Test
+    public void testAddListToDBListEingetragen() throws SQLiteException, PartException {
+	IBend<Double> bend1 = new Bend<Double>(4000D, 80D, 100D);
+	IBend<Double> bend2 = new Bend<Double>(4000D, 70D, 200D);
+	IBend<Double> bend3 = new Bend<Double>(4000D, 60D, 300D);
+
+	partBend.addBend(bend1);
+	partBend.addBend(bend2);
+	partBend.addBend(bend3);
+
+	boolean check = partBend.addListToDB();
+
+	assertTrue("Liste nicht eingetragen", check);
+    }
+
     @Override
     public void tearDown() throws SQLiteException {
-	sql.close();
     }
 
 }

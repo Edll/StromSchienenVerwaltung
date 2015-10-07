@@ -2,6 +2,8 @@ package de.edlly.part;
 
 import java.util.List;
 
+import de.edlly.db.SQLiteException;
+
 /**
  * Erstellt aus einem Bend Objekt eine Liste und verwaltet dieses Prüft ob es eine Kollision innerhalb der Liste gibt.
  * Sortiert die Liste neu wenn ein Objekt hinzugefügt wird.
@@ -10,15 +12,17 @@ import java.util.List;
  *
  */
 
-public interface IPartBend extends IPart {
+public interface IPartBend {
 
     /**
      * PartId zu der das Objekt gehört
      * 
      * @param id
      *            PartId
+     * @throws SQLiteException
+     * @throws PartException
      */
-    public void setPartId(int id);
+    public void setPartId(int id) throws PartException, SQLiteException;
 
     /**
      * PartId zu der das Objekt gehört
@@ -26,9 +30,9 @@ public interface IPartBend extends IPart {
      * @return PartId
      */
     public int getPartId();
-    
+
     /**
-     * Fügt eine Biegung der Liste hinzu. Prüft davor ob es eine Kollision auf dem Werkstück gibt. 
+     * Fügt eine Biegung der Liste hinzu. Prüft davor ob es eine Kollision auf dem Werkstück gibt.
      * 
      * 
      * @param bend
@@ -81,6 +85,11 @@ public interface IPartBend extends IPart {
 
     /**
      * Fügt die Liste in die Datenbank ein.
+     * 
+     * @return boolean true wenn eintragen ein erfolg war
+     * 
+     * @throws SQLiteException
+     * @throws PartException
      */
-    public boolean addListToDB();
+    public boolean addListToDB() throws PartException;
 }
