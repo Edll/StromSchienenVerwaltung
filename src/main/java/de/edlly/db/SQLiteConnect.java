@@ -8,7 +8,8 @@ import javax.swing.JOptionPane;
  * 
  * Verbindung zur SQLite Datenbank Verwalten.
  * 
- * TODO: Funktion einbauen um zu prüfen ob das DB File da ist/Sonst Funktion einleiten zum erstellen/fehlermeldung!.
+ * TODO: SQLite Klassen so ändern das nur ein Objekt erzeugt werden muss das alles kann. So das nicht mehr für alles
+ * eine eigene Klasse erzeugt werden muss.
  * 
  * @author Edlly java@edlly.de
  *
@@ -56,7 +57,7 @@ public class SQLiteConnect extends SQLite {
     public void close() throws SQLiteException {
 	try {
 	    if (connection != null && !connection.isClosed()) {
-		    connection.close();
+		connection.close();
 	    }
 	} catch (SQLException e) {
 	    throw new SQLiteException(e.getLocalizedMessage());
@@ -83,6 +84,7 @@ public class SQLiteConnect extends SQLite {
 	    throw new SQLiteException(e.getLocalizedMessage());
 	}
     }
+
     public void testDatabankStruktur() {
 	try {
 	    SQLiteConnect sqlConnection = new SQLiteConnect();

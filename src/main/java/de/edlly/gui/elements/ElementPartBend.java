@@ -17,7 +17,6 @@ import java.awt.event.ActionListener;
 public class ElementPartBend extends Element implements IElement {
     private JPanel panel = new JPanel();
     private JPanel formPanel = new JPanel();
-    private SQLiteConnect sqLite = new SQLiteConnect();
     private IPartBend partBend;
     private double yMax;
 
@@ -32,6 +31,7 @@ public class ElementPartBend extends Element implements IElement {
     private JLabel lblMaterialSize = new JLabel();
     private JLabel lblYMax = new JLabel();
     private JLabel lblProjektNr = new JLabel();
+    private JButton btnSave;
 
     public ElementPartBend() {
     }
@@ -60,20 +60,20 @@ public class ElementPartBend extends Element implements IElement {
     }
 
     public void create() {
-
 	try {
-	    sqLite.dbConnect();
-	    partBend = new PartBend(sqLite);
+	    partBend = new PartBend();
 	} catch (SQLiteException e) {
 	    systemExceptionHandling(e.getLocalizedMessage());
 	} catch (PartException e) {
 	    userExceptionHandling(e.getLocalizedMessage());
 	}
-	panel.setLayout(new MigLayout("", "[grow,left]", "[20.00][][18.00][89.00,top][300px:n,grow,top]"));
+
+	panel.setLayout(new MigLayout("", "[grow,left]", "[20.00][][18.00][89.00,top][300px:n,grow,top][][]"));
 
 	addHeader();
 	addForm();
 	addBendTable();
+	addSave();
 
     }
 
@@ -138,6 +138,12 @@ public class ElementPartBend extends Element implements IElement {
 	panel.add(scrollPane, "cell 0 4,alignx left,aligny top");
     }
 
+    private void addSave() {
+	btnSave = new JButton("Speichern");
+	panel.add(btnSave, "cell 0 5");
+	addActionSave();
+    }
+
     public void addActionWeiter() {
 	btnAdd.addActionListener(new ActionListener() {
 	    public void actionPerformed(ActionEvent arg0) {
@@ -166,6 +172,19 @@ public class ElementPartBend extends Element implements IElement {
 
 		panel.validate();
 		panel.repaint();
+	    }
+	});
+    }
+
+    public void addActionSave() {
+	btnSave.addActionListener(new ActionListener() {
+	    public void actionPerformed(ActionEvent arg0) {
+		try {
+		    partBend.addListToDB();
+		} catch (PartException e) {
+		    userExceptionHandling(e.getLocalizedMessage());
+		}
+
 	    }
 	});
     }

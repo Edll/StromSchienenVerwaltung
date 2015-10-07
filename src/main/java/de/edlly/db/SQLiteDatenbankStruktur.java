@@ -19,8 +19,9 @@ public class SQLiteDatenbankStruktur {
     public void datenbankCheckUndAnlegen() throws SQLiteException {
 	boolean tableMaterialVorhanden = tableMaterialVorhanden();
 	boolean tableMaterialSorteVorhanden = tableMaterialSorteVorhanden();
-	boolean tableBiegenVorhanden = tableBiegenVorhanden();
-	if (tableMaterialVorhanden || tableMaterialSorteVorhanden || tableBiegenVorhanden) {
+	boolean tablePartVorhanden = tablePartVorhanden();
+	boolean tableBendVorhanden =tableBendVorhanden();
+	if (tableMaterialVorhanden || tableMaterialSorteVorhanden || tablePartVorhanden || tableBendVorhanden) {
 	    throw new SQLiteException("Die Struktur in der Datenbank war nicht korrekt. \n Um diesen Fehler zu beheben wurde eine neue Struktur angelegt.");
 	}
     }
@@ -87,7 +88,7 @@ public class SQLiteDatenbankStruktur {
 	return false;
     }
 
-    public boolean tableBiegenVorhanden() throws SQLiteException {
+    public boolean tablePartVorhanden() throws SQLiteException {
 	try {
 	    sqLite.setQuery("SELECT * FROM Werkstueck");
 	    sqLite.preparedStatmentVorbereiten(sqLite.getQuery());
@@ -124,4 +125,43 @@ public class SQLiteDatenbankStruktur {
 	}
 	return false;
     }
+    public boolean tableBendVorhanden() throws SQLiteException {
+	try {
+	    sqLite.setQuery("SELECT * FROM Bend");
+	    sqLite.preparedStatmentVorbereiten(sqLite.getQuery());
+	    sqLite.preparedStatmentAusfuehren();
+	    sqLite.closePrepareStatment();
+
+	} catch (SQLiteException e) {
+	    String errorErwartet = "no such table: Bend";
+	    String errorBekommen = e.getLocalizedMessage();
+	    if (errorBekommen.contains(errorErwartet)) {
+		sqLite.setQuery(
+			"CREATE  TABLE \"Bend\" (\"id\" INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL  UNIQUE , \"partId\" INTEGER NOT NULL , \"angel\" DOUBLE, \"y\" DOUBLE)");
+		sqLite.preparedStatmentVorbereiten(sqLite.getQuery());
+		sqLite.preparedStatmentAusfuehren();
+		sqLite.closePrepareStatment();
+		
+		sqLite.setQuery("INSERT INTO Bend  (\"partId\",\"angel\",\"y\") VALUES (\"1\",\"45.0\",\"100\") ");
+		sqLite.preparedStatmentVorbereiten(sqLite.getQuery());
+		sqLite.preparedStatmentAusfuehren();
+		sqLite.closePrepareStatment();
+		
+		sqLite.setQuery("INSERT INTO Bend  (\"partId\",\"angel\",\"y\") VALUES (\"1\",\"30.0\",\"200\") ");
+		sqLite.preparedStatmentVorbereiten(sqLite.getQuery());
+		sqLite.preparedStatmentAusfuehren();
+		sqLite.closePrepareStatment();
+		
+		sqLite.setQuery("INSERT INTO Bend  (\"partId\",\"angel\",\"y\") VALUES (\"1\",\"60.0\",\"300\") ");
+		sqLite.preparedStatmentVorbereiten(sqLite.getQuery());
+		sqLite.preparedStatmentAusfuehren();
+		sqLite.closePrepareStatment();
+		
+		return true;
+	    }
+	}
+	return false;
+    }
+    
+
 }
