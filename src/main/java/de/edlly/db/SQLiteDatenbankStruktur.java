@@ -20,9 +20,10 @@ public class SQLiteDatenbankStruktur {
 	boolean tableMaterialVorhanden = tableMaterialVorhanden();
 	boolean tableMaterialSorteVorhanden = tableMaterialSorteVorhanden();
 	boolean tablePartVorhanden = tablePartVorhanden();
-	boolean tableBendVorhanden =tableBendVorhanden();
+	boolean tableBendVorhanden = tableBendVorhanden();
 	if (tableMaterialVorhanden || tableMaterialSorteVorhanden || tablePartVorhanden || tableBendVorhanden) {
-	    throw new SQLiteException("Die Struktur in der Datenbank war nicht korrekt. \n Um diesen Fehler zu beheben wurde eine neue Struktur angelegt.");
+	    throw new SQLiteException(
+		    "Die Struktur in der Datenbank war nicht korrekt. \n Um diesen Fehler zu beheben wurde eine neue Struktur angelegt.");
 	}
     }
 
@@ -41,7 +42,8 @@ public class SQLiteDatenbankStruktur {
 		sqLite.preparedStatmentVorbereiten(sqLite.getQuery());
 		sqLite.preparedStatmentAusfuehren();
 		sqLite.closePrepareStatment();
-		sqLite.setQuery("INSERT INTO Material  (\"MaterialSorteId\",\"x\",\"z\",\"yMax\",\"visibly\") VALUES (\"1\",\"50\",\"10\",\"4000\",\"1\") ");
+		sqLite.setQuery(
+			"INSERT INTO Material  (\"MaterialSorteId\",\"x\",\"z\",\"yMax\",\"visibly\") VALUES (\"1\",\"50\",\"10\",\"4000\",\"1\") ");
 		sqLite.preparedStatmentVorbereiten(sqLite.getQuery());
 		sqLite.preparedStatmentAusfuehren();
 		sqLite.closePrepareStatment();
@@ -104,27 +106,31 @@ public class SQLiteDatenbankStruktur {
 		sqLite.preparedStatmentVorbereiten(sqLite.getQuery());
 		sqLite.preparedStatmentAusfuehren();
 		sqLite.closePrepareStatment();
-		
-		sqLite.setQuery("INSERT INTO Werkstueck  (\"materialId\",\"name\",\"projektNr\",\"erstellDatum\") VALUES (\"1\",\"TestErstelltInSQLStru\",\"666\",\"10\") ");
+
+		sqLite.setQuery(
+			"INSERT INTO Werkstueck  (\"materialId\",\"name\",\"projektNr\",\"erstellDatum\") VALUES (\"1\",\"TestErstelltInSQLStru\",\"666\",\"10\") ");
 		sqLite.preparedStatmentVorbereiten(sqLite.getQuery());
 		sqLite.preparedStatmentAusfuehren();
 		sqLite.closePrepareStatment();
-		
-		sqLite.setQuery("INSERT INTO Werkstueck  (\"materialId\",\"name\",\"projektNr\",\"erstellDatum\") VALUES (\"1\",\"TestErstelltInSQLStru2\",\"667\",\"100\") ");
+
+		sqLite.setQuery(
+			"INSERT INTO Werkstueck  (\"materialId\",\"name\",\"projektNr\",\"erstellDatum\") VALUES (\"1\",\"TestErstelltInSQLStru2\",\"667\",\"100\") ");
 		sqLite.preparedStatmentVorbereiten(sqLite.getQuery());
 		sqLite.preparedStatmentAusfuehren();
 		sqLite.closePrepareStatment();
-		
-		sqLite.setQuery("INSERT INTO Werkstueck  (\"materialId\",\"name\",\"projektNr\",\"erstellDatum\") VALUES (\"1\",\"TestErstelltInSQLStru2\",\"668\",\"200\") ");
+
+		sqLite.setQuery(
+			"INSERT INTO Werkstueck  (\"materialId\",\"name\",\"projektNr\",\"erstellDatum\") VALUES (\"1\",\"TestErstelltInSQLStru2\",\"668\",\"200\") ");
 		sqLite.preparedStatmentVorbereiten(sqLite.getQuery());
 		sqLite.preparedStatmentAusfuehren();
 		sqLite.closePrepareStatment();
-		
+
 		return true;
 	    }
 	}
 	return false;
     }
+
     public boolean tableBendVorhanden() throws SQLiteException {
 	try {
 	    sqLite.setQuery("SELECT * FROM Bend");
@@ -141,27 +147,26 @@ public class SQLiteDatenbankStruktur {
 		sqLite.preparedStatmentVorbereiten(sqLite.getQuery());
 		sqLite.preparedStatmentAusfuehren();
 		sqLite.closePrepareStatment();
-		
+
 		sqLite.setQuery("INSERT INTO Bend  (\"partId\",\"angel\",\"y\") VALUES (\"1\",\"45.0\",\"100\") ");
 		sqLite.preparedStatmentVorbereiten(sqLite.getQuery());
 		sqLite.preparedStatmentAusfuehren();
 		sqLite.closePrepareStatment();
-		
+
 		sqLite.setQuery("INSERT INTO Bend  (\"partId\",\"angel\",\"y\") VALUES (\"1\",\"30.0\",\"200\") ");
 		sqLite.preparedStatmentVorbereiten(sqLite.getQuery());
 		sqLite.preparedStatmentAusfuehren();
 		sqLite.closePrepareStatment();
-		
+
 		sqLite.setQuery("INSERT INTO Bend  (\"partId\",\"angel\",\"y\") VALUES (\"1\",\"60.0\",\"300\") ");
 		sqLite.preparedStatmentVorbereiten(sqLite.getQuery());
 		sqLite.preparedStatmentAusfuehren();
 		sqLite.closePrepareStatment();
-		
+
 		return true;
 	    }
 	}
 	return false;
     }
-    
 
 }

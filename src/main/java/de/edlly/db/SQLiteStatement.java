@@ -9,7 +9,7 @@ public class SQLiteStatement extends SQLiteQueryAndResult {
     public SQLiteStatement(SQLiteConnect sqlConnection) throws SQLiteException {
 	super(sqlConnection);
     }
-    
+
     public Statement getStatment() {
 	return statment;
     }
