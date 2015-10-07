@@ -77,6 +77,7 @@ public class PartBend implements IPartBend {
 		sqLite.getPreparedStatment().setDouble(1, partId);
 		sqLite.getPreparedStatment().setDouble(2, bendList.get(i).getAngel().doubleValue());
 		sqLite.getPreparedStatment().setDouble(3, bendList.get(i).getY().doubleValue());
+		
 		sqLite.preparedStatmentAusfuehren();
 		sqLite.closePrepareStatmentAndResult();
 	    }

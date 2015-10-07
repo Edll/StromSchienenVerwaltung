@@ -95,9 +95,9 @@ public class Bend<T extends Number & Comparable<T>> implements IBend<T>, Compara
 	    throw new PartException(
 		    "Der Angegebene Y Wert ist zu klein. Der mindest Abstand zum Rand ist:" + IBend.ABSTAND_RAND);
 
-	} else if (y.doubleValue() > yMax.doubleValue() - IBend.ABSTAND_RAND.doubleValue()) {
+	} else if (y.doubleValue() > yMax.doubleValue() - IBend.ABSTAND_RAND.doubleValue() + 1) {
 
-	    throw new PartException("Der Angegebene Y Wert ist zu groß. Der mindest Abstand zum Rand ist:"
+	    throw new PartException("Der Angegebene Y Wert ist zu groß. Der mindest Abstand zum Rand ist: "
 		    + (yMax.doubleValue() - IBend.ABSTAND_RAND.doubleValue()));
 
 	}

@@ -59,7 +59,7 @@ public class BendTest extends TestCase {
 
     @Test
     public void testSetGetY() throws PartException {
-	Double expected = 1000D;
+	Double expected = 900D;
 	bend.setY(expected);
 	Number actual = bend.getY();
 	assertEquals(expected, actual);
@@ -108,7 +108,7 @@ public class BendTest extends TestCase {
     @Test
     public void testCreate() throws PartException {
 	double angel = IBend.ANGEL_MAX.doubleValue();
-	double y = IBend.Y_MIN.doubleValue();
+	double y = IBend.Y_MIN.doubleValue() + IBend.ABSTAND_RAND.doubleValue();
 	bend.create(angel, y);
     }
 
