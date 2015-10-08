@@ -41,11 +41,17 @@ public class PartDataTest extends TestCase {
     }
 
     @Test
-    public void testGetMaterialId() {
-	int actual = datensatz.getMaterialId();
-	int expected = 0;
+    public void testGetMaterialId() throws PartException {
 
-	assertEquals(expected, actual);
+	try {
+	    datensatz.getMaterialId();
+	    fail("Erwarted wurde Exeption: Die MaterialId ist nicht initalisiert worden!");
+	} catch (PartException actual) {
+
+	    String expected = "Die MaterialId ist nicht initalisiert worden!";
+	    boolean check = actual.getLocalizedMessage().contains(expected);
+	    assertTrue("Fehler: falsche Exception: " + actual.getLocalizedMessage(), check);
+	}
     }
 
     @Test
@@ -113,7 +119,7 @@ public class PartDataTest extends TestCase {
     }
 
     @Test
-    public void testGetData() throws PartException {
+    public void testGetData() throws PartException, SQLiteException {
 	IPartData data = new PartData(sqlConnection);
 	data = datensatz.getData(1);
 
