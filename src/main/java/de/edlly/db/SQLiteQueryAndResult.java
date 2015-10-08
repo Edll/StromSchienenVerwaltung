@@ -54,6 +54,8 @@ public class SQLiteQueryAndResult extends SQLiteConnect {
     public String getQuery() {
 	return this.query;
     }
+    
+
 
     public boolean resultOhneErgebniss(ResultSet result) throws SQLiteException {
 
