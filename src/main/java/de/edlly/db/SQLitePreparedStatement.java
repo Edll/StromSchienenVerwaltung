@@ -44,11 +44,11 @@ public class SQLitePreparedStatement extends SQLiteQueryAndResult {
 	    throw new SQLiteException(e.getLocalizedMessage());
 	}
     }
-    
+
     public void preparedStatmentWithKeyAusfuehren() throws SQLiteException {
 	preparedStatmentAusfuehren();
 	primayKey();
-     }
+    }
 
     public void closePrepareStatmentAndResult() throws SQLiteException {
 	closePrepareStatment();
@@ -72,10 +72,9 @@ public class SQLitePreparedStatement extends SQLiteQueryAndResult {
 	    generatedKeys = preparedStatment.getGeneratedKeys();
 
 	    if (generatedKeys.next()) {
-		System.out.println(generatedKeys.getInt(1));
-		setPrimaryKey(generatedKeys.getLong(1));
+		setPrimaryKey(generatedKeys.getInt(1));
 	    } else {
-		throw new SQLException("Creating user failed, no ID obtained.");
+		throw new SQLiteException("Fehler beim erstell des Datensatzes. Es ist keine ID erzeugt worden.");
 	    }
 	} catch (SQLException e) {
 	    throw new SQLiteException(e.getLocalizedMessage());

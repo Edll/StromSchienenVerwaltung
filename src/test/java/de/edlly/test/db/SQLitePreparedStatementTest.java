@@ -40,19 +40,20 @@ public class SQLitePreparedStatementTest extends TestCase {
 	    fail("Sollte keine Exception werfen, ist aber:" + e.getMessage() + e.getLocalizedMessage());
 	}
     }
-    
+
     @Test
     public void testClosePrepareStatmentKey() {
 	double expected = 0D;
 	try {
-	    preparedStatement.preparedStatmentWithKeyVorbereiten("INSERT INTO Bend (\"partId\",\"angel\",\"y\") VALUES (?1, ?2, ?3)");
+	    preparedStatement.preparedStatmentWithKeyVorbereiten(
+		    "INSERT INTO Bend (\"partId\",\"angel\",\"y\") VALUES (?1, ?2, ?3)");
 	    preparedStatement.getPreparedStatment().setDouble(1, 1D);
 	    preparedStatement.getPreparedStatment().setDouble(2, 90D);
 	    preparedStatement.getPreparedStatment().setDouble(3, 1000D);
-	    
+
 	    preparedStatement.preparedStatmentWithKeyAusfuehren();
 	    double actual = preparedStatement.getPrimaryKey();
-	    assertNotSame("Fehler die Rückgabe ist 0 muss aber eine ID sein größer 0",expected, actual);
+	    assertNotSame("Fehler die Rückgabe ist 0 muss aber eine ID sein größer 0", expected, actual);
 	    preparedStatement.closePrepareStatmentAndResult();
 	} catch (Exception e) {
 	    e.printStackTrace();
@@ -60,8 +61,6 @@ public class SQLitePreparedStatementTest extends TestCase {
 	}
 
     }
-    
-    
 
     @Test
     public void testPreparedStatmentVorbereiten() {

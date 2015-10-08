@@ -4,17 +4,17 @@ import java.sql.Connection;
 
 public abstract class SQLite {
     private SQLiteConnect sqlConnection;
-    private long primaryKey;
+    private int primaryKey;
 
     public SQLite() {
 
     }
     
-    public long getPrimaryKey() {
+    public int getPrimaryKey() {
         return primaryKey;
     }
 
-    public void setPrimaryKey(long id) {
+    public void setPrimaryKey(int id) {
         this.primaryKey = id;
     }
 
