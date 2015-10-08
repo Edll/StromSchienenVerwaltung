@@ -21,17 +21,17 @@ public class Part implements IPart {
     }
 
     public void setId(int id) throws PartException, SQLiteException {
-	SQLiteConnect sqlConnection = new SQLiteConnect();
-	sqlConnection.dbConnect();
-	IPartData idPruefung = new PartData(sqlConnection);
+	sqLite.dbConnect();
+	IPartData idPruefung = new PartData(sqLite);
 	if (id == 0) {
 	    this.id = 0;
 	} else if (!idPruefung.idVorhanden(id)) {
+	    sqLite.close();
 	    throw new PartException("Fehler bei der Werkstückid, die angebene id: " + id + " gibt es nicht.");
 	} else {
 	    this.id = id;
 	}
-	sqlConnection.close();
+	sqLite.close();
     }
 
     public String getName() {
@@ -77,7 +77,7 @@ public class Part implements IPart {
     }
 
     public Integer getMaterialId() throws PartException {
-	if(materialId == null){
+	if (materialId == null) {
 	    throw new PartException("Die MaterialId ist nicht initalisiert worden!");
 	}
 	return materialId.getId();
@@ -91,9 +91,10 @@ public class Part implements IPart {
     }
 
     public int getMaterialYMax() throws IllegalArgumentException, SQLiteException, PartException {
+	sqLite.dbConnect();
 	MaterialDatensatz abfrage = new MaterialDatensatz(sqLite);
 	int[] daten = abfrage.getMaterialDatensatzAusDatenbank(getMaterialId());
-
+	sqLite.close();
 	return daten[4];
     }
 }

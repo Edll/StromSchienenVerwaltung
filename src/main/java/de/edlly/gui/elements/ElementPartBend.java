@@ -53,9 +53,7 @@ public class ElementPartBend extends Element implements IElement {
 
 	create();
 	try {
-	    sql.dbConnect();
 	    this.partNew = partNew;
-	    this.partNew.setSqlConnection(sql);
 	    this.yMax = this.partNew.getMaterialYMax();
 	    this.lblName.setText("Name: " + this.partNew.getName());
 	    this.lblYMax.setText("Maximale länge: " + Integer.toString(this.partNew.getMaterialYMax()));
@@ -66,6 +64,8 @@ public class ElementPartBend extends Element implements IElement {
 	    userExceptionHandling(e.getLocalizedMessage());
 	} catch (SQLiteException e) {
 	    systemExceptionHandling(e.getLocalizedMessage());
+	} catch (PartException e) {
+	    userExceptionHandling(e.getLocalizedMessage());
 	}
 	return panel;
     }
@@ -193,8 +193,7 @@ public class ElementPartBend extends Element implements IElement {
 	    public void actionPerformed(ActionEvent arg0) {
 		try {
 		    sql.dbConnect();
-		    partNew.setSqlConnection(sql);
-		    SQLiteConnect.isClosed( partNew.getSqlConnection());
+
 		    partNew.dbAdd();
 
 		    partBend.setPartId(partNew.getId());

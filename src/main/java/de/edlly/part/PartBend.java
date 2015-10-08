@@ -18,9 +18,8 @@ public class PartBend implements IPartBend {
     public PartBend() throws SQLiteException, PartException {
 	bendList = new ArrayList<IBend<?>>();
 
-	connection.dbConnect();
-	part = new Part(connection);
-	connection.close();
+
+	part = new Part();
     }
 
     public void addBend(IBend<?> bend) throws PartException {

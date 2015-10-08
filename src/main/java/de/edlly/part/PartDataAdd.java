@@ -7,17 +7,10 @@ import de.edlly.db.*;
 public class PartDataAdd extends PartData implements IPartData {
     SQLitePreparedStatement sql;
 
-    public PartDataAdd(SQLiteConnect sqlConnection) throws PartException {
+    public PartDataAdd(SQLiteConnect sqlConnection) throws PartException, SQLiteException {
 	super(sqlConnection);
-	try {
-	    sql = new SQLitePreparedStatement(sqlConnection);
-	} catch (IllegalArgumentException e) {
-
-	    throw new PartException("Format Fehler:" + e.getLocalizedMessage() + " in " + e.getClass());
-	} catch (SQLiteException e) {
-
-	    throw new PartException("SQL Fehler:" + e.getLocalizedMessage() + " in " + e.getClass());
-	}
+	 
+	sql = new SQLitePreparedStatement(sqlConnection);
     }
 
     public boolean dbAdd() throws PartException {

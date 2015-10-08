@@ -1,7 +1,6 @@
 package de.edlly.test.part;
 
 import org.junit.Test;
-import de.edlly.db.SQLiteConnect;
 import de.edlly.db.SQLiteException;
 import de.edlly.part.IPart;
 import de.edlly.part.Part;
@@ -14,10 +13,10 @@ public class PartTest extends TestCase {
 
     @Override
     public void setUp() throws PartException, SQLiteException {
-	SQLiteConnect sqlConnection = new SQLiteConnect();
-	sqlConnection.dbConnect();
 
-	part = new Part(sqlConnection);
+
+
+	part = new Part();
     }
 
     @Test
@@ -34,18 +33,10 @@ public class PartTest extends TestCase {
 
     }
 
-    @Test
-    public void testGetSqlConnection() {
-	SQLiteConnect connection = part.getSqlConnection();
-	try {
-	    SQLiteConnect.isClosed(connection);
-	} catch (SQLiteException e) {
-	    fail("Verbindung wurde Fehlerhaft übergeben.");
-	}
-    }
+
     
     @Test
-    public void testGetMaterialYMax() throws IllegalArgumentException, SQLiteException {
+    public void testGetMaterialYMax() throws IllegalArgumentException, SQLiteException, PartException {
 	part.setMaterialId(1);
 	int actual = part.getMaterialYMax();
 	int expected = 4000;

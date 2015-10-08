@@ -2,12 +2,11 @@ package de.edlly.part;
 
 import java.text.SimpleDateFormat;
 import java.util.regex.*;
-import de.edlly.db.*;
 
 public abstract class PartUtil extends Part {
 
-    public PartUtil(SQLiteConnect sqlConnection) throws PartException {
-	super(sqlConnection);
+    public PartUtil() throws PartException {
+
     }
 
     /**

@@ -7,20 +7,12 @@ import java.util.ArrayList;
 import de.edlly.db.*;
 
 public class PartData extends Part implements IPartData {
-
     SQLiteStatement sql;
 
-    public PartData(SQLiteConnect sqlConnection) throws PartException {
-	super(sqlConnection);
-	try {
+
+    public PartData(SQLiteConnect sqlConnection) throws PartException, SQLiteException {
+	    SQLiteConnect.isClosedOrNull(sqlConnection);
 	    sql = new SQLiteStatement(sqlConnection);
-	} catch (IllegalArgumentException e) {
-
-	    throw new PartException("Format Fehler:" + e.getLocalizedMessage() + " in " + e.getClass());
-	} catch (SQLiteException e) {
-
-	    throw new PartException("SQL Fehler:" + e.getLocalizedMessage() + " in " + e.getClass());
-	}
     }
 
     public List<Integer> getIdList() throws SQLiteException {
@@ -56,10 +48,8 @@ public class PartData extends Part implements IPartData {
     }
 
     public IPartData getData(int id) throws PartException {
-	IPartData data = new PartData(getSqlConnection());
-	data.datensatzAusDbAbfragen(id);
-
-	return data;
+	datensatzAusDbAbfragen(id);
+	return this;
     }
 
     public List<IPartData> getDataList() throws PartException, SQLiteException {
@@ -140,10 +130,10 @@ public class PartData extends Part implements IPartData {
 	    sql.statmentVorbereitenUndStarten(sql.getQuery());
 
 	    if (sql.resultOhneErgebniss(sql.getResult())) {
-		    setMaterialId(0);
-		    setName("KeinDatensatzVorhanden");
-		    setProjektNr(1);
-		    setErstellDatum(1);
+		setMaterialId(0);
+		setName("KeinDatensatzVorhanden");
+		setProjektNr(1);
+		setErstellDatum(1);
 	    }
 	    setMaterialId(sql.getResult().getInt(1));
 	    setName(sql.getResult().getString(2));
@@ -151,7 +141,6 @@ public class PartData extends Part implements IPartData {
 	    setErstellDatum(sql.getResult().getLong(4));
 
 	    sql.closeStatmentAndResult();
-
 	} catch (SQLiteException e) {
 	    throw new PartException("SQL Fehler:" + e.getLocalizedMessage() + " in " + e.getClass());
 	} catch (SQLException e) {
@@ -168,7 +157,7 @@ public class PartData extends Part implements IPartData {
     public List<IPartData> getDummyData(int id) throws PartException, SQLiteException {
 	// MOCK OBJEKT
 	List<IPartData> datensatz = new ArrayList<IPartData>();
-	IPartData daten2 = new PartData(getSqlConnection());
+	IPartData daten2 = new PartData(sql);
 	daten2.setId(1);
 	daten2.setName("TestDaten");
 	daten2.setProjektNr(666);
