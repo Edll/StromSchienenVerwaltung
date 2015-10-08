@@ -39,6 +39,7 @@ public class ElementPartBend extends Element implements IElement {
     private JLabel lblProjektNr = new JLabel();
     private JButton btnSave;
     PartDataAdd partNew;
+    SQLiteConnect sql = new SQLiteConnect();
 
     public ElementPartBend() {
     }
@@ -49,16 +50,18 @@ public class ElementPartBend extends Element implements IElement {
     }
 
     public JPanel createAndGet(PartDataAdd partNew) {
-	this.partNew = partNew;
+
 	create();
 	try {
-
+	    sql.dbConnect();
+	    this.partNew = partNew;
+	    this.partNew.setSqlConnection(sql);
 	    this.yMax = this.partNew.getMaterialYMax();
 	    this.lblName.setText("Name: " + this.partNew.getName());
 	    this.lblYMax.setText("Maximale länge: " + Integer.toString(this.partNew.getMaterialYMax()));
 	    this.lblMaterialSize.setText("Material Id: " + Integer.toString(this.partNew.getMaterialId()));
 	    this.lblProjektNr.setText("Projekt Nr: " + Integer.toString(this.partNew.getProjektNr()));
-
+	    sql.close();
 	} catch (IllegalArgumentException e) {
 	    userExceptionHandling(e.getLocalizedMessage());
 	} catch (SQLiteException e) {
@@ -189,9 +192,21 @@ public class ElementPartBend extends Element implements IElement {
 	btnSave.addActionListener(new ActionListener() {
 	    public void actionPerformed(ActionEvent arg0) {
 		try {
+		    sql.dbConnect();
+		    partNew.setSqlConnection(sql);
+		    SQLiteConnect.isClosed( partNew.getSqlConnection());
+		    partNew.dbAdd();
+
+		    partBend.setPartId(partNew.getId());
+
 		    partBend.addListToDB();
+		    sql.close();
 		} catch (PartException e) {
+			   e.printStackTrace();
 		    userExceptionHandling(e.getLocalizedMessage());
+		} catch (SQLiteException e) {
+		   e.printStackTrace();
+		    systemExceptionHandling(e.getLocalizedMessage());
 		}
 
 	    }

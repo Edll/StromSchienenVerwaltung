@@ -8,10 +8,12 @@ import de.edlly.part.*;
 
 public class PartBendTest extends TestCase {
     IPartBend partBend;
+    SQLiteConnect sql = new SQLiteConnect();
 
     @Override
     public void setUp() throws PartException, SQLiteException {
 	partBend = new PartBend();
+	sql.dbConnect();
     }
 
     @Test
@@ -137,9 +139,29 @@ public class PartBendTest extends TestCase {
 
 	assertTrue("Liste nicht eingetragen", check);
     }
+    
+    @Test
+    public void testBendGetPrimaryPartId() throws PartException, SQLiteException{
+	IBend<Double> bend1 = new Bend<Double>(4000D, 80D, 100D);
+	IBend<Double> bend2 = new Bend<Double>(4000D, 70D, 200D);
+	IBend<Double> bend3 = new Bend<Double>(4000D, 60D, 300D);
+	partBend.addBend(bend1);
+	partBend.addBend(bend2);
+	partBend.addBend(bend3);
+	
+	PartDataAdd datensatz = new PartDataAdd(sql);
+	java.util.Date date = new java.util.Date();
+	datensatz.setData("TestDaten", 1, 666, date.getTime());
+	datensatz.dbAdd();
+	partBend.setPartId(datensatz.getId());
+	
+	partBend.addListToDB();
+	
+    }
 
     @Override
     public void tearDown() throws SQLiteException {
+	sql.close();
     }
 
 }

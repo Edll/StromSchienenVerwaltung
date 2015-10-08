@@ -9,13 +9,13 @@ public abstract class SQLite {
     public SQLite() {
 
     }
-    
+
     public int getPrimaryKey() {
-        return primaryKey;
+	return primaryKey;
     }
 
     public void setPrimaryKey(int id) {
-        this.primaryKey = id;
+	this.primaryKey = id;
     }
 
     public Connection getSqlConnection() {
