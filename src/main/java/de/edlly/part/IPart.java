@@ -1,6 +1,5 @@
 package de.edlly.part;
 
-import de.edlly.db.SQLiteConnect;
 import de.edlly.db.SQLiteException;
 
 public interface IPart {
@@ -41,9 +40,10 @@ public interface IPart {
      * Id des Materials das bei diesem Werkstück verwendet worden ist aus der Datenbank holen
      * 
      * @return Integer id
+     * @throws PartException 
      */
 
-    public Integer getMaterialId();
+    public Integer getMaterialId() throws PartException;
 
     /**
      * Id das Material in das Objekt Setzten
@@ -59,9 +59,10 @@ public interface IPart {
      * @return
      * @throws SQLiteException 
      * @throws IllegalArgumentException 
+     * @throws PartException 
      */
     
-    public int getMaterialYMax() throws IllegalArgumentException, SQLiteException;
+    public int getMaterialYMax() throws IllegalArgumentException, SQLiteException, PartException;
 
     /**
      * Timestamp wann das Werkstück erstellt worden ist.
@@ -102,13 +103,5 @@ public interface IPart {
      */
 
     public void setErstellDatum(long erstellDatum) throws PartException;
-
-    /**
-     * Prüft ob die Id in der Datenbank vorhanden ist
-     * 
-     * @param id
-     * @return false wenn diese nicht vorhanden ist.
-     */
-    public SQLiteConnect getSqlConnection();
 
 }

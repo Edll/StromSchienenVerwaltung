@@ -5,7 +5,7 @@ import de.edlly.material.*;
 import de.edlly.part.PartUtil;
 
 public class Part implements IPart {
-    private SQLiteConnect sqlConnection;
+    private SQLiteConnect sqLite = new SQLiteConnect();
 
     private int id;
     private String name;
@@ -13,18 +13,7 @@ public class Part implements IPart {
     private long erstellDatum;
     private MaterialIds materialId;
 
-    public Part(SQLiteConnect sqlConnection) throws PartException {
-
-	this.sqlConnection = sqlConnection;
-	try {
-	    materialId = new MaterialIds(sqlConnection);
-	} catch (IllegalArgumentException e) {
-
-	    throw new PartException("Format Fehler:" + e.getLocalizedMessage() + " in " + e.getClass());
-	} catch (SQLiteException e) {
-
-	    throw new PartException("SQL Fehler:" + e.getLocalizedMessage() + " in " + e.getClass());
-	}
+    public Part() throws PartException {
     }
 
     public int getId() {
@@ -87,27 +76,24 @@ public class Part implements IPart {
 	this.erstellDatum = erstellDatum;
     }
 
-    public Integer getMaterialId() {
+    public Integer getMaterialId() throws PartException {
+	if(materialId == null){
+	    throw new PartException("Die MaterialId ist nicht initalisiert worden!");
+	}
 	return materialId.getId();
     }
 
     public void setMaterialId(Integer materialId) throws SQLiteException {
+	sqLite.dbConnect();
+	this.materialId = new MaterialIds(sqLite);
 	this.materialId.setId(materialId);
+	sqLite.close();
     }
 
-    public int getMaterialYMax() throws IllegalArgumentException, SQLiteException {
-	MaterialDatensatz abfrage = new MaterialDatensatz(sqlConnection);
+    public int getMaterialYMax() throws IllegalArgumentException, SQLiteException, PartException {
+	MaterialDatensatz abfrage = new MaterialDatensatz(sqLite);
 	int[] daten = abfrage.getMaterialDatensatzAusDatenbank(getMaterialId());
 
 	return daten[4];
     }
-
-    public SQLiteConnect getSqlConnection() {
-	return sqlConnection;
-    }
-    
-    public void setSqlConnection(SQLiteConnect sqlConnection) {
-	this.sqlConnection = sqlConnection;
-    }
-
 }
