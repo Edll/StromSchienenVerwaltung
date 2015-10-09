@@ -86,10 +86,12 @@ public class Part implements IPart {
     }
 
     public void setMaterialId(Integer materialId) throws SQLiteException {
+	if(materialId != 0){
 	sqLite.dbConnect();
 	this.materialId = new MaterialIds(sqLite);
 	this.materialId.setId(materialId);
 	sqLite.close();
+	}
     }
 
     public int getMaterialYMax() throws IllegalArgumentException, SQLiteException, PartException {
@@ -112,7 +114,6 @@ public class Part implements IPart {
     public void getDB(int id, SQLiteStatement sql) throws PartException, SQLiteException {
 	try {
 	    setId(id);
-
 	    SQLiteConnect.isClosedOrNull(sql);
 
 	    sql.setQuery("SELECT materialId, name, projektNr, erstellDatum FROM Werkstueck WHERE id = " + getId());
@@ -123,17 +124,20 @@ public class Part implements IPart {
 		setName("KeinDatensatzVorhanden");
 		setProjektNr(1);
 		setErstellDatum(1);
-	    }
+	    }else{
 	    setMaterialId(sql.getResult().getInt(1));
 	    setName(sql.getResult().getString(2));
 	    setProjektNr(sql.getResult().getInt(3));
 	    setErstellDatum(sql.getResult().getLong(4));
+	    }
 
 	    sql.closeStatmentAndResult();
 	} catch (SQLException e) {
 	    throw new SQLiteException(e.getLocalizedMessage());
 	} finally {
-		sql.closeStatmentAndResult();
+		sql.closeStatment();
+
+	
 	}
     }
 }

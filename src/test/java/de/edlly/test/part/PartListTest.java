@@ -42,6 +42,19 @@ public class PartListTest extends TestCase {
 
 	assertEquals("Die größe ist nicht korrekt", 3, list.size());
     }
+    
+    @Test
+    public void testGetDataListIdNull() throws SQLiteException {
+	try {
+	  datensatz.getDataList(new int[] { 1000 });
+	    fail("Sollte Part Exception werfen das keine 0 als id geht.");
+	} catch (PartException actual) {
+
+	    String expected = "Die Part id für die Abfrage darf nicht 0 sein.";
+	    boolean check = actual.getLocalizedMessage().contains(expected);
+	    assertTrue("Fehler: falsche Exception: " + actual.getLocalizedMessage(), check);
+	}
+    }
 
     @Test
     public void testIdVorhanden() throws SQLiteException {

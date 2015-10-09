@@ -7,18 +7,38 @@ import de.edlly.db.SQLiteException;
 public interface IPartList {
 
     /**
-     * Gibt eine komplette liste mit allen Ids zurück
+     * Gibt das Lokale Part Objekt zurück das als IPart erstellt worden ist.
      * 
-     * @return
+     * @return IPart Objekt mit den Aktuellen werten.
+     */
+
+    public IPart getPart();
+
+    /**
+     * Setz das Lokale Part Objekt aus dem die List erstellt wird.
+     * 
+     * @param part
+     *            als IPart
+     */
+
+    public void setPart(IPart part);
+
+    /**
+     * Erstellt eine Liste mit allen PartIds in der Datenbank und gibt diese zurück. Wenn kein Objekt vorhanden ist gibt
+     * es nur eine Element mit dem wert 0.
+     * 
+     * @return List Objekt mit allen in der Datenbank vorhandenen PartIds
      */
 
     List<Integer> getIdList() throws SQLiteException;
 
     /**
-     * Erstellt eine Liste mit allen Werkstücken in der Datenbank
+     * Erstellt ein ListObjekt mit allen Parts in der DB. Diese werden als IPart Objekt eingefügt. Ist die Datenbank
+     * leer wird nur eine Listenelement eingefügt das Leer ist.
      * 
-     * @return List Objekt mit dem Generic Typ IPartData
+     * @return List mit alle Datenbank Parts 
      * @throws PartException
+     * @throws SQLiteException
      */
 
     public List<IPart> getDataList() throws PartException, SQLiteException;
