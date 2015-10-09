@@ -132,6 +132,6 @@ public interface IPart {
      *
      */
 
-    public void datensatzAusDbAbfragen(int id, SQLiteStatement sql) throws PartException, SQLiteException;
+    public void getDB(int id, SQLiteStatement sql) throws PartException, SQLiteException;
 
 }

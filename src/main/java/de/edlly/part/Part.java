@@ -24,7 +24,7 @@ public class Part implements IPart {
 
     public void setId(int id) throws PartException, SQLiteException {
 	sqLite.dbConnect();
-	IPartData idPruefung = new PartData(sqLite);
+	IPartList idPruefung = new PartList(sqLite);
 	if (id == 0) {
 	    this.id = 0;
 	} else if (!idPruefung.idVorhanden(id)) {
@@ -109,7 +109,7 @@ public class Part implements IPart {
 	setMaterialId(materialId);
     }
 
-    public void datensatzAusDbAbfragen(int id, SQLiteStatement sql) throws PartException, SQLiteException {
+    public void getDB(int id, SQLiteStatement sql) throws PartException, SQLiteException {
 	try {
 	    setId(id);
 

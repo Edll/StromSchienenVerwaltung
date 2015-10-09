@@ -10,28 +10,17 @@ import junit.framework.TestCase;
 
 public class PartDataTest extends TestCase {
 
-    IPartData datensatz;
+    IPartList datensatz;
     SQLiteConnect sqlConnection;
 
     @Override
     public void setUp() throws PartException, SQLiteException {
 	sqlConnection = new SQLiteConnect();
 	sqlConnection.dbConnect();
-	datensatz = new PartData(sqlConnection);
+	datensatz = new PartList(sqlConnection);
     }
 
-  
-
-    @Test
-    public void testGetData() throws PartException, SQLiteException {
-	IPart data = new Part();
-	data = datensatz.getData(1);
-
-	int actual = data.getId();
-	int expected = 1;
-
-	assertEquals("Die erhaltene Id weicht von der erwarteten ab.", expected, actual);
-    }
+ 
 
     @Test
     public void testGetDataListAll() throws PartException, SQLiteException {

@@ -4,7 +4,7 @@ import java.sql.SQLException;
 
 import de.edlly.db.*;
 
-public class PartDataAdd extends PartData implements IPartData {
+public class PartDataAdd extends PartList implements IPartList {
     SQLitePreparedStatement sql;
 
     public PartDataAdd(SQLiteConnect sqlConnection) throws PartException, SQLiteException {

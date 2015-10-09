@@ -1,7 +1,10 @@
 package de.edlly.test.part;
 
 import org.junit.Test;
+
+import de.edlly.db.SQLiteConnect;
 import de.edlly.db.SQLiteException;
+import de.edlly.db.SQLiteStatement;
 import de.edlly.part.IPart;
 import de.edlly.part.Part;
 import de.edlly.part.PartException;
@@ -10,13 +13,12 @@ import junit.framework.TestCase;
 public class PartTest extends TestCase {
 
     IPart part;
+    SQLiteConnect sqLite = new SQLiteConnect();
 
     @Override
     public void setUp() throws PartException, SQLiteException {
-
-
-
 	part = new Part();
+	sqLite.dbConnect();
     }
 
     @Test
@@ -141,13 +143,23 @@ public class PartTest extends TestCase {
 
     }
 
+    @Test
+    public void testGetData() throws PartException, SQLiteException {
+	SQLiteStatement sql = new SQLiteStatement(sqLite);
+	part.getDB(1, sql);
 
+	int actual = part.getId();
+	int expected = 1;
+
+	assertEquals("Die erhaltene Id weicht von der erwarteten ab.", expected, actual);
+    }
     
     
 
 
     @Override
-    public void tearDown() {
+    public void tearDown() throws SQLiteException {
+	sqLite.close();
     }
 
 }

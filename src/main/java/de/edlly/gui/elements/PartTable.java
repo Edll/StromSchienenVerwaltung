@@ -6,14 +6,14 @@ import javax.swing.table.DefaultTableModel;
 import de.edlly.db.SQLiteConnect;
 import de.edlly.db.SQLiteException;
 import de.edlly.part.IPart;
-import de.edlly.part.IPartData;
-import de.edlly.part.PartData;
+import de.edlly.part.IPartList;
+import de.edlly.part.PartList;
 import de.edlly.part.PartException;
 import de.edlly.part.PartUtil;
 
 public class PartTable {
     private SQLiteConnect sqLite;
-    private IPartData datensatz;
+    private IPartList datensatz;
     private JTable partTable;
 
     public PartTable() {
@@ -36,7 +36,7 @@ public class PartTable {
 
 	sqLite.dbConnect();
 
-	datensatz = new PartData(sqLite);
+	datensatz = new PartList(sqLite);
 	List<IPart> list = datensatz.getDataList();
 
 	for (int i = 0; i < list.size(); i++) {
