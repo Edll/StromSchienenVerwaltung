@@ -8,7 +8,7 @@ import de.edlly.db.SQLiteException;
 import de.edlly.part.*;
 import junit.framework.TestCase;
 
-public class PartDataTest extends TestCase {
+public class PartListTest extends TestCase {
 
     IPartList datensatz;
     SQLiteConnect sqlConnection;

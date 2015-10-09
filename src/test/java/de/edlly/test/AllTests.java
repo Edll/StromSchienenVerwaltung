@@ -28,7 +28,7 @@ public class AllTests extends TestSuite {
 	// materialDatensatz.addTestSuite(MaterialTabelleTest.class);
 
 	materialDatensatz.addTestSuite(PartTest.class);
-	materialDatensatz.addTestSuite(PartDataTest.class);
+	materialDatensatz.addTestSuite(PartListTest.class);
 	materialDatensatz.addTestSuite(PartDataAddTest.class);
 	materialDatensatz.addTestSuite(PartUtilTest.class);
 	materialDatensatz.addTestSuite(PartTableTest.class);
