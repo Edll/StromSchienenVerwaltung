@@ -68,7 +68,7 @@ public class BendTest extends TestCase {
     @Test
     public void testSetOverMaXY() {
 	try {
-	    IPartData part = new PartData(sqLite);
+	    IPart part = new Part();
 	    part.setMaterialId(1);
 	    int expected = part.getMaterialYMax();
 	    bend.setYMax((double) expected);

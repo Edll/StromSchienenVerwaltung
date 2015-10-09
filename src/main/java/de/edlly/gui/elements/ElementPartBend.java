@@ -38,7 +38,8 @@ public class ElementPartBend extends Element implements IElement {
     private JLabel lblYMax = new JLabel();
     private JLabel lblProjektNr = new JLabel();
     private JButton btnSave;
-    PartDataAdd partNew;
+    IPart partNew;
+    PartDataAdd partAdd;
     SQLiteConnect sql = new SQLiteConnect();
 
     public ElementPartBend() {
@@ -49,7 +50,7 @@ public class ElementPartBend extends Element implements IElement {
 	return panel;
     }
 
-    public JPanel createAndGet(PartDataAdd partNew) {
+    public JPanel createAndGet(IPart partNew) {
 
 	create();
 	try {
@@ -193,8 +194,10 @@ public class ElementPartBend extends Element implements IElement {
 	    public void actionPerformed(ActionEvent arg0) {
 		try {
 		    sql.dbConnect();
-
-		    partNew.dbAdd();
+		    partAdd = new PartDataAdd(sql);
+		    
+		    partAdd.setPart(partNew);	 
+		    partAdd.dbAdd();
 
 		    partBend.setPartId(partNew.getId());
 

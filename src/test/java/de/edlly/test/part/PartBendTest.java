@@ -149,10 +149,13 @@ public class PartBendTest extends TestCase {
 	partBend.addBend(bend2);
 	partBend.addBend(bend3);
 	
-	PartDataAdd datensatz = new PartDataAdd(sql);
+	IPart datensatz = new Part();
 	java.util.Date date = new java.util.Date();
 	datensatz.setData("TestDaten", 1, 666, date.getTime());
-	datensatz.dbAdd();
+	
+	PartDataAdd partDataAdd = new PartDataAdd(sql);
+	partDataAdd.setPart(datensatz);
+	partDataAdd.dbAdd();
 	partBend.setPartId(datensatz.getId());
 	
 	partBend.addListToDB();

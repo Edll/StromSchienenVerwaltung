@@ -12,7 +12,7 @@ import de.edlly.part.*;
 public class ElementPartNeu extends Element implements IElement {
     private JPanel panel;
     private ElementPartBend panelBend;
-    private PartDataAdd partNew;
+    private IPart partNew;
     private MaterialTable table;
     private SQLiteConnect sqLite;
 
@@ -99,7 +99,7 @@ public class ElementPartNeu extends Element implements IElement {
 		try {
 	
 		    sqLite.dbConnect();
-		    partNew = new PartDataAdd(sqLite);
+		    partNew = new Part();
 		    java.util.Date date = new java.util.Date();
 		    partNew.setData(inputName.getText(), table.getSelectedMaterialId(),
 			    Integer.parseInt(inputProjektNr.getText()), date.getTime());

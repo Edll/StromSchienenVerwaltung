@@ -1,5 +1,7 @@
 package de.edlly.part;
 
+import java.sql.SQLException;
+
 import de.edlly.db.*;
 import de.edlly.material.*;
 import de.edlly.part.PartUtil;
@@ -96,5 +98,42 @@ public class Part implements IPart {
 	int[] daten = abfrage.getMaterialDatensatzAusDatenbank(getMaterialId());
 	sqLite.close();
 	return daten[4];
+    }
+
+    public void setData(String name, int materialId, int projektNr, long erstellDatum)
+	    throws PartException, SQLiteException {
+
+	setErstellDatum(erstellDatum);
+	setName(name);
+	setProjektNr(projektNr);
+	setMaterialId(materialId);
+    }
+
+    public void datensatzAusDbAbfragen(int id, SQLiteStatement sql) throws PartException, SQLiteException {
+	try {
+	    setId(id);
+
+	    SQLiteConnect.isClosedOrNull(sql);
+
+	    sql.setQuery("SELECT materialId, name, projektNr, erstellDatum FROM Werkstueck WHERE id = " + getId());
+	    sql.statmentVorbereitenUndStarten(sql.getQuery());
+
+	    if (sql.resultOhneErgebniss(sql.getResult())) {
+		setMaterialId(0);
+		setName("KeinDatensatzVorhanden");
+		setProjektNr(1);
+		setErstellDatum(1);
+	    }
+	    setMaterialId(sql.getResult().getInt(1));
+	    setName(sql.getResult().getString(2));
+	    setProjektNr(sql.getResult().getInt(3));
+	    setErstellDatum(sql.getResult().getLong(4));
+
+	    sql.closeStatmentAndResult();
+	} catch (SQLException e) {
+	    throw new SQLiteException(e.getLocalizedMessage());
+	} finally {
+		sql.closeStatmentAndResult();
+	}
     }
 }

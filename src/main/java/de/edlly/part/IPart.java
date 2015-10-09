@@ -1,6 +1,7 @@
 package de.edlly.part;
 
 import de.edlly.db.SQLiteException;
+import de.edlly.db.SQLiteStatement;
 
 public interface IPart {
 
@@ -16,7 +17,7 @@ public interface IPart {
      * 
      * @param id
      * @throws PartException
-     * @throws SQLiteException 
+     * @throws SQLiteException
      */
     public void setId(int id) throws PartException, SQLiteException;
 
@@ -40,7 +41,7 @@ public interface IPart {
      * Id des Materials das bei diesem Werkstück verwendet worden ist aus der Datenbank holen
      * 
      * @return Integer id
-     * @throws PartException 
+     * @throws PartException
      */
 
     public Integer getMaterialId() throws PartException;
@@ -53,15 +54,16 @@ public interface IPart {
      */
 
     public void setMaterialId(Integer materialId) throws SQLiteException;
-    
+
     /**
      * Gibt den YMax wert des ausgewählten Materials zurück. Vorher muss die MaterialId gesetzt worden sein.
+     * 
      * @return
-     * @throws SQLiteException 
-     * @throws IllegalArgumentException 
-     * @throws PartException 
+     * @throws SQLiteException
+     * @throws IllegalArgumentException
+     * @throws PartException
      */
-    
+
     public int getMaterialYMax() throws IllegalArgumentException, SQLiteException, PartException;
 
     /**
@@ -103,5 +105,33 @@ public interface IPart {
      */
 
     public void setErstellDatum(long erstellDatum) throws PartException;
+
+    /**
+     * Setzt alle Werte eines Part.
+     * 
+     * @param name
+     *            Name des Werkstücks
+     * @param materialId
+     *            Material das verwendet wird.
+     * @param l
+     *            Datum Datum wann das Werkstück erstellt worden ist.
+     * @param projektNr
+     *            Projekt des des Werkstücks
+     * @throws PartException
+     * @throws SQLiteException
+     */
+
+    public void setData(String name, int materialId, int projektNr, long erstellDatum)
+	    throws PartException, SQLiteException;
+
+    /**
+     * Abfrage eines Datensatzes aus der DB Ergebiss wird ins Objekt geschrieben.
+     * 
+     * @param id
+     *            Die Id des Datensatzes der abgefragt werden soll
+     *
+     */
+
+    public void datensatzAusDbAbfragen(int id, SQLiteStatement sql) throws PartException, SQLiteException;
 
 }

@@ -5,6 +5,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import de.edlly.db.SQLiteConnect;
 import de.edlly.db.SQLiteException;
+import de.edlly.part.IPart;
 import de.edlly.part.IPartData;
 import de.edlly.part.PartData;
 import de.edlly.part.PartException;
@@ -36,12 +37,11 @@ public class PartTable {
 	sqLite.dbConnect();
 
 	datensatz = new PartData(sqLite);
-	List<IPartData> list = datensatz.getDataList();
+	List<IPart> list = datensatz.getDataList();
 
 	for (int i = 0; i < list.size(); i++) {
 
-	    IPartData d = list.get(i);
-
+	    IPart d = list.get(i);
 	    model.addRow(new Object[] { d.getId(), d.getName(), d.getMaterialId(), d.getProjektNr(),
 		    PartUtil.erstellDatumFormatieren(d.getErstellDatum()) });
 

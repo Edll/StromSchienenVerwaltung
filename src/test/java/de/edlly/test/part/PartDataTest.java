@@ -20,107 +20,11 @@ public class PartDataTest extends TestCase {
 	datensatz = new PartData(sqlConnection);
     }
 
-    @Test
-    public void testGetName() {
-	String actual = datensatz.getName();
-	String expected = "N/A";
-
-	assertEquals("Der string ist nicht korrekt", expected, actual);
-    }
-
-    @Test
-    public void testSetName() {
-	try {
-	    datensatz.setName("");
-	    fail("Name nicht angeben Exception nicht ausgelösen!");
-	} catch (PartException e) {
-
-	    boolean condition = e.getLocalizedMessage().contains("Es wurde kein Name angegeben!");
-	    assertTrue("Der fehler String ist nicht korrekt.", condition);
-	}
-    }
-
-    @Test
-    public void testGetMaterialId() throws PartException {
-
-	try {
-	    datensatz.getMaterialId();
-	    fail("Erwarted wurde Exeption: Die MaterialId ist nicht initalisiert worden!");
-	} catch (PartException actual) {
-
-	    String expected = "Die MaterialId ist nicht initalisiert worden!";
-	    boolean check = actual.getLocalizedMessage().contains(expected);
-	    assertTrue("Fehler: falsche Exception: " + actual.getLocalizedMessage(), check);
-	}
-    }
-
-    @Test
-    public void testSetMaterialId() throws SQLiteException {
-
-	try {
-	    datensatz.setMaterialId(0);
-	    fail("Material id Fehler nicht vorhanden wurde nicht ausgelöst");
-	} catch (IllegalArgumentException e) {
-
-	    boolean condition = e.getLocalizedMessage().contains("Material Id nicht vorhanden");
-	    assertTrue("Der fehler String ist nicht korrekt.", condition);
-	}
-    }
-
-    @Test
-    public void testGetProjektNr() throws PartException {
-	datensatz.setProjektNr(1);
-	int actual = datensatz.getProjektNr();
-	int expected = 1;
-
-	assertEquals("Die Projekt nummer ist nicht korrekt übergeben worden", expected, actual);
-    }
-
-    @Test
-    public void testSetProjektNr() {
-	try {
-	    datensatz.setProjektNr(0);
-	    fail("Projekt Nummer 0 Exception nicht ausgelöst");
-	} catch (PartException e) {
-	    boolean condition = e.getLocalizedMessage().contains("Es wurde keine ProjektNr angegeben!");
-	    assertTrue("Der fehler String ist nicht korrekt.", condition);
-	}
-    }
-
-    @Test
-    public void testGetErstellDatum() {
-	long actual = datensatz.getErstellDatum();
-	long expected = 0;
-
-	assertEquals("Fehler bei der Datums übergabe", expected, actual);
-    }
-
-    @Test
-    public void testSetErstellDatum() {
-	try {
-	    datensatz.setErstellDatum(0);
-	    fail("Datum in der Vergangheit muss fehler Auslösen");
-	} catch (PartException e) {
-	    boolean condition = e.getLocalizedMessage().contains("Das Datum darf nicht in der Vergangenheit liegen.");
-	    assertTrue("Der fehler String ist nicht korrekt.", condition);
-	}
-    }
-
-    @Test
-    public void testSetData() {
-	try {
-	    datensatz.setData("", 0, 0, 0);
-	    fail("Muss Fehler auslösen");
-	} catch (Exception e) {
-	    boolean condition = e.getLocalizedMessage().contains("Angaben nicht korrekt: ");
-	    assertTrue("Der fehler String ist nicht korrekt: " + e.getLocalizedMessage(), condition);
-	}
-
-    }
+  
 
     @Test
     public void testGetData() throws PartException, SQLiteException {
-	IPartData data = new PartData(sqlConnection);
+	IPart data = new Part();
 	data = datensatz.getData(1);
 
 	int actual = data.getId();
@@ -131,7 +35,7 @@ public class PartDataTest extends TestCase {
 
     @Test
     public void testGetDataListAll() throws PartException, SQLiteException {
-	List<IPartData> list = datensatz.getDataList();
+	List<IPart> list = datensatz.getDataList();
 
 	assertEquals("Das erste Listenelement Stimmt nicht", 1, list.get(0).getId());
 	assertEquals("Das zweite Listenelement Stimmt nicht", 2, list.get(1).getId());
@@ -139,13 +43,9 @@ public class PartDataTest extends TestCase {
 
     }
 
-    /**
-     * 
-     * TODO: umstellen auf ein Mock Objekt?
-     */
     @Test
-    public void testGetDataListId() throws PartException {
-	List<IPartData> list = datensatz.getDataList(new int[] { 1, 2, 3 });
+    public void testGetDataListId() throws PartException, SQLiteException {
+	List<IPart> list = datensatz.getDataList(new int[] { 1, 2, 3 });
 
 	assertEquals("Das erste Listenelement Stimmt nicht", 1, list.get(0).getId());
 	assertEquals("Das zweite Listenelement Stimmt nicht", 2, list.get(1).getId());

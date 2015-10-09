@@ -20,13 +20,13 @@ public class PartDataAdd extends PartData implements IPartData {
 		    "INSERT INTO Werkstueck (\"materialId\",\"name\",\"projektNr\",\"erstellDatum\") VALUES (?1,?2,?3,?4)");
 
 	    sql.preparedStatmentWithKeyVorbereiten(sql.getQuery());
-	    sql.getPreparedStatment().setInt(1, getMaterialId());
-	    sql.getPreparedStatment().setString(2, getName());
-	    sql.getPreparedStatment().setInt(3, getProjektNr());
-	    sql.getPreparedStatment().setLong(4, getErstellDatum());
+	    sql.getPreparedStatment().setInt(1, getPart().getMaterialId());
+	    sql.getPreparedStatment().setString(2, getPart().getName());
+	    sql.getPreparedStatment().setInt(3, getPart().getProjektNr());
+	    sql.getPreparedStatment().setLong(4, getPart().getErstellDatum());
 	    sql.preparedStatmentWithKeyAusfuehren();
 
-	    setId(sql.getPrimaryKey());
+	    getPart().setId(sql.getPrimaryKey());
 
 	    sql.closePrepareStatment();
 	    return true;

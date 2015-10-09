@@ -6,13 +6,13 @@ import java.util.ArrayList;
 
 import de.edlly.db.*;
 
-public class PartData extends Part implements IPartData {
-    SQLiteStatement sql;
-
+public class PartData implements IPartData {
+    private SQLiteStatement sql;
+    private IPart part = new Part();
 
     public PartData(SQLiteConnect sqlConnection) throws PartException, SQLiteException {
-	    SQLiteConnect.isClosedOrNull(sqlConnection);
-	    sql = new SQLiteStatement(sqlConnection);
+	SQLiteConnect.isClosedOrNull(sqlConnection);
+	sql = new SQLiteStatement(sqlConnection);
     }
 
     public List<Integer> getIdList() throws SQLiteException {
@@ -20,6 +20,14 @@ public class PartData extends Part implements IPartData {
 	List<Integer> idList = new ArrayList<Integer>();
 	idListeAusDbAbfragen(idList);
 	return idList;
+    }
+
+    public IPart getPart() {
+	return part;
+    }
+
+    public void setPart(IPart part) {
+	this.part = part;
     }
 
     /**
@@ -47,50 +55,34 @@ public class PartData extends Part implements IPartData {
 
     }
 
-    public IPartData getData(int id) throws PartException {
+    public IPart getData(int id) throws PartException {
 	datensatzAusDbAbfragen(id);
-	return this;
+	return part;
     }
 
-    public List<IPartData> getDataList() throws PartException, SQLiteException {
-	List<IPartData> datensatz = new ArrayList<IPartData>();
+    public List<IPart> getDataList() throws PartException, SQLiteException {
+	List<IPart> datensatz = new ArrayList<IPart>();
+	
+	for (int i = 0; i < getIdList().size(); i++) {
+	    part = new Part();
+	    part.datensatzAusDbAbfragen(getIdList().get(i), sql);
 
-	int i = 0;
-
-	while (i < getIdList().size()) {
-	    datensatz.add(i, getData(getIdList().get(i)));
-	    i++;
+	    datensatz.add(part);
 	}
 	return datensatz;
     }
 
-    public List<IPartData> getDataList(int... id) throws PartException {
-	List<IPartData> datensatz = new ArrayList<IPartData>();
+    public List<IPart> getDataList(int... id) throws PartException, SQLiteException {
+	List<IPart> datensatz = new ArrayList<IPart>();
 
-	int i = 0;
+	for (int i = 0; i < id.length; i++) {
+	    
+	    part = new Part();
+	    part.datensatzAusDbAbfragen(id[i], sql);
 
-	while (i < id.length) {
-	    datensatz.add(i, getData(id[i]));
-	    i++;
+	    datensatz.add(part);
 	}
 	return datensatz;
-    }
-
-    public void setData(String name, int materialId, int projektNr, long erstellDatum) throws PartException {
-
-	try {
-	    setErstellDatum(erstellDatum);
-	    setName(name);
-	    setProjektNr(projektNr);
-	    setMaterialId(materialId);
-	} catch (PartException e) {
-	    throw new PartException("Angaben nicht korrekt: " + e.getLocalizedMessage() + " in " + e.getClass());
-	} catch (IllegalArgumentException e) {
-	    throw new PartException("Angaben nicht korrekt: " + e.getLocalizedMessage() + " in " + e.getClass());
-
-	} catch (SQLiteException e) {
-	    throw new PartException("SQL Fehler:" + e.getLocalizedMessage() + " in " + e.getClass());
-	}
 
     }
 
@@ -125,20 +117,20 @@ public class PartData extends Part implements IPartData {
 
     public void datensatzAusDbAbfragen(int id) throws IllegalArgumentException, PartException {
 	try {
-	    setId(id);
-	    sql.setQuery("SELECT materialId, name, projektNr, erstellDatum FROM Werkstueck WHERE id = " + getId());
+	    part.setId(id);
+	    sql.setQuery("SELECT materialId, name, projektNr, erstellDatum FROM Werkstueck WHERE id = " + part.getId());
 	    sql.statmentVorbereitenUndStarten(sql.getQuery());
 
 	    if (sql.resultOhneErgebniss(sql.getResult())) {
-		setMaterialId(0);
-		setName("KeinDatensatzVorhanden");
-		setProjektNr(1);
-		setErstellDatum(1);
+		part.setMaterialId(0);
+		part.setName("KeinDatensatzVorhanden");
+		part.setProjektNr(1);
+		part.setErstellDatum(1);
 	    }
-	    setMaterialId(sql.getResult().getInt(1));
-	    setName(sql.getResult().getString(2));
-	    setProjektNr(sql.getResult().getInt(3));
-	    setErstellDatum(sql.getResult().getLong(4));
+	    part.setMaterialId(sql.getResult().getInt(1));
+	    part.setName(sql.getResult().getString(2));
+	    part.setProjektNr(sql.getResult().getInt(3));
+	    part.setErstellDatum(sql.getResult().getLong(4));
 
 	    sql.closeStatmentAndResult();
 	} catch (SQLiteException e) {
@@ -152,21 +144,6 @@ public class PartData extends Part implements IPartData {
 		throw new PartException("SQL Fehler:" + e.getLocalizedMessage() + " in " + e.getClass());
 	    }
 	}
-    }
-
-    public List<IPartData> getDummyData(int id) throws PartException, SQLiteException {
-	// MOCK OBJEKT
-	List<IPartData> datensatz = new ArrayList<IPartData>();
-	IPartData daten2 = new PartData(sql);
-	daten2.setId(1);
-	daten2.setName("TestDaten");
-	daten2.setProjektNr(666);
-	daten2.setErstellDatum(1442940229642L);
-
-	datensatz.add(daten2);
-
-	return datensatz;
-
     }
 
 }
