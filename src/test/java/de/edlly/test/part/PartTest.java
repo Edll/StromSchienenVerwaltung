@@ -34,9 +34,20 @@ public class PartTest extends TestCase {
 	assertEquals(0, part.getId());
 
     }
+    @Test
+    public void testSetIdNichtVorhanden()  {
+	try {
+	    part.setId(2000);
+	    fail("Fehler Id nicht vorhanden");
+	} catch (Exception actual) {
 
-
-    
+	    String expected = "Fehler bei der Werkstückid, die angebene id:";
+	    boolean check = actual.getLocalizedMessage().contains(expected);
+	    assertTrue("Fehler: falsche Exception: " + actual.getLocalizedMessage(), check);
+	}
+		
+    }
+ 
     @Test
     public void testGetMaterialYMax() throws IllegalArgumentException, SQLiteException, PartException {
 	part.setMaterialId(1);
@@ -83,7 +94,7 @@ public class PartTest extends TestCase {
     public void testSetMaterialId() throws SQLiteException {
 
 	try {
-	    part.setMaterialId(0);
+	    part.setMaterialId(1000);
 	    fail("Material id Fehler nicht vorhanden wurde nicht ausgelöst");
 	} catch (IllegalArgumentException e) {
 
@@ -153,9 +164,6 @@ public class PartTest extends TestCase {
 
 	assertEquals("Die erhaltene Id weicht von der erwarteten ab.", expected, actual);
     }
-    
-    
-
 
     @Override
     public void tearDown() throws SQLiteException {
