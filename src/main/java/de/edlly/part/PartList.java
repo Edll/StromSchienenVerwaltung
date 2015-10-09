@@ -6,11 +6,11 @@ import java.util.ArrayList;
 
 import de.edlly.db.*;
 
-public class PartData implements IPartData {
+public class PartList implements IPartList {
     private SQLiteStatement sql;
     private IPart part = new Part();
 
-    public PartData(SQLiteConnect sqlConnection) throws PartException, SQLiteException {
+    public PartList(SQLiteConnect sqlConnection) throws PartException, SQLiteException {
 	SQLiteConnect.isClosedOrNull(sqlConnection);
 	sql = new SQLiteStatement(sqlConnection);
     }
@@ -54,18 +54,12 @@ public class PartData implements IPartData {
 	}
 
     }
-
-    public IPart getData(int id) throws PartException {
-	datensatzAusDbAbfragen(id);
-	return part;
-    }
-
     public List<IPart> getDataList() throws PartException, SQLiteException {
 	List<IPart> datensatz = new ArrayList<IPart>();
 	
 	for (int i = 0; i < getIdList().size(); i++) {
 	    part = new Part();
-	    part.datensatzAusDbAbfragen(getIdList().get(i), sql);
+	    part.getDB(getIdList().get(i), sql);
 
 	    datensatz.add(part);
 	}
@@ -78,7 +72,7 @@ public class PartData implements IPartData {
 	for (int i = 0; i < id.length; i++) {
 	    
 	    part = new Part();
-	    part.datensatzAusDbAbfragen(id[i], sql);
+	    part.getDB(id[i], sql);
 
 	    datensatz.add(part);
 	}
@@ -114,36 +108,4 @@ public class PartData implements IPartData {
 	    sql.closeStatmentAndResult();
 	}
     }
-
-    public void datensatzAusDbAbfragen(int id) throws IllegalArgumentException, PartException {
-	try {
-	    part.setId(id);
-	    sql.setQuery("SELECT materialId, name, projektNr, erstellDatum FROM Werkstueck WHERE id = " + part.getId());
-	    sql.statmentVorbereitenUndStarten(sql.getQuery());
-
-	    if (sql.resultOhneErgebniss(sql.getResult())) {
-		part.setMaterialId(0);
-		part.setName("KeinDatensatzVorhanden");
-		part.setProjektNr(1);
-		part.setErstellDatum(1);
-	    }
-	    part.setMaterialId(sql.getResult().getInt(1));
-	    part.setName(sql.getResult().getString(2));
-	    part.setProjektNr(sql.getResult().getInt(3));
-	    part.setErstellDatum(sql.getResult().getLong(4));
-
-	    sql.closeStatmentAndResult();
-	} catch (SQLiteException e) {
-	    throw new PartException("SQL Fehler:" + e.getLocalizedMessage() + " in " + e.getClass());
-	} catch (SQLException e) {
-	    throw new PartException("SQL Fehler:" + e.getLocalizedMessage() + " in " + e.getClass());
-	} finally {
-	    try {
-		sql.closeStatmentAndResult();
-	    } catch (SQLiteException e) {
-		throw new PartException("SQL Fehler:" + e.getLocalizedMessage() + " in " + e.getClass());
-	    }
-	}
-    }
-
 }
