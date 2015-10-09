@@ -36,7 +36,7 @@ public interface IPartList {
      * Erstellt ein ListObjekt mit allen Parts in der DB. Diese werden als IPart Objekt eingefügt. Ist die Datenbank
      * leer wird nur eine Listenelement eingefügt das Leer ist.
      * 
-     * @return List mit alle Datenbank Parts 
+     * @return List mit alle Datenbank Parts
      * @throws PartException
      * @throws SQLiteException
      */
@@ -44,7 +44,8 @@ public interface IPartList {
     public List<IPart> getDataList() throws PartException, SQLiteException;
 
     /**
-     * Erstellt eine Liste mit den Werkstücken die in der Id Liste abgefragt worden sind.
+     * Erstellt eine Liste mit den Werkstücken die in der Id Liste abgefragt worden sind. Wenn diese 0 wird ein Dummy
+     * Objekt geliefert mit der ID 0
      * 
      * @param id
      *            Integre als Array
@@ -54,6 +55,14 @@ public interface IPartList {
      */
 
     public List<IPart> getDataList(int... id) throws PartException, SQLiteException;
+
+    /**
+     * Erstellt eine Id Liste mit allen Part Id in der Datenbank. Wenn Keine Ids vorhanden sind wird es eine Element mit
+     * einer 0 zurück gegeben.
+     * 
+     * @throws SQLiteException
+     */
+    public void idListeErstellen() throws SQLiteException;
 
     /**
      * Prüft in der Datenbank ob eine PartId vorhanden ist

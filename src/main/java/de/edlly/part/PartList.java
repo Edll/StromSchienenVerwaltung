@@ -7,13 +7,16 @@ import java.util.ArrayList;
 import de.edlly.db.*;
 
 public class PartList implements IPartList {
-    private SQLiteStatement sql;
+    private SQLiteStatement sqlStatment;
+    
     private IPart part = new Part();
     private List<IPart> datensatz = new ArrayList<IPart>();
+    List<Integer> idList;
+    
 
     public PartList(SQLiteConnect sqlConnection) throws PartException, SQLiteException {
 	SQLiteConnect.isClosedOrNull(sqlConnection);
-	sql = new SQLiteStatement(sqlConnection);
+	sqlStatment = new SQLiteStatement(sqlConnection);
 
     }
 
@@ -26,16 +29,14 @@ public class PartList implements IPartList {
     }
 
     public List<Integer> getIdList() throws SQLiteException {
-	List<Integer> idList = new ArrayList<Integer>();
-	
-	idListeAusDbAbfragen(idList);
+	idListeErstellen();
 	return idList;
     }
 
     public List<IPart> getDataList() throws PartException, SQLiteException {
 	for (int i = 0; i < getIdList().size(); i++) {
 	    part = new Part();
-	    part.getDB(getIdList().get(i), sql);
+	    part.getDB(getIdList().get(i), sqlStatment);
 
 	    datensatz.add(part);
 	}
@@ -46,7 +47,7 @@ public class PartList implements IPartList {
 	for (int i = 0; i < id.length; i++) {
 
 	    part = new Part();
-	    part.getDB(id[i], sql);
+	    part.getDB(id[i], sqlStatment);
 
 	    datensatz.add(part);
 	}
@@ -54,31 +55,29 @@ public class PartList implements IPartList {
 
     }
 
-    private void idListeAusDbAbfragen(List<Integer> idList) throws SQLiteException {
+    public void idListeErstellen() throws SQLiteException {
 	try {
-	    sql.setQuery("Select id From Werkstueck");
+	    idList = new ArrayList<Integer>();
+	    sqlStatment.setQuery("Select id From Werkstueck");
 
-	    int anzahlId = sql.anzahlDatenseatze();
+	    int anzahlId = sqlStatment.anzahlDatenseatze();
 
 	    if (anzahlId == 0) {
-
 		idList.add(new Integer(0));
 	    } else {
 
-		sql.statmentExecute(sql.getQuery());
-
-		while (sql.getResult().next()) {
-
-		    idList.add(sql.getResult().getInt(1));
+		sqlStatment.statmentExecute(sqlStatment.getQuery());
+		while (sqlStatment.getResult().next()) {
+		    idList.add(sqlStatment.getResult().getInt(1));
 		}
 	    }
-	    sql.closeStatmentAndResult();
+	    sqlStatment.closeStatmentAndResult();
 
 	} catch (SQLException sqlException) {
 	    throw new SQLiteException(sqlException.getLocalizedMessage());
 
 	} finally {
-	    sql.closeStatmentAndResult();
+	    sqlStatment.closeStatmentAndResult();
 	}
     }
 
