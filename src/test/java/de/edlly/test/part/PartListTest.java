@@ -44,16 +44,10 @@ public class PartListTest extends TestCase {
     }
     
     @Test
-    public void testGetDataListIdNull() throws SQLiteException {
-	try {
-	  datensatz.getDataList(new int[] { 1000 });
-	    fail("Sollte Part Exception werfen das keine 0 als id geht.");
-	} catch (PartException actual) {
+    public void testGetDataListIdNull() throws SQLiteException, PartException {
 
-	    String expected = "Die Part id für die Abfrage darf nicht 0 sein.";
-	    boolean check = actual.getLocalizedMessage().contains(expected);
-	    assertTrue("Fehler: falsche Exception: " + actual.getLocalizedMessage(), check);
-	}
+	    List<IPart> list = datensatz.getDataList(new int[] { 0 });
+       assertEquals("Das erste Listenelement Stimmt nicht", 0, list.get(0).getId());
     }
 
     @Test
