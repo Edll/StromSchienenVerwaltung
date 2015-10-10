@@ -39,7 +39,7 @@ public class ElementPartBend extends Element implements IElement {
     private JLabel lblProjektNr = new JLabel();
     private JButton btnSave;
     IPart partNew;
-    PartDataAdd partAdd;
+    IPartNew partAdd;
     SQLiteConnect sql = new SQLiteConnect();
 
     public ElementPartBend() {
@@ -194,10 +194,10 @@ public class ElementPartBend extends Element implements IElement {
 	    public void actionPerformed(ActionEvent arg0) {
 		try {
 		    sql.dbConnect();
-		    partAdd = new PartDataAdd(sql);
+		    partAdd = new PartNew(sql);
 		    
 		    partAdd.setPart(partNew);	 
-		    partAdd.dbAdd();
+		    partAdd.addToDdAndSetPartId();
 
 		    partBend.setPartId(partNew.getId());
 

@@ -153,9 +153,9 @@ public class PartBendTest extends TestCase {
 	java.util.Date date = new java.util.Date();
 	datensatz.setData("TestDaten", 1, 666, date.getTime());
 	
-	PartDataAdd partDataAdd = new PartDataAdd(sql);
+	IPartNew partDataAdd = new PartNew(sql);
 	partDataAdd.setPart(datensatz);
-	partDataAdd.dbAdd();
+	partDataAdd.addToDdAndSetPartId();
 	partBend.setPartId(datensatz.getId());
 	
 	partBend.addListToDB();
