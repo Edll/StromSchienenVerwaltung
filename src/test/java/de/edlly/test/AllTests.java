@@ -32,7 +32,7 @@ public class AllTests extends TestSuite {
 	materialDatensatz.addTestSuite(PartNewTest.class);
 	materialDatensatz.addTestSuite(PartUtilTest.class);
 	materialDatensatz.addTestSuite(PartTableTest.class);
-	materialDatensatz.addTestSuite(PartBendTest.class);
+	materialDatensatz.addTestSuite(BendListTest.class);
 	materialDatensatz.addTestSuite(BendTest.class);
 
 	materialDatensatz.addTestSuite(SQLiteBooleanTest.class);

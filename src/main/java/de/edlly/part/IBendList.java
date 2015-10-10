@@ -12,7 +12,7 @@ import de.edlly.db.SQLiteException;
  *
  */
 
-public interface IPartBend {
+public interface IBendList {
 
     /**
      * PartId zu der das Objekt gehört

@@ -6,7 +6,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import de.edlly.part.IBend;
-import de.edlly.part.IPartBend;
+import de.edlly.part.IBendList;
 
 public class BendTable extends JTable {
     private static final long serialVersionUID = -5081097819010063413L;
@@ -32,7 +32,7 @@ public class BendTable extends JTable {
 	bendTable.setModel(model);
     }
 
-    public void addData(IPartBend bend) {
+    public void addData(IBendList bend) {
 	List<IBend<?>> bendList = bend.getBends();
 
 	for (int i = model.getRowCount() - 1; i >= 0; i--) {

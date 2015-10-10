@@ -6,13 +6,13 @@ import junit.framework.TestCase;
 import de.edlly.db.*;
 import de.edlly.part.*;
 
-public class PartBendTest extends TestCase {
-    IPartBend partBend;
+public class BendListTest extends TestCase {
+    IBendList partBend;
     SQLiteConnect sql = new SQLiteConnect();
 
     @Override
     public void setUp() throws PartException, SQLiteException {
-	partBend = new PartBend();
+	partBend = new BendList();
 	sql.dbConnect();
     }
 

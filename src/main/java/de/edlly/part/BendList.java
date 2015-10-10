@@ -9,13 +9,13 @@ import de.edlly.db.SQLiteConnect;
 import de.edlly.db.SQLiteException;
 import de.edlly.db.SQLitePreparedStatement;
 
-public class PartBend implements IPartBend {
+public class BendList implements IBendList {
     List<IBend<?>> bendList;
     SQLiteConnect connection = new SQLiteConnect();
     SQLitePreparedStatement sqLite;
     IPart part;
 
-    public PartBend() throws SQLiteException, PartException {
+    public BendList() throws SQLiteException, PartException {
 	bendList = new ArrayList<IBend<?>>();
 
 

@@ -23,7 +23,7 @@ import java.awt.event.ActionListener;
 public class ElementPartBend extends Element implements IElement {
     private JPanel panel = new JPanel();
     private JPanel formPanel = new JPanel();
-    private IPartBend partBend;
+    private IBendList partBend;
     private double yMax;
 
     private BendTable bendTable = new BendTable();
@@ -73,7 +73,7 @@ public class ElementPartBend extends Element implements IElement {
 
     public void create() {
 	try {
-	    partBend = new PartBend();
+	    partBend = new BendList();
 	} catch (SQLiteException e) {
 	    systemExceptionHandling(e.getLocalizedMessage());
 	} catch (PartException e) {
