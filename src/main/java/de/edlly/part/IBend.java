@@ -1,5 +1,7 @@
 package de.edlly.part;
 
+import de.edlly.db.SQLiteException;
+import de.edlly.db.SQLiteStatement;
 import de.edlly.material.Material;
 
 /**
@@ -13,7 +15,7 @@ import de.edlly.material.Material;
  * @param <T>
  */
 
-public interface IBend<T extends Number & Comparable<T>> extends Comparable<IBend<?>>  {
+public interface IBend<T extends Number & Comparable<T>> extends Comparable<IBend<?>> {
 
     /**
      * Konstanten
@@ -93,5 +95,31 @@ public interface IBend<T extends Number & Comparable<T>> extends Comparable<IBen
      *            <T extends Numbers>
      * @throws PartException
      */
-    public void create(T angel, T y) throws PartException;
+    public void setAngelAndY(T angel, T y) throws PartException;
+
+    /**
+     * Gibt die Id des Bends zurück wenn dieser aus der Datenbank gelesen wurde oder wenn eine neues Bend in die
+     * Datenbank eingetragen worden ist.
+     */
+    int getId();
+
+    /**
+     * Setz die Id des Bends, es wird geprüft ob diese in der Datenbank vorhanden ist wenn nicht gibt es eine
+     * PartException
+     * 
+     * @param id
+     */
+    void setId(int id) throws PartException;
+
+    /**
+     * Lädt ein Bend Objekt mit id aus der Datenbank. Dabei wird je nach Generic Typ der Klasse geladen. Gibt es keine
+     * Möglichkeit das Objekt mit diesem Generic Typ zu Laden gibt es eine RuntimeExcpetion
+     * 
+     * @param id des zu ladenden Objekts
+     * @param sql SqliteStatement mit gültiger DB Connection
+     * @throws PartException
+     * @throws SQLiteException
+     */
+    void getDB(int id, SQLiteStatement sql) throws PartException, SQLiteException;
+
 }

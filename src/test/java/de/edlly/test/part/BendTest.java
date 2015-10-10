@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import de.edlly.db.SQLiteConnect;
 import de.edlly.db.SQLiteException;
+import de.edlly.db.SQLiteStatement;
 import de.edlly.part.*;
 import junit.framework.TestCase;
 
@@ -109,7 +110,95 @@ public class BendTest extends TestCase {
     public void testCreate() throws PartException {
 	double angel = IBend.ANGEL_MAX.doubleValue();
 	double y = IBend.Y_MIN.doubleValue() + IBend.ABSTAND_RAND.doubleValue();
-	bend.create(angel, y);
+	bend.setAngelAndY(angel, y);
+    }
+
+    @Test
+    public void testGetDB() throws Exception {
+	SQLiteStatement sql = new SQLiteStatement(sqLite);
+	int id = 1;
+	bend.getDB(id, sql);
+	double actual = bend.getAngel();
+	assertNotSame(0D, actual);
+    }
+
+    @Test
+    public void testGetDBFloat() throws Exception {
+	SQLiteStatement sql = new SQLiteStatement(sqLite);
+	IBend<Float> bendFloat = new Bend<Float>(4000F);
+
+	bendFloat.getDB(1, sql);
+
+	assertTrue(bendFloat.getAngel().getClass() == Float.class);
+	assertNotSame(0L, bendFloat.getAngel());
+
+	assertTrue(bendFloat.getY().getClass() == Float.class);
+	assertNotSame(0L, bendFloat.getY());
+    }
+
+    @Test
+    public void testGetDBLong() throws Exception {
+	SQLiteStatement sql = new SQLiteStatement(sqLite);
+	IBend<Long> bendLong = new Bend<Long>(4000L);
+
+	bendLong.getDB(1, sql);
+	Long actual = bendLong.getAngel();
+
+	assertTrue(bendLong.getAngel().getClass() == Long.class);
+	assertNotSame(0L, actual);
+
+	assertTrue(bendLong.getY().getClass() == Long.class);
+	assertNotSame(0L, bendLong.getY());
+    }
+
+    @Test
+    public void testGetDBInteger() throws Exception {
+	SQLiteStatement sql = new SQLiteStatement(sqLite);
+	IBend<Integer> bendInt = new Bend<Integer>(4000);
+
+	bendInt.getDB(1, sql);
+	Integer actual = bendInt.getAngel();
+
+	assertTrue(bendInt.getAngel().getClass() == Integer.class);
+	assertNotSame(0L, actual);
+
+	assertTrue(bendInt.getY().getClass() == Integer.class);
+	assertNotSame(0L, bendInt.getY());
+    }
+
+    @Test
+    public void testGetDBDouble() throws Exception {
+	SQLiteStatement sql = new SQLiteStatement(sqLite);
+	IBend<Double> bendInt = new Bend<Double>(4000D);
+
+	bendInt.getDB(1, sql);
+	Double actual = bendInt.getAngel();
+
+	assertTrue(bendInt.getAngel().getClass() == Double.class);
+	assertNotSame(0D, actual);
+
+	assertTrue(bendInt.getY().getClass() == Double.class);
+	assertNotSame(0D, bendInt.getY());
+    }
+
+    @Test
+    public void testGetDBFail() throws Exception {
+
+	try {
+	    SQLiteStatement sql = new SQLiteStatement(sqLite);
+	    byte test = 100;
+	    IBend<Byte> bendInt = new Bend<Byte>(test);
+
+	    bendInt.getDB(1, sql);
+	    bendInt.getAngel();
+
+	    fail("Nicht vorhandenes Zahlenformat angefordert.");
+	} catch (Exception actual) {
+
+	    String expected = "Nicht vorhandenes Zahlenformat angefordert.";
+	    boolean check = actual.getLocalizedMessage().contains(expected);
+	    assertTrue("Fehler: falsche Exception: " + actual.getLocalizedMessage(), check);
+	}
     }
 
     @Override
