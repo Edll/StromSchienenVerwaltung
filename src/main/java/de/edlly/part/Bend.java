@@ -120,12 +120,12 @@ public class Bend<T extends Number & Comparable<T>> implements IBend<T>, Compara
 		 * Dies ist nötig da aus der Datenbank immer ein konkreter Typ ausgelesen werden muss.
 		 */
 		if (sql.getResult().getObject(2) instanceof Number) {
+		    
 		    if (((Comparable<?>) yMax) instanceof Double) {
 			setAngel((T) (Comparable<?>) sql.getResult().getObject(2));
 
 		    } else if (((Comparable<?>) yMax) instanceof Float) {
 			Float angel = sql.getResult().getFloat(2);
-
 			setAngel((T) (Comparable<?>) angel);
 
 		    } else if (((Comparable<?>) yMax) instanceof Integer) {
