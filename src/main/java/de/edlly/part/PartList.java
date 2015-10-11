@@ -59,14 +59,14 @@ public class PartList implements IPartList {
 	try {
 	    idList = new ArrayList<Integer>();
 	    sqlStatment.setQuery("Select id From Werkstueck");
-
+	    sqlStatment.statmentVorbereitenUndStarten(sqlStatment.getQuery());
 	    int anzahlId = sqlStatment.anzahlDatenseatze();
 
 	    if (anzahlId == 0) {
 		idList.add(new Integer(0));
 	    } else {
 
-		sqlStatment.statmentExecute(sqlStatment.getQuery());
+		  sqlStatment.statmentVorbereitenUndStarten(sqlStatment.getQuery());
 		while (sqlStatment.getResult().next()) {
 		    idList.add(sqlStatment.getResult().getInt(1));
 		}

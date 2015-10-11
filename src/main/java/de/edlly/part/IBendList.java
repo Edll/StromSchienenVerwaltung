@@ -3,6 +3,7 @@ package de.edlly.part;
 import java.util.List;
 
 import de.edlly.db.SQLiteException;
+import de.edlly.db.SQLiteStatement;
 
 /**
  * Erstellt aus einem Bend Objekt eine Liste und verwaltet dieses Prüft ob es eine Kollision innerhalb der Liste gibt.
@@ -13,13 +14,14 @@ import de.edlly.db.SQLiteException;
  */
 
 public interface IBendList {
-    
+
     /**
      * Setz das Part Objekt auf das Das Bend Objekt eine Referenz mit der PartId hat.
+     * 
      * @param part
-     * @throws PartException 
+     * @throws PartException
      */
-    
+
     void setPart(IPart part) throws PartException;
 
     /**
@@ -83,4 +85,14 @@ public interface IBendList {
      * @throws PartException
      */
     public boolean addListToDB() throws PartException, SQLiteException;
+
+    /**
+     * Erzeugt eine Liste mit allen Ids die die in der Datenbank vorhanden sind.
+     * 
+     * @return List<IBend<?>> mit den Ids
+     * 
+     * @throws SQLiteException
+     * @throws PartException 
+     */
+    public List<Integer> getIdList(SQLiteStatement sql) throws SQLiteException, PartException;
 }
