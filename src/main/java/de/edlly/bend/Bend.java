@@ -178,9 +178,11 @@ public class Bend<T extends Number & Comparable<T>> implements IBend<T>, Compara
 
     @Override
     public void addDB(SQLitePreparedStatement sql) throws PartException, SQLiteException {
+	
 	try {
 	    int partId = part.getId();
 	    SQLiteConnect.isClosedOrNull(sql);
+	    
 	    sql.setQuery("INSERT INTO \"Bend\" (\"partId\",\"angel\",\"y\") VALUES (?1,?2,?3)");
 	    sql.preparedStatmentWithKeyVorbereiten(sql.getQuery());
 	    sql.getPreparedStatment().setObject(1, partId);
@@ -213,31 +215,25 @@ public class Bend<T extends Number & Comparable<T>> implements IBend<T>, Compara
 
     private void checkAngel(T angel) throws PartException {
 	if (angel.doubleValue() > IBend.ANGEL_MAX.doubleValue()) {
-
 	    throw new PartException("Der angegebene Winkel ist zu groß. Maximal:" + IBend.ANGEL_MAX);
 
 	} else if (angel.doubleValue() < IBend.ANGEL_MIN.doubleValue()) {
-
 	    throw new PartException("Der angegebene Winkel ist zu klein. Minimal:" + IBend.ANGEL_MAX);
 	}
     }
 
     private void checkY(T y) throws PartException {
 	if (y.doubleValue() > yMax.doubleValue()) {
-
 	    throw new PartException("Der Angegebene Y Wert ist zu größ. Maximal:" + yMax);
 
 	} else if (y.doubleValue() < IBend.Y_MIN.doubleValue()) {
-
 	    throw new PartException("Der Angegebene Y Wert ist zu klein. Minimal:" + IBend.Y_MIN);
 
 	} else if (y.doubleValue() < IBend.ABSTAND_RAND.doubleValue()) {
-
 	    throw new PartException(
 		    "Der Angegebene Y Wert ist zu klein. Der mindest Abstand zum Rand ist:" + IBend.ABSTAND_RAND);
 
 	} else if (y.doubleValue() > yMax.doubleValue() - IBend.ABSTAND_RAND.doubleValue()) {
-
 	    throw new PartException("Der Angegebene Y Wert ist zu groß. Der Maximale Wert ist: "
 		    + (yMax.doubleValue() - IBend.ABSTAND_RAND.doubleValue()));
 

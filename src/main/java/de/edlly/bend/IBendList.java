@@ -24,7 +24,7 @@ public interface IBendList {
      * @throws PartException
      */
 
-    void setPart(IPart part) throws PartException;
+    public void setPart(IPart part) throws PartException;
 
     /**
      * Fügt eine Biegung der Liste hinzu. Prüft davor ob es eine Kollision auf dem Werkstück gibt.

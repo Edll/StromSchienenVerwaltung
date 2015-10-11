@@ -24,7 +24,7 @@ import de.edlly.part.PartException;
 public interface IBend<T extends Number & Comparable<T>> extends Comparable<IBend<?>> {
 
     /**
-     * Konstanten
+     * Konstanten für die Grenzwert Überprüfung.
      */
 
     // Grenzwerte für den Angel
