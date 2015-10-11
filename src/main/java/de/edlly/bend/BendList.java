@@ -1,4 +1,4 @@
-package de.edlly.part;
+package de.edlly.bend;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -9,6 +9,9 @@ import de.edlly.db.SQLiteConnect;
 import de.edlly.db.SQLiteException;
 import de.edlly.db.SQLitePreparedStatement;
 import de.edlly.db.SQLiteStatement;
+import de.edlly.part.IPart;
+import de.edlly.part.Part;
+import de.edlly.part.PartException;
 
 public class BendList implements IBendList {
     List<IBend<?>> bendList;

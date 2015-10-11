@@ -1,7 +1,9 @@
-package de.edlly.test.part;
+package de.edlly.test.bend;
 
 import org.junit.Test;
 
+import de.edlly.bend.Bend;
+import de.edlly.bend.IBend;
 import de.edlly.db.SQLiteConnect;
 import de.edlly.db.SQLiteException;
 import de.edlly.db.SQLitePreparedStatement;

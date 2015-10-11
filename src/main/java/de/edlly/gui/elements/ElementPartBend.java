@@ -1,5 +1,10 @@
 package de.edlly.gui.elements;
 
+import de.edlly.bend.Bend;
+import de.edlly.bend.BendList;
+import de.edlly.bend.IBend;
+import de.edlly.bend.IBendList;
+
 /**
  * TODO: Hinzufüge Button für Database!
  */

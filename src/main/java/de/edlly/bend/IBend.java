@@ -1,9 +1,11 @@
-package de.edlly.part;
+package de.edlly.bend;
 
 import de.edlly.db.SQLiteException;
 import de.edlly.db.SQLitePreparedStatement;
 import de.edlly.db.SQLiteStatement;
 import de.edlly.material.Material;
+import de.edlly.part.IPart;
+import de.edlly.part.PartException;
 
 /**
  * Ein Bend Objekt wird auf der Grundlage eines Part Objekts erzeugt. Als Referenz dient die PartId aus dem IPart

@@ -1,9 +1,13 @@
-package de.edlly.test.part;
+package de.edlly.test.bend;
 
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.Test;
 import junit.framework.TestCase;
+import de.edlly.bend.Bend;
+import de.edlly.bend.BendList;
+import de.edlly.bend.IBend;
+import de.edlly.bend.IBendList;
 import de.edlly.db.*;
 import de.edlly.part.*;
 

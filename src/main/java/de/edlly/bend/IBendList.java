@@ -1,9 +1,11 @@
-package de.edlly.part;
+package de.edlly.bend;
 
 import java.util.List;
 
 import de.edlly.db.SQLiteException;
 import de.edlly.db.SQLiteStatement;
+import de.edlly.part.IPart;
+import de.edlly.part.PartException;
 
 /**
  * Erstellt aus einem Bend Objekt eine Liste und verwaltet dieses Prüft ob es eine Kollision innerhalb der Liste gibt.

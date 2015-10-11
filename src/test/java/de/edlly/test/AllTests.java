@@ -1,5 +1,7 @@
 package de.edlly.test;
 
+import de.edlly.test.bend.BendListTest;
+import de.edlly.test.bend.BendTest;
 import de.edlly.test.db.*;
 import de.edlly.test.gui.part.PartTableTest;
 import de.edlly.test.material.*;
