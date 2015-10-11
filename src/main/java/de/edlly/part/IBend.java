@@ -1,6 +1,7 @@
 package de.edlly.part;
 
 import de.edlly.db.SQLiteException;
+import de.edlly.db.SQLitePreparedStatement;
 import de.edlly.db.SQLiteStatement;
 import de.edlly.material.Material;
 
@@ -53,7 +54,14 @@ public interface IBend<T extends Number & Comparable<T>> extends Comparable<IBen
      * @return <T extends Number & Comparable<T>>
      */
     public T getYMax();
-
+    
+    /**
+     * Setz das Part Objekt auf das Das Bend Objekt eine Referenz mit der PartId hat.
+     * @param part
+     * @throws PartException 
+     */
+    public void setPart(IPart part) throws PartException;
+    
     /**
      * Winkel der Biegung je nach Richtung dieser wird er als + oder - wert angegeben. Es wird geprüft ob er innerhalb
      * der Konstanten ANGEL_MAX / ANGEL_MIN liegt. Ist dies nicht der Fall wird eine PartException ausgelöst.
@@ -129,5 +137,16 @@ public interface IBend<T extends Number & Comparable<T>> extends Comparable<IBen
      * @throws SQLiteException
      */
     void getDB(int id, SQLiteStatement sql) throws PartException, SQLiteException;
+
+    /**
+     * Fügt das vorhandene Bend Objekt in die Datenbank ein. Dabei wird geprüft ob alle Grenzwerte eingehalten worden
+     * sind. Ist die erfolgreich wird die Id auf den aktuellen Wert in der Datenbank gesetzt.
+     * 
+     * 
+     */
+    void addDB(SQLitePreparedStatement sql) throws PartException, SQLiteException;
+
+
+    
 
 }

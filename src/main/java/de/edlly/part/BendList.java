@@ -1,6 +1,5 @@
 package de.edlly.part;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -14,14 +13,23 @@ public class BendList implements IBendList {
     SQLiteConnect connection = new SQLiteConnect();
     SQLitePreparedStatement sqLite;
     IPart part;
-
+    
+    
     public BendList() throws SQLiteException, PartException {
 	bendList = new ArrayList<IBend<?>>();
 
-
 	part = new Part();
     }
-
+    
+    @Override
+    public void setPart(IPart part) throws PartException {
+	if (part == null) {
+	    throw new PartException("Part Id nicht angelegt");
+	}
+	this.part = part;
+    }
+    
+    @Override
     public void addBend(IBend<?> bend) throws PartException {
 	if (isBendKollision(bend)) {
 	    throw new PartException("Fehler: Der minimal Abstand ist nicht eingehalten worden +- : "
@@ -49,45 +57,19 @@ public class BendList implements IBendList {
 	Collections.sort(bendList);
     }
 
-    public void setPartId(int id) throws PartException, SQLiteException {
-	part.setId(id);
-    }
-
-    public int getPartId() {
-	// FIXME: Rückgabe darf nicht 0 sein!
-	return part.getId();
-    }
-
-    public boolean addListToDB() throws PartException {
+    public boolean addListToDB() throws PartException, SQLiteException {
 
 	if (bendList == null || bendList.isEmpty()) {
 	    throw new PartException("Liste wurde nicht angelegt");
 	}
-
-	if (part == null) {
-	    throw new PartException("Part Id nicht angelegt");
+	connection.dbConnect();
+	for (int i = 0; i < bendList.size(); i++) {
+	    SQLitePreparedStatement sql = new SQLitePreparedStatement(connection);
+	    bendList.get(i).setPart(part);
+	    bendList.get(i).addDB(sql);
 	}
-	int partId = getPartId();
-	try {
-	    connection.dbConnect();
-	    for (int i = 0; i < bendList.size(); i++) {
-		sqLite = new SQLitePreparedStatement(connection);
-		sqLite.setQuery("INSERT INTO \"Bend\" (\"partId\",\"angel\",\"y\") VALUES (?1,?2,?3)");
-		sqLite.preparedStatmentVorbereiten(sqLite.getQuery());
-		sqLite.getPreparedStatment().setDouble(1, partId);
-		sqLite.getPreparedStatment().setDouble(2, bendList.get(i).getAngel().doubleValue());
-		sqLite.getPreparedStatment().setDouble(3, bendList.get(i).getY().doubleValue());
-
-		sqLite.preparedStatmentAusfuehren();
-		sqLite.closePrepareStatmentAndResult();
-	    }
-	    connection.close();
-	    return true;
-	} catch (SQLiteException e) {
-	    throw new PartException("Fehler beim eintragen in die Datenbank.\n" + e.getLocalizedMessage());
-	} catch (SQLException e) {
-	    throw new PartException("Fehler beim eintragen in die Datenbank.\n" + e.getLocalizedMessage());
-	}
+	connection.close();
+	return true;
     }
 
     public boolean isBendKollision(IBend<?> bend) {
@@ -113,4 +95,6 @@ public class BendList implements IBendList {
 	}
 	return false;
     }
+
+ 
 }

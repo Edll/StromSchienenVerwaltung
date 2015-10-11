@@ -4,6 +4,7 @@ import java.sql.SQLException;
 
 import de.edlly.db.SQLiteConnect;
 import de.edlly.db.SQLiteException;
+import de.edlly.db.SQLitePreparedStatement;
 import de.edlly.db.SQLiteStatement;
 
 public class Bend<T extends Number & Comparable<T>> implements IBend<T>, Comparable<IBend<?>> {
@@ -38,6 +39,14 @@ public class Bend<T extends Number & Comparable<T>> implements IBend<T>, Compara
     public void setYMax(T yMax) {
 	this.yMax = yMax;
     }
+    
+    @Override
+    public void setPart(IPart part) throws PartException {
+	if (part == null) {
+	    throw new PartException("Part Id nicht angelegt");
+	}
+	this.part = part;
+    }
 
     @Override
     public T getAngel() {
@@ -69,7 +78,7 @@ public class Bend<T extends Number & Comparable<T>> implements IBend<T>, Compara
 	setAngel(angel);
 	setY(y);
     }
-    
+
     /**
      * Suppress Warning ist für für den cast von bend auf T. Insoweit ohne Problem das Numbers Objekt die verwendet
      * werden können Comparable sind.
@@ -79,7 +88,7 @@ public class Bend<T extends Number & Comparable<T>> implements IBend<T>, Compara
     public int compareTo(IBend<?> bend) {
 	return this.y.compareTo((T) bend.getY());
     }
-    
+
     @SuppressWarnings("unchecked")
     @Override
     public void getDB(int id, SQLiteStatement sql) throws PartException, SQLiteException {
@@ -91,7 +100,8 @@ public class Bend<T extends Number & Comparable<T>> implements IBend<T>, Compara
 	    sql.statmentVorbereitenUndStarten(sql.getQuery());
 
 	    if (sql.resultOhneErgebniss(sql.getResult())) {
-		throw new PartException("Abrufen des Bends aus der Datenbank fehlgeschlagen. Kein Datensatz unter dieser Id Vorhanden.");
+		throw new PartException(
+			"Abrufen des Bends aus der Datenbank fehlgeschlagen. Kein Datensatz unter dieser Id Vorhanden.");
 	    } else {
 		part = new Part();
 		part.setId(sql.getResult().getInt(1));
@@ -160,6 +170,42 @@ public class Bend<T extends Number & Comparable<T>> implements IBend<T>, Compara
 	}
     }
 
+    @Override
+    public void addDB(SQLitePreparedStatement sql) throws PartException, SQLiteException {
+	try {
+	    int partId = part.getId();
+	    SQLiteConnect.isClosedOrNull(sql);
+	    sql.setQuery("INSERT INTO \"Bend\" (\"partId\",\"angel\",\"y\") VALUES (?1,?2,?3)");
+	    sql.preparedStatmentWithKeyVorbereiten(sql.getQuery());
+	    sql.getPreparedStatment().setObject(1, partId);
+	    sql.getPreparedStatment().setObject(2, getAngel().doubleValue());
+	    sql.getPreparedStatment().setObject(3, getY().doubleValue());
+
+	    sql.preparedStatmentWithKeyAusfuehren();
+
+
+	    if (sql.getPrimaryKey() == 0) {
+		throw new PartException(
+			"Fehler beim eintragen in die Datenbank. Es ist kein Datensatz angelegt worden.");
+	    }else{
+		setId(sql.getPrimaryKey());
+	    }
+	    
+	    sql.closePrepareStatmentAndResult();
+	} catch (SQLException e) {
+	    throw new SQLiteException(e.getLocalizedMessage());
+	    
+	} finally {
+	    
+	    try {
+		sql.closePrepareStatmentAndResult();
+		
+	    } catch (SQLiteException e) {
+		e.printStackTrace();
+	    }
+	}
+    }
+
     private void checkAngel(T angel) throws PartException {
 	if (angel.doubleValue() > IBend.ANGEL_MAX.doubleValue()) {
 
@@ -192,5 +238,7 @@ public class Bend<T extends Number & Comparable<T>> implements IBend<T>, Compara
 
 	}
     }
+
+
 
 }

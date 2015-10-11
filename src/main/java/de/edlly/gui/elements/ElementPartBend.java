@@ -199,7 +199,7 @@ public class ElementPartBend extends Element implements IElement {
 		    partAdd.setPart(partNew);	 
 		    partAdd.addToDdAndSetPartId();
 
-		    partBend.setPartId(partNew.getId());
+		    partBend.setPart(partNew);
 
 		    partBend.addListToDB();
 		    sql.close();

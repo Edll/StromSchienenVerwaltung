@@ -13,23 +13,14 @@ import de.edlly.db.SQLiteException;
  */
 
 public interface IBendList {
-
+    
     /**
-     * PartId zu der das Objekt gehört
-     * 
-     * @param id
-     *            PartId
-     * @throws SQLiteException
-     * @throws PartException
+     * Setz das Part Objekt auf das Das Bend Objekt eine Referenz mit der PartId hat.
+     * @param part
+     * @throws PartException 
      */
-    public void setPartId(int id) throws PartException, SQLiteException;
-
-    /**
-     * PartId zu der das Objekt gehört
-     * 
-     * @return PartId
-     */
-    public int getPartId();
+    
+    void setPart(IPart part) throws PartException;
 
     /**
      * Fügt eine Biegung der Liste hinzu. Prüft davor ob es eine Kollision auf dem Werkstück gibt.
@@ -91,5 +82,5 @@ public interface IBendList {
      * @throws SQLiteException
      * @throws PartException
      */
-    public boolean addListToDB() throws PartException;
+    public boolean addListToDB() throws PartException, SQLiteException;
 }

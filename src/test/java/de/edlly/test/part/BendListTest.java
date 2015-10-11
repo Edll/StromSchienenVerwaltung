@@ -156,7 +156,7 @@ public class BendListTest extends TestCase {
 	IPartNew partDataAdd = new PartNew(sql);
 	partDataAdd.setPart(datensatz);
 	partDataAdd.addToDdAndSetPartId();
-	partBend.setPartId(datensatz.getId());
+	partBend.setPart(datensatz);
 	
 	partBend.addListToDB();
 	
