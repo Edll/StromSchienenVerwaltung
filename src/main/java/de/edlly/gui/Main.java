@@ -40,8 +40,12 @@ public class Main {
 	testDatabankStruktur();
 	
 	frame = new JFrame();
-	frame.setBounds(0, 0, 800, 600);
-	frame.getContentPane().setLayout(new MigLayout("", "[grow,left]", "[grow,top]"));
+
+	frame.getContentPane().setLayout(new MigLayout("fill", "[grow,left]", "[grow,top]"));
+	frame.getContentPane().setBackground(Format.BGCOLOR);
+	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	frame.pack();
+	frame.setExtendedState(frame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
 
 	Menu menu = new Menu(frame);
 	menu.getMenu();

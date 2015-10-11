@@ -37,6 +37,7 @@ public class PartTable {
 	sqLite.dbConnect();
 
 	datensatz = new PartList(sqLite);
+	
 	List<IPart> list = datensatz.getDataList();
 
 	for (int i = 0; i < list.size(); i++) {
@@ -44,7 +45,6 @@ public class PartTable {
 	    IPart d = list.get(i);
 	    model.addRow(new Object[] { d.getId(), d.getName(), d.getMaterialId(), d.getProjektNr(),
 		    PartUtil.erstellDatumFormatieren(d.getErstellDatum()) });
-
 	}
 	sqLite.close();
 

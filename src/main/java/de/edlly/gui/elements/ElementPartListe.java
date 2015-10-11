@@ -29,12 +29,13 @@ public class ElementPartListe extends Element implements IElement {
 
     public void create() {
 	panel = new JPanel();
-	panel.setLayout(new MigLayout("", Formatierung.MIG_ELEMENT_PANEL_LEFT, Formatierung.MIG_ELEMENT_PANEL_TOP));
+	panel.setLayout(new MigLayout("fill", Format.MIG_ELEMENT_PANEL_LEFT, Format.MIG_ELEMENT_PANEL_TOP));
 
 	JScrollPane scrollPane = new JScrollPane();
 
 	try {
 	    scrollPane.setViewportView(partTable.getPartTable());
+	    
 	} catch (SQLiteException e) {
 	    systemExceptionHandling(e.getLocalizedMessage());
 	} catch (PartException e) {

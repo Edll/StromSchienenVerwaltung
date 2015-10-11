@@ -39,7 +39,7 @@ public class Bend<T extends Number & Comparable<T>> implements IBend<T>, Compara
     public void setYMax(T yMax) {
 	this.yMax = yMax;
     }
-    
+
     @Override
     public void setPart(IPart part) throws PartException {
 	if (part == null) {
@@ -114,24 +114,27 @@ public class Bend<T extends Number & Comparable<T>> implements IBend<T>, Compara
 		 * der @SuppressWarnings("unchecked") weil ein Cast auf T gemacht wird. Dieser ist jedoch geprüft und
 		 * kann nicht zu einem CastException führen.
 		 * 
+		 * Der Cast von YMax nach (Comparable<?>) und von angel y nach (T) (Comparable<?>) ist nötig auf Grund
+		 * eines nicht behobenen Bugs in Java 1.6 http://bugs.java.com/view_bug.do?bug_id=6932571 
+		 * 
 		 * Dies ist nötig da aus der Datenbank immer ein konkreter Typ ausgelesen werden muss.
 		 */
 		if (sql.getResult().getObject(2) instanceof Number) {
+		    if (((Comparable<?>) yMax) instanceof Double) {
+			setAngel((T) (Comparable<?>) sql.getResult().getObject(2));
 
-		    if (yMax instanceof Double) {
-			setAngel((T) sql.getResult().getObject(2));
-
-		    } else if (yMax instanceof Float) {
+		    } else if (((Comparable<?>) yMax) instanceof Float) {
 			Float angel = sql.getResult().getFloat(2);
-			setAngel((T) angel);
 
-		    } else if (yMax instanceof Integer) {
+			setAngel((T) (Comparable<?>) angel);
+
+		    } else if (((Comparable<?>) yMax) instanceof Integer) {
 			Integer angel = sql.getResult().getInt(2);
-			setAngel((T) angel);
+			setAngel((T) (Comparable<?>) angel);
 
-		    } else if (yMax instanceof Long) {
+		    } else if (((Comparable<?>) yMax) instanceof Long) {
 			Long angel = sql.getResult().getLong(2);
-			setAngel((T) angel);
+			setAngel((T) (Comparable<?>) angel);
 
 		    } else {
 			throw new RuntimeException("Nicht vorhandenes Zahlenformat angefordert.");
@@ -141,20 +144,20 @@ public class Bend<T extends Number & Comparable<T>> implements IBend<T>, Compara
 
 		if (sql.getResult().getObject(3) instanceof Number) {
 
-		    if (yMax instanceof Double) {
-			setY((T) sql.getResult().getObject(3));
+		    if (((Comparable<?>) yMax) instanceof Double) {
+			setY((T) (Comparable<?>) sql.getResult().getObject(3));
 
-		    } else if (yMax instanceof Float) {
+		    } else if (((Comparable<?>) yMax) instanceof Float) {
 			Float y = sql.getResult().getFloat(3);
-			setY((T) y);
+			setY((T) (Comparable<?>) y);
 
-		    } else if (yMax instanceof Integer) {
+		    } else if (((Comparable<?>) yMax) instanceof Integer) {
 			Integer y = sql.getResult().getInt(2);
-			setY((T) y);
+			setY((T) (Comparable<?>) y);
 
-		    } else if (yMax instanceof Long) {
+		    } else if (((Comparable<?>) yMax) instanceof Long) {
 			Long y = sql.getResult().getLong(2);
-			setY((T) y);
+			setY((T) (Comparable<?>) y);
 
 		    } else {
 			throw new RuntimeException("Nicht vorhandenes Zahlenformat angefordert.");
@@ -183,23 +186,22 @@ public class Bend<T extends Number & Comparable<T>> implements IBend<T>, Compara
 
 	    sql.preparedStatmentWithKeyAusfuehren();
 
-
 	    if (sql.getPrimaryKey() == 0) {
 		throw new PartException(
 			"Fehler beim eintragen in die Datenbank. Es ist kein Datensatz angelegt worden.");
-	    }else{
+	    } else {
 		setId(sql.getPrimaryKey());
 	    }
-	    
+
 	    sql.closePrepareStatmentAndResult();
 	} catch (SQLException e) {
 	    throw new SQLiteException(e.getLocalizedMessage());
-	    
+
 	} finally {
-	    
+
 	    try {
 		sql.closePrepareStatmentAndResult();
-		
+
 	    } catch (SQLiteException e) {
 		e.printStackTrace();
 	    }
@@ -238,7 +240,5 @@ public class Bend<T extends Number & Comparable<T>> implements IBend<T>, Compara
 
 	}
     }
-
-
 
 }

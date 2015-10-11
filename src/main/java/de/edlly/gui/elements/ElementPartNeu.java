@@ -59,19 +59,19 @@ public class ElementPartNeu extends Element implements IElement {
 				RowSpec.decode("20px"), }));
 
 	JLabel lblName = new JLabel("Name");
-	lblName.setFont(Formatierung.eingabeFeldLabel());
+	lblName.setFont(Format.eingabeFeldLabel());
 
 	inputName = new JTextField();
 	inputName.setText("");
 	inputName.setColumns(30);
-	inputName.setFont(Formatierung.eingabeFeldLabel());
+	inputName.setFont(Format.eingabeFeldLabel());
 
 	JLabel lblProjektNummer = new JLabel("Projekt Nummer");
-	lblProjektNummer.setFont(Formatierung.eingabeFeldLabel());
+	lblProjektNummer.setFont(Format.eingabeFeldLabel());
 
 	inputProjektNr = new JTextField();
 	inputProjektNr.setColumns(30);
-	inputProjektNr.setFont(Formatierung.eingabeFeldLabel());
+	inputProjektNr.setFont(Format.eingabeFeldLabel());
 
 	formPanel.add(lblName, "1, 2");
 	formPanel.add(inputName, "3, 2, left, center");

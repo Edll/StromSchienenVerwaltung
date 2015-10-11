@@ -107,28 +107,28 @@ public class ElementPartBend extends Element implements IElement {
 			FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, }));
 
 	JLabel lblWinkel = new JLabel("Winkel");
-	lblWinkel.setFont(Formatierung.eingabeFeldLabel());
+	lblWinkel.setFont(Format.eingabeFeldLabel());
 
 	inputAngel = new JTextField();
 	inputAngel.setColumns(10);
-	inputAngel.setFont(Formatierung.eingabeFeldLabel());
+	inputAngel.setFont(Format.eingabeFeldLabel());
 
 	JLabel lblY = new JLabel("Y");
-	lblY.setFont(Formatierung.eingabeFeldLabel());
+	lblY.setFont(Format.eingabeFeldLabel());
 
 	inputY = new JTextField();
 	inputY.setColumns(10);
-	inputY.setFont(Formatierung.eingabeFeldLabel());
+	inputY.setFont(Format.eingabeFeldLabel());
 
 	JLabel lblRichtung = new JLabel("Richtung");
-	lblRichtung.setFont(Formatierung.eingabeFeldLabel());
+	lblRichtung.setFont(Format.eingabeFeldLabel());
 
 	inputRichtung = new JComboBox();
-	inputRichtung.setFont(Formatierung.eingabeFeldLabel());
+	inputRichtung.setFont(Format.eingabeFeldLabel());
 	inputRichtung.setModel(new DefaultComboBoxModel(new String[] { "Vor", "Zurück" }));
 
 	btnAdd = new JButton("Hinzufügen");
-	btnAdd.setFont(Formatierung.eingabeFeldLabel());
+	btnAdd.setFont(Format.eingabeFeldLabel());
 	addActionWeiter();
 
 	formPanel.add(lblWinkel, "2, 2");

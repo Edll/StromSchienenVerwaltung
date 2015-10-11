@@ -7,7 +7,7 @@ import javax.swing.*;
 
 import de.edlly.db.*;
 import de.edlly.gui.Element;
-import de.edlly.gui.Formatierung;
+import de.edlly.gui.Format;
 import de.edlly.gui.IElement;
 import de.edlly.material.Material;
 import de.edlly.material.MaterialSorte;
@@ -121,35 +121,35 @@ public class ElementMaterialNeu extends Element implements IElement {
 			FormSpecs.DEFAULT_ROWSPEC, }));
 
 	JLabel lblSortenAuswahl = new JLabel("Material Sorte");
-	lblSortenAuswahl.setFont(Formatierung.eingabeFeldLabel());
+	lblSortenAuswahl.setFont(Format.eingabeFeldLabel());
 
 	materialSortenListeAbfragen();
 	sortenAuswahl = new JComboBox(materialListe);
-	sortenAuswahl.setFont(Formatierung.eingabeFeldLabel());
+	sortenAuswahl.setFont(Format.eingabeFeldLabel());
 
 	JLabel lblInputX = new JLabel("Breite");
-	lblInputX.setFont(Formatierung.eingabeFeldLabel());
+	lblInputX.setFont(Format.eingabeFeldLabel());
 
 	inputX = new JTextField();
 	inputX.setToolTipText("Maximal Breite " + Material.MAX_X + " mm");
 	inputX.setColumns(10);
 
 	JLabel lblInputeZ = new JLabel("Dicke");
-	lblInputeZ.setFont(Formatierung.eingabeFeldLabel());
+	lblInputeZ.setFont(Format.eingabeFeldLabel());
 
 	inputZ = new JTextField();
 	inputZ.setToolTipText("Maximal Dicke " + Material.MAX_Z + " mm");
 	inputZ.setColumns(10);
 
 	JLabel lblInputeY = new JLabel("Maximale Länge");
-	lblInputeY.setFont(Formatierung.eingabeFeldLabel());
+	lblInputeY.setFont(Format.eingabeFeldLabel());
 
 	inputY = new JTextField();
 	inputY.setToolTipText("Maximal Länge " + Material.MAX_Y + " mm");
 	inputY.setColumns(10);
 
 	save = new JButton("Speichern");
-	save.setFont(Formatierung.buttonFont());
+	save.setFont(Format.buttonFont());
 
 	formPanel.add(lblSortenAuswahl, "1, 2, default, top");
 	formPanel.add(sortenAuswahl, "2, 2, default, center");

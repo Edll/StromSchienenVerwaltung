@@ -7,7 +7,7 @@ import javax.swing.*;
 import de.edlly.db.SQLiteConnect;
 import de.edlly.db.SQLiteException;
 import de.edlly.gui.Element;
-import de.edlly.gui.Formatierung;
+import de.edlly.gui.Format;
 import de.edlly.gui.IElement;
 import de.edlly.material.MaterialLoeschen;
 import net.miginfocom.swing.MigLayout;
@@ -69,7 +69,7 @@ public class ElementMaterialListe extends Element implements IElement {
 	JPanel panel = new JPanel();
 
 	jBLoeschen = new JButton("Makierte Löschen");
-	jBLoeschen.setFont(Formatierung.buttonFont());
+	jBLoeschen.setFont(Format.buttonFont());
 	panel.add(jBLoeschen);
 
 	jBLoeschen.addActionListener(new ActionListener() {

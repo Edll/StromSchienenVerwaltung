@@ -12,7 +12,7 @@ import javax.swing.border.LineBorder;
  *
  */
 
-public abstract class Formatierung {
+public abstract class Format {
 
     // Formatierung Standard ElementPanel
 
@@ -22,6 +22,8 @@ public abstract class Formatierung {
     // Position eines headers
     public static final int HEADER_POSITION_X = 5;
     public static final int HEADER_POSITION_Y = 5;
+    
+    public static final Color BGCOLOR = Color.WHITE;
 
     // Header Font Formatierung
     public static Font headerFont() {
@@ -52,5 +54,7 @@ public abstract class Formatierung {
 	LineBorder rahmen = new LineBorder(Color.GRAY);
 	return rahmen;
     }
+    
+    
 
 }
