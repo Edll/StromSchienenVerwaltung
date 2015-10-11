@@ -76,57 +76,26 @@ public class Bend<T extends Number & Comparable<T>> implements IBend<T>, Compara
     }
 
     @Override
-    public void setId(int id)  throws PartException {
+    public void setId(int id) throws PartException {
 	this.id = id;
     }
 
+    @Override
+    public void setAngelAndY(T angel, T y) throws PartException {
+	setAngel(angel);
+	setY(y);
+    }
+    
     /**
-     * Suppress Warning ist für für den cast von bend auf T
+     * Suppress Warning ist für für den cast von bend auf T. Insoweit ohne Problem das Numbers Objekt die verwendet
+     * werden können Comparable sind.
      */
     @SuppressWarnings("unchecked")
     @Override
     public int compareTo(IBend<?> bend) {
 	return this.y.compareTo((T) bend.getY());
     }
-
-    public void setAngelAndY(T angel, T y) throws PartException {
-	setAngel(angel);
-	setY(y);
-    }
-
-    private void checkAngel(T angel) throws PartException {
-	if (angel.doubleValue() > IBend.ANGEL_MAX.doubleValue()) {
-
-	    throw new PartException("Der angegebene Winkel ist zu groß. Maximal:" + IBend.ANGEL_MAX);
-
-	} else if (angel.doubleValue() < IBend.ANGEL_MIN.doubleValue()) {
-
-	    throw new PartException("Der angegebene Winkel ist zu klein. Minimal:" + IBend.ANGEL_MAX);
-	}
-    }
-
-    private void checkY(T y) throws PartException {
-	if (y.doubleValue() > yMax.doubleValue()) {
-
-	    throw new PartException("Der Angegebene Y Wert ist zu größ. Maximal:" + yMax);
-
-	} else if (y.doubleValue() < IBend.Y_MIN.doubleValue()) {
-
-	    throw new PartException("Der Angegebene Y Wert ist zu klein. Minimal:" + IBend.Y_MIN);
-
-	} else if (y.doubleValue() < IBend.ABSTAND_RAND.doubleValue()) {
-
-	    throw new PartException(
-		    "Der Angegebene Y Wert ist zu klein. Der mindest Abstand zum Rand ist:" + IBend.ABSTAND_RAND);
-
-	} else if (y.doubleValue() > yMax.doubleValue() - IBend.ABSTAND_RAND.doubleValue() + 1) {
-
-	    throw new PartException("Der Angegebene Y Wert ist zu groß. Der mindest Abstand zum Rand ist: "
-		    + (yMax.doubleValue() - IBend.ABSTAND_RAND.doubleValue()));
-
-	}
-    }
-
+    
     @SuppressWarnings("unchecked")
     @Override
     public void getDB(int id, SQLiteStatement sql) throws PartException, SQLiteException {
@@ -206,4 +175,38 @@ public class Bend<T extends Number & Comparable<T>> implements IBend<T>, Compara
 
 	}
     }
+
+    private void checkAngel(T angel) throws PartException {
+	if (angel.doubleValue() > IBend.ANGEL_MAX.doubleValue()) {
+
+	    throw new PartException("Der angegebene Winkel ist zu groß. Maximal:" + IBend.ANGEL_MAX);
+
+	} else if (angel.doubleValue() < IBend.ANGEL_MIN.doubleValue()) {
+
+	    throw new PartException("Der angegebene Winkel ist zu klein. Minimal:" + IBend.ANGEL_MAX);
+	}
+    }
+
+    private void checkY(T y) throws PartException {
+	if (y.doubleValue() > yMax.doubleValue()) {
+
+	    throw new PartException("Der Angegebene Y Wert ist zu größ. Maximal:" + yMax);
+
+	} else if (y.doubleValue() < IBend.Y_MIN.doubleValue()) {
+
+	    throw new PartException("Der Angegebene Y Wert ist zu klein. Minimal:" + IBend.Y_MIN);
+
+	} else if (y.doubleValue() < IBend.ABSTAND_RAND.doubleValue()) {
+
+	    throw new PartException(
+		    "Der Angegebene Y Wert ist zu klein. Der mindest Abstand zum Rand ist:" + IBend.ABSTAND_RAND);
+
+	} else if (y.doubleValue() > yMax.doubleValue() - IBend.ABSTAND_RAND.doubleValue() + 1) {
+
+	    throw new PartException("Der Angegebene Y Wert ist zu groß. Der mindest Abstand zum Rand ist: "
+		    + (yMax.doubleValue() - IBend.ABSTAND_RAND.doubleValue()));
+
+	}
+    }
+
 }

@@ -10,6 +10,8 @@ import de.edlly.material.Material;
  * 
  * Bend ist als Generic angelegt und kann mit jeder Art von Objekt genutzt werden die von Number abstammen.
  * 
+ * Achtung! bei BigDecimal ist die Prüfung der Grenzwerte im oberen Bereich über Double ungenau.
+ * 
  * @author Edlly java@edlly.de
  *
  * @param <T>
@@ -35,34 +37,37 @@ public interface IBend<T extends Number & Comparable<T>> extends Comparable<IBen
     public final static Number ABSTAND_RAND = 45;
 
     /**
-     * Der Maximal nutzbarer Wert auf der Y-Achse
+     * Der maximal nutzbarer Wert auf der Y-Achse. Wird durch das Material bestimmt das im IPart Objekt gewählt worden
+     * ist.
      * 
      * @param yMax
-     *            <T extends Numbers>
+     *            <T extends Number & Comparable<T>>
      */
     public void setYMax(T yMax);
 
     /**
-     * Der Maximal nutzbarer Wert auf der Y-Achse
+     * Der Maximal nutzbarer Wert auf der Y-Achse. Wird durch das Material bestimmt das im IPart Objekt gewählt worden
+     * ist.
      * 
-     * @return <T extends Numbers>
+     * @return <T extends Number & Comparable<T>>
      */
     public T getYMax();
 
     /**
-     * Winkel der Biegung. Wird geprüft ob er innerhalb der Konstanten ANGEL_MAX / ANGEL_MIN liegt.
+     * Winkel der Biegung je nach Richtung dieser wird er als + oder - wert angegeben. Es wird geprüft ob er innerhalb
+     * der Konstanten ANGEL_MAX / ANGEL_MIN liegt. Ist dies nicht der Fall wird eine PartException ausgelöst.
      * 
      * @param angel
-     *            <T extends Numbers>
+     *            <T extends Number & Comparable<T>>
      * @throws PartException
      */
 
     public void setAngel(T angel) throws PartException;
 
     /**
-     * Winkel der Biegung.
+     * Winkel der Biegung. Wird je nach Richtung als + oder - wert zurück geben.
      * 
-     * @return <T extends Numbers>
+     * @return <T extends Number & Comparable<T>>
      */
 
     public T getAngel();
@@ -72,22 +77,22 @@ public interface IBend<T extends Number & Comparable<T>> extends Comparable<IBen
      * von yMax liegt.
      * 
      * @param y
-     *            <T extends Numbers>
+     *            <T extends Number & Comparable<T>>
      * @throws PartException
      */
 
     public void setY(T y) throws PartException;
 
     /**
-     * Gibt die Position auf der Y Achse zurück
+     * Gibt die Position der Biegung auf der Y Achse zurück.
      * 
-     * @return
+     * @return <T extends Number & Comparable<T>>
      */
 
     public T getY();
 
     /**
-     * Erzeugt ein neues Bend mit den settern Methoden des Objekts.
+     * Setzt den Winkel und die Position mit den Methoden setY und setAngel.
      * 
      * @param angel
      *            <T extends Numbers>
@@ -98,25 +103,27 @@ public interface IBend<T extends Number & Comparable<T>> extends Comparable<IBen
     public void setAngelAndY(T angel, T y) throws PartException;
 
     /**
-     * Gibt die Id des Bends zurück wenn dieser aus der Datenbank gelesen wurde oder wenn eine neues Bend in die
-     * Datenbank eingetragen worden ist.
-     */
-    int getId();
-
-    /**
-     * Setz die Id des Bends, es wird geprüft ob diese in der Datenbank vorhanden ist wenn nicht gibt es eine
-     * PartException
+     * Setz die Id des Bends, es wird geprüft ob diese in der Datenbank vorhanden ist. Wenn nicht wird eine
+     * PartException ausgelöst.
      * 
      * @param id
      */
     void setId(int id) throws PartException;
 
     /**
+     * Gibt die Id des Bend zurück wenn dieser aus der Datenbank gelesen wurde. Wenn eine neues Bend in der Datenbank
+     * erstellt worden ist, wird die neue Id eingetragen.
+     */
+    int getId();
+
+    /**
      * Lädt ein Bend Objekt mit id aus der Datenbank. Dabei wird je nach Generic Typ der Klasse geladen. Gibt es keine
-     * Möglichkeit das Objekt mit diesem Generic Typ zu Laden gibt es eine RuntimeExcpetion
+     * Möglichkeit das Objekt mit diesem Generic Typ zu Laden gibt es eine RuntimeExcpetion.
      * 
-     * @param id des zu ladenden Objekts
-     * @param sql SqliteStatement mit gültiger DB Connection
+     * @param id
+     *           die id des zu ladenden Objekts.
+     * @param sql
+     *            SQLiteStatement mit gültiger DB Connection.
      * @throws PartException
      * @throws SQLiteException
      */
