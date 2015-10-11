@@ -29,8 +29,7 @@ public interface IPartList {
      * 
      * @return List Objekt mit allen in der Datenbank vorhandenen PartIds
      */
-
-    List<Integer> getIdList() throws SQLiteException;
+    public List<Integer> getIdList() throws SQLiteException;
 
     /**
      * Erstellt ein ListObjekt mit allen Parts in der DB. Diese werden als IPart Objekt eingefügt. Ist die Datenbank
@@ -72,9 +71,20 @@ public interface IPartList {
      * @return
      * @throws SQLiteException
      */
-    boolean idVorhanden(int id) throws SQLiteException;
+    public boolean idVorhanden(int id) throws SQLiteException;
+    
+    /**
+     * Sortiert die Liste nach Namen.
+     */
 
-    void sortList();
-
-    List<IPart> getDataListSort() throws PartException, SQLiteException;
+    public void sortList();
+    
+    /**
+     * Gibt eine Sortierte Liste nach Namen zurück.
+     * 
+     * @return 
+     * @throws PartException
+     * @throws SQLiteException
+     */
+    public List<IPart> getDataListSort() throws PartException, SQLiteException;
 }

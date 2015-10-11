@@ -180,6 +180,28 @@ public class BendListTest extends TestCase {
 	assertEquals(expectedList.get(0), getList.get(0));
     }
 
+    @Test
+    public void testIsIdVorhanden() throws SQLiteException, PartException {
+
+	assertTrue(bendList.isIdVorhanden(1));
+	assertFalse(bendList.isIdVorhanden(1000));
+    }
+
+    @Test
+    public void testGetBendAfterPartId() throws SQLiteException, PartException {
+
+	SQLiteStatement sqlStatment = new SQLiteStatement(sql);
+	List<IBend<?>> bendAfterId = new ArrayList<IBend<?>>();
+
+	IPart part = new Part();
+	part.getDB(1, sqlStatment);
+
+	IBend<Double> bend = new Bend<Double>(((Number) part.getMaterialYMax()).doubleValue());
+	bendAfterId = bendList.getBendAfterPartId(bend, part.getId());
+
+	assertEquals(1, bendAfterId.get(0).getId());
+    }
+
     @Override
     public void tearDown() throws SQLiteException {
 	sql.close();

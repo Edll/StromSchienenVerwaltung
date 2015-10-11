@@ -11,11 +11,11 @@ import de.edlly.part.Part;
 import de.edlly.part.PartException;
 
 public class Bend<T extends Number & Comparable<T>> implements IBend<T>, Comparable<IBend<?>> {
-   private T angel;
-   private T y;
-   private T yMax;
-   private  int id;
-   private IPart part;
+    private T angel;
+    private T y;
+    private T yMax;
+    private int id;
+    private IPart part;
 
     public Bend(T yMax) {
 	setYMax(yMax);
@@ -118,12 +118,12 @@ public class Bend<T extends Number & Comparable<T>> implements IBend<T>, Compara
 		 * kann nicht zu einem CastException führen.
 		 * 
 		 * Der Cast von YMax nach (Comparable<?>) und von angel y nach (T) (Comparable<?>) ist nötig auf Grund
-		 * eines nicht behobenen Bugs in Java 1.6 http://bugs.java.com/view_bug.do?bug_id=6932571 
+		 * eines nicht behobenen Bugs in Java 1.6 http://bugs.java.com/view_bug.do?bug_id=6932571
 		 * 
 		 * Dies ist nötig da aus der Datenbank immer ein konkreter Typ ausgelesen werden muss.
 		 */
 		if (sql.getResult().getObject(2) instanceof Number) {
-		    
+
 		    if (((Comparable<?>) yMax) instanceof Double) {
 			setAngel((T) (Comparable<?>) sql.getResult().getObject(2));
 

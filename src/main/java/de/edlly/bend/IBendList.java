@@ -48,17 +48,21 @@ public interface IBendList {
     public void addBendSort(IBend<?> bend) throws PartException;
 
     /**
-     * Fragt das Objekt Bend anhand der ID ab.
+     * Fragt die Id anhand der Part Id ab.
      * 
+     * @param bend
+     *            Objekt für die Abfrage damit von außerhalb festgelegt werden kann welchen Typ die BendListe haben
+     *            soll.
      * @param partId
-     *            der Bend in der DB.
-     * @return IPartBend Objekt
+     * @return
+     * @throws PartException
+     * @throws SQLiteException
      */
 
-    public List<IBend<?>> getBends(int partId);
+    public List<IBend<?>> getBendAfterPartId(IBend<?> bend, int partId) throws PartException, SQLiteException;
 
     /**
-     * Gibt die Bend Liste im Objekt zurück
+     * Gibt die Bendliste im Objekt zurück
      * 
      * @return IBend Liste.
      */
@@ -70,7 +74,6 @@ public interface IBendList {
      * @param bend
      * @return boolean wert True wenn es eine Kollision gibt.
      */
-
     public boolean isBendKollision(IBend<?> bend);
 
     /**
@@ -97,4 +100,28 @@ public interface IBendList {
      * @throws PartException
      */
     public List<Integer> getIdList(SQLiteStatement sql) throws SQLiteException, PartException;
+
+    /**
+     * Prüft ob eine Id vorhanden ist.
+     * 
+     * @param id
+     * @return true wenn die Id vorhanden ist.
+     * @throws SQLiteException
+     * @throws PartException
+     */
+    public boolean isIdVorhanden(int id) throws SQLiteException, PartException;
+
+    /**
+     * Gibt eine Liste mit allen Id zurück.
+     * 
+     * @param sql
+     *            SQLiteStatement mit SQl Verbindung
+     * @param partId
+     *            die Part Id zu der die Ids gehören oder aber -1 wenn alle abgefragt werden sollen
+     * @return
+     * @throws SQLiteException
+     * @throws PartException
+     */
+    public List<Integer> getIdList(SQLiteStatement sql, int partId) throws SQLiteException, PartException;
+
 }
