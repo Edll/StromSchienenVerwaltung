@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import de.edlly.db.SQLiteConnect;
 import de.edlly.db.SQLiteException;
+import de.edlly.db.SQLitePreparedStatement;
 import de.edlly.db.SQLiteStatement;
 import de.edlly.part.*;
 import junit.framework.TestCase;
@@ -116,7 +117,6 @@ public class BendTest extends TestCase {
 	try {
 	    int expected = 1000 - IBend.ABSTAND_RAND.intValue();
 	    expected++;
-	    System.out.println(expected);
 	    bend.setY((double) expected);
 	    fail("Wert ist kleiner als erlaubt muss eine Exption auslösen");
 	} catch (Exception actual) {
@@ -150,12 +150,12 @@ public class BendTest extends TestCase {
 	double actual = bend.getAngel();
 	assertNotSame(0D, actual);
     }
-    
+
     @Test
     public void testGetDBFailIdNichtVorhanden() throws Exception {
 	SQLiteStatement sql = new SQLiteStatement(sqLite);
 
-	try {	
+	try {
 	    int id = 1000;
 	    bend.getDB(id, sql);
 	    fail("Abrufen des Bends aus der Datenbank fehlgeschlagen.");
@@ -166,7 +166,6 @@ public class BendTest extends TestCase {
 	    assertTrue("Fehler: falsche Exception: " + actual.getLocalizedMessage(), check);
 	}
     }
-    
 
     @Test
     public void testGetDBFloat() throws Exception {
@@ -241,6 +240,52 @@ public class BendTest extends TestCase {
 	} catch (Exception actual) {
 
 	    String expected = "Nicht vorhandenes Zahlenformat angefordert.";
+	    boolean check = actual.getLocalizedMessage().contains(expected);
+	    assertTrue("Fehler: falsche Exception: " + actual.getLocalizedMessage(), check);
+	}
+    }
+
+    @Test
+    public void testAddDBDouble() throws SQLiteException, PartException {
+	SQLitePreparedStatement sql = new SQLitePreparedStatement(sqLite);
+
+	IPart part = new Part();
+	part.setId(1);
+
+	IBend<Double> bend = new Bend<Double>(4000D, 80D, 200D);
+	bend.setPart(part);
+
+	bend.addDB(sql);
+	int actual = bend.getId();
+
+	assertNotSame(0, actual);
+    }
+
+    @Test
+    public void testAddDBFloat() throws SQLiteException, PartException {
+	SQLitePreparedStatement sql = new SQLitePreparedStatement(sqLite);
+
+	IPart part = new Part();
+	part.setId(1);
+
+	IBend<Float> bend = new Bend<Float>(4000F, 80.10F, 200.20F);
+	bend.setPart(part);
+
+	bend.addDB(sql);
+	int actual = bend.getId();
+
+	assertNotSame(0, actual);
+    }
+
+    @Test
+    public void testSetPart() throws SQLiteException, PartException {
+	try {
+	    IPart part = null;
+	    bend.setPart(part);
+	    fail("Nicht gesetz worden.");
+	} catch (Exception actual) {
+
+	    String expected = "Part Id nicht angelegt";
 	    boolean check = actual.getLocalizedMessage().contains(expected);
 	    assertTrue("Fehler: falsche Exception: " + actual.getLocalizedMessage(), check);
 	}
