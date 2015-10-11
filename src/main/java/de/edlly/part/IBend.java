@@ -117,13 +117,13 @@ public interface IBend<T extends Number & Comparable<T>> extends Comparable<IBen
      * 
      * @param id
      */
-    void setId(int id) throws PartException;
+    public void setId(int id) throws PartException;
 
     /**
      * Gibt die Id des Bend zurück wenn dieser aus der Datenbank gelesen wurde. Wenn eine neues Bend in der Datenbank
      * erstellt worden ist, wird die neue Id eingetragen.
      */
-    int getId();
+    public int getId();
 
     /**
      * Lädt ein Bend Objekt mit id aus der Datenbank. Dabei wird je nach Generic Typ der Klasse geladen. Gibt es keine
@@ -136,7 +136,7 @@ public interface IBend<T extends Number & Comparable<T>> extends Comparable<IBen
      * @throws PartException
      * @throws SQLiteException
      */
-    void getDB(int id, SQLiteStatement sql) throws PartException, SQLiteException;
+    public void getDB(int id, SQLiteStatement sql) throws PartException, SQLiteException;
 
     /**
      * Fügt das vorhandene Bend Objekt in die Datenbank ein. Dabei wird geprüft ob alle Grenzwerte eingehalten worden
@@ -144,7 +144,7 @@ public interface IBend<T extends Number & Comparable<T>> extends Comparable<IBen
      * 
      * 
      */
-    void addDB(SQLitePreparedStatement sql) throws PartException, SQLiteException;
+    public void addDB(SQLitePreparedStatement sql) throws PartException, SQLiteException;
 
 
     
