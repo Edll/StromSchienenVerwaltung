@@ -73,4 +73,8 @@ public interface IPartList {
      * @throws SQLiteException
      */
     boolean idVorhanden(int id) throws SQLiteException;
+
+    void sortList();
+
+    List<IPart> getDataListSort() throws PartException, SQLiteException;
 }

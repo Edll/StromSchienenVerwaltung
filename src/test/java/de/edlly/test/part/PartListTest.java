@@ -44,6 +44,15 @@ public class PartListTest extends TestCase {
     }
     
     @Test
+    public void testGetDataListSort() throws PartException, SQLiteException {
+	List<IPart> list = datensatz.getDataListSort();
+
+	assertNotSame("Das erste Listenelement Stimmt nicht", 1, list.get(1).getId());
+    }
+    
+
+    
+    @Test
     public void testGetDataListIdNull() throws SQLiteException, PartException {
 
 	    List<IPart> list = datensatz.getDataList(new int[] { 0 });

@@ -42,7 +42,7 @@ public class PartTable {
 
 	datensatz = new PartList(sqLite);
 	
-	List<IPart> list = datensatz.getDataList();
+	List<IPart> list = datensatz.getDataListSort();
 
 	for (int i = 0; i < list.size(); i++) {
 

@@ -3,6 +3,7 @@ package de.edlly.part;
 import java.util.List;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import de.edlly.db.*;
 
@@ -10,8 +11,8 @@ public class PartList implements IPartList {
     private SQLiteStatement sqlStatment;
 
     private IPart part = new Part();
-    private List<IPart> datensatz = new ArrayList<IPart>();
-    List<Integer> idList;
+    private List<IPart> list = new ArrayList<IPart>();
+    private List<Integer> idList;
 
     public PartList(SQLiteConnect sqlConnection) throws PartException, SQLiteException {
 	SQLiteConnect.isClosedOrNull(sqlConnection);
@@ -19,41 +20,63 @@ public class PartList implements IPartList {
 
     }
 
+    @Override
     public IPart getPart() {
 	return part;
     }
 
+    @Override
     public void setPart(IPart part) {
 	this.part = part;
     }
 
+    @Override
     public List<Integer> getIdList() throws SQLiteException {
 	idListeErstellen();
 	return idList;
     }
 
+    @Override
+    public void sortList() {
+	Collections.sort(list);
+    }
+
+    @Override
     public List<IPart> getDataList() throws PartException, SQLiteException {
+	makeCompleteDataList();
+	return list;
+    }
+
+    @Override
+    public List<IPart> getDataListSort() throws PartException, SQLiteException {
+	makeCompleteDataList();
+	sortList();
+	return list;
+    }
+
+    private void makeCompleteDataList() throws SQLiteException, PartException {
 	for (int i = 0; i < getIdList().size(); i++) {
 	    part = new Part();
 	    part.getDB(getIdList().get(i), sqlStatment);
 
-	    datensatz.add(part);
+	    list.add(part);
 	}
-	return datensatz;
     }
 
+    @Override
     public List<IPart> getDataList(int... id) throws PartException, SQLiteException {
 	for (int i = 0; i < id.length; i++) {
 
 	    part = new Part();
 	    part.getDB(id[i], sqlStatment);
 
-	    datensatz.add(part);
+	    list.add(part);
 	}
-	return datensatz;
+	return list;
 
     }
 
+    @Override
     public void idListeErstellen() throws SQLiteException {
 	try {
 	    idList = new ArrayList<Integer>();
@@ -80,6 +103,7 @@ public class PartList implements IPartList {
 	}
     }
 
+    @Override
     public boolean idVorhanden(int id) throws SQLiteException {
 
 	if (getIdList().get(0) == 0) {

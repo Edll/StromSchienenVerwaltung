@@ -6,7 +6,7 @@ import de.edlly.db.*;
 import de.edlly.material.*;
 import de.edlly.part.PartUtil;
 
-public class Part implements IPart {
+public class Part implements IPart, Comparable<IPart> {
     private SQLiteConnect sqLite = new SQLiteConnect();
 
     private int id;
@@ -138,5 +138,10 @@ public class Part implements IPart {
 	    sql.closeStatment();
 
 	}
+    }
+
+    @Override
+    public int compareTo(IPart part) {
+	return this.name.compareTo(part.getName());
     }
 }

@@ -3,7 +3,7 @@ package de.edlly.part;
 import de.edlly.db.SQLiteException;
 import de.edlly.db.SQLiteStatement;
 
-public interface IPart {
+public interface IPart  extends Comparable<IPart> {
 
     /**
      * Getter Funktion für die WerkstückId
