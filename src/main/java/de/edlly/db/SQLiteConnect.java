@@ -8,8 +8,6 @@ import javax.swing.JOptionPane;
  * 
  * Verbindung zur SQLite Datenbank Verwalten.
  * 
- * TODO: SQLite Klassen so ändern das nur ein Objekt erzeugt werden muss das alles kann. So das nicht mehr für alles
- * eine eigene Klasse erzeugt werden muss.
  * 
  * @author Edlly java@edlly.de
  *

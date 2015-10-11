@@ -4,9 +4,7 @@ import de.edlly.db.*;
 
 /**
  * Abfrage der MaterialDaten für eine Tabelle
- * 
- * TODO: Als Unter Objekt von MaterialDatensatz umbauen
- * 
+ *  
  * @author Edlly java@edlly.de
  *
  */

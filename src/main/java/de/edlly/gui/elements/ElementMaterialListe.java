@@ -13,8 +13,7 @@ import de.edlly.material.MaterialLoeschen;
 import net.miginfocom.swing.MigLayout;
 
 /**
- * TODO: refresh der Table Models
- * 
+ *  * 
  * @author Edlly
  *
  */

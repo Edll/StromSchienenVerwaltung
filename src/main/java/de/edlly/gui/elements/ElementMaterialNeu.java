@@ -23,7 +23,6 @@ import com.jgoodies.forms.layout.RowSpec;
  * "+" Knopf der die Daten in das Objekt f�r einen neuen Material Datensatz legt und dann ein Anlegen des Datensatz
  * auslöst.
  * 
- * TODO: Form Layout!
  * 
  * @author Edlly java@edlly.de
  *

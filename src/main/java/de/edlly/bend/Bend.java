@@ -11,11 +11,11 @@ import de.edlly.part.Part;
 import de.edlly.part.PartException;
 
 public class Bend<T extends Number & Comparable<T>> implements IBend<T>, Comparable<IBend<?>> {
-    T angel;
-    T y;
-    T yMax;
-    int id;
-    IPart part;
+   private T angel;
+   private T y;
+   private T yMax;
+   private  int id;
+   private IPart part;
 
     public Bend(T yMax) {
 	setYMax(yMax);

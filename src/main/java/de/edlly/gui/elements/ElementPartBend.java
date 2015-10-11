@@ -1,14 +1,6 @@
 package de.edlly.gui.elements;
 
-import de.edlly.bend.Bend;
-import de.edlly.bend.BendList;
-import de.edlly.bend.IBend;
-import de.edlly.bend.IBendList;
-
-/**
- * TODO: Hinzufüge Button für Database!
- */
-
+import de.edlly.bend.*;
 import de.edlly.db.*;
 import de.edlly.gui.*;
 import de.edlly.part.*;
@@ -20,8 +12,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * FIXME: PART ID fürs eintragen -> Konzept?
- * 
  * @author Edlly java@edlly.de
  *
  */
