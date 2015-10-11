@@ -81,7 +81,7 @@ public class ElementPartBend extends Element implements IElement {
 	}
 
 	panel.setLayout(new MigLayout("", "[grow,left]", "[20.00][][18.00][89.00,top][300px:n,grow,top][][]"));
-
+	panel.setBackground(Format.BGCOLOR);
 	addHeader();
 	addForm();
 	addBendTable();
@@ -105,6 +105,7 @@ public class ElementPartBend extends Element implements IElement {
 		new RowSpec[] { FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC,
 			FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC,
 			FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, }));
+	formPanel.setBackground(Format.BGCOLOR);
 
 	JLabel lblWinkel = new JLabel("Winkel");
 	lblWinkel.setFont(Format.eingabeFeldLabel());
@@ -147,7 +148,9 @@ public class ElementPartBend extends Element implements IElement {
 	scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 	scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 	scrollPane.setViewportView(bendTable.getTable());
+	scrollPane.getViewport().setBackground(Format.BGCOLOR);
 	panel.add(scrollPane, "cell 0 4,alignx left,aligny top");
+
     }
 
     private void addSave() {
@@ -195,20 +198,38 @@ public class ElementPartBend extends Element implements IElement {
 		try {
 		    sql.dbConnect();
 		    partAdd = new PartNew(sql);
-		    
-		    partAdd.setPart(partNew);	 
+
+		    partAdd.setPart(partNew);
 		    partAdd.addToDdAndSetPartId();
 
 		    partBend.setPart(partNew);
 
-		    partBend.addListToDB();
+		    if (partBend.addListToDB()) {
+
+			userSuccessHandling("Das neue Part ist angelegt worden.");
+			JFrame frame = (JFrame) SwingUtilities.windowForComponent(panel);
+
+			frame.getContentPane().removeAll();
+			frame.setTitle("Werkstück Liste");
+
+			ElementPartListe werkstueckVerwaltung = new ElementPartListe();
+			frame.getContentPane().add(werkstueckVerwaltung.createAndGet());
+
+			frame.repaint();
+			frame.validate();
+		    }
 		    sql.close();
 		} catch (PartException e) {
-			   e.printStackTrace();
+
 		    userExceptionHandling(e.getLocalizedMessage());
 		} catch (SQLiteException e) {
-		   e.printStackTrace();
 		    systemExceptionHandling(e.getLocalizedMessage());
+		} finally {
+		    try {
+			sql.close();
+		    } catch (SQLiteException e) {
+			e.printStackTrace();
+		    }
 		}
 
 	    }

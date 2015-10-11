@@ -21,7 +21,7 @@ public class ElementPartNeu extends Element implements IElement {
     private JButton btnWeiter;
     private int step;
 
-    public ElementPartNeu(){
+    public ElementPartNeu() {
 	panel = new JPanel();
 	panelBend = new ElementPartBend();
 	sqLite = new SQLiteConnect();
@@ -29,6 +29,7 @@ public class ElementPartNeu extends Element implements IElement {
 
     public JPanel createAndGet() {
 	create();
+
 	return panel;
     }
 
@@ -48,8 +49,8 @@ public class ElementPartNeu extends Element implements IElement {
     }
 
     public void addStepOne() throws IllegalArgumentException, SQLiteException {
-	panel.setLayout(new MigLayout("", "[608.00px,left]", "[215px,top][400px:n,grow,top][center]"));
-
+	panel.setLayout(new MigLayout("", "[grow,left]", "[fill,top][fill,top][fill,top]"));
+	panel.setBackground(Format.BGCOLOR);
 	JPanel formPanel = new JPanel();
 	formPanel
 		.setLayout(new FormLayout(
@@ -57,6 +58,7 @@ public class ElementPartNeu extends Element implements IElement {
 				FormSpecs.DEFAULT_COLSPEC, },
 			new RowSpec[] { RowSpec.decode("12px"), RowSpec.decode("20px"), FormSpecs.RELATED_GAP_ROWSPEC,
 				RowSpec.decode("20px"), }));
+	formPanel.setBackground(Format.BGCOLOR);
 
 	JLabel lblName = new JLabel("Name");
 	lblName.setFont(Format.eingabeFeldLabel());
@@ -86,9 +88,10 @@ public class ElementPartNeu extends Element implements IElement {
 	scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 	scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 	scrollPane.setViewportView(table.getMaterialTabel(false));
+	scrollPane.getViewport().setBackground(Format.BGCOLOR);
 
 	panel.add(formPanel, "cell 0 0,alignx left,aligny top");
-	panel.add(btnWeiter, "cell 0 2,alignx right,growy");
+	panel.add(btnWeiter, "cell 0 2,alignx left,aligny top");
 	panel.add(scrollPane, "cell 0 1,alignx left,aligny top");
     }
 
@@ -97,14 +100,14 @@ public class ElementPartNeu extends Element implements IElement {
 	    public void actionPerformed(ActionEvent arg0) {
 		step = 1;
 		try {
-	
+
 		    sqLite.dbConnect();
 		    partNew = new Part();
 		    java.util.Date date = new java.util.Date();
 		    partNew.setData(inputName.getText(), table.getSelectedMaterialId(),
 			    Integer.parseInt(inputProjektNr.getText()), date.getTime());
 
-	    create();
+		    create();
 		} catch (NumberFormatException e) {
 		    JOptionPane.showMessageDialog(null, "Bitte eine gültige Zahl eingeben.");
 
@@ -112,7 +115,7 @@ public class ElementPartNeu extends Element implements IElement {
 		    JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
 
 		} catch (SQLiteException e) {
-		   systemExceptionHandling(e.getLocalizedMessage());
+		    systemExceptionHandling(e.getLocalizedMessage());
 		} finally {
 		    try {
 			sqLite.close();

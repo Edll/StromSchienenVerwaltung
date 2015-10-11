@@ -41,7 +41,7 @@ public class Main {
 	
 	frame = new JFrame();
 
-	frame.getContentPane().setLayout(new MigLayout("fill", "[grow,left]", "[grow,top]"));
+	frame.getContentPane().setLayout(new MigLayout("fill", "[grow,fill]", "[grow,fill]"));
 	frame.getContentPane().setBackground(Format.BGCOLOR);
 	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	frame.pack();

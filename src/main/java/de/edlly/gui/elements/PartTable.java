@@ -1,10 +1,14 @@
 package de.edlly.gui.elements;
 
+import java.awt.Color;
 import java.util.List;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+
 import de.edlly.db.SQLiteConnect;
 import de.edlly.db.SQLiteException;
+import de.edlly.gui.Format;
 import de.edlly.part.IPart;
 import de.edlly.part.IPartList;
 import de.edlly.part.PartList;
@@ -49,7 +53,20 @@ public class PartTable {
 	sqLite.close();
 
 	partTable = new JTable(model);
+
 	partTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+	
+	partTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+	partTable.getColumnModel().getColumn(0).setPreferredWidth(20);
+	partTable.getColumnModel().getColumn(1).setPreferredWidth(400);
+	partTable.getColumnModel().getColumn(2).setPreferredWidth(150);
+	partTable.getColumnModel().getColumn(3).setPreferredWidth(200);
+	partTable.getColumnModel().getColumn(4).setPreferredWidth(120);
+	partTable.setBackground(Format.BGCOLOR);
+	
+	JTableHeader header = partTable.getTableHeader();
+	      header.setBackground(Color.LIGHT_GRAY);
+	      header.setForeground(Color.black);
     }
 
     public class PartTableModel extends DefaultTableModel {

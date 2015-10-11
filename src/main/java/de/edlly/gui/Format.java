@@ -16,8 +16,8 @@ public abstract class Format {
 
     // Formatierung Standard ElementPanel
 
-    public static final String MIG_ELEMENT_PANEL_LEFT = "[grow,left]";
-    public static final String MIG_ELEMENT_PANEL_TOP = "[grow,top]";
+    public static final String MIG_ELEMENT_PANEL_LEFT = "[grow,left][grow,center]";
+    public static final String MIG_ELEMENT_PANEL_TOP = "[grow,top][grow,bottom]";
 
     // Position eines headers
     public static final int HEADER_POSITION_X = 5;

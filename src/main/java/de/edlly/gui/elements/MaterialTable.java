@@ -1,7 +1,10 @@
 package de.edlly.gui.elements;
 
+import java.awt.Color;
+
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 
 import de.edlly.db.SQLiteConnect;
 import de.edlly.db.SQLiteException;
@@ -57,7 +60,10 @@ public class MaterialTable {
 
 	materialTable = new JTable(model);
 	materialTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-
+	
+	JTableHeader header = materialTable.getTableHeader();
+	      header.setBackground(Color.LIGHT_GRAY);
+	      header.setForeground(Color.black);
 	sqLite.close();
     }
 
