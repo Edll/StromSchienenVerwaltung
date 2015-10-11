@@ -13,25 +13,9 @@ public class Bend<T extends Number & Comparable<T>> implements IBend<T>, Compara
     int id;
     IPart part;
 
-    /**
-     * @param yMax
-     *            Setz den Maximalen wert auf der Y Achse
-     */
-
     public Bend(T yMax) {
 	setYMax(yMax);
     }
-
-    /**
-     * 
-     * @param yMax
-     *            Setz den Maximalen wert auf der Y Achse
-     * @param angel
-     *            Setz den Winkel
-     * @param y
-     *            setz die Position auf der Y Achse
-     * @throws PartException
-     */
 
     public Bend(T yMax, T angel, T y) throws PartException {
 	setYMax(yMax);
@@ -107,7 +91,7 @@ public class Bend<T extends Number & Comparable<T>> implements IBend<T>, Compara
 	    sql.statmentVorbereitenUndStarten(sql.getQuery());
 
 	    if (sql.resultOhneErgebniss(sql.getResult())) {
-		throw new PartException("Abrufen des Bends aus der Datenbank fehlgeschlagen.");
+		throw new PartException("Abrufen des Bends aus der Datenbank fehlgeschlagen. Kein Datensatz unter dieser Id Vorhanden.");
 	    } else {
 		part = new Part();
 		part.setId(sql.getResult().getInt(1));
@@ -201,9 +185,9 @@ public class Bend<T extends Number & Comparable<T>> implements IBend<T>, Compara
 	    throw new PartException(
 		    "Der Angegebene Y Wert ist zu klein. Der mindest Abstand zum Rand ist:" + IBend.ABSTAND_RAND);
 
-	} else if (y.doubleValue() > yMax.doubleValue() - IBend.ABSTAND_RAND.doubleValue() + 1) {
+	} else if (y.doubleValue() > yMax.doubleValue() - IBend.ABSTAND_RAND.doubleValue()) {
 
-	    throw new PartException("Der Angegebene Y Wert ist zu groß. Der mindest Abstand zum Rand ist: "
+	    throw new PartException("Der Angegebene Y Wert ist zu groß. Der Maximale Wert ist: "
 		    + (yMax.doubleValue() - IBend.ABSTAND_RAND.doubleValue()));
 
 	}

@@ -5,10 +5,11 @@ import de.edlly.db.SQLiteStatement;
 import de.edlly.material.Material;
 
 /**
- * Bend Objekt ist die Grundlage für PartBend. Wird eine neue Biegung in einem Part erzeugt, wird ein Bend Objekt
- * erzeugt und dieses Bend Objekt dann von PartBend verwaltet.
+ * Ein Bend Objekt wird auf der Grundlage eines Part Objekts erzeugt. Als Referenz dient die PartId aus dem IPart
+ * Objekt. Wird diese nicht gefunden wird eine Part Exception erzeugt.
  * 
- * Bend ist als Generic angelegt und kann mit jeder Art von Objekt genutzt werden die von Number abstammen.
+ * Bend ist als Generic angelegt und kann mit jeder Art von Objekt genutzt werden die von Number abstammen. Es gibt zwei
+ * Konstruktoren um ein Bend zu erzeugen einmal nur mit dem Grenzwert YMax und einmal mit allen Objekt Attributen.
  * 
  * Achtung! bei BigDecimal ist die Prüfung der Grenzwerte im oberen Bereich über Double ungenau.
  * 
@@ -121,7 +122,7 @@ public interface IBend<T extends Number & Comparable<T>> extends Comparable<IBen
      * Möglichkeit das Objekt mit diesem Generic Typ zu Laden gibt es eine RuntimeExcpetion.
      * 
      * @param id
-     *           die id des zu ladenden Objekts.
+     *            die id des zu ladenden Objekts.
      * @param sql
      *            SQLiteStatement mit gültiger DB Connection.
      * @throws PartException

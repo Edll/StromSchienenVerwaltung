@@ -86,12 +86,41 @@ public class BendTest extends TestCase {
     @Test
     public void testSetUnderMinY() {
 	try {
-	    int expected = IBend.ANGEL_MIN.intValue();
+	    int expected = IBend.Y_MIN.intValue();
 	    expected--;
 	    bend.setY((double) expected);
 	    fail("Wert ist kleiner als erlaubt muss eine Exption auslösen");
 	} catch (Exception actual) {
 	    String expected = "Der Angegebene Y Wert ist zu klein. Minimal";
+	    boolean check = actual.getLocalizedMessage().contains(expected);
+	    assertTrue("Fehler: falsche Exception: " + actual.getLocalizedMessage(), check);
+	}
+    }
+
+    @Test
+    public void testSetRandYAbstandNichtEingehalten() {
+	try {
+	    int expected = IBend.ABSTAND_RAND.intValue();
+	    expected--;
+	    bend.setY((double) expected);
+	    fail("Wert ist kleiner als erlaubt muss eine Exption auslösen");
+	} catch (Exception actual) {
+	    String expected = "Der Angegebene Y Wert ist zu klein. Der mindest Abstand zu";
+	    boolean check = actual.getLocalizedMessage().contains(expected);
+	    assertTrue("Fehler: falsche Exception: " + actual.getLocalizedMessage(), check);
+	}
+    }
+
+    @Test
+    public void testSetOverRandYAbstandNichtEingehalten() {
+	try {
+	    int expected = 1000 - IBend.ABSTAND_RAND.intValue();
+	    expected++;
+	    System.out.println(expected);
+	    bend.setY((double) expected);
+	    fail("Wert ist kleiner als erlaubt muss eine Exption auslösen");
+	} catch (Exception actual) {
+	    String expected = "Der Angegebene Y Wert ist zu groß. Der Maximale Wert ist:";
 	    boolean check = actual.getLocalizedMessage().contains(expected);
 	    assertTrue("Fehler: falsche Exception: " + actual.getLocalizedMessage(), check);
 	}
@@ -107,7 +136,7 @@ public class BendTest extends TestCase {
     }
 
     @Test
-    public void testCreate() throws PartException {
+    public void testSetAngelAndY() throws PartException {
 	double angel = IBend.ANGEL_MAX.doubleValue();
 	double y = IBend.Y_MIN.doubleValue() + IBend.ABSTAND_RAND.doubleValue();
 	bend.setAngelAndY(angel, y);
@@ -121,6 +150,23 @@ public class BendTest extends TestCase {
 	double actual = bend.getAngel();
 	assertNotSame(0D, actual);
     }
+    
+    @Test
+    public void testGetDBFailIdNichtVorhanden() throws Exception {
+	SQLiteStatement sql = new SQLiteStatement(sqLite);
+
+	try {	
+	    int id = 1000;
+	    bend.getDB(id, sql);
+	    fail("Abrufen des Bends aus der Datenbank fehlgeschlagen.");
+	} catch (Exception actual) {
+
+	    String expected = "Abrufen des Bends aus der Datenbank fehlgeschlagen.";
+	    boolean check = actual.getLocalizedMessage().contains(expected);
+	    assertTrue("Fehler: falsche Exception: " + actual.getLocalizedMessage(), check);
+	}
+    }
+    
 
     @Test
     public void testGetDBFloat() throws Exception {
@@ -182,13 +228,12 @@ public class BendTest extends TestCase {
     }
 
     @Test
-    public void testGetDBFail() throws Exception {
+    public void testGetDBFailNumberFormatNichtVorhanden() throws Exception {
+	SQLiteStatement sql = new SQLiteStatement(sqLite);
+	byte test = 100;
+	IBend<Byte> bendInt = new Bend<Byte>(test);
 
 	try {
-	    SQLiteStatement sql = new SQLiteStatement(sqLite);
-	    byte test = 100;
-	    IBend<Byte> bendInt = new Bend<Byte>(test);
-
 	    bendInt.getDB(1, sql);
 	    bendInt.getAngel();
 
