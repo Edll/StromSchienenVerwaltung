@@ -54,14 +54,15 @@ public interface IBend<T extends Number & Comparable<T>> extends Comparable<IBen
      * @return <T extends Number & Comparable<T>>
      */
     public T getYMax();
-    
+
     /**
      * Setz das Part Objekt auf das Das Bend Objekt eine Referenz mit der PartId hat.
+     * 
      * @param part
-     * @throws PartException 
+     * @throws PartException
      */
     public void setPart(IPart part) throws PartException;
-    
+
     /**
      * Winkel der Biegung je nach Richtung dieser wird er als + oder - wert angegeben. Es wird geprüft ob er innerhalb
      * der Konstanten ANGEL_MAX / ANGEL_MIN liegt. Ist dies nicht der Fall wird eine PartException ausgelöst.
@@ -145,8 +146,5 @@ public interface IBend<T extends Number & Comparable<T>> extends Comparable<IBen
      * 
      */
     public void addDB(SQLitePreparedStatement sql) throws PartException, SQLiteException;
-
-
-    
 
 }

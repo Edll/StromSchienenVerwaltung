@@ -8,11 +8,10 @@ import de.edlly.db.*;
 
 public class PartList implements IPartList {
     private SQLiteStatement sqlStatment;
-    
+
     private IPart part = new Part();
     private List<IPart> datensatz = new ArrayList<IPart>();
     List<Integer> idList;
-    
 
     public PartList(SQLiteConnect sqlConnection) throws PartException, SQLiteException {
 	SQLiteConnect.isClosedOrNull(sqlConnection);
@@ -66,7 +65,7 @@ public class PartList implements IPartList {
 		idList.add(new Integer(0));
 	    } else {
 
-		  sqlStatment.statmentVorbereitenUndStarten(sqlStatment.getQuery());
+		sqlStatment.statmentVorbereitenUndStarten(sqlStatment.getQuery());
 		while (sqlStatment.getResult().next()) {
 		    idList.add(sqlStatment.getResult().getInt(1));
 		}

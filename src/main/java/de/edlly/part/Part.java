@@ -124,20 +124,19 @@ public class Part implements IPart {
 		setName("KeinDatensatzVorhanden");
 		setProjektNr(1);
 		setErstellDatum(1);
-	    }else{
-	    setMaterialId(sql.getResult().getInt(1));
-	    setName(sql.getResult().getString(2));
-	    setProjektNr(sql.getResult().getInt(3));
-	    setErstellDatum(sql.getResult().getLong(4));
+	    } else {
+		setMaterialId(sql.getResult().getInt(1));
+		setName(sql.getResult().getString(2));
+		setProjektNr(sql.getResult().getInt(3));
+		setErstellDatum(sql.getResult().getLong(4));
 	    }
 
 	    sql.closeStatmentAndResult();
 	} catch (SQLException e) {
 	    throw new SQLiteException(e.getLocalizedMessage());
 	} finally {
-		sql.closeStatment();
+	    sql.closeStatment();
 
-	
 	}
     }
 }

@@ -140,40 +140,41 @@ public class BendListTest extends TestCase {
 
 	assertTrue("Liste nicht eingetragen", check);
     }
-    
+
     @Test
-    public void testBendGetPrimaryPartId() throws PartException, SQLiteException{
+    public void testBendAddToDdAndSetPartId() throws PartException, SQLiteException {
 	IBend<Double> bend1 = new Bend<Double>(4000D, 80D, 100D);
 	IBend<Double> bend2 = new Bend<Double>(4000D, 70D, 200D);
 	IBend<Double> bend3 = new Bend<Double>(4000D, 60D, 300D);
 	bendList.addBend(bend1);
 	bendList.addBend(bend2);
 	bendList.addBend(bend3);
-	
+
 	IPart datensatz = new Part();
 	java.util.Date date = new java.util.Date();
 	datensatz.setData("TestDaten", 1, 666, date.getTime());
-	
+
 	IPartNew partDataAdd = new PartNew(sql);
 	partDataAdd.setPart(datensatz);
 	partDataAdd.addToDdAndSetPartId();
 	bendList.setPart(datensatz);
-	
+
 	bendList.addListToDB();
-	
+
     }
+
     @Test
     public void testGetIdList() throws SQLiteException, PartException {
 	SQLiteStatement sqlStatment = new SQLiteStatement(sql);
 	List<Integer> getList = bendList.getIdList(sqlStatment);
-	
+
 	assertNotNull(getList);
-	
+
 	List<Integer> expectedList = new ArrayList<Integer>();
 	expectedList.add(1);
-	
+
 	assertEquals(expectedList.get(0), getList.get(0));
-    }        
+    }
 
     @Override
     public void tearDown() throws SQLiteException {

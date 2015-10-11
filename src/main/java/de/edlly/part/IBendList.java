@@ -92,7 +92,7 @@ public interface IBendList {
      * @return List<IBend<?>> mit den Ids
      * 
      * @throws SQLiteException
-     * @throws PartException 
+     * @throws PartException
      */
     public List<Integer> getIdList(SQLiteStatement sql) throws SQLiteException, PartException;
 }
