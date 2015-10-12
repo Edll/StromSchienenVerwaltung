@@ -22,72 +22,72 @@ public class MaterialDatensatz extends Material {
     SQLiteStatement sqlLite;
 
     public MaterialDatensatz(SQLiteConnect sqlConnection) throws IllegalArgumentException, SQLiteException {
-	super(sqlConnection);
-	sqlLite = new SQLiteStatement(sqlConnection);
-	materialId = new MaterialIds(sqlConnection);
+        super(sqlConnection);
+        sqlLite = new SQLiteStatement(sqlConnection);
+        materialId = new MaterialIds(sqlConnection);
     }
 
     public void setMaterialId(int id) throws IllegalArgumentException, SQLiteException {
-	materialId.setId(id);
+        materialId.setId(id);
     }
 
     public int getMaterialId() {
-	return materialId.getId();
+        return materialId.getId();
     }
 
     public int[] getMaterialDatensatzAusDatenbank(int materialId) throws IllegalArgumentException, SQLiteException {
-	setMaterialId(materialId);
+        setMaterialId(materialId);
 
-	materialDatenAbrufen();
+        materialDatenAbrufen();
 
-	return materialDatensatz;
+        return materialDatensatz;
     }
 
     public int[] getMaterialDatensatz() {
-	return materialDatensatz;
+        return materialDatensatz;
     }
 
     public void setMaterialDatensatz(int[] materialDatensatz) throws IllegalArgumentException {
-	if (materialDatensatz == null) {
-	    throw new IllegalArgumentException(
-		    "Der Materialdatensatz bei eintragen darf nicht null sein." + this.getClass());
-	}
-	this.materialDatensatz = materialDatensatz;
+        if (materialDatensatz == null) {
+            throw new IllegalArgumentException(
+                    "Der Materialdatensatz bei eintragen darf nicht null sein." + this.getClass());
+        }
+        this.materialDatensatz = materialDatensatz;
     }
 
     private void materialDatenAbrufen() throws SQLiteException {
 
-	try {
+        try {
 
-	    sqlLite.setQuery("SELECT id, MaterialSorteId, x, z, yMax, visibly FROM Material WHERE id = \""
-		    + this.materialId.getId() + "\" ");
-	    sqlLite.statmentVorbereitenUndStarten(sqlLite.getQuery());
+            sqlLite.setQuery("SELECT id, MaterialSorteId, x, z, yMax, visibly FROM Material WHERE id = \""
+                    + this.materialId.getId() + "\" ");
+            sqlLite.statmentVorbereitenUndStarten(sqlLite.getQuery());
 
-	    if (sqlLite.resultOhneErgebniss(sqlLite.getResult())) {
-		materialDatensatz = new int[] { 0, 0, 0, 0, 0, 0 };
+            if (sqlLite.resultOhneErgebniss(sqlLite.getResult())) {
+                materialDatensatz = new int[] { 0, 0, 0, 0, 0, 0 };
 
-	    } else {
-		materialDatensatz[getOrdinal("ID")] = sqlLite.getResult().getInt(1); // id
-		materialDatensatz[getOrdinal("MATERIALSORTE_ID")] = sqlLite.getResult().getInt(2); // MaterialSorteId
-		materialDatensatz[getOrdinal("X")] = sqlLite.getResult().getInt(3); // x
-		materialDatensatz[getOrdinal("Z")] = sqlLite.getResult().getInt(4); // z
-		materialDatensatz[getOrdinal("YMAX")] = sqlLite.getResult().getInt(5); // yMax
-		materialDatensatz[getOrdinal("SICHTBARKEIT")] = sqlLite.getResult().getInt(6); // visibly
-	    }
+            } else {
+                materialDatensatz[getOrdinal("ID")] = sqlLite.getResult().getInt(1); // id
+                materialDatensatz[getOrdinal("MATERIALSORTE_ID")] = sqlLite.getResult().getInt(2); // MaterialSorteId
+                materialDatensatz[getOrdinal("X")] = sqlLite.getResult().getInt(3); // x
+                materialDatensatz[getOrdinal("Z")] = sqlLite.getResult().getInt(4); // z
+                materialDatensatz[getOrdinal("YMAX")] = sqlLite.getResult().getInt(5); // yMax
+                materialDatensatz[getOrdinal("SICHTBARKEIT")] = sqlLite.getResult().getInt(6); // visibly
+            }
 
-	    sqlLite.closeStatmentAndResult();
+            sqlLite.closeStatmentAndResult();
 
-	} catch (SQLException e) {
-	    throw new SQLiteException(e.getLocalizedMessage());
+        } catch (SQLException e) {
+            throw new SQLiteException(e.getLocalizedMessage());
 
-	} finally {
-	    try {
-		sqlLite.closeStatmentAndResult();
-	    } catch (SQLiteException e) {
-		e.printStackTrace();
-	    }
+        } finally {
+            try {
+                sqlLite.closeStatmentAndResult();
+            } catch (SQLiteException e) {
+                e.printStackTrace();
+            }
 
-	}
+        }
     }
 
 }

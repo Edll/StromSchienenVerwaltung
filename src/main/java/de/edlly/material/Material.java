@@ -21,19 +21,19 @@ public class Material {
     public static final int MIN_Y = 1;
 
     public SQLiteConnect getSqlConnection() {
-	return sqlConnection;
+        return sqlConnection;
     }
 
     public Material(SQLiteConnect sqlConnection) {
-	this.sqlConnection = sqlConnection;
+        this.sqlConnection = sqlConnection;
     }
 
     public enum datensatzNamen {
-	ID, MATERIALSORTE_ID, X, Z, YMAX, SICHTBARKEIT
+        ID, MATERIALSORTE_ID, X, Z, YMAX, SICHTBARKEIT
     }
 
     static int getOrdinal(String datensatzNamen) {
-	return MaterialDatensatz.datensatzNamen.valueOf(datensatzNamen).ordinal();
+        return MaterialDatensatz.datensatzNamen.valueOf(datensatzNamen).ordinal();
     }
 
 }

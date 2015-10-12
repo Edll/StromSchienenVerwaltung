@@ -7,6 +7,6 @@ public class PartException extends Exception {
     }
 
     public PartException(String s) {
-	super(s);
+        super(s);
     }
 }

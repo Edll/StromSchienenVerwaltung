@@ -8,7 +8,7 @@ public class SQLiteException extends Exception {
     }
 
     public SQLiteException(String s) {
-	super(s);
+        super(s);
     }
 
 }

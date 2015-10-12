@@ -16,138 +16,138 @@ public class NeuerMaterialDatensatz extends MaterialDatensatz {
     private SQLitePreparedStatement sqlLite;
 
     public NeuerMaterialDatensatz(SQLiteConnect sqlConnection) throws IllegalArgumentException, SQLiteException {
-	super(sqlConnection);
-	sqlLite = new SQLitePreparedStatement(sqlConnection);
+        super(sqlConnection);
+        sqlLite = new SQLitePreparedStatement(sqlConnection);
 
     }
 
     public void setMaterialDaten(int koordinateX, int koordinateZ, int koordinateyMax, int materialSorteId)
-	    throws IllegalArgumentException, SQLiteException {
-	int[] materialDatensatz = new int[6];
-	try {
+            throws IllegalArgumentException, SQLiteException {
+        int[] materialDatensatz = new int[6];
+        try {
 
-	    if (koordinateXIstImDefinitionsbereich(koordinateX)) {
-		materialDatensatz[getOrdinal("X")] = koordinateX;
-	    }
+            if (koordinateXIstImDefinitionsbereich(koordinateX)) {
+                materialDatensatz[getOrdinal("X")] = koordinateX;
+            }
 
-	    if (koordinateZIstImDefinitionsbereich(koordinateZ)) {
-		materialDatensatz[getOrdinal("Z")] = koordinateZ;
-	    }
+            if (koordinateZIstImDefinitionsbereich(koordinateZ)) {
+                materialDatensatz[getOrdinal("Z")] = koordinateZ;
+            }
 
-	    if (koordinateyMaxIstImDefinitionsbereich(koordinateyMax)) {
-		materialDatensatz[getOrdinal("YMAX")] = koordinateyMax;
-	    }
+            if (koordinateyMaxIstImDefinitionsbereich(koordinateyMax)) {
+                materialDatensatz[getOrdinal("YMAX")] = koordinateyMax;
+            }
 
-	    if (materialSorteIdIstVorhanden(materialSorteId)) {
-		materialDatensatz[getOrdinal("MATERIALSORTE_ID")] = materialSorteId;
-	    }
-	    materialDatensatz[getOrdinal("SICHTBARKEIT")] = 1;
-	    setMaterialDatensatz(materialDatensatz);
+            if (materialSorteIdIstVorhanden(materialSorteId)) {
+                materialDatensatz[getOrdinal("MATERIALSORTE_ID")] = materialSorteId;
+            }
+            materialDatensatz[getOrdinal("SICHTBARKEIT")] = 1;
+            setMaterialDatensatz(materialDatensatz);
 
-	} catch (IllegalArgumentException datenSetzenFehlgeschlagen) {
+        } catch (IllegalArgumentException datenSetzenFehlgeschlagen) {
 
-	    clearObjektWerte();
-	    throw new IllegalArgumentException(datenSetzenFehlgeschlagen.getMessage());
-	}
+            clearObjektWerte();
+            throw new IllegalArgumentException(datenSetzenFehlgeschlagen.getMessage());
+        }
     }
 
     public Boolean datensatzAusObjektWertenAnlegen() throws SQLiteException, IllegalArgumentException {
-	int[] materialDatensatz = getMaterialDatensatz();
+        int[] materialDatensatz = getMaterialDatensatz();
 
-	if (objektWerteSindNull()) {
-	    throw new IllegalArgumentException(
-		    "Die Objektwerte sind nicht gesetzt worden /n ein leerer Datensatz kann nich angelegt werden.");
-	}
+        if (objektWerteSindNull()) {
+            throw new IllegalArgumentException(
+                    "Die Objektwerte sind nicht gesetzt worden /n ein leerer Datensatz kann nich angelegt werden.");
+        }
 
-	try {
-	    sqlLite.setQuery(
-		    "INSERT INTO Material (\"MaterialSorteId\",\"x\",\"z\",\"yMax\",\"visibly\") VALUES (?1,?2,?3,?4,?5)");
+        try {
+            sqlLite.setQuery(
+                    "INSERT INTO Material (\"MaterialSorteId\",\"x\",\"z\",\"yMax\",\"visibly\") VALUES (?1,?2,?3,?4,?5)");
 
-	    sqlLite.preparedStatmentVorbereiten(sqlLite.getQuery());
+            sqlLite.preparedStatmentVorbereiten(sqlLite.getQuery());
 
-	    sqlLite.getPreparedStatment().setInt(1, materialDatensatz[getOrdinal("MATERIALSORTE_ID")]);
-	    sqlLite.getPreparedStatment().setInt(2, materialDatensatz[getOrdinal("X")]);
-	    sqlLite.getPreparedStatment().setInt(3, materialDatensatz[getOrdinal("Z")]);
-	    sqlLite.getPreparedStatment().setInt(4, materialDatensatz[getOrdinal("YMAX")]);
-	    sqlLite.getPreparedStatment().setInt(5, materialDatensatz[getOrdinal("SICHTBARKEIT")]);
+            sqlLite.getPreparedStatment().setInt(1, materialDatensatz[getOrdinal("MATERIALSORTE_ID")]);
+            sqlLite.getPreparedStatment().setInt(2, materialDatensatz[getOrdinal("X")]);
+            sqlLite.getPreparedStatment().setInt(3, materialDatensatz[getOrdinal("Z")]);
+            sqlLite.getPreparedStatment().setInt(4, materialDatensatz[getOrdinal("YMAX")]);
+            sqlLite.getPreparedStatment().setInt(5, materialDatensatz[getOrdinal("SICHTBARKEIT")]);
 
-	    sqlLite.preparedStatmentAusfuehren();
-	    sqlLite.closePrepareStatment();
+            sqlLite.preparedStatmentAusfuehren();
+            sqlLite.closePrepareStatment();
 
-	} catch (SQLException sqlException) {
+        } catch (SQLException sqlException) {
 
-	    throw new SQLiteException(sqlException.getLocalizedMessage());
-	} finally {
-	    sqlLite.closePrepareStatment();
-	}
-	return true;
+            throw new SQLiteException(sqlException.getLocalizedMessage());
+        } finally {
+            sqlLite.closePrepareStatment();
+        }
+        return true;
     }
 
     public Boolean koordinateXIstImDefinitionsbereich(int koordinateX) throws IllegalArgumentException {
 
-	if (koordinateX < MIN_X) {
-	    throw new IllegalArgumentException("Die Materialbreite darf nicht Negativ oder 0 sein.");
-	}
+        if (koordinateX < MIN_X) {
+            throw new IllegalArgumentException("Die Materialbreite darf nicht Negativ oder 0 sein.");
+        }
 
-	if (koordinateX > MAX_X) {
-	    throw new IllegalArgumentException("Die maximal Materialbreite ist: " + MAX_X);
-	}
+        if (koordinateX > MAX_X) {
+            throw new IllegalArgumentException("Die maximal Materialbreite ist: " + MAX_X);
+        }
 
-	return true;
+        return true;
     }
 
     public Boolean koordinateZIstImDefinitionsbereich(int koordinateZ) throws IllegalArgumentException {
 
-	if (koordinateZ < MIN_Z) {
-	    throw new IllegalArgumentException("Die Materialbreite darf nicht Negativ oder 0 sein.");
-	}
+        if (koordinateZ < MIN_Z) {
+            throw new IllegalArgumentException("Die Materialbreite darf nicht Negativ oder 0 sein.");
+        }
 
-	if (koordinateZ > MAX_Z) {
-	    throw new IllegalArgumentException("Die maximal Materialdicke ist: " + MAX_Z);
-	}
+        if (koordinateZ > MAX_Z) {
+            throw new IllegalArgumentException("Die maximal Materialdicke ist: " + MAX_Z);
+        }
 
-	return true;
+        return true;
     }
 
     public Boolean koordinateyMaxIstImDefinitionsbereich(int koordinatey) throws IllegalArgumentException {
 
-	if (koordinatey < MIN_Y) {
-	    throw new IllegalArgumentException("Die Materialbreite darf nicht Negativ sein.");
-	}
+        if (koordinatey < MIN_Y) {
+            throw new IllegalArgumentException("Die Materialbreite darf nicht Negativ sein.");
+        }
 
-	if (koordinatey > MAX_Y) {
-	    throw new IllegalArgumentException("Die maximal Material Länge ist: " + MAX_Y);
-	}
+        if (koordinatey > MAX_Y) {
+            throw new IllegalArgumentException("Die maximal Material Länge ist: " + MAX_Y);
+        }
 
-	return true;
+        return true;
     }
 
     public Boolean materialSorteIdIstVorhanden(int materialSorteId) throws IllegalArgumentException, SQLiteException {
 
-	if (materialSorteId < 0) {
-	    throw new IllegalArgumentException("Die materialSorteId darf nicht Negativ sein.");
-	}
+        if (materialSorteId < 0) {
+            throw new IllegalArgumentException("Die materialSorteId darf nicht Negativ sein.");
+        }
 
-	MaterialSorte sorteVorhanden = new MaterialSorte(getSqlConnection());
-	if (!sorteVorhanden.materialsorteIdVorhanden(materialSorteId)) {
-	    throw new IllegalArgumentException("Die materialSorteId ist nicht vorhanden.");
-	}
+        MaterialSorte sorteVorhanden = new MaterialSorte(getSqlConnection());
+        if (!sorteVorhanden.materialsorteIdVorhanden(materialSorteId)) {
+            throw new IllegalArgumentException("Die materialSorteId ist nicht vorhanden.");
+        }
 
-	return true;
+        return true;
     }
 
     public Boolean objektWerteSindNull() {
-	int[] datensatz = getMaterialDatensatz();
-	if (datensatz[getOrdinal("MATERIALSORTE_ID")] == 0 || datensatz[getOrdinal("X")] == 0
-		|| datensatz[getOrdinal("YMAX")] == 0 || datensatz[getOrdinal("YMAX")] == 0) {
-	    return true;
-	} else {
-	    return false;
-	}
+        int[] datensatz = getMaterialDatensatz();
+        if (datensatz[getOrdinal("MATERIALSORTE_ID")] == 0 || datensatz[getOrdinal("X")] == 0
+                || datensatz[getOrdinal("YMAX")] == 0 || datensatz[getOrdinal("YMAX")] == 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     private void clearObjektWerte() {
-	setMaterialDatensatz(new int[] { 0, 0, 0, 0, 0, 0 });
+        setMaterialDatensatz(new int[] { 0, 0, 0, 0, 0, 0 });
     }
 
 }

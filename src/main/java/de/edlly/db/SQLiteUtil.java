@@ -16,13 +16,13 @@ public class SQLiteUtil {
      */
 
     public static int booleanToInteger(boolean bool) {
-	int integer = 0;
+        int integer = 0;
 
-	if (bool) {
-	    integer = 1;
-	}
+        if (bool) {
+            integer = 1;
+        }
 
-	return integer;
+        return integer;
     }
 
     /**
@@ -35,12 +35,12 @@ public class SQLiteUtil {
      */
 
     public static boolean integerToBoolean(int integer) {
-	boolean bool = false;
+        boolean bool = false;
 
-	if (integer == 1) {
-	    bool = true;
-	}
+        if (integer == 1) {
+            bool = true;
+        }
 
-	return bool;
+        return bool;
     }
 }

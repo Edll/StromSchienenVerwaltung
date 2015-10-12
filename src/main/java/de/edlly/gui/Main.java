@@ -22,49 +22,49 @@ public class Main {
     JPanel testpanel;
 
     public Main() {
-	initialize();
+        initialize();
     }
 
     public static void main(String[] args) {
-	EventQueue.invokeLater(new Runnable() {
-	    public void run() {
+        EventQueue.invokeLater(new Runnable() {
+            public void run() {
 
-		Main window = new Main();
-		window.frame.setVisible(true);
+                Main window = new Main();
+                window.frame.setVisible(true);
 
-	    }
-	});
+            }
+        });
     }
 
     private void initialize() {
-	testDatabankStruktur();
-	
-	frame = new JFrame();
+        testDatabankStruktur();
 
-	frame.getContentPane().setLayout(new MigLayout("fill", "[grow,fill]", "[grow,fill]"));
-	frame.getContentPane().setBackground(Format.BGCOLOR);
-	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	frame.pack();
-	frame.setExtendedState(frame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
+        frame = new JFrame();
 
-	Menu menu = new Menu(frame);
-	menu.getMenu();
+        frame.getContentPane().setLayout(new MigLayout("fill", "[grow,fill]", "[grow,fill]"));
+        frame.getContentPane().setBackground(Format.BGCOLOR);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setExtendedState(frame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
 
-	ElementPartListe werkstueckVerwaltung = new ElementPartListe();
-	frame.setTitle("Werkstück Verwaltung");
+        Menu menu = new Menu(frame);
+        menu.getMenu();
 
-	frame.getContentPane().add(werkstueckVerwaltung.createAndGet());
+        ElementPartListe werkstueckVerwaltung = new ElementPartListe();
+        frame.setTitle("Werkstück Verwaltung");
+
+        frame.getContentPane().add(werkstueckVerwaltung.createAndGet());
     }
 
     private void testDatabankStruktur() {
-	try {
-	    SQLiteConnect sqlConnection = new SQLiteConnect();
-	    sqlConnection.dbConnect();
-	    SQLiteDatenbankStruktur datenbankCheck = new SQLiteDatenbankStruktur(sqlConnection);
-	    datenbankCheck.datenbankCheckUndAnlegen();
-	    sqlConnection.close();
-	} catch (SQLiteException e) {
-	    JOptionPane.showMessageDialog(null, e.getMessage());
-	} 
+        try {
+            SQLiteConnect sqlConnection = new SQLiteConnect();
+            sqlConnection.dbConnect();
+            SQLiteDatenbankStruktur datenbankCheck = new SQLiteDatenbankStruktur(sqlConnection);
+            datenbankCheck.datenbankCheckUndAnlegen();
+            sqlConnection.close();
+        } catch (SQLiteException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
     }
 }

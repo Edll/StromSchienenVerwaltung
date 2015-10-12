@@ -17,52 +17,50 @@ public class SQLiteQueryAndResult extends SQLiteConnect {
     private String query = "";
 
     public SQLiteQueryAndResult(SQLiteConnect sqlConnection) throws SQLiteException {
-	SQLiteConnect.isClosedOrNull(sqlConnection);
-	setSqlConnection(sqlConnection);
+        SQLiteConnect.isClosedOrNull(sqlConnection);
+        setSqlConnection(sqlConnection);
     }
 
     public void setResult(ResultSet result) {
-	this.result = result;
+        this.result = result;
     }
 
     public ResultSet getResult() {
-	return result;
+        return result;
     }
 
     public void setQuery(String query) throws SQLiteException {
-	queryNotNull(query);
-	this.query = query;
+        queryNotNull(query);
+        this.query = query;
     }
 
     public void closeResult() throws SQLiteException {
-	try {
-	    if (this.result != null && !this.result.isClosed()) {
-		this.result.close();
-	    }
-	} catch (SQLException e) {
-	    throw new SQLiteException(e.getLocalizedMessage());
-	}
+        try {
+            if (this.result != null && !this.result.isClosed()) {
+                this.result.close();
+            }
+        } catch (SQLException e) {
+            throw new SQLiteException(e.getLocalizedMessage());
+        }
 
     }
 
     protected void queryNotNull(String query) throws SQLiteException {
-	if (query == null || query == "") {
-	    throw new SQLiteException("Der SQL Query String darf nicht null sein.");
-	}
+        if (query == null || query == "") {
+            throw new SQLiteException("Der SQL Query String darf nicht null sein.");
+        }
     }
 
     public String getQuery() {
-	return this.query;
+        return this.query;
     }
-    
-
 
     public boolean resultOhneErgebniss(ResultSet result) throws SQLiteException {
 
-	try {
-	    return !result.isBeforeFirst();
-	} catch (SQLException e) {
-	    throw new SQLiteException(e.getLocalizedMessage());
-	}
+        try {
+            return !result.isBeforeFirst();
+        } catch (SQLException e) {
+            throw new SQLiteException(e.getLocalizedMessage());
+        }
     }
 }

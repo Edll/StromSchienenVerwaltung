@@ -6,78 +6,78 @@ public class SQLitePreparedStatement extends SQLiteQueryAndResult {
     private PreparedStatement preparedStatment;
 
     public SQLitePreparedStatement(SQLiteConnect sqlConnection) throws SQLiteException {
-	super(sqlConnection);
+        super(sqlConnection);
     }
 
     public PreparedStatement getPreparedStatment() {
-	return preparedStatment;
+        return preparedStatment;
     }
 
     public void setPreparedStatment(PreparedStatement preparedStatment) {
-	this.preparedStatment = preparedStatment;
+        this.preparedStatment = preparedStatment;
     }
 
     public void preparedStatmentVorbereiten(String query) throws SQLiteException {
-	queryNotNull(query);
-	try {
-	    preparedStatment = getSqlConnection().prepareStatement(query);
-	} catch (SQLException e) {
-	    throw new SQLiteException(e.getLocalizedMessage());
-	}
+        queryNotNull(query);
+        try {
+            preparedStatment = getSqlConnection().prepareStatement(query);
+        } catch (SQLException e) {
+            throw new SQLiteException(e.getLocalizedMessage());
+        }
 
     }
 
     public void preparedStatmentWithKeyVorbereiten(String query) throws SQLiteException {
-	queryNotNull(query);
-	try {
-	    preparedStatment = getSqlConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-	} catch (SQLException e) {
-	    throw new SQLiteException(e.getLocalizedMessage());
-	}
+        queryNotNull(query);
+        try {
+            preparedStatment = getSqlConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+        } catch (SQLException e) {
+            throw new SQLiteException(e.getLocalizedMessage());
+        }
 
     }
 
     public void preparedStatmentAusfuehren() throws SQLiteException {
-	try {
-	    preparedStatment.executeUpdate();
-	} catch (SQLException e) {
-	    throw new SQLiteException(e.getLocalizedMessage());
-	}
+        try {
+            preparedStatment.executeUpdate();
+        } catch (SQLException e) {
+            throw new SQLiteException(e.getLocalizedMessage());
+        }
     }
 
     public void preparedStatmentWithKeyAusfuehren() throws SQLiteException {
-	preparedStatmentAusfuehren();
-	primayKey();
+        preparedStatmentAusfuehren();
+        primayKey();
     }
 
     public void closePrepareStatmentAndResult() throws SQLiteException {
-	closePrepareStatment();
-	closeResult();
+        closePrepareStatment();
+        closeResult();
     }
 
     public void closePrepareStatment() throws SQLiteException {
-	try {
-	    if (preparedStatment != null && !preparedStatment.isClosed()) {
-		preparedStatment.close();
-	    }
-	} catch (SQLException e) {
-	    throw new SQLiteException(e.getLocalizedMessage());
-	}
+        try {
+            if (preparedStatment != null && !preparedStatment.isClosed()) {
+                preparedStatment.close();
+            }
+        } catch (SQLException e) {
+            throw new SQLiteException(e.getLocalizedMessage());
+        }
     }
 
     public void primayKey() throws SQLiteException {
 
-	ResultSet generatedKeys;
-	try {
-	    generatedKeys = preparedStatment.getGeneratedKeys();
+        ResultSet generatedKeys;
+        try {
+            generatedKeys = preparedStatment.getGeneratedKeys();
 
-	    if (generatedKeys.next()) {
-		setPrimaryKey(generatedKeys.getInt(1));
-	    } else {
-		throw new SQLiteException("Fehler beim erstell des Datensatzes. Es ist keine ID erzeugt worden.");
-	    }
-	} catch (SQLException e) {
-	    throw new SQLiteException(e.getLocalizedMessage());
-	}
+            if (generatedKeys.next()) {
+                setPrimaryKey(generatedKeys.getInt(1));
+            } else {
+                throw new SQLiteException("Fehler beim erstell des Datensatzes. Es ist keine ID erzeugt worden.");
+            }
+        } catch (SQLException e) {
+            throw new SQLiteException(e.getLocalizedMessage());
+        }
     }
 }

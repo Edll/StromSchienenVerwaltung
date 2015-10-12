@@ -3,7 +3,7 @@ package de.edlly.part;
 import de.edlly.db.SQLiteException;
 import de.edlly.db.SQLiteStatement;
 
-public interface IPart  extends Comparable<IPart> {
+public interface IPart extends Comparable<IPart> {
 
     /**
      * Getter Funktion für die WerkstückId
@@ -122,7 +122,7 @@ public interface IPart  extends Comparable<IPart> {
      */
 
     public void setData(String name, int materialId, int projektNr, long erstellDatum)
-	    throws PartException, SQLiteException;
+            throws PartException, SQLiteException;
 
     /**
      * Abfrage eines Datensatzes aus der DB Ergebiss wird ins Objekt geschrieben.

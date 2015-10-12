@@ -23,68 +23,68 @@ public class UpdateMaterialDatensatz extends MaterialDatensatz {
     private int visibly;
 
     public UpdateMaterialDatensatz(SQLiteConnect sqlConnection) throws IllegalArgumentException, SQLiteException {
-	super(sqlConnection);
-	sqlLite = new SQLitePreparedStatement(sqlConnection);
+        super(sqlConnection);
+        sqlLite = new SQLitePreparedStatement(sqlConnection);
     }
 
     public void setMaterialDaten(int materialId, int koordinateX, int koordinateZ, int koordinateyMax,
-	    int materialSorteId, int visibly) {
+            int materialSorteId, int visibly) {
 
-	this.materialId = materialId;
-	this.koordinateX = koordinateX;
-	this.koordinateZ = koordinateZ;
-	this.koordinateyMax = koordinateyMax;
-	this.materialSorteId = materialSorteId;
-	this.visibly = visibly;
+        this.materialId = materialId;
+        this.koordinateX = koordinateX;
+        this.koordinateZ = koordinateZ;
+        this.koordinateyMax = koordinateyMax;
+        this.materialSorteId = materialSorteId;
+        this.visibly = visibly;
 
     }
 
     public void setMaterialVisibly(int visibly) {
 
-	this.visibly = visibly;
+        this.visibly = visibly;
 
     }
 
     public void setMaterialId(int materialId) throws IllegalArgumentException {
 
-	try {
-	    // Auskommentiert da Datensatz so nicht mehr aktuell
-	    // MaterialDatensatz materialIdVorhanden = new MaterialDatensatz(this.sqlConnection);
-	    // materialIdVorhanden.materialIdVorhanden(materialId);
-	    // this.materialId = materialId;
-	} catch (IllegalArgumentException e) {
-	    // e.printStackTrace();
+        try {
+            // Auskommentiert da Datensatz so nicht mehr aktuell
+            // MaterialDatensatz materialIdVorhanden = new MaterialDatensatz(this.sqlConnection);
+            // materialIdVorhanden.materialIdVorhanden(materialId);
+            // this.materialId = materialId;
+        } catch (IllegalArgumentException e) {
+            // e.printStackTrace();
 
-	}
+        }
 
     }
 
     public void updateVisibly(int id, int visibly) throws SQLiteException {
 
-	if (id == 0) {
-	    throw new IllegalArgumentException("Die Material id darf nicht 0 sein.");
-	}
-	if (visibly != 0 & visibly != 1) {
-	    throw new IllegalArgumentException("Die Sichtbarkeit kann nur auf 1 oder 0 gesetzt werden.");
-	}
+        if (id == 0) {
+            throw new IllegalArgumentException("Die Material id darf nicht 0 sein.");
+        }
+        if (visibly != 0 & visibly != 1) {
+            throw new IllegalArgumentException("Die Sichtbarkeit kann nur auf 1 oder 0 gesetzt werden.");
+        }
 
-	try {
-	    sqlLite.setQuery("UPDATE \"main\".\"Material\" SET \"visibly\" = ?1 WHERE  \"id\" = " + id);
-	    sqlLite.preparedStatmentVorbereiten(sqlLite.getQuery());
-	    sqlLite.getPreparedStatment().setInt(1, visibly);
-	    sqlLite.preparedStatmentAusfuehren();
-	    sqlLite.closePrepareStatment();
+        try {
+            sqlLite.setQuery("UPDATE \"main\".\"Material\" SET \"visibly\" = ?1 WHERE  \"id\" = " + id);
+            sqlLite.preparedStatmentVorbereiten(sqlLite.getQuery());
+            sqlLite.getPreparedStatment().setInt(1, visibly);
+            sqlLite.preparedStatmentAusfuehren();
+            sqlLite.closePrepareStatment();
 
-	} catch (SQLException e) {
+        } catch (SQLException e) {
 
-	    throw new SQLiteException(e.getLocalizedMessage());
-	} finally {
-	    try {
-		sqlLite.closePrepareStatment();
-	    } catch (Exception e) {
-		throw new IllegalArgumentException(e);
-	    }
-	}
+            throw new SQLiteException(e.getLocalizedMessage());
+        } finally {
+            try {
+                sqlLite.closePrepareStatment();
+            } catch (Exception e) {
+                throw new IllegalArgumentException(e);
+            }
+        }
     }
 
 }

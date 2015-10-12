@@ -14,66 +14,66 @@ public class SQLiteStatementTest extends TestCase {
 
     @Override
     public void setUp() throws IllegalArgumentException, SQLiteException {
-	sqlConnection = new SQLiteConnect();
-	sqlConnection.dbConnect();
-	statement = new SQLiteStatement(sqlConnection);
+        sqlConnection = new SQLiteConnect();
+        sqlConnection.dbConnect();
+        statement = new SQLiteStatement(sqlConnection);
     }
 
     @Test
     public void testCloseStatmentUndResult() {
-	try {
-	    statement.statmentVorbereiten();
-	    statement.statmentExecute("SELECT * FROM material");
-	    statement.closeStatmentAndResult();
-	} catch (Exception e) {
-	    fail("Sollte keine Exception werfen, ist aber:" + e.getMessage() + e.getLocalizedMessage());
-	    e.printStackTrace();
-	}
+        try {
+            statement.statmentVorbereiten();
+            statement.statmentExecute("SELECT * FROM material");
+            statement.closeStatmentAndResult();
+        } catch (Exception e) {
+            fail("Sollte keine Exception werfen, ist aber:" + e.getMessage() + e.getLocalizedMessage());
+            e.printStackTrace();
+        }
     }
 
     @Test
     public void testStatmentAusfuehren() {
-	try {
-	    statement.statmentExecute(null);
-	    fail("Muss eine IllegalArgumentException auslösen");
-	} catch (SQLiteException exception) {
-	    String erwarteteException = "Der SQL Query String darf nicht null sein.";
-	    assertEquals(erwarteteException, exception.getMessage());
-	}
+        try {
+            statement.statmentExecute(null);
+            fail("Muss eine IllegalArgumentException auslösen");
+        } catch (SQLiteException exception) {
+            String erwarteteException = "Der SQL Query String darf nicht null sein.";
+            assertEquals(erwarteteException, exception.getMessage());
+        }
     }
 
     @Test
     public void testResultOhneErgebniss() throws SQLiteException {
-	statement.statmentVorbereiten();
-	statement.statmentExecute("SELECT * FROM material");
-	boolean ergebniss = statement.resultOhneErgebniss(statement.getResult());
+        statement.statmentVorbereiten();
+        statement.statmentExecute("SELECT * FROM material");
+        boolean ergebniss = statement.resultOhneErgebniss(statement.getResult());
 
-	assertFalse(ergebniss);
+        assertFalse(ergebniss);
     }
 
     @Test
     public void testAbfrageVorbereitenUndStarten() throws SQLiteException {
-	statement.statmentVorbereitenUndStarten("SELECT * FROM material");
-	boolean ergebniss = statement.resultOhneErgebniss(statement.getResult());
+        statement.statmentVorbereitenUndStarten("SELECT * FROM material");
+        boolean ergebniss = statement.resultOhneErgebniss(statement.getResult());
 
-	assertFalse(ergebniss);
+        assertFalse(ergebniss);
 
-	try {
-	    statement.statmentVorbereitenUndStarten(null);
-	    fail("Muss eine IllegalArgumentException auslösen");
-	} catch (SQLiteException exception) {
-	    String erwarteteException = "Der SQL Query String darf nicht null sein.";
-	    assertEquals(erwarteteException, exception.getMessage());
-	}
+        try {
+            statement.statmentVorbereitenUndStarten(null);
+            fail("Muss eine IllegalArgumentException auslösen");
+        } catch (SQLiteException exception) {
+            String erwarteteException = "Der SQL Query String darf nicht null sein.";
+            assertEquals(erwarteteException, exception.getMessage());
+        }
     }
 
     @Override
     public void tearDown() throws SQLiteException {
-	try {
-	    statement.closeStatmentAndResult();
-	} catch (SQLiteException e) {
-	    e.printStackTrace();
-	}
-	sqlConnection.close();
+        try {
+            statement.closeStatmentAndResult();
+        } catch (SQLiteException e) {
+            e.printStackTrace();
+        }
+        sqlConnection.close();
     }
 }

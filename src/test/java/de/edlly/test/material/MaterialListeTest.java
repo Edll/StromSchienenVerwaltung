@@ -23,61 +23,61 @@ public class MaterialListeTest extends TestCase {
 
     @Override
     public void setUp() throws IllegalArgumentException, SQLiteException {
-	sqlConnection = new SQLiteConnect();
-	sqlConnection.dbConnect();
-	materialDatensatz = new MaterialListe(sqlConnection);
+        sqlConnection = new SQLiteConnect();
+        sqlConnection.dbConnect();
+        materialDatensatz = new MaterialListe(sqlConnection);
     }
 
     @Test
     public void testGetMaterialListeKeineNullDatensatzAnzeigen() throws IllegalArgumentException, SQLiteException {
 
-	materialDatensatz.setAusgeblendetDatenAnzeigen(true);
-	Object[][] materialListe = materialDatensatz.getMaterialListe();
+        materialDatensatz.setAusgeblendetDatenAnzeigen(true);
+        Object[][] materialListe = materialDatensatz.getMaterialListe();
 
-	assertNotNull("methode darf keine Null liefern", materialListe);
+        assertNotNull("methode darf keine Null liefern", materialListe);
     }
 
     @Test
     public void testGetMaterialListeKeineNullDatensatzAusblenden() throws IllegalArgumentException, SQLiteException {
-	try {
-	    materialDatensatz.setAusgeblendetDatenAnzeigen(false);
-	    Object[][] materialListe = materialDatensatz.getMaterialListe();
-	    assertNotNull("methode darf keine Null liefern", materialListe);
-	} catch (IllegalArgumentException e) {
+        try {
+            materialDatensatz.setAusgeblendetDatenAnzeigen(false);
+            Object[][] materialListe = materialDatensatz.getMaterialListe();
+            assertNotNull("methode darf keine Null liefern", materialListe);
+        } catch (IllegalArgumentException e) {
 
-	}
+        }
 
     }
 
     @Test
     public void testGetMaterialListeIstObject() throws SQLiteException, IllegalArgumentException {
-	materialDatensatz.setAusgeblendetDatenAnzeigen(false);
-	Object[][] vergleichsFormate = new Object[0][0];
-	assertEquals(vergleichsFormate.getClass(), materialDatensatz.getMaterialListe().getClass());
+        materialDatensatz.setAusgeblendetDatenAnzeigen(false);
+        Object[][] vergleichsFormate = new Object[0][0];
+        assertEquals(vergleichsFormate.getClass(), materialDatensatz.getMaterialListe().getClass());
     }
 
     @Test
     public void testgetMaterialListeFormatiertKeineNullDatensatzAnzeigen()
-	    throws SQLiteException, IllegalArgumentException {
+            throws SQLiteException, IllegalArgumentException {
 
-	materialDatensatz.setAusgeblendetDatenAnzeigen(true);
-	Object[][] materialListe = materialDatensatz.getMaterialListeFormatiert();
-	assertNotNull("methode darf keine Null liefern", materialListe);
+        materialDatensatz.setAusgeblendetDatenAnzeigen(true);
+        Object[][] materialListe = materialDatensatz.getMaterialListeFormatiert();
+        assertNotNull("methode darf keine Null liefern", materialListe);
     }
 
     @Test
     public void testgetMaterialListeFormatiertKeineNullDatensatzAusblenden()
-	    throws SQLiteException, IllegalArgumentException {
+            throws SQLiteException, IllegalArgumentException {
 
-	materialDatensatz.setAusgeblendetDatenAnzeigen(false);
-	Object[][] materialListe = materialDatensatz.getMaterialListeFormatiert();
-	assertNotNull("methode darf keine Null liefern", materialListe);
+        materialDatensatz.setAusgeblendetDatenAnzeigen(false);
+        Object[][] materialListe = materialDatensatz.getMaterialListeFormatiert();
+        assertNotNull("methode darf keine Null liefern", materialListe);
 
     }
 
     @Override
     public void tearDown() throws SQLiteException {
-	sqlConnection.close();
+        sqlConnection.close();
     }
 
 }

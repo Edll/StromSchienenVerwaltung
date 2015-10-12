@@ -19,30 +19,30 @@ import junit.framework.TestSuite;
 public class AllTests extends TestSuite {
 
     public static Test suite() {
-	TestSuite materialDatensatz = new TestSuite("Alle Tests");
-	materialDatensatz.addTestSuite(NeuerMaterialDatensatzTest.class);
-	materialDatensatz.addTestSuite(MaterialDatensatzTest.class);
-	materialDatensatz.addTestSuite(UpdateMaterialDatensatzTest.class);
-	materialDatensatz.addTestSuite(MaterialListeTest.class);
-	materialDatensatz.addTestSuite(MaterialIdsTest.class);
-	materialDatensatz.addTestSuite(MaterialSorteTest.class);
-	materialDatensatz.addTestSuite(MaterialLoeschenTest.class);
-	// materialDatensatz.addTestSuite(MaterialTabelleTest.class);
+        TestSuite materialDatensatz = new TestSuite("Alle Tests");
+        materialDatensatz.addTestSuite(NeuerMaterialDatensatzTest.class);
+        materialDatensatz.addTestSuite(MaterialDatensatzTest.class);
+        materialDatensatz.addTestSuite(UpdateMaterialDatensatzTest.class);
+        materialDatensatz.addTestSuite(MaterialListeTest.class);
+        materialDatensatz.addTestSuite(MaterialIdsTest.class);
+        materialDatensatz.addTestSuite(MaterialSorteTest.class);
+        materialDatensatz.addTestSuite(MaterialLoeschenTest.class);
+        // materialDatensatz.addTestSuite(MaterialTabelleTest.class);
 
-	materialDatensatz.addTestSuite(PartTest.class);
-	materialDatensatz.addTestSuite(PartListTest.class);
-	materialDatensatz.addTestSuite(PartNewTest.class);
-	materialDatensatz.addTestSuite(PartUtilTest.class);
-	materialDatensatz.addTestSuite(PartTableTest.class);
-	materialDatensatz.addTestSuite(BendListTest.class);
-	materialDatensatz.addTestSuite(BendTest.class);
+        materialDatensatz.addTestSuite(PartTest.class);
+        materialDatensatz.addTestSuite(PartListTest.class);
+        materialDatensatz.addTestSuite(PartNewTest.class);
+        materialDatensatz.addTestSuite(PartUtilTest.class);
+        materialDatensatz.addTestSuite(PartTableTest.class);
+        materialDatensatz.addTestSuite(BendListTest.class);
+        materialDatensatz.addTestSuite(BendTest.class);
 
-	materialDatensatz.addTestSuite(SQLiteBooleanTest.class);
-	materialDatensatz.addTestSuite(SQLiteConnectTest.class);
-	materialDatensatz.addTestSuite(SQLiteQueryAndResultTest.class);
-	materialDatensatz.addTestSuite(SQLiteStatementTest.class);
-	materialDatensatz.addTestSuite(SQLitePreparedStatementTest.class);
+        materialDatensatz.addTestSuite(SQLiteBooleanTest.class);
+        materialDatensatz.addTestSuite(SQLiteConnectTest.class);
+        materialDatensatz.addTestSuite(SQLiteQueryAndResultTest.class);
+        materialDatensatz.addTestSuite(SQLiteStatementTest.class);
+        materialDatensatz.addTestSuite(SQLitePreparedStatementTest.class);
 
-	return materialDatensatz;
+        return materialDatensatz;
     }
 }

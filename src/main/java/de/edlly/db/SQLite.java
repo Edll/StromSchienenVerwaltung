@@ -11,20 +11,20 @@ public abstract class SQLite {
     }
 
     public int getPrimaryKey() {
-	return primaryKey;
+        return primaryKey;
     }
 
     public void setPrimaryKey(int id) {
-	this.primaryKey = id;
+        this.primaryKey = id;
     }
 
     public Connection getSqlConnection() {
-	return sqlConnection.getSqlConnection();
+        return sqlConnection.getSqlConnection();
     }
 
     public void setSqlConnection(SQLiteConnect sqlConnection) throws IllegalArgumentException, SQLiteException {
-	SQLiteConnect.isClosedOrNull(sqlConnection);
-	this.sqlConnection = sqlConnection;
+        SQLiteConnect.isClosedOrNull(sqlConnection);
+        this.sqlConnection = sqlConnection;
     }
 
     public static final String SQLITE_FILE_PATH = "kupfer.sqlite";

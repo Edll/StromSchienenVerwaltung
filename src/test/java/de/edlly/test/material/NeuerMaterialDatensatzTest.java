@@ -32,78 +32,78 @@ public class NeuerMaterialDatensatzTest extends TestCase {
 
     @Override
     public void setUp() throws IllegalArgumentException, SQLiteException {
-	sqlConnection = new SQLiteConnect();
-	sqlConnection.dbConnect();
-	materialDatensatz = new NeuerMaterialDatensatz(sqlConnection);
+        sqlConnection = new SQLiteConnect();
+        sqlConnection.dbConnect();
+        materialDatensatz = new NeuerMaterialDatensatz(sqlConnection);
     }
 
     @Test
     public void testSetMaximaleMaterialDatenPlusEins() throws SQLiteException {
-	try {
-	    materialDatensatz.setMaterialDaten(koordinatenMaxX + 1, koordiantenMaxZ - 1, koordiantenMaxY - 1,
-		    sortenId - 1); // wirft eine: IllegalArgumentException
-	    fail("Sollte eine fehler werfen wenn auf X größere daten als die Maximalen gesetz werden.");
-	    materialDatensatz.setMaterialDaten(koordinatenMaxX - 1, koordiantenMaxZ + 1, koordiantenMaxY - 1,
-		    sortenId - 1); // wirft eine: IllegalArgumentException
-	    fail("Sollte eine fehler werfen wenn auf Y größere daten als die Maximalen gesetz werden.");
-	    materialDatensatz.setMaterialDaten(koordinatenMaxX - 1, koordiantenMaxZ - 1, koordiantenMaxY + 1,
-		    sortenId - 1); // wirft eine: IllegalArgumentException
-	    fail("Sollte eine fehler werfen wenn auf Z größere daten als die Maximalen gesetz werden.");
-	    materialDatensatz.setMaterialDaten(koordinatenMaxX - 1, koordiantenMaxZ - 1, koordiantenMaxY - 1,
-		    sortenId + 1); // wirft eine: IllegalArgumentException
-	    fail("Sollte eine fehler werfen wenn auf Sorten Id größere daten als die Maximalen gesetz werden.");
-	} catch (IllegalArgumentException expected) {
-	    assertEquals(IllegalArgumentException.class, expected.getClass());
-	}
+        try {
+            materialDatensatz.setMaterialDaten(koordinatenMaxX + 1, koordiantenMaxZ - 1, koordiantenMaxY - 1,
+                    sortenId - 1); // wirft eine: IllegalArgumentException
+            fail("Sollte eine fehler werfen wenn auf X größere daten als die Maximalen gesetz werden.");
+            materialDatensatz.setMaterialDaten(koordinatenMaxX - 1, koordiantenMaxZ + 1, koordiantenMaxY - 1,
+                    sortenId - 1); // wirft eine: IllegalArgumentException
+            fail("Sollte eine fehler werfen wenn auf Y größere daten als die Maximalen gesetz werden.");
+            materialDatensatz.setMaterialDaten(koordinatenMaxX - 1, koordiantenMaxZ - 1, koordiantenMaxY + 1,
+                    sortenId - 1); // wirft eine: IllegalArgumentException
+            fail("Sollte eine fehler werfen wenn auf Z größere daten als die Maximalen gesetz werden.");
+            materialDatensatz.setMaterialDaten(koordinatenMaxX - 1, koordiantenMaxZ - 1, koordiantenMaxY - 1,
+                    sortenId + 1); // wirft eine: IllegalArgumentException
+            fail("Sollte eine fehler werfen wenn auf Sorten Id größere daten als die Maximalen gesetz werden.");
+        } catch (IllegalArgumentException expected) {
+            assertEquals(IllegalArgumentException.class, expected.getClass());
+        }
     }
 
     @Test
     public void testSetMaximaleMaterialDaten() throws IllegalArgumentException, SQLiteException {
-	materialDatensatz.setMaterialDaten(koordinatenMaxX, koordiantenMaxZ, koordiantenMaxY, sortenId);
+        materialDatensatz.setMaterialDaten(koordinatenMaxX, koordiantenMaxZ, koordiantenMaxY, sortenId);
 
-	assertFalse("Maximalewerte sind nicht gesetzt worden", materialDatensatz.objektWerteSindNull());
+        assertFalse("Maximalewerte sind nicht gesetzt worden", materialDatensatz.objektWerteSindNull());
     }
 
     @Test
     public void testMinimaleObjektDatensetzenMinusEins() throws SQLiteException {
-	try {
-	    materialDatensatz.setMaterialDaten(koordinatenMinX - 1, koordiantenMinZ + 1, koordinatenMinY + 1,
-		    sortenId + 1); // wirft eine: IllegalArgumentException
-	    fail("Sollte eine fehler werfen wenn auf X kleinere Daten als die minimalen gesetz werden.");
-	    materialDatensatz.setMaterialDaten(koordinatenMinX + 1, koordiantenMinZ - 1, koordinatenMinY + 1,
-		    sortenId + 1); // wirft eine: IllegalArgumentException
-	    fail("Sollte eine fehler werfen wenn auf Y kleinere Daten als die minimalen gesetz werden.");
-	    materialDatensatz.setMaterialDaten(koordinatenMinX + 1, koordiantenMinZ + 1, koordinatenMinY - 1,
-		    sortenId + 1); // wirft eine: IllegalArgumentException
-	    fail("Sollte eine fehler werfen wenn auf Z kleinere Daten als die minimalen gesetz werden.");
-	    materialDatensatz.setMaterialDaten(koordinatenMinX + 1, koordiantenMinZ + 1, koordinatenMinY + 1,
-		    sortenId - 1); // wirft eine: IllegalArgumentException
-	    fail("Sollte eine fehler werfen wenn auf SortenId kleinere Daten als die minimalen gesetz werden.");
-	} catch (IllegalArgumentException expected) {
-	    assertEquals(IllegalArgumentException.class, expected.getClass());
-	}
+        try {
+            materialDatensatz.setMaterialDaten(koordinatenMinX - 1, koordiantenMinZ + 1, koordinatenMinY + 1,
+                    sortenId + 1); // wirft eine: IllegalArgumentException
+            fail("Sollte eine fehler werfen wenn auf X kleinere Daten als die minimalen gesetz werden.");
+            materialDatensatz.setMaterialDaten(koordinatenMinX + 1, koordiantenMinZ - 1, koordinatenMinY + 1,
+                    sortenId + 1); // wirft eine: IllegalArgumentException
+            fail("Sollte eine fehler werfen wenn auf Y kleinere Daten als die minimalen gesetz werden.");
+            materialDatensatz.setMaterialDaten(koordinatenMinX + 1, koordiantenMinZ + 1, koordinatenMinY - 1,
+                    sortenId + 1); // wirft eine: IllegalArgumentException
+            fail("Sollte eine fehler werfen wenn auf Z kleinere Daten als die minimalen gesetz werden.");
+            materialDatensatz.setMaterialDaten(koordinatenMinX + 1, koordiantenMinZ + 1, koordinatenMinY + 1,
+                    sortenId - 1); // wirft eine: IllegalArgumentException
+            fail("Sollte eine fehler werfen wenn auf SortenId kleinere Daten als die minimalen gesetz werden.");
+        } catch (IllegalArgumentException expected) {
+            assertEquals(IllegalArgumentException.class, expected.getClass());
+        }
 
     }
 
     @Test
     public void testMinimaleObjektDatensetzen() throws IllegalArgumentException, SQLiteException {
-	materialDatensatz.setMaterialDaten(koordinatenMinX, koordiantenMinZ, koordinatenMinY, sortenId);
-	assertFalse("Minimalewerte sind nicht gesetzt worden", materialDatensatz.objektWerteSindNull());
+        materialDatensatz.setMaterialDaten(koordinatenMinX, koordiantenMinZ, koordinatenMinY, sortenId);
+        assertFalse("Minimalewerte sind nicht gesetzt worden", materialDatensatz.objektWerteSindNull());
     }
 
     @Test
     public void testNeuerDatensatztausObjektDaten() throws IllegalArgumentException, SQLiteException {
 
-	materialDatensatz.setMaterialDaten(koordinatenMinX, koordiantenMinZ, koordinatenMinY, sortenId);
+        materialDatensatz.setMaterialDaten(koordinatenMinX, koordiantenMinZ, koordinatenMinY, sortenId);
 
-	boolean materialDatenEingetragen = materialDatensatz.datensatzAusObjektWertenAnlegen();
+        boolean materialDatenEingetragen = materialDatensatz.datensatzAusObjektWertenAnlegen();
 
-	assertTrue("Neuer Datensatz aus Objektdaten", materialDatenEingetragen);
+        assertTrue("Neuer Datensatz aus Objektdaten", materialDatenEingetragen);
     }
 
     @Override
     public void tearDown() throws SQLiteException {
-	sqlConnection.close();
+        sqlConnection.close();
 
     }
 

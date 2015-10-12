@@ -72,13 +72,13 @@ public interface IPartList {
      * @throws SQLiteException
      */
     public boolean idVorhanden(int id) throws SQLiteException;
-    
+
     /**
      * Sortiert die Liste nach Namen.
      */
 
     public void sortList();
-    
+
     /**
      * Gibt eine Sortierte Liste nach Namen zurück.
      * 

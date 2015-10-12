@@ -19,21 +19,21 @@ public class SQLiteBooleanTest extends TestCase {
 
     @Test
     public void testToBoolean() {
-	int integreReturnEins = SQLiteUtil.booleanToInteger(true);
-	assertSame("Sollte 1 sein", 1, integreReturnEins);
+        int integreReturnEins = SQLiteUtil.booleanToInteger(true);
+        assertSame("Sollte 1 sein", 1, integreReturnEins);
 
-	int integreReturnNull = SQLiteUtil.booleanToInteger(false);
-	assertSame("Sollte 0 sein", 0, integreReturnNull);
+        int integreReturnNull = SQLiteUtil.booleanToInteger(false);
+        assertSame("Sollte 0 sein", 0, integreReturnNull);
 
     }
 
     @Test
     public void testToInteger() {
-	boolean boolReturnTrue = SQLiteUtil.integerToBoolean(1);
-	assertTrue(boolReturnTrue);
+        boolean boolReturnTrue = SQLiteUtil.integerToBoolean(1);
+        assertTrue(boolReturnTrue);
 
-	boolean boolReturnFalse = SQLiteUtil.integerToBoolean(0);
-	assertFalse(boolReturnFalse);
+        boolean boolReturnFalse = SQLiteUtil.integerToBoolean(0);
+        assertFalse(boolReturnFalse);
 
     }
 

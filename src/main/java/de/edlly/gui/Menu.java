@@ -23,98 +23,98 @@ public class Menu {
     private JMenuItem itemMaterial;
 
     public Menu(JFrame frame) {
-	this.frame = frame;
+        this.frame = frame;
     }
 
     public void getMenu() {
-	addMenuItem();
-	addMenuAction();
+        addMenuItem();
+        addMenuAction();
     }
 
     public void addMenuAction() {
-	itemListPart.addActionListener(new ActionListener() {
-	    public void actionPerformed(ActionEvent e) {
+        itemListPart.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
 
-		frame.getContentPane().removeAll();
-		frame.setTitle("Werkstück Liste");
+                frame.getContentPane().removeAll();
+                frame.setTitle("Werkstück Liste");
 
-		ElementPartListe werkstueckVerwaltung = new ElementPartListe();
-		frame.getContentPane().add(werkstueckVerwaltung.createAndGet());
+                ElementPartListe werkstueckVerwaltung = new ElementPartListe();
+                frame.getContentPane().add(werkstueckVerwaltung.createAndGet());
 
-		frame.repaint();
-		frame.validate();
-	    }
-	});
+                frame.repaint();
+                frame.validate();
+            }
+        });
 
-	itemNeuPart.addActionListener(new ActionListener() {
-	    public void actionPerformed(ActionEvent e) {
-		ElementPartNeu werkstueckVerwaltung = new ElementPartNeu();
-		frame.getContentPane().removeAll();
-		frame.setTitle("Werkstück Anlegen");
+        itemNeuPart.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                ElementPartNeu werkstueckVerwaltung = new ElementPartNeu();
+                frame.getContentPane().removeAll();
+                frame.setTitle("Werkstück Anlegen");
 
-		frame.getContentPane().add(werkstueckVerwaltung.createAndGet());
+                frame.getContentPane().add(werkstueckVerwaltung.createAndGet());
 
-		frame.repaint();
-		frame.validate();
-	    }
-	});
+                frame.repaint();
+                frame.validate();
+            }
+        });
 
-	itemNeuMaterial.addActionListener(new ActionListener() {
-	    public void actionPerformed(ActionEvent e) {
+        itemNeuMaterial.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
 
-		frame.getContentPane().removeAll();
-		frame.setTitle("Material Liste");
+                frame.getContentPane().removeAll();
+                frame.setTitle("Material Liste");
 
-		ElementMaterialNeu neuesMaterialAnlegen = new ElementMaterialNeu();
-		frame.getContentPane().add(neuesMaterialAnlegen.createAndGet());
+                ElementMaterialNeu neuesMaterialAnlegen = new ElementMaterialNeu();
+                frame.getContentPane().add(neuesMaterialAnlegen.createAndGet());
 
-		frame.repaint();
-		frame.validate();
+                frame.repaint();
+                frame.validate();
 
-	    }
-	});
+            }
+        });
 
-	itemListMaterial.addActionListener(new ActionListener() {
-	    public void actionPerformed(ActionEvent e) {
-		frame.getContentPane().removeAll();
-		frame.setTitle("Material Anlegen");
+        itemListMaterial.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                frame.getContentPane().removeAll();
+                frame.setTitle("Material Anlegen");
 
-		ElementMaterialListe materialVerwaltung = new ElementMaterialListe();
-		frame.getContentPane().add(materialVerwaltung.createAndGet());
+                ElementMaterialListe materialVerwaltung = new ElementMaterialListe();
+                frame.getContentPane().add(materialVerwaltung.createAndGet());
 
-		frame.repaint();
-		frame.validate();
-	    }
-	});
+                frame.repaint();
+                frame.validate();
+            }
+        });
 
     }
 
     public void addMenuItem() {
-	mainMenuBar = new JMenuBar();
-	frame.setJMenuBar(mainMenuBar);
+        mainMenuBar = new JMenuBar();
+        frame.setJMenuBar(mainMenuBar);
 
-	mPart = new JMenu("Werkstücke");
-	mainMenuBar.add(mPart);
+        mPart = new JMenu("Werkstücke");
+        mainMenuBar.add(mPart);
 
-	itemListPart = new JMenuItem("Liste");
-	mPart.add(itemListPart);
+        itemListPart = new JMenuItem("Liste");
+        mPart.add(itemListPart);
 
-	itemNeuPart = new JMenuItem("Neu");
-	mPart.add(itemNeuPart);
+        itemNeuPart = new JMenuItem("Neu");
+        mPart.add(itemNeuPart);
 
-	mMaterial = new JMenu("Material");
-	mainMenuBar.add(mMaterial);
+        mMaterial = new JMenu("Material");
+        mainMenuBar.add(mMaterial);
 
-	itemListMaterial = new JMenuItem("Liste");
-	mMaterial.add(itemListMaterial);
+        itemListMaterial = new JMenuItem("Liste");
+        mMaterial.add(itemListMaterial);
 
-	itemNeuMaterial = new JMenuItem("Neu");
-	mMaterial.add(itemNeuMaterial);
+        itemNeuMaterial = new JMenuItem("Neu");
+        mMaterial.add(itemNeuMaterial);
 
-	mSettings = new JMenu("Einstellungen");
-	mainMenuBar.add(mSettings);
+        mSettings = new JMenu("Einstellungen");
+        mainMenuBar.add(mSettings);
 
-	itemMaterial = new JMenuItem("Material");
-	mSettings.add(itemMaterial);
+        itemMaterial = new JMenuItem("Material");
+        mSettings.add(itemMaterial);
     }
 }

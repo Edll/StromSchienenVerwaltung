@@ -14,16 +14,16 @@ public class PartTableTest extends TestCase {
 
     @Override
     public void setUp() {
-	table = new PartTable();
+        table = new PartTable();
     }
 
     @Test
     public void test() throws SQLiteException, PartException {
-	JTable actual = table.getPartTable();
-	JTable expected = new JTable();
+        JTable actual = table.getPartTable();
+        JTable expected = new JTable();
 
-	assertNotNull(actual);
-	assertEquals(expected.getClass(), actual.getClass());
+        assertNotNull(actual);
+        assertEquals(expected.getClass(), actual.getClass());
     }
 
     @Override

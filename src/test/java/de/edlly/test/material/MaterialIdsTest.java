@@ -22,89 +22,89 @@ public class MaterialIdsTest extends TestCase {
 
     @Before
     public void setUp() throws IllegalArgumentException, SQLiteException {
-	sqlConnection = new SQLiteConnect();
-	sqlConnection.dbConnect();
-	materialIds = new MaterialIds(sqlConnection);
+        sqlConnection = new SQLiteConnect();
+        sqlConnection.dbConnect();
+        materialIds = new MaterialIds(sqlConnection);
     }
 
     @Test
     public void testGetIdListeDatensatzeTrue() throws SQLiteException, IllegalArgumentException {
-	boolean ausgelendeteDatensatzeNichtAnzeigen = true;
-	materialIds.setAusgeblendetDatenAnzeigen(ausgelendeteDatensatzeNichtAnzeigen);
-	int[] idListeBekommen = materialIds.getIdListe();
+        boolean ausgelendeteDatensatzeNichtAnzeigen = true;
+        materialIds.setAusgeblendetDatenAnzeigen(ausgelendeteDatensatzeNichtAnzeigen);
+        int[] idListeBekommen = materialIds.getIdListe();
 
-	assertNotNull("methode darf keine Null liefern", idListeBekommen);
+        assertNotNull("methode darf keine Null liefern", idListeBekommen);
     }
 
     @Test
     public void testGetIdListeDatensatzeFalse() throws SQLiteException, IllegalArgumentException {
-	boolean ausgelendeteDatensatzeNichtAnzeigen = false;
+        boolean ausgelendeteDatensatzeNichtAnzeigen = false;
 
-	materialIds.setAusgeblendetDatenAnzeigen(ausgelendeteDatensatzeNichtAnzeigen);
-	int[] idListeBekommen = materialIds.getIdListe();
+        materialIds.setAusgeblendetDatenAnzeigen(ausgelendeteDatensatzeNichtAnzeigen);
+        int[] idListeBekommen = materialIds.getIdListe();
 
-	assertNotNull("methode darf keine Null liefern", idListeBekommen);
+        assertNotNull("methode darf keine Null liefern", idListeBekommen);
     }
 
     @Test
     public void testQueryAuswahlFalse() throws SQLiteException {
-	materialIds.setAusgeblendetDatenAnzeigen(false);
-	materialIds.queryAuswahl();
+        materialIds.setAusgeblendetDatenAnzeigen(false);
+        materialIds.queryAuswahl();
 
-	String bekommenesQuery = materialIds.getQuery();
-	String erwartetesQuery = "SELECT id FROM Material WHERE visibly = 1";
+        String bekommenesQuery = materialIds.getQuery();
+        String erwartetesQuery = "SELECT id FROM Material WHERE visibly = 1";
 
-	assertEquals(erwartetesQuery, bekommenesQuery);
+        assertEquals(erwartetesQuery, bekommenesQuery);
     }
 
     @Test
     public void testQueryAuswahlTrue() throws SQLiteException {
-	materialIds.setAusgeblendetDatenAnzeigen(true);
-	materialIds.queryAuswahl();
+        materialIds.setAusgeblendetDatenAnzeigen(true);
+        materialIds.queryAuswahl();
 
-	String queryBekommen = materialIds.getQuery();
-	String queryErwartet = "SELECT id FROM Material";
+        String queryBekommen = materialIds.getQuery();
+        String queryErwartet = "SELECT id FROM Material";
 
-	assertEquals(queryErwartet, queryBekommen);
+        assertEquals(queryErwartet, queryBekommen);
     }
 
     @Test
     public void testanzahlDerDatensatze() throws SQLiteException {
-	materialIds.setAusgeblendetDatenAnzeigen(false);
-	materialIds.queryAuswahl();
-	int anzahlBekommen = materialIds.anzahlDatenseatze();
+        materialIds.setAusgeblendetDatenAnzeigen(false);
+        materialIds.queryAuswahl();
+        int anzahlBekommen = materialIds.anzahlDatenseatze();
 
-	assertTrue(0 < anzahlBekommen);
+        assertTrue(0 < anzahlBekommen);
     }
 
     @Test
     public void testanzahlDerDatensatzeFail() {
-	try {
-	    materialIds.anzahlDatenseatze();
-	    fail("muss eine IllegalArgumentException ergeben da Query String nicht gesezt worden ist.");
-	} catch (SQLiteException e) {
-	    assertEquals("Der SQL Query String darf nicht null sein.", e.getLocalizedMessage());
-	}
+        try {
+            materialIds.anzahlDatenseatze();
+            fail("muss eine IllegalArgumentException ergeben da Query String nicht gesezt worden ist.");
+        } catch (SQLiteException e) {
+            assertEquals("Der SQL Query String darf nicht null sein.", e.getLocalizedMessage());
+        }
     }
 
     @Test
     public void testMaterialIdVorhandenFalse() throws IllegalArgumentException, SQLiteException {
-	boolean idnichtvorhanden = materialIds.materialIdVorhanden(0);
+        boolean idnichtvorhanden = materialIds.materialIdVorhanden(0);
 
-	assertFalse("Wenn 0 als id abgefragt wird sollte das ergebniss false sein", idnichtvorhanden);
+        assertFalse("Wenn 0 als id abgefragt wird sollte das ergebniss false sein", idnichtvorhanden);
     }
 
     @Test
     public void testMaterialIdVorhandenTrue() throws IllegalArgumentException, SQLiteException {
-	int[] idListeBekommen = materialIds.getIdListe();
-	boolean idvorhanden = materialIds.materialIdVorhanden(idListeBekommen[0]);
+        int[] idListeBekommen = materialIds.getIdListe();
+        boolean idvorhanden = materialIds.materialIdVorhanden(idListeBekommen[0]);
 
-	assertTrue("Id vorhanden sollte true sein", idvorhanden);
+        assertTrue("Id vorhanden sollte true sein", idvorhanden);
     }
 
     @After
     public void tearDown() throws SQLiteException {
-	sqlConnection.close();
+        sqlConnection.close();
     }
 
 }

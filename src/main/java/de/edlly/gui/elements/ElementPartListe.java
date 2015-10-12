@@ -18,36 +18,34 @@ public class ElementPartListe extends Element implements IElement {
     private JPanel panel;
 
     public ElementPartListe() {
-	partTable = new PartTable();
+        partTable = new PartTable();
     }
 
     /**
      * @wbp.parser.entryPoint
      */
     public JPanel createAndGet() {
-	create();
-	return panel;
+        create();
+        return panel;
     }
 
     public void create() {
-	panel = new JPanel();
-	panel.setLayout(new MigLayout("fill", Format.MIG_ELEMENT_PANEL_LEFT, Format.MIG_ELEMENT_PANEL_TOP));
-	panel.setBackground(Format.BGCOLOR);
-	
-	JScrollPane scrollPane = new JScrollPane();
-	scrollPane.getViewport().setBackground(Format.BGCOLOR);
-	try {
-	    scrollPane.setViewportView(partTable.getPartTable());
-	    panel.add(scrollPane, "grow");
-		
-	} catch (SQLiteException e) {
-	    systemExceptionHandling(e.getLocalizedMessage());
-	} catch (PartException e) {
-	    userExceptionHandling(e.getLocalizedMessage());
-	}
+        panel = new JPanel();
+        panel.setLayout(new MigLayout("fill", Format.MIG_ELEMENT_PANEL_LEFT, Format.MIG_ELEMENT_PANEL_TOP));
+        panel.setBackground(Format.BGCOLOR);
 
-	
-	
+        JScrollPane scrollPane = new JScrollPane();
+        scrollPane.getViewport().setBackground(Format.BGCOLOR);
+        try {
+            scrollPane.setViewportView(partTable.getPartTable());
+            panel.add(scrollPane, "grow");
+
+        } catch (SQLiteException e) {
+            systemExceptionHandling(e.getLocalizedMessage());
+        } catch (PartException e) {
+            userExceptionHandling(e.getLocalizedMessage());
+        }
+
     }
 
 }

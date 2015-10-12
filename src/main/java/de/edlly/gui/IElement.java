@@ -7,7 +7,8 @@ public interface IElement {
     /**
      * Für jedes Element des Programms gibt es eine eigene Klasse. In dieser wird die Oberfläche zusammengestellt und
      * dann in ein Panel verpackt. Mit dieser Funktion wird das Panel erzeugt und Abgefragt.
-     * @param partNew 
+     * 
+     * @param partNew
      * 
      * @return Das JPanel mit dem Inhalt des Element der Klasse.
      */

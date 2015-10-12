@@ -14,49 +14,49 @@ public class BendTable extends JTable {
     private DefaultTableModel model;
 
     public BendTable() {
-	createTable();
-	addHeadColumn();
-	setTableModel();
+        createTable();
+        addHeadColumn();
+        setTableModel();
     }
 
     public JTable getTable() {
-	return bendTable;
+        return bendTable;
     }
 
     public void createTable() {
-	bendTable = new JTable();
-	bendTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        bendTable = new JTable();
+        bendTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
     }
 
     public void setTableModel() {
-	bendTable.setModel(model);
+        bendTable.setModel(model);
     }
 
     public void addData(IBendList bend) {
-	List<IBend<?>> bendList = bend.getBends();
+        List<IBend<?>> bendList = bend.getBends();
 
-	for (int i = model.getRowCount() - 1; i >= 0; i--) {
-	    model.removeRow(i);
-	}
+        for (int i = model.getRowCount() - 1; i >= 0; i--) {
+            model.removeRow(i);
+        }
 
-	for (int i = 0; i < bendList.size(); i++) {
-	    Double y = bendList.get(i).getY().doubleValue();
-	    Double angel = bendList.get(i).getAngel().doubleValue();
-	    String richtung = "Vor";
+        for (int i = 0; i < bendList.size(); i++) {
+            Double y = bendList.get(i).getY().doubleValue();
+            Double angel = bendList.get(i).getAngel().doubleValue();
+            String richtung = "Vor";
 
-	    if (angel < 0) {
-		angel = angel * -1;
-		richtung = "Zurück";
-	    }
-	    model.addRow(new Object[] { y, angel, richtung });
-	}
+            if (angel < 0) {
+                angel = angel * -1;
+                richtung = "Zurück";
+            }
+            model.addRow(new Object[] { y, angel, richtung });
+        }
     }
 
     public void addHeadColumn() {
-	model = new DefaultTableModel();
-	model.addColumn("Y Position");
-	model.addColumn("Winkel");
-	model.addColumn("Richtung");
+        model = new DefaultTableModel();
+        model.addColumn("Y Position");
+        model.addColumn("Winkel");
+        model.addColumn("Richtung");
     }
 
 }
