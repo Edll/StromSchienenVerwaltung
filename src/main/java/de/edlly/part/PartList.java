@@ -115,11 +115,8 @@ public class PartList implements IPartList {
 		if (getIdList().get(i) == id) {
 		    return true;
 		}
-
 	    }
 	    return false;
-
 	}
-
     }
 }

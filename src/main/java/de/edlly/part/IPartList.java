@@ -82,7 +82,7 @@ public interface IPartList {
     /**
      * Gibt eine Sortierte Liste nach Namen zurück.
      * 
-     * @return 
+     * @return
      * @throws PartException
      * @throws SQLiteException
      */
